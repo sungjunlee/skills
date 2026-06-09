@@ -8,7 +8,7 @@ For a 4-6 person panel:
 
 - 2-3 context-specific experts
 - 1-2 general quality experts
-- 1 surprising outsider
+- 1 adversarial or surprising outsider
 
 The best persona sounds like a real person who would notice a specific failure mode:
 
@@ -18,6 +18,12 @@ The best persona sounds like a real person who would notice a specific failure m
 - better: "internal-tool security reviewer focused on accidental credential leaks"
 - weak: "writer"
 - better: "support-doc editor who has to answer confused user tickets"
+
+Give each persona a lens, bias, and missed-by-others concern:
+
+- lens: what they optimize for
+- bias: what they distrust
+- missed-by-others: what they are unusually likely to catch
 
 ## Context-specific seeds
 
@@ -59,9 +65,20 @@ Add one when it could reveal a blind spot:
 - Non-technical stakeholder who only sees the final artifact
 - Competitor or critic looking for the weak point
 
+## Adversarial seeds
+
+Use when the review should find failures a normal reviewer would miss:
+
+- Red-team reviewer trying to make the artifact fail in public
+- Skeptical buyer looking for the reason not to adopt
+- Abuse-minded operator looking for incentives and misuse paths
+- Future maintainer looking for the hidden cost six months later
+- Incident reviewer asking what would make this embarrassing in hindsight
+
 ## Avoid
 
 - Do not fill the panel with only engineering roles unless the target is purely engineering.
 - Do not reuse the same generic panel every time.
 - Do not create personas so broad that they can only say generic things.
 - Do not let the surprising outsider dominate the practical recommendations.
+- Do not make the adversarial reviewer theatrical. They need evidence and a fix path.

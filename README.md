@@ -6,6 +6,26 @@ These skills are meant to stay compact, composable, and easy to adapt. Each skil
 
 ## Skills
 
+### Productivity
+
+#### delegate
+
+One-shot delegate a prompt to a chosen agent/model and return its output. No worktree, manifest, or review.
+
+When the full `relay-dispatch` flow is overkill — you just want a quick answer from a specific model — `delegate` shells out directly to the chosen CLI.
+
+```text
+/delegate opencode-go/deepseek-v4-pro "refactor this function to use streams"
+/delegate reasonix/deepseek-v4-pro "write unit tests for the parser"
+/delegate opencode/glm-5.2 "summarize this diff"
+/delegate opencode "explain this file"  # no model: CLI default
+```
+
+Source:
+
+- `skills/productivity/delegate/SKILL.md`
+- `skills/productivity/delegate/references/cli-invocations.md`
+
 ### Review
 
 #### gosu-review
@@ -52,6 +72,10 @@ Adjust the destination for your runtime. Codex and Claude Code may use different
 
 ```text
 skills/
+  productivity/
+    delegate/
+      SKILL.md
+      references/
   review/
     gosu-review/
       SKILL.md

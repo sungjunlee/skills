@@ -58,31 +58,30 @@ Target: <path, diff, repo scope, or artifact>
 Context: <5-10 lines: what, why, constraints>
 Focus: <persona-specific mandate>
 
-Return:
-  verdict: ship | fix | rethink
-  sharp_take: <strongest opinion>
-  top_findings: - [P1/P2/P3] <finding> (evidence: <file:line>)
-  what_others_may_miss: <unusual concern>
-  first_fix: <concrete change>
-  score_optional: <0-100, with one short reason, only if useful>
+Return one panel entry using the shape defined in the Output section.
 ```
 
 ## Output
 
-Show panel voices first, then synthesize. Rough shape:
+Show panel voices first, then synthesize. Lead with a one-line verdict summary so the reader can scan before diving into detail.
+
+**Panel entry shape** (each subagent returns one):
+
+- **verdict**: `ship` | `fix` | `rethink`
+- **sharp take**: one strong sentence
+- **first fix**: one concrete action
+- **missed by others**: one unusual concern
+- **score**: optional N/100, with one short reason
+
+**Output shape:**
 
 ```text
 # gosu-review: <target>
 target: <selected target>
 casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial, one line>
 
-## Panel
-### <persona>                         # one entry per panelist
-verdict: ship | fix | rethink
-sharp take: <one strong sentence>
-first fix: <one concrete action>
-missed by others: <one unusual concern>
-score: <optional N/100, with reason>
+**Verdicts**                          # one line per panelist
+- <persona>: <verdict> — <sharp take>
 
 ## Tensions                            # only if personas disagree
 - <A> vs <B>: <what>. Recommendation: <short call>
@@ -90,10 +89,9 @@ score: <optional N/100, with reason>
 ## Consensus                           # only if 2+ agree
 - [P1] <action> — <persona names> (source: Raw Notes)
 
-## Raw Notes
-<details><summary><persona></summary>  # one block per returned subagent
-... full raw response ...
-</details>
+## Panel
+### <persona>
+verdict / sharp take / first fix / missed by others / score
 
 ## Meta
 - requested: N agents / returned: M / tool: <name or "unavailable">
@@ -101,10 +99,8 @@ score: <optional N/100, with reason>
 
 Rules:
 
-- Include one `<details>` block for every returned subagent.
-- Do not invent findings during synthesis. Every consensus item must name the persona(s) it came from.
+- Do not invent findings during synthesis.
 - If fewer than 2 agents return, skip synthesis and show only raw notes plus a retry recommendation.
-- Use scores only when they add signal. A score without a reason is noise.
 
 ## Optional References
 

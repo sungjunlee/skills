@@ -1,21 +1,11 @@
 ---
 name: gosu-review
-description: Review the current artifact with a real 4-6 person expert subagent panel. Use on explicit /gosu-review calls when code, plans, skills, design docs, decisions, or repo state need multiple context-specific perspectives. The core requirement is to dispatch actual subagents and preserve their raw notes before synthesis.
+description: Review the current artifact with a real 4-6 person expert subagent panel. Use on explicit /gosu-review calls when code, plans, skills, design docs, decisions, or repo state need multiple context-specific perspectives.
 ---
 
 # gosu-review
 
-Get a real panel review from multiple experts.
-
-The loop is simple:
-
-1. Pick 4-6 distinct experts.
-2. Dispatch real subagents in parallel.
-3. Make each panelist use a distinct lens.
-4. Show each panelist's view first.
-5. Synthesize briefly at the end.
-
-Fake panels fail the skill. If actual subagents are unavailable, say so instead of presenting a simulated panel review.
+Get a real panel review from multiple experts. Fake panels fail the skill — dispatch actual subagents and preserve their raw notes before synthesis. If actual subagents are unavailable, say so instead of presenting a simulated panel review.
 
 ## Target
 

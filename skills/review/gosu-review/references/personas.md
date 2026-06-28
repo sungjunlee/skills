@@ -1,16 +1,8 @@
 # gosu-review persona seeds
 
-This file is a seed list, not a menu. Prefer inventing context-specific experts over copying these labels.
+This file is a seed list, not a menu. Prefer inventing context-specific experts over copying these labels. The casting rule (2-3 specialized + 1-2 quality + 1 adversarial) lives in the SKILL.md Cast section.
 
-## Casting rule
-
-For a 4-6 person panel:
-
-- 2-3 context-specific experts
-- 1-2 general quality experts
-- 1 adversarial or surprising outsider
-
-The best persona sounds like a real person who would notice a specific failure mode:
+A persona sounds like a real person who would notice a specific failure mode:
 
 - weak: "PM"
 - better: "B2B SaaS onboarding PM who has watched activation funnels fail"

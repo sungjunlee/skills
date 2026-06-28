@@ -2,35 +2,46 @@
 
 This file is a seed list, not a menu. Prefer inventing context-specific experts over copying these labels. The casting rule (2-3 specialized + 1-2 quality + 1 adversarial) lives in the SKILL.md Cast section.
 
-A persona sounds like a real person who would notice a specific failure mode:
+## What "gosu" means
 
-- weak: "PM"
-- better: "B2B SaaS onboarding PM who has watched activation funnels fail"
-- weak: "security expert"
-- better: "internal-tool security reviewer focused on accidental credential leaks"
-- weak: "writer"
-- better: "support-doc editor who has to answer confused user tickets"
+A gosu persona is not a job title. It is a specific practitioner with **scars** — past incidents, near-misses, or repeated patterns that shaped how they think. The scar is what makes them sharp; without it, the persona catches nothing.
 
-Give each persona a lens, bias, and missed-by-others concern:
+- **label**: "PM" — anyone with the title
+- **role**: "B2B SaaS onboarding PM" — a class of practitioners
+- **gosu**: "B2B SaaS PM who shipped three onboarding rewrites, watched activation keep dropping in steps 2-4, and now reviews every flow against the 'first-time user without help' test" — a specific person with a scar
 
-- lens: what they optimize for
-- bias: what they distrust
-- missed-by-others: what they are unusually likely to catch
+- **label**: "security expert"
+- **role**: "internal-tool security reviewer"
+- **gosu**: "security reviewer who has been paged at 3am for a leaked API key in a config file, learned to scan for env-var sprawl and unrotated tokens, and now treats every config file as a potential incident waiting to happen"
+
+- **label**: "writer"
+- **role**: "support-doc editor"
+- **gosu**: "support-doc editor who has answered the same 200+ tickets about the same misfeature, knows the docs describe what we wish users did, and now reads every doc for 'is this what users actually do'"
+
+A gosu persona names a scar, names what they look for now, and speaks in domain language. A label catches nothing. If you cannot point to a specific past failure that shaped this persona, it is not yet a gosu — go back to the target and find what failure mode matters here.
+
+## Attributes
+
+For each panelist, define:
+
+- **Lens**: what they optimize for
+- **Bias**: what they distrust, usually from a specific past failure
+- **Blind spot**: what this persona is uniquely likely to catch
 
 ## Context-specific seeds
 
 Use these patterns to generate sharper personas:
 
-- `<domain> practitioner who uses this every week`
-- `<audience> beginner seeing this for the first time`
-- `<team> maintainer inheriting this six months later`
-- `<business model> operator worried about cost and churn`
-- `<regulated domain> reviewer worried about compliance and audit trails`
-- `<workflow> power user optimizing for speed`
-- `<community> moderator worried about abuse and norms`
-- `<content type> editor worried about clarity and trust`
-- `<buyer/user split> stakeholder who pays but does not use the product`
-- `<support role> person who handles the fallout when this fails`
+- `<domain> practitioner who has been bitten by <specific failure>`
+- `<audience> first-time user who hit <specific friction> and abandoned`
+- `<team> maintainer who inherited <specific kind of mess> six months later`
+- `<business model> operator who watched cost or churn spike because of <specific cause>`
+- `<regulated domain> reviewer worried about <specific compliance gap> in <specific context>`
+- `<workflow> power user who broke <specific bottleneck> by <specific workaround>`
+- `<community> moderator who has seen <specific abuse pattern> and how it spread`
+- `<content type> editor who has answered <specific question> 200+ times because the doc was wrong`
+- `<buyer/user split> stakeholder who pays but has seen <specific failure> cost real money`
+- `<support role> person who handles the fallout when <specific failure> hits production`
 
 ## General quality seeds
 
@@ -74,3 +85,4 @@ Use when the review should find failures a normal reviewer would miss:
 - Do not create personas so broad that they can only say generic things.
 - Do not let the surprising outsider dominate the practical recommendations.
 - Do not make the adversarial reviewer theatrical. They need evidence and a fix path.
+- Do not ship a persona without a scar — a scar is what makes a gosu different from a label.

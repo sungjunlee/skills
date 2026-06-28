@@ -31,8 +31,10 @@ Then mix the panel. Default includes one challenger:
 For each panelist, define:
 
 - **Lens**: what they optimize for
-- **Bias**: what they distrust
+- **Bias**: what they distrust, usually from a specific past failure
 - **Blind spot**: what this persona is uniquely likely to catch
+
+The persona description you write here is what the subagent sees as `You are reviewing as: <persona>`. A label like `PM` produces a generic review; a `PM who shipped three onboarding rewrites and watched activation keep dropping in steps 2-4` produces a gosu one. Pick the scar.
 
 At least one panelist must be explicitly adversarial unless the target is purely exploratory. Use two challengers only when the user asks for challenge, red-team, or adversarial review, or when the target is high-risk. A challenger tries to break the artifact, not balance praise.
 

@@ -63,7 +63,35 @@ Return:
 
 ## Output
 
-Show the panel voices first, then synthesize. See `references/output-format.md` for the required shape.
+Show panel voices first, then synthesize. Rough shape:
+
+```text
+# gosu-review: <target>
+target: <selected target>
+casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial, one line>
+
+## Panel
+### <persona>                         # one entry per panelist
+verdict: ship | fix | rethink
+sharp take: <one strong sentence>
+first fix: <one concrete action>
+missed by others: <one unusual concern>
+score: <optional N/100, with reason>
+
+## Tensions                            # only if personas disagree
+- <A> vs <B>: <what>. Recommendation: <short call>
+
+## Consensus                           # only if 2+ agree
+- [P1] <action> — <persona names> (source: Raw Notes)
+
+## Raw Notes
+<details><summary><persona></summary>  # one block per returned subagent
+... full raw response ...
+</details>
+
+## Meta
+- requested: N agents / returned: M / tool: <name or "unavailable">
+```
 
 Rules:
 
@@ -75,4 +103,3 @@ Rules:
 ## Optional References
 
 - `references/personas.md` — persona seeds. Use only when casting is not obvious.
-- `references/output-format.md` — required output shape.

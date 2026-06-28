@@ -28,9 +28,15 @@ Then mix the panel. Default includes one challenger:
 - 1-2 general quality experts (e.g. architect, implementation expert, QA expert)
 - 1 adversarial or surprising outsider (e.g. copy editor, cost watcher, skeptical user, future maintainer, new teammate, customer support rep)
 
-For each panelist, give them a lens, bias, and missed-by-others concern (see `references/personas.md` for what these mean). At least one panelist must be explicitly adversarial unless the target is purely exploratory. Use two challengers only when the user asks for challenge, red-team, or adversarial review, or when the target is high-risk. A challenger tries to break the artifact, not balance praise.
+For each panelist, define:
 
-Read `references/personas.md` only when casting is not obvious. Do not fill the panel by copying that list.
+- **Lens**: what they optimize for
+- **Bias**: what they distrust
+- **Missed-by-others**: what they are unusually likely to catch
+
+At least one panelist must be explicitly adversarial unless the target is purely exploratory. Use two challengers only when the user asks for challenge, red-team, or adversarial review, or when the target is high-risk. A challenger tries to break the artifact, not balance praise.
+
+See `references/personas.md` for seed patterns. Do not fill the panel by copying that list.
 
 ## Dispatch
 

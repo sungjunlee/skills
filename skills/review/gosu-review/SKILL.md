@@ -32,7 +32,7 @@ For each panelist, define:
 
 - **Lens**: what they optimize for
 - **Bias**: what they distrust
-- **Missed-by-others**: what they are unusually likely to catch
+- **Blind spot**: what this persona is uniquely likely to catch
 
 At least one panelist must be explicitly adversarial unless the target is purely exploratory. Use two challengers only when the user asks for challenge, red-team, or adversarial review, or when the target is high-risk. A challenger tries to break the artifact, not balance praise.
 
@@ -70,7 +70,7 @@ Show panel voices first, then synthesize. Lead with a one-line verdict summary s
 - **verdict**: `ship` | `fix` | `rethink`
 - **sharp take**: one strong sentence
 - **first fix**: one concrete action
-- **missed by others**: one unusual concern
+- **blind spot**: one unique concern
 - **score**: optional N/100, with one short reason
 
 **Output shape:**
@@ -87,11 +87,11 @@ casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial, one line>
 - <A> vs <B>: <what>. Recommendation: <short call>
 
 ## Consensus                           # only if 2+ agree
-- [P1] <action> — <persona names> (source: Raw Notes)
+- [P1] <action> — <persona names>
 
 ## Panel
 ### <persona>
-verdict / sharp take / first fix / missed by others / score
+verdict / sharp take / first fix / blind spot / score
 
 ## Meta
 - requested: N agents / returned: M / tool: <name or "unavailable">

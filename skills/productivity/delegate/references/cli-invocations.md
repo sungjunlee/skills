@@ -22,4 +22,4 @@ Verify each row against your installed CLI: `<cli> run --help` (or `<cli> exec -
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
 
-Use `reasonix/*` only for non-sensitive, general work; it talks directly to DeepSeek API, whose data-use posture may not fit private or proprietary code.
+Use `reasonix/*` only for non-sensitive, general work: it talks directly to DeepSeek API. Do not use `model-catalog.md`; use an explicit DeepSeek-compatible id or the CLI default.

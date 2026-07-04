@@ -21,3 +21,5 @@ Verify each row against your installed CLI: `<cli> run --help` (or `<cli> exec -
 > If `<model>` is omitted from the route, drop `-m <model>` from the argv — the CLI uses its configured default.
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
+
+Use `reasonix/*` only for non-sensitive, general work; it talks directly to DeepSeek API, whose data-use posture may not fit private or proprietary code.

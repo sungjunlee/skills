@@ -26,6 +26,7 @@ Source:
 
 - `skills/productivity/delegate/SKILL.md`
 - `skills/productivity/delegate/references/cli-invocations.md`
+- `skills/productivity/delegate/references/model-catalog.md`
 
 ### Review
 

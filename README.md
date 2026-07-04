@@ -17,6 +17,7 @@ When the full `relay-dispatch` flow is overkill — you just want a quick answer
 ```text
 /delegate opencode-go/deepseek-v4-pro "refactor this function to use streams"
 /delegate reasonix/deepseek-v4-pro "write unit tests for the parser"
+/delegate cline-pass/glm-5.2 "review this diff"
 /delegate opencode/glm-5.2 "summarize this diff"
 /delegate opencode "explain this file"  # no model: CLI default
 ```

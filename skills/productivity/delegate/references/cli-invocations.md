@@ -16,5 +16,8 @@ Verify each row against your installed CLI: `<cli> run --help` (or `<cli> exec -
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `pi --list-models [search]` |
 | `cursor/*` | `agent --print --yolo --trust --model <model> <prompt>` (binary is `agent`, not `cursor`) | `agent models` |
 | `reasonix/*` | `reasonix run -m <model> <prompt>` | — (no CLI subcommand) |
+| `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | — (no CLI subcommand) |
 
 > If `<model>` is omitted from the route, drop `-m <model>` from the argv — the CLI uses its configured default.
+
+For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.

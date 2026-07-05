@@ -10,7 +10,7 @@ Verify each row against your installed CLI: `<cli> run --help` (or `<cli> exec -
 
 | Provider | Run argv | List models |
 |---|---|---|
-| `opencode/*` | `opencode run -m <model> <prompt>` | `opencode models [provider]` |
+| `opencode/*` | `opencode run --auto -m <model> <prompt> < /dev/null` | `opencode models [provider]` |
 | `claude/*` | `claude -p --permission-mode auto --model <model> <prompt>` | `claude models` |
 | `codex/*` | `codex exec --dangerously-bypass-approvals-and-sandbox -m <model> <prompt>` | — (check `~/.codex/config.toml`) |
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `pi --list-models [search]` |
@@ -19,6 +19,8 @@ Verify each row against your installed CLI: `<cli> run --help` (or `<cli> exec -
 | `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | — (no CLI subcommand) |
 
 > If `<model>` is omitted from the route, drop `-m <model>` from the argv — the CLI uses its configured default.
+
+For `opencode/*`, pass the prompt as an argument and connect stdin to DEVNULL in non-interactive harnesses. In shell form, keep `< /dev/null`; open stdin is treated as additional prompt input and can hang before session creation. `--auto` has the same trust implications as other non-interactive permission bypass flags.
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
 

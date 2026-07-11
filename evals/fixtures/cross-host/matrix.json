@@ -1,0 +1,76 @@
+{
+  "base_sha": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
+  "expected_skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
+  "revision_contract": "Every committed result.skill_revision must equal expected_skill_revision, which is exactly base_sha (the frozen origin/main SHA at which every replayed skill workflow was executed). No suffixes.",
+  "execution_date": "2026-07-11",
+  "report": "evals/reports/2026-07-11-epic-8-cross-host.md",
+  "required_hosts": [
+    "Claude Code",
+    "Codex",
+    "OpenCode",
+    "Cursor",
+    "Pi"
+  ],
+  "required_cases": [
+    {
+      "requirement": 1,
+      "case_id": "bs.vague-feature",
+      "path": "evals/cases/brainstorming.vague-feature.json"
+    },
+    {
+      "requirement": 2,
+      "case_id": "bs.clear-low-risk",
+      "path": "evals/cases/brainstorming.clear-low-risk.json"
+    },
+    {
+      "requirement": 3,
+      "case_id": "feature-spec.design-handoff",
+      "path": "evals/cases/feature-spec/design-handoff.json"
+    },
+    {
+      "requirement": 4,
+      "case_id": "feature-spec.tracker-task-ac-preservation",
+      "path": "evals/cases/feature-spec/tracker-task-ac-preservation.json"
+    },
+    {
+      "requirement": 5,
+      "case_id": "feature-spec.decomposition-shape-unavailable",
+      "path": "evals/cases/feature-spec/decomposition-shape-unavailable.json"
+    },
+    {
+      "requirement": 6,
+      "case_id": "implement.localized-safe",
+      "path": "evals/cases/implement/localized-safe.json"
+    },
+    {
+      "requirement": 7,
+      "case_id": "implement.dependent-units",
+      "path": "evals/cases/implement/dependent-units.json"
+    },
+    {
+      "requirement": 8,
+      "case_id": "implement.independent-isolated",
+      "path": "evals/cases/implement/independent-isolated.json"
+    },
+    {
+      "requirement": 9,
+      "case_id": "implement.shared-schema-serializes",
+      "path": "evals/cases/implement/shared-schema-serializes.json"
+    },
+    {
+      "requirement": 10,
+      "case_id": "implement.high-risk-relay",
+      "path": "evals/cases/implement/high-risk-relay.json"
+    },
+    {
+      "requirement": 11,
+      "case_id": "implement.worker-unavailable-degrades",
+      "path": "evals/cases/implement/worker-unavailable-degrades.json"
+    },
+    {
+      "requirement": 12,
+      "case_id": "implement.worker-partial-failure",
+      "path": "evals/cases/implement/worker-partial-failure.json"
+    }
+  ]
+}

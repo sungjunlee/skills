@@ -11,11 +11,11 @@ Evidence states are `native | emulated | unavailable | unverified`, defined in `
 
 | Host | Version | inline_repository_work | blocking_user_question | Evidence |
 | --- | --- | --- | --- | --- |
-| Claude Code | opus-4.8 | native | native | 2026-07-11 authored smoke for cases `bs.*` 1-4: read-only repo inspection and single blocking questions observed |
-| Codex | — | unverified | unverified | Owned by #13 cross-host matrix |
-| OpenCode | — | unverified | unverified | No observation |
-| Cursor | — | unverified | unverified | No observation |
-| Pi | — | unverified | unverified | No observation |
+| Claude Code | CLI 2.1.207 / claude-opus-4-8 | native | native | 2026-07-11 #13 `bs.vague-feature` two-phase replay: phase 1 (`--session-id`) emitted five material blocking questions and stopped; phase 2 (`--resume`, same session id) took the fixed answer sequence and settled the Design Handoff; read-only inspection also observed |
+| Codex | codex-cli 0.144.1 / account default | native | native | 2026-07-12 #13 `bs.vague-feature` two-phase replay: phase 1 read the disposable repository, emitted five material blocking questions, and stopped without an artifact; phase 2 used `exec resume` on the exact persisted thread with the fixed answer sequence and settled the Design Handoff |
+| OpenCode | 1.17.18 / opencode/big-pickle | native | unverified | 2026-07-11 #13 `bs.vague-feature` two-phase attempt (`opencode run` phase 1, `run -s <session>` phase 2): phase 1 returned a one-shot Design Handoff instead of stopping on real emitted questions, so no genuine blocking-question round trip was observed and the discovery row is recorded `fail`; that semantic mismatch does not prove the host capability unavailable |
+| Cursor | CLI 2026.07.09-a3815c0 | unverified | unverified | Authenticated preflight succeeded, but replay startup failed before model execution with EPERM creating host project state |
+| Pi | 0.80.6 | unverified | unverified | Installed preflight returned no available models because no provider authentication was configured |
 
 ## Degradation
 

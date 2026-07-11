@@ -1,0 +1,74 @@
+{
+  "case_id": "feature-spec.decomposition-shape-unavailable",
+  "host": "Codex",
+  "host_version": "codex-cli 0.144.1 / account default",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "handoff",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Decomposition-Handoff."
+    },
+    {
+      "assertion_id": "literal",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Shape-unavailable-literal."
+    },
+    {
+      "assertion_id": "stop",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Stop-without-fallback."
+    },
+    {
+      "assertion_id": "unavailable-route",
+      "status": "pass",
+      "observed": "shape unavailable",
+      "evidence": "Observed route \"shape unavailable\"."
+    },
+    {
+      "assertion_id": "no-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "Observed 0 blocking question(s)."
+    },
+    {
+      "assertion_id": "unavailable",
+      "status": "pass",
+      "observed": "successor-unavailable",
+      "evidence": "Observed escalation \"successor-unavailable\"."
+    },
+    {
+      "assertion_id": "no-successor-invocation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No external_message observed."
+    },
+    {
+      "assertion_id": "no-ticket-invention",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No issue_mutation observed."
+    },
+    {
+      "assertion_id": "no-fallback-implementation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No repository_write observed."
+    }
+  ],
+  "observed_output_fields": [
+    "Decomposition-Handoff",
+    "Shape-unavailable-literal",
+    "Stop-without-fallback"
+  ],
+  "observed_route": "shape unavailable",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "successor-unavailable",
+  "side_effects": [],
+  "evidence_note": "2026-07-11 isolated Codex CLI replay; exit 0; diff evidence 0 working-tree path(s); worker lifecycle observations 0; independent fixture verification exit not run; operational failures None. Raw artifacts remain outside the repository."
+}

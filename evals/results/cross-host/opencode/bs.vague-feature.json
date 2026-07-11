@@ -1,0 +1,134 @@
+{
+  "case_id": "bs.vague-feature",
+  "host": "OpenCode",
+  "host_version": "1.17.18 / opencode/big-pickle",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
+  "status": "fail",
+  "assertion_results": [
+    {
+      "assertion_id": "field-problem",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.problem."
+    },
+    {
+      "assertion_id": "field-outcome",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.user_visible_outcome."
+    },
+    {
+      "assertion_id": "field-direction",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.chosen_direction."
+    },
+    {
+      "assertion_id": "field-why-direction",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.why_this_direction."
+    },
+    {
+      "assertion_id": "field-alternatives",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.alternatives_rejected."
+    },
+    {
+      "assertion_id": "field-constraints",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.constraints."
+    },
+    {
+      "assertion_id": "field-open",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.open_decisions."
+    },
+    {
+      "assertion_id": "field-next",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.recommended_next_step."
+    },
+    {
+      "assertion_id": "field-why",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains design_handoff.why."
+    },
+    {
+      "assertion_id": "route-feature-spec",
+      "status": "pass",
+      "observed": "feature-spec",
+      "evidence": "Observed route \"feature-spec\"."
+    },
+    {
+      "assertion_id": "questions-in-range",
+      "status": "fail",
+      "observed": 0,
+      "evidence": "No genuine blocking-question round trip: phase 1 emitted a complete Design Handoff plus a considered-questions list in one shot instead of stopping on real emitted questions, so 0 material blocking questions were observed, outside the required 1-5."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Observed escalation \"none\"."
+    },
+    {
+      "assertion_id": "no-repo-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No repository_write observed."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit observed."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No push observed."
+    },
+    {
+      "assertion_id": "no-pr",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No pull_request observed."
+    },
+    {
+      "assertion_id": "no-issue-mutation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No issue_mutation observed."
+    },
+    {
+      "assertion_id": "no-external-message",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No external_message observed."
+    }
+  ],
+  "observed_output_fields": [
+    "design_handoff.problem",
+    "design_handoff.user_visible_outcome",
+    "design_handoff.chosen_direction",
+    "design_handoff.why_this_direction",
+    "design_handoff.alternatives_rejected",
+    "design_handoff.constraints",
+    "design_handoff.open_decisions",
+    "design_handoff.recommended_next_step",
+    "design_handoff.why"
+  ],
+  "observed_route": "feature-spec",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "2026-07-11 OpenCode `opencode run` two-phase attempt (phase 1 --format json capturing session id, phase 2 -s <session>); both host exits 0 and no repository writes, but phase 1 returned a complete one-shot Design Handoff plus a considered-questions list rather than stopping on real emitted blocking questions, so the genuine blocking-question count is 0 and the discovery row is an executed semantic mismatch (fail), not a pass. Raw artifacts remain outside the repository."
+}

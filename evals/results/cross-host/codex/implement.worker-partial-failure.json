@@ -2,7 +2,7 @@
   "case_id": "implement.worker-partial-failure",
   "host": "Codex",
   "host_version": "codex-cli 0.144.1 / account default",
-  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
   "status": "pass",
   "assertion_results": [
     {
@@ -128,6 +128,8 @@
   "observed_engine": "serial_workers",
   "question_count": 0,
   "observed_escalation": "worker-partial-failure-blocked",
-  "side_effects": [],
-  "evidence_note": "2026-07-11 isolated Codex CLI replay; exit 0; diff evidence 0 working-tree path(s); worker lifecycle observations 2; independent fixture verification exit 0; operational failures None. Raw artifacts remain outside the repository."
+  "side_effects": [
+    "repository_write"
+  ],
+  "evidence_note": "2026-07-12 single-lineage Codex CLI replay in a disposable Git repository; host exit 0; 2 real serial worker dispatches were observed. The DONE base worker created src/base.mjs, its required check passed, and the parent inspected the real working-tree diff before dispatching the consumer. The consumer created src/consumer.mjs and its genuine required check failed (exit 1); the parent inspected both created files, reran the passing base check and failing consumer check, and returned blocked/serial_workers/worker-partial-failure-blocked. Operational failure: the consumer required check failed (exit 1), which is the partial failure this case exercises. Raw artifacts remain outside the repository."
 }

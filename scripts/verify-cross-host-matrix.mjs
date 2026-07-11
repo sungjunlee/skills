@@ -1,23 +1,30 @@
 #!/usr/bin/env node
 
-import { readFile, readdir } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const matrix = JSON.parse(await readFile(
-  path.join(root, "evals/fixtures/cross-host/matrix.json"),
-  "utf8",
-));
-const resultsRoot = path.join(root, "evals/results/cross-host");
-const requiredOnly = process.argv.slice(2).includes("--required");
-const unknownFlags = process.argv.slice(2).filter((argument) => argument !== "--required");
+const args = process.argv.slice(2);
+const requiredOnly = args.includes("--required");
+const selfTest = args.includes("--selftest");
+const unknownFlags = args.filter((argument) => argument !== "--required" && argument !== "--selftest");
 if (unknownFlags.length > 0) throw new Error(`Unknown argument(s): ${unknownFlags.join(", ")}`);
 
 const expectedHosts = ["Claude Code", "Codex", "OpenCode", "Cursor", "Pi"];
 const requiredHosts = new Set(["Claude Code", "Codex"]);
-const errors = [];
+const validStatuses = new Set(["pass", "fail", "unverified"]);
+
+// Hygiene patterns applied to every committed result field, the report, and fixtures.
+const machinePathPattern = /(?:\/Users\/|\/home\/[A-Za-z]|\/private\/var\/folders\/|\/tmp\/[A-Za-z0-9]|[A-Za-z]:\\Users\\)/;
+// Credential-like VALUES (long key runs / assigned tokens), not kebab-case identifiers.
+const credentialPattern = /(?:sk-[A-Za-z0-9]{20,}|sk-(?:proj|svcacct|admin)-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|xox[baprs]-[A-Za-z0-9-]{12,}|AKIA[0-9A-Z]{16}|eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{6,}|Bearer\s+[A-Za-z0-9._~+/-]{16,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|(?:access|refresh|api|secret)[_-]?(?:token|key)"?\s*[:=]\s*"?[A-Za-z0-9._-]{12,})/i;
+// Host CLI transcript signals that must never appear in ANY committed file.
+const hostTranscriptPattern = /(?:"type"\s*:\s*"tool_use"|"role"\s*:\s*"assistant"|\bstream-json\b|"stop_reason"\s*:|"num_turns"\s*:|"session_id"\s*:|"thread_id"\s*:|thread\.started|turn\.completed)/i;
+// Raw artifact/question delimiters: leakage in a result or report, but the answer
+// script fixture legitimately defines them as its response protocol.
+const artifactDelimiterPattern = /(?:===\s*ARTIFACT\s*===|===\s*QUESTIONS\s*===)/i;
 
 function same(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
@@ -36,6 +43,40 @@ async function jsonFiles(directory) {
     else if (entry.isFile() && entry.name.endsWith(".json")) files.push(child);
   }
   return files;
+}
+
+async function fileExists(absolute) {
+  try {
+    const info = await stat(absolute);
+    return info.isFile() && info.size > 0;
+  } catch {
+    return false;
+  }
+}
+
+// Load everything the validator needs into a plain in-memory context so the same
+// pure validation runs against real inputs and against deliberately mutated clones.
+async function loadContext() {
+  const matrix = JSON.parse(await readFile(path.join(root, "evals/fixtures/cross-host/matrix.json"), "utf8"));
+  const cases = [];
+  for (const entry of matrix.required_cases) {
+    const replayCase = JSON.parse(await readFile(path.join(root, entry.path), "utf8"));
+    cases.push({ entry, replayCase });
+  }
+  const resultsRoot = path.join(root, "evals/results/cross-host");
+  const results = [];
+  for (const filename of await jsonFiles(resultsRoot)) {
+    const text = await readFile(filename, "utf8");
+    results.push({ relative: path.relative(root, filename), text, json: JSON.parse(text) });
+  }
+  const reportRelative = matrix.report ?? `evals/reports/${matrix.execution_date}-epic-8-cross-host.md`;
+  const reportPresent = await fileExists(path.join(root, reportRelative));
+  const reportText = reportPresent ? await readFile(path.join(root, reportRelative), "utf8") : "";
+  const fixtures = [];
+  for (const rel of ["evals/fixtures/cross-host/answer-script.md", "evals/fixtures/cross-host/matrix.json"]) {
+    fixtures.push({ relative: rel, text: await readFile(path.join(root, rel), "utf8") });
+  }
+  return { matrix, cases, results, reportRelative, reportPresent, reportText, fixtures };
 }
 
 function expectedAssertion(assertion, replayCase, result) {
@@ -71,86 +112,201 @@ function expectedAssertion(assertion, replayCase, result) {
   }
 }
 
-if (!/^[0-9a-f]{40}$/.test(matrix.base_sha)) errors.push("matrix base_sha must be an exact SHA");
-if (!same(matrix.required_hosts, expectedHosts)) errors.push("matrix hosts differ from the canonical five-host order");
-if (matrix.required_cases.length !== 12) errors.push(`expected 12 cases, found ${matrix.required_cases.length}`);
-
-const cases = new Map();
-for (const [index, entry] of matrix.required_cases.entries()) {
-  if (entry.requirement !== index + 1) errors.push(`case ${entry.case_id} has non-canonical requirement number`);
-  if (cases.has(entry.case_id)) errors.push(`duplicate matrix case ${entry.case_id}`);
-  const replayCase = JSON.parse(await readFile(path.join(root, entry.path), "utf8"));
-  if (replayCase.case_id !== entry.case_id) errors.push(`${entry.path} declares ${replayCase.case_id}`);
-  cases.set(entry.case_id, replayCase);
-}
-
-const files = await jsonFiles(resultsRoot);
-const expectedCount = expectedHosts.length * cases.size;
-if (files.length !== expectedCount) errors.push(`expected exactly ${expectedCount} result files, found ${files.length}`);
-
-const pairs = new Map();
-for (const filename of files) {
-  const result = JSON.parse(await readFile(filename, "utf8"));
-  const relative = path.relative(root, filename);
-  const key = `${result.host}\u0000${result.case_id}`;
-  if (pairs.has(key)) errors.push(`duplicate result ${result.host} / ${result.case_id}`);
-  pairs.set(key, result);
-  if (!expectedHosts.includes(result.host)) errors.push(`${relative}: unexpected host ${result.host}`);
-  if (!cases.has(result.case_id)) errors.push(`${relative}: unexpected case ${result.case_id}`);
-  const expectedPath = path.join("evals/results/cross-host", slug(result.host), `${result.case_id}.json`);
-  if (relative !== expectedPath) errors.push(`${relative}: expected path ${expectedPath}`);
-  if (/(?:\/Users\/|\/home\/|\/private\/var\/folders\/|[A-Za-z]:\\Users\\)/.test(result.evidence_note)) {
-    errors.push(`${relative}: evidence note contains a machine-specific path`);
-  }
-  if (/(?:accessToken|refreshToken|sk-[A-Za-z0-9_-]{8,}|Bearer\s+[A-Za-z0-9._-]{8,})/i.test(result.evidence_note)) {
-    errors.push(`${relative}: evidence note contains credential-like material`);
+function scanHygiene(label, text, errors, { allowArtifactDelimiters = false } = {}) {
+  if (machinePathPattern.test(text)) errors.push(`${label}: contains a machine-specific path`);
+  if (credentialPattern.test(text)) errors.push(`${label}: contains credential-like material`);
+  if (hostTranscriptPattern.test(text)) errors.push(`${label}: contains a raw transcript marker`);
+  if (!allowArtifactDelimiters && artifactDelimiterPattern.test(text)) {
+    errors.push(`${label}: contains a raw transcript marker`);
   }
 }
 
-for (const host of expectedHosts) {
-  for (const [caseId, replayCase] of cases) {
-    const result = pairs.get(`${host}\u0000${caseId}`);
-    if (!result) {
-      errors.push(`missing result ${host} / ${caseId}`);
-      continue;
+function collectErrors(ctx) {
+  const { matrix, cases: caseList, results, reportRelative, reportPresent } = ctx;
+  const errors = [];
+
+  // Frozen matrix shape.
+  if (!/^[0-9a-f]{40}$/.test(matrix.base_sha)) errors.push("matrix base_sha must be an exact SHA");
+  if (!same(matrix.required_hosts, expectedHosts)) errors.push("matrix hosts differ from the canonical five-host order");
+  if (matrix.required_cases.length !== 12) errors.push(`expected 12 cases, found ${matrix.required_cases.length}`);
+
+  // Revision contract: an exact, documented value tied to base_sha (no unchecked suffix).
+  if (matrix.expected_skill_revision !== matrix.base_sha) {
+    errors.push("matrix expected_skill_revision must equal base_sha exactly");
+  }
+
+  // Required report must be the exact dated file tied to execution_date, and must exist.
+  const datedReport = `evals/reports/${matrix.execution_date}-epic-8-cross-host.md`;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(matrix.execution_date ?? "")) errors.push("matrix execution_date must be an ISO date");
+  if (reportRelative !== datedReport) errors.push(`matrix report must be the dated ${datedReport}, found ${reportRelative}`);
+  if (!reportPresent) errors.push(`required report ${reportRelative} is missing or empty`);
+
+  const cases = new Map();
+  for (const [index, { entry, replayCase }] of caseList.entries()) {
+    if (entry.requirement !== index + 1) errors.push(`case ${entry.case_id} has non-canonical requirement number`);
+    if (cases.has(entry.case_id)) errors.push(`duplicate matrix case ${entry.case_id}`);
+    if (replayCase.case_id !== entry.case_id) errors.push(`${entry.path} declares ${replayCase.case_id}`);
+    cases.set(entry.case_id, replayCase);
+  }
+
+  const expectedCount = expectedHosts.length * cases.size;
+  if (results.length !== expectedCount) errors.push(`expected exactly ${expectedCount} result files, found ${results.length}`);
+
+  const pairs = new Map();
+  for (const { relative, text, json: result } of results) {
+    const key = `${result.host}\u0000${result.case_id}`;
+    if (pairs.has(key)) errors.push(`duplicate result ${result.host} / ${result.case_id}`);
+    pairs.set(key, result);
+    if (!expectedHosts.includes(result.host)) errors.push(`${relative}: unexpected host ${result.host}`);
+    if (!cases.has(result.case_id)) errors.push(`${relative}: unexpected case ${result.case_id}`);
+    const expectedPath = path.join("evals/results/cross-host", slug(result.host), `${result.case_id}.json`);
+    if (relative !== expectedPath) errors.push(`${relative}: expected path ${expectedPath}`);
+    if (!validStatuses.has(result.status)) errors.push(`${relative}: invalid status ${JSON.stringify(result.status)}`);
+    if (result.skill_revision !== matrix.expected_skill_revision) {
+      errors.push(`${relative}: skill_revision must equal the frozen ${matrix.expected_skill_revision}`);
     }
-    const assertionIds = replayCase.semantic_assertions.map((assertion) => assertion.assertion_id);
-    const resultIds = result.assertion_results.map((assertion) => assertion.assertion_id);
-    if (!same([...resultIds].sort(), [...assertionIds].sort())) {
-      errors.push(`${host} / ${caseId}: assertion id set differs from the case`);
-      continue;
-    }
-    if (result.status === "unverified") {
-      for (const assertion of result.assertion_results) {
-        if (assertion.status !== "unverified" || assertion.observed !== null) {
-          errors.push(`${host} / ${caseId}: unverified row has executed assertion evidence`);
+    // Hygiene scan over every committed field of the result, not just evidence_note.
+    scanHygiene(relative, text, errors);
+  }
+
+  // Hygiene scan of the report and committed fixtures. The answer script is the
+  // one file allowed to contain the artifact/question delimiter templates it defines.
+  scanHygiene(reportRelative, ctx.reportText, errors);
+  for (const { relative, text } of ctx.fixtures) {
+    scanHygiene(relative, text, errors, { allowArtifactDelimiters: relative.endsWith("answer-script.md") });
+  }
+
+  for (const host of expectedHosts) {
+    for (const [caseId, replayCase] of cases) {
+      const result = pairs.get(`${host}\u0000${caseId}`);
+      if (!result) {
+        errors.push(`missing result ${host} / ${caseId}`);
+        continue;
+      }
+      const assertionIds = replayCase.semantic_assertions.map((assertion) => assertion.assertion_id);
+      const resultIds = result.assertion_results.map((assertion) => assertion.assertion_id);
+      if (!same([...resultIds].sort(), [...assertionIds].sort())) {
+        errors.push(`${host} / ${caseId}: assertion id set differs from the case`);
+        continue;
+      }
+      if (result.status === "unverified") {
+        for (const assertion of result.assertion_results) {
+          if (assertion.status !== "unverified" || assertion.observed !== null) {
+            errors.push(`${host} / ${caseId}: unverified row has executed assertion evidence`);
+          }
+        }
+      } else {
+        for (const assertion of replayCase.semantic_assertions) {
+          const observed = result.assertion_results.find((candidate) => candidate.assertion_id === assertion.assertion_id);
+          const expected = expectedAssertion(assertion, replayCase, result);
+          if (observed.status !== expected.status || !same(observed.observed, expected.observed)) {
+            errors.push(`${host} / ${caseId}: assertion ${assertion.assertion_id} does not match observed fields`);
+          }
+        }
+        const expectedStatus = result.assertion_results.every((assertion) => assertion.status === "pass") ? "pass" : "fail";
+        if (result.status !== expectedStatus) errors.push(`${host} / ${caseId}: overall status must be ${expectedStatus}`);
+      }
+      if (requiredHosts.has(host)) {
+        if (result.status !== "pass") errors.push(`required host ${host} must pass ${caseId}; found ${result.status}`);
+        if (!result.assertion_results.every((assertion) => assertion.status === "pass")) {
+          errors.push(`required host ${host} has a non-pass assertion for ${caseId}`);
         }
       }
-    } else {
-      for (const assertion of replayCase.semantic_assertions) {
-        const observed = result.assertion_results.find((candidate) => candidate.assertion_id === assertion.assertion_id);
-        const expected = expectedAssertion(assertion, replayCase, result);
-        if (observed.status !== expected.status || !same(observed.observed, expected.observed)) {
-          errors.push(`${host} / ${caseId}: assertion ${assertion.assertion_id} does not match observed fields`);
-        }
-      }
-      const expectedStatus = result.assertion_results.every((assertion) => assertion.status === "pass") ? "pass" : "fail";
-      if (result.status !== expectedStatus) errors.push(`${host} / ${caseId}: overall status must be ${expectedStatus}`);
-    }
-    if (requiredHosts.has(host)) {
-      if (result.status !== "pass") errors.push(`required host ${host} must pass ${caseId}; found ${result.status}`);
-      if (!result.assertion_results.every((assertion) => assertion.status === "pass")) {
-        errors.push(`required host ${host} has a non-pass assertion for ${caseId}`);
-      }
     }
   }
+
+  return errors;
 }
 
-if (errors.length > 0) {
-  console.error(errors.join("\n"));
-  process.exitCode = 1;
-} else if (requiredOnly) {
-  console.log("Required matrix complete: Claude Code and Codex pass all 24 canonical host/case rows.");
+// Deterministic negative self-tests: clone the real context, apply one targeted
+// mutation, and assert the validator rejects it with the expected message.
+function clone(ctx) {
+  return {
+    matrix: JSON.parse(JSON.stringify(ctx.matrix)),
+    cases: ctx.cases.map(({ entry, replayCase }) => ({ entry, replayCase })),
+    results: ctx.results.map((r) => ({ relative: r.relative, text: r.text, json: JSON.parse(JSON.stringify(r.json)) })),
+    reportRelative: ctx.reportRelative,
+    reportPresent: ctx.reportPresent,
+    reportText: ctx.reportText,
+    fixtures: ctx.fixtures.map((f) => ({ ...f })),
+  };
+}
+
+function runSelfTests(baseCtx) {
+  const baseline = collectErrors(baseCtx);
+  const failures = [];
+  if (baseline.length > 0) failures.push(`baseline is not clean:\n  ${baseline.join("\n  ")}`);
+
+  const checks = [
+    {
+      name: "missing report",
+      mutate: (c) => { c.reportPresent = false; c.reportText = ""; },
+      expect: /report .* is missing/,
+    },
+    {
+      name: "revision mismatch",
+      mutate: (c) => { c.results[0].json.skill_revision = `${c.matrix.base_sha}+drift`; },
+      expect: /skill_revision must equal the frozen/,
+    },
+    {
+      name: "invalid optional status",
+      mutate: (c) => {
+        const row = c.results.find((r) => !requiredHosts.has(r.json.host));
+        row.json.status = "skipped";
+      },
+      expect: /invalid status/,
+    },
+    {
+      name: "machine path leak",
+      mutate: (c) => { c.results[0].text = c.results[0].text.replace("Raw artifacts", "/Users/leak/x Raw artifacts"); },
+      expect: /machine-specific path/,
+    },
+    {
+      name: "credential leak",
+      mutate: (c) => { c.results[0].text = c.results[0].text.replace("Raw artifacts", "sk-abcdefghijklmno0123456789 Raw artifacts"); },
+      expect: /credential-like material/,
+    },
+    {
+      name: "raw artifact delimiter leak in a result",
+      mutate: (c) => { c.results[0].text = c.results[0].text.replace("Raw artifacts", "===ARTIFACT=== Raw artifacts"); },
+      expect: /raw transcript marker/,
+    },
+    {
+      name: "host transcript signal leak in the report",
+      mutate: (c) => { c.reportText = `${c.reportText}\n"stop_reason": "end_turn"\n`; },
+      expect: /raw transcript marker/,
+    },
+  ];
+
+  for (const check of checks) {
+    const mutated = clone(baseCtx);
+    check.mutate(mutated);
+    const errors = collectErrors(mutated);
+    if (!errors.some((message) => check.expect.test(message))) {
+      failures.push(`self-test "${check.name}" did not trigger ${check.expect}; got: ${errors.join(" | ") || "(no errors)"}`);
+    }
+  }
+  return failures;
+}
+
+const ctx = await loadContext();
+
+if (selfTest) {
+  const failures = runSelfTests(ctx);
+  if (failures.length > 0) {
+    console.error(failures.join("\n"));
+    process.exitCode = 1;
+  } else {
+    console.log("Self-tests passed: clean baseline plus 7 negative rejections (missing report, revision mismatch, invalid status, machine-path, credential, artifact-delimiter, and host-transcript hygiene).");
+  }
 } else {
-  console.log("Cross-host matrix complete: exactly 60 unique canonical rows; required hosts pass all 12 cases each.");
+  const errors = collectErrors(ctx);
+  if (errors.length > 0) {
+    console.error(errors.join("\n"));
+    process.exitCode = 1;
+  } else if (requiredOnly) {
+    console.log("Required matrix complete: Claude Code and Codex pass all 24 canonical host/case rows.");
+  } else {
+    console.log("Cross-host matrix complete: exactly 60 unique canonical rows; required hosts pass all 12 cases each.");
+  }
 }

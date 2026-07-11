@@ -2,7 +2,7 @@
   "case_id": "implement.worker-partial-failure",
   "host": "Claude Code",
   "host_version": "CLI 2.1.207 / claude-opus-4-8",
-  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
   "status": "pass",
   "assertion_results": [
     {
@@ -131,5 +131,5 @@
   "side_effects": [
     "repository_write"
   ],
-  "evidence_note": "2026-07-11 isolated Claude Code CLI replay with evidence-backed finalization phase; exit 0; diff evidence 191 byte(s); worker lifecycle observations 3; independent fixture verification exit 0; operational failures None. Raw artifacts remain outside the repository."
+  "evidence_note": "2026-07-11 single-lineage Claude Code CLI replay in a sanitized disposable host env; host exit 0; 2 real Agent worker dispatches (serial: base then consumer) observed in the run's own tool stream; the DONE base worker wrote src/base.mjs and its required check `npm run test:base` passed (exit 0), inspected before dispatch; the consumer worker wrote src/consumer.mjs but its required check `npm run test:consumer` genuinely failed (exit 1), so the orchestrator returned blocked/serial_workers/worker-partial-failure-blocked; 227 diff bytes across both units; operational failures: the consumer required check failed (exit 1) — the partial failure this case exercises and the orchestrator surfaced. Raw artifacts remain outside the repository."
 }

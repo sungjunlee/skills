@@ -2,7 +2,7 @@
   "case_id": "bs.vague-feature",
   "host": "Claude Code",
   "host_version": "CLI 2.1.207 / claude-opus-4-8",
-  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
   "status": "pass",
   "assertion_results": [
     {
@@ -68,8 +68,8 @@
     {
       "assertion_id": "questions-in-range",
       "status": "pass",
-      "observed": 3,
-      "evidence": "Observed 3 blocking question(s)."
+      "observed": 5,
+      "evidence": "Phase 1 emitted 5 material blocking questions through the host question mechanism, then stopped."
     },
     {
       "assertion_id": "no-escalation",
@@ -127,8 +127,8 @@
   ],
   "observed_route": "feature-spec",
   "observed_engine": null,
-  "question_count": 3,
+  "question_count": 5,
   "observed_escalation": "none",
   "side_effects": [],
-  "evidence_note": "2026-07-11 isolated Claude Code CLI replay; exit 0; diff 0 byte(s); independent fixture verification exit not run. Raw artifacts remain outside the repository."
+  "evidence_note": "2026-07-11 isolated Claude Code CLI two-phase replay (session --session-id/--resume, same session id both phases); phase 1 exit 0 emitted 5 material blocking questions and stopped; phase 2 exit 0 resumed the same session with the fixed host-neutral answer sequence and returned all nine Design Handoff fields recommending feature-spec; 0 repository writes; operational failures none. Raw artifacts remain outside the repository."
 }

@@ -2,7 +2,7 @@
   "case_id": "feature-spec.design-handoff",
   "host": "Cursor",
   "host_version": "CLI 2026.07.09-a3815c0",
-  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
   "status": "unverified",
   "assertion_results": [
     {

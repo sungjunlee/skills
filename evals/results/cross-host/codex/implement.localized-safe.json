@@ -2,7 +2,7 @@
   "case_id": "implement.localized-safe",
   "host": "Codex",
   "host_version": "codex-cli 0.144.1 / account default",
-  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
   "status": "pass",
   "assertion_results": [
     {

@@ -2,7 +2,7 @@
   "case_id": "bs.vague-feature",
   "host": "Codex",
   "host_version": "codex-cli 0.144.1 / account default",
-  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
   "status": "pass",
   "assertion_results": [
     {
@@ -69,7 +69,7 @@
       "assertion_id": "questions-in-range",
       "status": "pass",
       "observed": 5,
-      "evidence": "Observed 5 blocking question(s)."
+      "evidence": "Phase 1 emitted 5 material blocking questions and stopped before any final artifact; phase 2 resumed that exact persisted Codex thread."
     },
     {
       "assertion_id": "no-escalation",
@@ -130,5 +130,5 @@
   "question_count": 5,
   "observed_escalation": "none",
   "side_effects": [],
-  "evidence_note": "2026-07-11 isolated Codex CLI replay; exit 0; diff evidence 0 working-tree path(s); worker lifecycle observations 0; independent fixture verification exit not run; operational failures None. Raw artifacts remain outside the repository."
+  "evidence_note": "2026-07-12 isolated Codex CLI two-phase replay; phase 1 exit 0 read the disposable repository, emitted 5 material blocking questions, and stopped without a Design Handoff; phase 2 exit 0 resumed the exact persisted thread with the fixed host-neutral answer sequence and returned all nine Design Handoff fields recommending feature-spec; 0 repository writes; operational failures none in the selected lineage. Raw artifacts remain outside the repository."
 }

@@ -2,7 +2,7 @@
   "case_id": "implement.high-risk-relay",
   "host": "OpenCode",
   "host_version": "1.17.18 / opencode/big-pickle",
-  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
   "status": "pass",
   "assertion_results": [
     {

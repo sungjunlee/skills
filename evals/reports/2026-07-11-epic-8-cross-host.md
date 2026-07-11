@@ -33,20 +33,34 @@ The pre-reset draft recorded all 12 Codex rows as unverified after the Codex CLI
 hit its usage limit. After the reset, all 12 canonical Codex cases were executed
 with `codex-cli 0.144.1`. Failing rows were rerun only for observed reasons:
 missing implementation diffs, absent worker lifecycle evidence, or a question
-count mismatch. A later redundant `implement.independent-isolated` attempt hit
-the usage limit again and was retained only as failed raw evidence; it did not
-replace the earlier successful run, which already contained two created leaf
-modules, worker lifecycle events, and a passing parent check.
+count mismatch. A 2026-07-12 follow-up established the two missing Codex
+contracts. `bs.vague-feature` used two turns of one persisted thread: phase 1
+read the fixture, emitted five material blocking questions, and stopped without
+an artifact; phase 2 resumed that exact thread with the fixed answer sequence
+and returned the settled Design Handoff. A setup probe that could not initialize
+the local Codex state/sandbox was discarded rather than combined with the
+selected clean two-phase lineage.
 
-Claude Code rows already satisfying the assertions were retained. Two failing
-rows were rerun: `implement.dependent-units` had previously produced no diff
-because the disposable baseline already contained the requested modules, and
-`implement.worker-partial-failure` lacked an exposed Agent tool. The corrected
-runs observed real Agent calls and diffs. Claude's shell then failed to create
-its session environment, so those attempts remained non-pass. The same replay
-worktrees were independently checked with `npm test` and `git diff --check`,
-both passing; Claude then performed a read-only finalization phase over that
-evidence and emitted truthful `completed` and `blocked` contracts respectively.
+The 2026-07-12 Codex `implement.worker-partial-failure` replay used one
+authoritative CLI lineage and two real serial worker dispatches. The base worker
+created an inspected working-tree artifact and passed its check before the
+consumer was dispatched. The consumer then created its artifact and hit the
+fixture's genuine required-check failure. The parent re-inspected both files,
+reran the passing base and failing consumer checks, and returned the required
+blocked contract; the consumer check failure is disclosed as the operational
+failure exercised by the case. Host exit was 0 and no forbidden external side
+effect occurred.
+
+Claude Code rows already satisfying the assertions were retained. The R1
+corrections reran `implement.dependent-units` and
+`implement.worker-partial-failure` from start to finish in sanitized disposable
+host environments. Each selected lineage exited 0, contained two real `Agent`
+dispatches, shared-checkout writes, orchestrator diff inspection before the
+dependent worker, and orchestrator-owned checks. The dependent-units lineage
+passed its authoritative check. The partial-failure lineage truthfully returned
+blocked after the consumer's required check failed; that expected operational
+failure is disclosed in its compact row. No failed execution was combined with
+a separate finalization.
 
 ## Matrix result
 
@@ -54,12 +68,14 @@ evidence and emitted truthful `completed` and `blocked` contracts respectively.
 | --- | --- | ---: | ---: | ---: | --- |
 | Claude Code | CLI 2.1.207 / claude-opus-4-8 | 12 | 0 | 0 | Required host; all canonical rows pass |
 | Codex | codex-cli 0.144.1 / account default | 12 | 0 | 0 | Required host; all canonical rows pass after reset and targeted reruns |
-| OpenCode | 1.17.18 / opencode/big-pickle | 7 | 5 | 0 | Executed; semantic failures retained |
+| OpenCode | 1.17.18 / opencode/big-pickle | 6 | 6 | 0 | Executed; semantic failures retained |
 | Cursor | CLI 2026.07.09-a3815c0 | 0 | 0 | 12 | Startup failed before model execution while creating host project state |
 | Pi | 0.80.6 | 0 | 0 | 12 | No authenticated provider/model was available |
 
-OpenCode failures are not waived: `bs.clear-low-risk` omitted the observable
-`implement` route; `implement.dependent-units` and
+OpenCode failures are not waived: `bs.vague-feature` returned a complete
+one-shot handoff in phase 1 instead of a genuine stop/resume question turn;
+`bs.clear-low-risk` omitted the observable `implement` route;
+`implement.dependent-units` and
 `implement.independent-isolated` had no observed worker dispatch;
 `implement.shared-schema-serializes` omitted the execution-summary contract;
 and `implement.worker-partial-failure` used inline execution. Cursor and Pi are
@@ -77,9 +93,9 @@ mappings:
 - Claude Code worker dispatch, bounded dispatch, lifecycle collection,
   repository editing, and verification are observed. Shared-checkout workers
   are not described as isolated workspaces.
-- Codex repository work and actual worker lifecycle behavior are observed for
-  the named cases; blocking user questions and commit authority remain
-  unverified.
+- Codex repository work, actual worker lifecycle behavior, and same-thread
+  blocking-question/resume behavior are observed for the named cases; commit
+  authority remains unverified.
 - OpenCode has observed inline repository work and verification, but no worker
   dispatch or non-interactive blocking-question round trip.
 - Cursor and Pi capabilities remain unverified for the recorded preflight
@@ -98,10 +114,16 @@ Landing gates:
 npm test
 node scripts/verify-cross-host-matrix.mjs
 node scripts/verify-cross-host-matrix.mjs --required
-npx --yes skills add . --list --full-depth
-git diff --check origin/main...HEAD
+node scripts/verify-cross-host-matrix.mjs --selftest
+NPM_CONFIG_CACHE="$(mktemp -d)" npx --yes skills add . --list --full-depth
+git diff --check
 ```
 
 The matrix checker requires exactly 60 unique canonical rows, recomputes every
 case assertion from the compact observations, and rejects any non-pass Claude
-Code or Codex row.
+Code or Codex row. It also rejects invalid optional statuses, revision drift,
+the wrong or missing dated report, machine paths, credential-like values, and
+raw host transcript markers across all compact results, the report, and the
+cross-host fixtures. Its deterministic negative self-tests cover each new
+failure class. Separate scope, secret/path, and raw-transcript scans confirmed
+that no frozen file or raw evidence entered the committed diff.

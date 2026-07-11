@@ -2,7 +2,7 @@
   "case_id": "implement.high-risk-relay",
   "host": "Pi",
   "host_version": "0.80.6",
-  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e",
   "status": "unverified",
   "assertion_results": [
     {

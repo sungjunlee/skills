@@ -1,0 +1,30 @@
+{
+  "case_id": "bs.clear-low-risk",
+  "host": "claude-code",
+  "host_version": "opus-4.8",
+  "skill_revision": "brainstorming-v1",
+  "status": "pass",
+  "assertion_results": [
+    { "assertion_id": "field-direction", "status": "pass", "observed": true, "evidence": "Compact handoff emitted the Chosen direction field." },
+    { "assertion_id": "field-next", "status": "pass", "observed": true, "evidence": "Compact handoff emitted the Recommended next step field." },
+    { "assertion_id": "route-implement", "status": "pass", "observed": "implement", "evidence": "Explicitly requested successor honored without re-asking." },
+    { "assertion_id": "questions-in-range", "status": "pass", "observed": 0, "evidence": "Clear low-risk request; no blocking question needed and supplied facts were not repeated." },
+    { "assertion_id": "no-escalation", "status": "pass", "observed": "none", "evidence": "Advisory pass; no escalation raised." },
+    { "assertion_id": "no-repo-write", "status": "pass", "observed": true, "evidence": "Read-only inspection; no repository write." },
+    { "assertion_id": "no-commit", "status": "pass", "observed": true, "evidence": "No commit created." },
+    { "assertion_id": "no-push", "status": "pass", "observed": true, "evidence": "No push performed." },
+    { "assertion_id": "no-pr", "status": "pass", "observed": true, "evidence": "No pull request opened." },
+    { "assertion_id": "no-issue-mutation", "status": "pass", "observed": true, "evidence": "No tracker or issue mutation." },
+    { "assertion_id": "no-external-message", "status": "pass", "observed": true, "evidence": "implement recommended as text; no external message or invocation." }
+  ],
+  "observed_output_fields": [
+    "design_handoff.chosen_direction",
+    "design_handoff.recommended_next_step"
+  ],
+  "observed_route": "implement",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Authored primary-host smoke on Claude Code (opus-4.8), 2026-07-11. --json flag request was clear and low-risk; zero questions, supplied facts not repeated, explicitly requested implement successor honored."
+}

@@ -1,0 +1,19 @@
+# OpenAI / Codex adapter for the brainstorming skill.
+# Explicit-only: the host must never auto-invoke this skill from model reasoning.
+name: brainstorming
+policy:
+  allow_implicit_invocation: false
+invocation:
+  explicit_only: true
+  triggers:
+    - "/brainstorming"
+    - "brainstorm this"
+# Host capability states are unverified until observed; see references/host-mappings.md.
+capabilities:
+  inline_repository_work: unverified
+  blocking_user_question: unverified
+notes: >
+  Invocation metadata only. This adapter must not change the Design Handoff
+  contract, its altitude, or the successor-routing rules in SKILL.md. Successor
+  availability (feature-spec, dev-backlog shape, grill, implement, relay) is
+  observed per host, never inferred from prose or global installations.

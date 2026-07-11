@@ -1,0 +1,30 @@
+{
+  "case_id": "bs.grill-request",
+  "host": "claude-code",
+  "host_version": "opus-4.8",
+  "skill_revision": "brainstorming-v1",
+  "status": "pass",
+  "assertion_results": [
+    { "assertion_id": "field-problem", "status": "pass", "observed": true, "evidence": "Handoff emitted the Problem field naming the plan to be stress-tested." },
+    { "assertion_id": "field-next", "status": "pass", "observed": true, "evidence": "Recommended next step recorded the grill capability as unavailable and stopped." },
+    { "assertion_id": "route-grill-unavailable", "status": "pass", "observed": "grill_unavailable", "evidence": "No compatible grill capability observed on the host, so it was recorded unavailable rather than impersonated." },
+    { "assertion_id": "questions-in-range", "status": "pass", "observed": 0, "evidence": "Adversarial stress-testing recognized as distinct from discovery; no discovery interview run." },
+    { "assertion_id": "no-escalation", "status": "pass", "observed": "none", "evidence": "Advisory pass; no escalation raised." },
+    { "assertion_id": "no-repo-write", "status": "pass", "observed": true, "evidence": "Read-only inspection; no repository write." },
+    { "assertion_id": "no-commit", "status": "pass", "observed": true, "evidence": "No commit created." },
+    { "assertion_id": "no-push", "status": "pass", "observed": true, "evidence": "No push performed." },
+    { "assertion_id": "no-pr", "status": "pass", "observed": true, "evidence": "No pull request opened." },
+    { "assertion_id": "no-issue-mutation", "status": "pass", "observed": true, "evidence": "No tracker or issue mutation." },
+    { "assertion_id": "no-external-message", "status": "pass", "observed": true, "evidence": "No grill successor invoked or impersonated; stopped after handoff." }
+  ],
+  "observed_output_fields": [
+    "design_handoff.problem",
+    "design_handoff.recommended_next_step"
+  ],
+  "observed_route": "grill_unavailable",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Authored primary-host smoke on Claude Code (opus-4.8), 2026-07-11. Grill request distinguished from discovery; no compatible grill capability observed, so it was recorded unavailable and the pass stopped after the handoff without impersonating an adversarial interviewer."
+}

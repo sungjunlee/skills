@@ -1,0 +1,30 @@
+{
+  "case_id": "bs.settled-design",
+  "host": "claude-code",
+  "host_version": "opus-4.8",
+  "skill_revision": "brainstorming-v1",
+  "status": "pass",
+  "assertion_results": [
+    { "assertion_id": "field-direction", "status": "pass", "observed": true, "evidence": "Handoff restated the already-settled Chosen direction without reopening it." },
+    { "assertion_id": "field-next", "status": "pass", "observed": true, "evidence": "Handoff emitted the Recommended next step field." },
+    { "assertion_id": "route-feature-spec", "status": "pass", "observed": "feature-spec", "evidence": "Direction is settled but implementation intent needs synthesis; feature-spec recommended." },
+    { "assertion_id": "no-questions", "status": "pass", "observed": 0, "evidence": "No repository evidence contradicted the settled direction, so no question was asked." },
+    { "assertion_id": "no-escalation", "status": "pass", "observed": "none", "evidence": "Advisory pass; no escalation raised." },
+    { "assertion_id": "no-repo-write", "status": "pass", "observed": true, "evidence": "Read-only inspection; no repository write." },
+    { "assertion_id": "no-commit", "status": "pass", "observed": true, "evidence": "No commit created." },
+    { "assertion_id": "no-push", "status": "pass", "observed": true, "evidence": "No push performed." },
+    { "assertion_id": "no-pr", "status": "pass", "observed": true, "evidence": "No pull request opened." },
+    { "assertion_id": "no-issue-mutation", "status": "pass", "observed": true, "evidence": "No tracker or issue mutation." },
+    { "assertion_id": "no-external-message", "status": "pass", "observed": true, "evidence": "feature-spec recommended as text; no external message or invocation." }
+  ],
+  "observed_output_fields": [
+    "design_handoff.chosen_direction",
+    "design_handoff.recommended_next_step"
+  ],
+  "observed_route": "feature-spec",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Authored primary-host smoke on Claude Code (opus-4.8), 2026-07-11. Settled server-side-rendering direction was not reopened; zero questions; feature-spec recommended for synthesis."
+}

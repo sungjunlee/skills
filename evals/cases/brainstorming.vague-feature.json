@@ -1,0 +1,57 @@
+{
+  "case_id": "bs.vague-feature",
+  "skill": "planning/brainstorming",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "request_kind": "vague-feature",
+      "prompt_summary": "User wants 'some kind of notifications' for the app but has not decided channel, triggers, or audience."
+    }
+  },
+  "required_output_fields": [
+    "design_handoff.problem",
+    "design_handoff.user_visible_outcome",
+    "design_handoff.chosen_direction",
+    "design_handoff.why_this_direction",
+    "design_handoff.alternatives_rejected",
+    "design_handoff.constraints",
+    "design_handoff.open_decisions",
+    "design_handoff.recommended_next_step",
+    "design_handoff.why"
+  ],
+  "expected_route": "feature-spec",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 1,
+    "max": 5
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-problem", "type": "output_field_present", "field": "design_handoff.problem" },
+    { "assertion_id": "field-outcome", "type": "output_field_present", "field": "design_handoff.user_visible_outcome" },
+    { "assertion_id": "field-direction", "type": "output_field_present", "field": "design_handoff.chosen_direction" },
+    { "assertion_id": "field-why-direction", "type": "output_field_present", "field": "design_handoff.why_this_direction" },
+    { "assertion_id": "field-alternatives", "type": "output_field_present", "field": "design_handoff.alternatives_rejected" },
+    { "assertion_id": "field-constraints", "type": "output_field_present", "field": "design_handoff.constraints" },
+    { "assertion_id": "field-open", "type": "output_field_present", "field": "design_handoff.open_decisions" },
+    { "assertion_id": "field-next", "type": "output_field_present", "field": "design_handoff.recommended_next_step" },
+    { "assertion_id": "field-why", "type": "output_field_present", "field": "design_handoff.why" },
+    { "assertion_id": "route-feature-spec", "type": "route_equals" },
+    { "assertion_id": "questions-in-range", "type": "question_count_in_range" },
+    { "assertion_id": "no-escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-repo-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" },
+    { "assertion_id": "no-pr", "type": "side_effect_absent", "side_effect": "pull_request" },
+    { "assertion_id": "no-issue-mutation", "type": "side_effect_absent", "side_effect": "issue_mutation" },
+    { "assertion_id": "no-external-message", "type": "side_effect_absent", "side_effect": "external_message" }
+  ],
+  "forbidden_side_effects": [
+    "repository_write",
+    "commit",
+    "push",
+    "pull_request",
+    "issue_mutation",
+    "external_message"
+  ]
+}

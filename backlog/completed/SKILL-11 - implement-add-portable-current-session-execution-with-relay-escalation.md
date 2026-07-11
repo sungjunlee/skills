@@ -71,15 +71,15 @@ The skill must not pretend isolation or parallel safety exists. Statuses, verifi
 
 ## Acceptance criteria
 
-- [ ] Accepts feature specs, tracker tasks, and already-clear prompts without re-planning settled intent.
-- [ ] Selects inline, serial, bounded-parallel, or relay escalation from explicit evidence.
-- [ ] Continuous execution does not ask “should I continue?” between normal units.
-- [ ] Orchestrator inspects actual diffs and runs authoritative final verification.
-- [ ] Worker failures and partial completion cannot be reported as success.
-- [ ] Risky or durability-heavy fixtures escalate before editing.
-- [ ] Committed cases plus at least one observed primary-host smoke result validate output semantics; #13 owns Claude Code/Codex equivalence.
-- [ ] OpenCode, Cursor, and Pi mappings document supported capabilities and degradation.
-- [ ] The skill remains materially lighter than relay.
+- [x] Accepts feature specs, tracker tasks, and already-clear prompts without re-planning settled intent.
+- [x] Selects inline, serial, bounded-parallel, or relay escalation from explicit evidence.
+- [x] Continuous execution does not ask “should I continue?” between normal units.
+- [x] Orchestrator inspects actual diffs and runs authoritative final verification.
+- [x] Worker failures and partial completion cannot be reported as success.
+- [x] Risky or durability-heavy fixtures escalate before editing.
+- [x] Committed cases plus at least one observed primary-host smoke result validate output semantics; #13 owns Claude Code/Codex equivalence.
+- [x] OpenCode, Cursor, and Pi mappings document supported capabilities and degradation.
+- [x] The skill remains materially lighter than relay.
 
 ## Non-goals
 

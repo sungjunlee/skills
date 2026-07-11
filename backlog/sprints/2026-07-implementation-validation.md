@@ -16,7 +16,7 @@ The repository can execute settled current-session work through a safe portable 
 
 ### Batch 1 — current-session implementation
 
-- [x] #11 implement: add portable current-session execution with relay escalation (~2 days; blocks #13)
+- [x] #11 implement: add portable current-session execution with relay escalation (~2 days; blocks #13) [branch:issue-11-implement] [run:issue-11-20260711071500000-a11ce011] → PR #23 (merged)
 
 ### Batch 2 — cross-host integration gate
 

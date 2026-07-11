@@ -1,0 +1,44 @@
+{
+  "case_id": "bs.clear-low-risk",
+  "skill": "planning/brainstorming",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "request_kind": "clear-low-risk",
+      "prompt_summary": "Add a --json flag to the existing status CLI command, then implement it.",
+      "explicit_successor": "implement"
+    }
+  },
+  "required_output_fields": [
+    "design_handoff.chosen_direction",
+    "design_handoff.recommended_next_step"
+  ],
+  "expected_route": "implement",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 0,
+    "max": 1
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-direction", "type": "output_field_present", "field": "design_handoff.chosen_direction" },
+    { "assertion_id": "field-next", "type": "output_field_present", "field": "design_handoff.recommended_next_step" },
+    { "assertion_id": "route-implement", "type": "route_equals" },
+    { "assertion_id": "questions-in-range", "type": "question_count_in_range" },
+    { "assertion_id": "no-escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-repo-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" },
+    { "assertion_id": "no-pr", "type": "side_effect_absent", "side_effect": "pull_request" },
+    { "assertion_id": "no-issue-mutation", "type": "side_effect_absent", "side_effect": "issue_mutation" },
+    { "assertion_id": "no-external-message", "type": "side_effect_absent", "side_effect": "external_message" }
+  ],
+  "forbidden_side_effects": [
+    "repository_write",
+    "commit",
+    "push",
+    "pull_request",
+    "issue_mutation",
+    "external_message"
+  ]
+}

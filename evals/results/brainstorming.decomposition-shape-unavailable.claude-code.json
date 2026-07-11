@@ -1,0 +1,30 @@
+{
+  "case_id": "bs.decomposition-shape-unavailable",
+  "host": "claude-code",
+  "host_version": "opus-4.8",
+  "skill_revision": "brainstorming-v1",
+  "status": "pass",
+  "assertion_results": [
+    { "assertion_id": "field-direction", "status": "pass", "observed": true, "evidence": "Handoff emitted the Chosen direction field for the multi-surface feature." },
+    { "assertion_id": "field-next", "status": "pass", "observed": true, "evidence": "Recommended next step was a tracker-neutral decomposition handoff recording shape unavailable." },
+    { "assertion_id": "route-shape-unavailable", "status": "pass", "observed": "shape_unavailable", "evidence": "dev-backlog shape was not observed available, so shape unavailable was recorded and the pass stopped." },
+    { "assertion_id": "questions-in-range", "status": "pass", "observed": 1, "evidence": "One question clarified the decomposition boundary; no ticket was created." },
+    { "assertion_id": "no-escalation", "status": "pass", "observed": "none", "evidence": "Advisory pass; no escalation raised." },
+    { "assertion_id": "no-repo-write", "status": "pass", "observed": true, "evidence": "Read-only inspection; no repository write." },
+    { "assertion_id": "no-commit", "status": "pass", "observed": true, "evidence": "No commit created." },
+    { "assertion_id": "no-push", "status": "pass", "observed": true, "evidence": "No push performed." },
+    { "assertion_id": "no-pr", "status": "pass", "observed": true, "evidence": "No pull request opened." },
+    { "assertion_id": "no-issue-mutation", "status": "pass", "observed": true, "evidence": "No tracker mutation and no invented tickets." },
+    { "assertion_id": "no-external-message", "status": "pass", "observed": true, "evidence": "Decomposition handoff produced as text; no external message or invocation." }
+  ],
+  "observed_output_fields": [
+    "design_handoff.chosen_direction",
+    "design_handoff.recommended_next_step"
+  ],
+  "observed_route": "shape_unavailable",
+  "observed_engine": null,
+  "question_count": 1,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Authored primary-host smoke on Claude Code (opus-4.8), 2026-07-11. Feature needing decomposition produced a tracker-neutral decomposition handoff; dev-backlog shape was not observed, so shape unavailable was recorded and no tracker was mutated."
+}

@@ -1,0 +1,32 @@
+{
+  "case_id": "bs.exploration-only",
+  "host": "claude-code",
+  "host_version": "opus-4.8",
+  "skill_revision": "brainstorming-v1",
+  "status": "pass",
+  "assertion_results": [
+    { "assertion_id": "field-problem", "status": "pass", "observed": true, "evidence": "Handoff emitted the Problem field." },
+    { "assertion_id": "field-open", "status": "pass", "observed": true, "evidence": "Handoff emitted the Open decisions requiring a human field." },
+    { "assertion_id": "field-next", "status": "pass", "observed": true, "evidence": "Handoff emitted the Recommended next step field." },
+    { "assertion_id": "route-stop", "status": "pass", "observed": "stop", "evidence": "Exploration-only request; stopped after the handoff." },
+    { "assertion_id": "questions-in-range", "status": "pass", "observed": 1, "evidence": "One scoping question about the offline surface; no successor pursued." },
+    { "assertion_id": "no-escalation", "status": "pass", "observed": "none", "evidence": "Advisory pass; no escalation raised." },
+    { "assertion_id": "no-repo-write", "status": "pass", "observed": true, "evidence": "Read-only inspection; no repository write." },
+    { "assertion_id": "no-commit", "status": "pass", "observed": true, "evidence": "No commit created." },
+    { "assertion_id": "no-push", "status": "pass", "observed": true, "evidence": "No push performed." },
+    { "assertion_id": "no-pr", "status": "pass", "observed": true, "evidence": "No pull request opened." },
+    { "assertion_id": "no-issue-mutation", "status": "pass", "observed": true, "evidence": "No tracker or issue mutation." },
+    { "assertion_id": "no-external-message", "status": "pass", "observed": true, "evidence": "No successor invoked; stopped as requested." }
+  ],
+  "observed_output_fields": [
+    "design_handoff.problem",
+    "design_handoff.open_decisions",
+    "design_handoff.recommended_next_step"
+  ],
+  "observed_route": "stop",
+  "observed_engine": null,
+  "question_count": 1,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Authored primary-host smoke on Claude Code (opus-4.8), 2026-07-11. Offline-support exploration emitted a handoff and stopped; no successor was invoked or mutated."
+}

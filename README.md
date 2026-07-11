@@ -6,6 +6,25 @@ These skills are meant to stay compact, composable, and easy to adapt. Each skil
 
 ## Skills
 
+### Planning
+
+#### brainstorming
+
+Turn a vague idea into one selected direction and a compact Design Handoff, then recommend the next owner. Explicit-only and engine-agnostic.
+
+`brainstorming` inspects safely discoverable repository context, asks only decision-changing questions, compares viable approaches, and converges on a Design Handoff. It recommends a successor (`feature-spec`, a tracker-neutral decomposition handoff, `implement`/relay, stop, or a grill capability) as output — it never invokes one, mutates a tracker, or infers capability availability.
+
+```text
+/brainstorming "we need some kind of notifications, not sure where to start"
+```
+
+Source:
+
+- `skills/planning/brainstorming/SKILL.md`
+- `skills/planning/brainstorming/references/routing.md`
+- `skills/planning/brainstorming/references/host-mappings.md`
+- `skills/planning/brainstorming/agents/openai.yaml`
+
 ### Productivity
 
 #### delegate
@@ -100,6 +119,11 @@ evals/
 scripts/
   verify-replays.mjs
 skills/
+  planning/
+    brainstorming/
+      SKILL.md
+      agents/
+      references/
   productivity/
     delegate/
       SKILL.md

@@ -103,6 +103,8 @@ Each compact row now cites only its one selected successful lineage.
 | `implement.worker-unavailable-degrades` | pass | pass | pass | unverified | unverified |
 | `implement.worker-partial-failure` | pass | pass | fail | unverified | unverified |
 
+`scripts/verify-cross-host-matrix.mjs` reconstructs this table from all 60 compact results and exact-matches it.
+
 OpenCode failures are not waived: `bs.vague-feature` returned a complete
 one-shot handoff in phase 1 instead of a genuine stop/resume question turn;
 `bs.clear-low-risk` omitted the observable `implement` route;

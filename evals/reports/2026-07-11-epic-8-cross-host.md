@@ -3,6 +3,9 @@
 ## Frozen scope
 
 - Run base: `66c13f499f522da0fbc92354ca0fa5e8753bca7e`.
+- Landing base: `6cf73bd02c02514be2e25133347ce1cc68df21ba`; its only
+  changes after the run base are bookkeeping files, so the evaluated skill,
+  replay, script, package, and README surfaces are byte-identical.
 - Canonical matrix: 12 cases × 5 hosts = 60 unique rows, defined by
   [`../fixtures/cross-host/matrix.json`](../fixtures/cross-host/matrix.json).
 - The replay cases, schemas, ownership boundaries, `README.md`,

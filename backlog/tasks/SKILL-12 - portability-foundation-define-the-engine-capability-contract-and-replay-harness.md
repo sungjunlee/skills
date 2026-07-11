@@ -1,7 +1,7 @@
 ---
 id: SKILL-12
 title: 'portability foundation: define the engine capability contract and replay harness'
-status: In Progress
+status: To Do
 labels:
   - type: foundation
 priority: medium

@@ -11,7 +11,8 @@ Give each worker:
 - expected artifacts or diff;
 - local verification responsibility;
 - the status vocabulary below;
-- a prohibition on commits, publishing, tracker mutation, relay invocation, and edits outside scope unless separately authorized.
+- a prohibition on commits unless separately authorized; and
+- an unconditional prohibition on push, PR/MR operations, tracker or sprint mutation, deployment, global installation, external publication or messaging, relay invocation, and edits outside scope.
 
 Require exactly one report status:
 

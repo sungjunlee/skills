@@ -23,7 +23,7 @@ Execute settled intent continuously in the current session. Do not reopen produc
 
 2. **Select the lightest safe engine.** Read [`references/routing.md`](references/routing.md) before mutation and choose exactly one of `inline`, `serial_workers`, `bounded_parallel`, or `relay`. Honor an explicit route only while its safety assumptions remain true. Use `engine: none` only when the pre-edit gate blocks before an engine can be selected.
 
-   Relay is an escalation handoff: stop before repository mutation, return `engine: relay`, and name `relay-ready`/`relay-plan` as the next owner without invoking it.
+   Relay is an escalation handoff: stop before repository mutation and return the inseparable combination `status: escalated`, `engine: relay`, and `handoff.route: relay`. Name `relay-ready`/`relay-plan` as the next owner without invoking it.
 
    **Complete when:** task shape, host capability, authority, dirty-state, and durability evidence all support the selected engine.
 
@@ -57,6 +57,8 @@ handoff:
   remaining_scope: []
 ```
 
+The alternatives above are not independently composable: every relay handoff must use `status: escalated`, `engine: relay`, and `handoff.route: relay` together before repository mutation. Never emit only part of that combination.
+
 ## Authority
 
-Edit only the authorized current-repository scope. Commit only when explicitly authorized. Never push, open or merge a PR/MR, mutate tracker or sprint state, install skills globally, or send external messages unless separately authorized. Read [`references/host-mappings.md`](references/host-mappings.md) only when adapting execution to a named host; unobserved capabilities remain `unverified`.
+Edit only the authorized current-repository scope. Commit only when explicitly authorized. Never push, open or merge a PR/MR, mutate tracker or sprint state, deploy, install skills globally, or publish externally or send external messages. Read [`references/host-mappings.md`](references/host-mappings.md) only when adapting execution to a named host; unobserved capabilities remain `unverified`.

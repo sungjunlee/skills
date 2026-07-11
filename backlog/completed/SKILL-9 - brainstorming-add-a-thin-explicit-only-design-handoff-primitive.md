@@ -1,7 +1,7 @@
 ---
 id: SKILL-9
 title: 'brainstorming: add a thin explicit-only Design Handoff primitive'
-status: In Progress
+status: Done
 labels:
   - type: skill
 priority: medium
@@ -74,13 +74,13 @@ The handoff stays at product/design/architecture altitude. It must not contain f
 
 ## Acceptance criteria
 
-- [ ] The skill is explicit-only wherever host metadata supports it.
-- [ ] It emits the complete Design Handoff contract.
-- [ ] It distinguishes exploration from adversarial grilling and implementation planning.
-- [ ] It recommends, but does not automatically invoke, the next owner.
-- [ ] Historical vague-feature prompts are committed as semantic cases and at least one primary host records observed smoke evidence; #13 owns the required Claude Code/Codex matrix.
-- [ ] Replays demonstrate that settled questions are not repeated and trivial work is not over-interviewed.
-- [ ] Installation and discovery work through the repository's normal `npx skills` distribution.
+- [x] The skill is explicit-only wherever host metadata supports it.
+- [x] It emits the complete Design Handoff contract.
+- [x] It distinguishes exploration from adversarial grilling and implementation planning.
+- [x] It recommends, but does not automatically invoke, the next owner.
+- [x] Historical vague-feature prompts are committed as semantic cases and at least one primary host records observed smoke evidence; #13 owns the required Claude Code/Codex matrix.
+- [x] Replays demonstrate that settled questions are not repeated and trivial work is not over-interviewed.
+- [x] Installation and discovery work through the repository's normal `npx skills` distribution.
 
 ## Non-goals
 

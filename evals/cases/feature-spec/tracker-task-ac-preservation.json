@@ -1,0 +1,33 @@
+{
+  "case_id": "feature-spec.tracker-task-ac-preservation",
+  "skill": "planning/feature-spec",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "source": "clear tracker task",
+      "settled": true,
+      "preselected_route": "relay",
+      "acceptance_criteria": [
+        "Existing clients receive the same response fields.",
+        "The migration can be rolled back without data loss."
+      ]
+    }
+  },
+  "required_output_fields": ["Acceptance-criteria", "Acceptance-criteria-preserved", "Execution-Handoff", "Relay-plan-consumer-ready"],
+  "expected_route": "relay",
+  "expected_engine": null,
+  "question_count_range": { "min": 0, "max": 0 },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "acceptance", "type": "output_field_present", "field": "Acceptance-criteria" },
+    { "assertion_id": "ac-preserved", "type": "output_field_present", "field": "Acceptance-criteria-preserved" },
+    { "assertion_id": "handoff", "type": "output_field_present", "field": "Execution-Handoff" },
+    { "assertion_id": "relay-plan-consumer", "type": "output_field_present", "field": "Relay-plan-consumer-ready" },
+    { "assertion_id": "honor-route", "type": "route_equals" },
+    { "assertion_id": "no-reopened-interview", "type": "question_count_in_range" },
+    { "assertion_id": "no-escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-tracker-mutation", "type": "side_effect_absent", "side_effect": "issue_mutation" },
+    { "assertion_id": "no-relay-invocation", "type": "side_effect_absent", "side_effect": "external_message" }
+  ],
+  "forbidden_side_effects": ["issue_mutation", "external_message"]
+}

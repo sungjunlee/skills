@@ -25,6 +25,20 @@ Source:
 - `skills/planning/brainstorming/references/host-mappings.md`
 - `skills/planning/brainstorming/agents/openai.yaml`
 
+#### feature-spec
+
+Compile a completed Design Handoff, settled proposal or conversation, or clear tracker task into a tracker-neutral, implementation-ready Feature Spec.
+
+It preserves settled decisions and acceptance criteria, records exact repository-contract contradictions for human resolution, and closes with either one `implement | relay` recommendation or a decomposition handoff. It recommends successors without invoking them or mutating tracker state.
+
+Source:
+
+- `skills/planning/feature-spec/SKILL.md`
+- `skills/planning/feature-spec/agents/openai.yaml`
+- `skills/planning/feature-spec/references/spec-template.md`
+- `skills/planning/feature-spec/references/routing.md`
+- `skills/planning/feature-spec/references/host-mappings.md`
+
 ### Productivity
 
 #### delegate
@@ -124,6 +138,14 @@ skills/
       SKILL.md
       agents/
       references/
+    feature-spec/
+      SKILL.md
+      agents/
+        openai.yaml
+      references/
+        host-mappings.md
+        routing.md
+        spec-template.md
   productivity/
     delegate/
       SKILL.md

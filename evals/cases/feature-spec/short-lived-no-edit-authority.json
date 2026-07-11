@@ -1,0 +1,23 @@
+{
+  "case_id": "feature-spec.short-lived-no-edit-authority",
+  "skill": "planning/feature-spec",
+  "input_fixture": {
+    "kind": "inline",
+    "value": { "lifetime": "short-lived", "edit_authority": false, "settled_unit": true }
+  },
+  "required_output_fields": ["Artifact-lifetime", "Response-body", "Execution-Handoff"],
+  "expected_route": "implement",
+  "expected_engine": null,
+  "question_count_range": { "min": 0, "max": 0 },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "lifetime", "type": "output_field_present", "field": "Artifact-lifetime" },
+    { "assertion_id": "body", "type": "output_field_present", "field": "Response-body" },
+    { "assertion_id": "handoff", "type": "output_field_present", "field": "Execution-Handoff" },
+    { "assertion_id": "route", "type": "route_equals" },
+    { "assertion_id": "no-question", "type": "question_count_in_range" },
+    { "assertion_id": "no-escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-file-write", "type": "side_effect_absent", "side_effect": "repository_write" }
+  ],
+  "forbidden_side_effects": ["repository_write"]
+}

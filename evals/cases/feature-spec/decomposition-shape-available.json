@@ -1,0 +1,28 @@
+{
+  "case_id": "feature-spec.decomposition-shape-available",
+  "skill": "planning/feature-spec",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "work_shape": "three observed leaves with dependency edges",
+      "dev_backlog_shape": "observed available"
+    }
+  },
+  "required_output_fields": ["Decomposition-Handoff", "Successor-availability", "Dependency-edges", "Shape-consumer-ready"],
+  "expected_route": "dev-backlog shape",
+  "expected_engine": null,
+  "question_count_range": { "min": 0, "max": 0 },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "handoff", "type": "output_field_present", "field": "Decomposition-Handoff" },
+    { "assertion_id": "availability", "type": "output_field_present", "field": "Successor-availability" },
+    { "assertion_id": "edges", "type": "output_field_present", "field": "Dependency-edges" },
+    { "assertion_id": "shape-consumer", "type": "output_field_present", "field": "Shape-consumer-ready" },
+    { "assertion_id": "shape-route", "type": "route_equals" },
+    { "assertion_id": "no-question", "type": "question_count_in_range" },
+    { "assertion_id": "no-escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-shape-invocation", "type": "side_effect_absent", "side_effect": "external_message" },
+    { "assertion_id": "no-ticket-invention", "type": "side_effect_absent", "side_effect": "issue_mutation" }
+  ],
+  "forbidden_side_effects": ["external_message", "issue_mutation"]
+}

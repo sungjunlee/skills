@@ -1,0 +1,24 @@
+{
+  "case_id": "feature-spec.durable-ambiguous-authority",
+  "skill": "planning/feature-spec",
+  "input_fixture": {
+    "kind": "inline",
+    "value": { "lifetime": "multi-session", "edit_authority": "ambiguous", "destination": "unspecified" }
+  },
+  "required_output_fields": ["Artifact-lifetime", "Response-body", "Suggested-path"],
+  "expected_route": "relay",
+  "expected_engine": null,
+  "question_count_range": { "min": 0, "max": 0 },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "lifetime", "type": "output_field_present", "field": "Artifact-lifetime" },
+    { "assertion_id": "body", "type": "output_field_present", "field": "Response-body" },
+    { "assertion_id": "path", "type": "output_field_present", "field": "Suggested-path" },
+    { "assertion_id": "route", "type": "route_equals" },
+    { "assertion_id": "no-question", "type": "question_count_in_range" },
+    { "assertion_id": "no-escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-ambiguous-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit"]
+}

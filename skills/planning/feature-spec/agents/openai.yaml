@@ -1,0 +1,6 @@
+interface:
+  display_name: "Feature Spec"
+  short_description: "Compile settled intent into a tracker-neutral spec"
+  default_prompt: "Use $feature-spec to compile this settled design into a tracker-neutral feature spec."
+policy:
+  allow_implicit_invocation: false

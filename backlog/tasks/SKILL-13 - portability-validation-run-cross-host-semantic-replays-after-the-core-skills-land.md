@@ -1,7 +1,7 @@
 ---
 id: SKILL-13
 title: 'portability validation: run cross-host semantic replays after the core skills land'
-status: To Do
+status: In Progress
 labels:
   - type: validation
 priority: medium

@@ -1,0 +1,148 @@
+{
+  "case_id": "feature-spec.tracker-task-ac-preservation",
+  "host": "Cursor",
+  "host_version": "CLI 2026.07.09-a3815c0",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "status": "unverified",
+  "assertion_results": [
+    {
+      "assertion_id": "feature-spec-title",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "problem",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "user-outcome",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "chosen-approach",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "rejected-alternatives",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "scope",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "non-goals",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "constraints",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "acceptance",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "verification",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "architecture",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "unresolved",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "lifetime",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "handoff",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "existing-client-ac-preserved",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "rollback-ac-preserved",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "relay-plan-consumer",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "honor-route",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "no-reopened-interview",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "no-tracker-mutation",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    },
+    {
+      "assertion_id": "no-relay-invocation",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+    }
+  ],
+  "observed_output_fields": [],
+  "observed_route": null,
+  "observed_engine": null,
+  "question_count": null,
+  "observed_escalation": null,
+  "side_effects": [],
+  "evidence_note": "Cursor was authenticated and exposed a headless agent, but the authoritative smoke failed before model execution with EPERM while creating the host project-state directory; no replay row was executed."
+}

@@ -1,0 +1,70 @@
+{
+  "case_id": "feature-spec.decomposition-shape-unavailable",
+  "host": "Pi",
+  "host_version": "0.80.6",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "status": "unverified",
+  "assertion_results": [
+    {
+      "assertion_id": "handoff",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    },
+    {
+      "assertion_id": "literal",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    },
+    {
+      "assertion_id": "stop",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    },
+    {
+      "assertion_id": "unavailable-route",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    },
+    {
+      "assertion_id": "no-question",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    },
+    {
+      "assertion_id": "unavailable",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    },
+    {
+      "assertion_id": "no-successor-invocation",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    },
+    {
+      "assertion_id": "no-ticket-invention",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    },
+    {
+      "assertion_id": "no-fallback-implementation",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+    }
+  ],
+  "observed_output_fields": [],
+  "observed_route": null,
+  "observed_engine": null,
+  "question_count": null,
+  "observed_escalation": null,
+  "side_effects": [],
+  "evidence_note": "Pi was installed, but `pi --list-models` returned no available models because no provider login or API key was configured; no replay row was executed."
+}

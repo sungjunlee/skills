@@ -1,0 +1,166 @@
+{
+  "case_id": "feature-spec.tracker-task-ac-preservation",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.207 / claude-opus-4-8",
+  "skill_revision": "66c13f499f522da0fbc92354ca0fa5e8753bca7e+issue13-calibration",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "feature-spec-title",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Feature-Spec-title."
+    },
+    {
+      "assertion_id": "problem",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Problem."
+    },
+    {
+      "assertion_id": "user-outcome",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains User-visible-outcome."
+    },
+    {
+      "assertion_id": "chosen-approach",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Chosen-approach."
+    },
+    {
+      "assertion_id": "rejected-alternatives",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Important-rejected-alternatives."
+    },
+    {
+      "assertion_id": "scope",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Scope."
+    },
+    {
+      "assertion_id": "non-goals",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Non-goals."
+    },
+    {
+      "assertion_id": "constraints",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Constraints-and-compatibility."
+    },
+    {
+      "assertion_id": "acceptance",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Acceptance-criteria."
+    },
+    {
+      "assertion_id": "verification",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Verification-strategy."
+    },
+    {
+      "assertion_id": "architecture",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Architecture-level-decisions."
+    },
+    {
+      "assertion_id": "unresolved",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Unresolved-human-decisions."
+    },
+    {
+      "assertion_id": "lifetime",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Artifact-lifetime."
+    },
+    {
+      "assertion_id": "handoff",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Execution-Handoff."
+    },
+    {
+      "assertion_id": "existing-client-ac-preserved",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Existing-client-response-fields-preserved."
+    },
+    {
+      "assertion_id": "rollback-ac-preserved",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Rollback-without-data-loss-preserved."
+    },
+    {
+      "assertion_id": "relay-plan-consumer",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Artifact contains Relay-plan-consumer-ready."
+    },
+    {
+      "assertion_id": "honor-route",
+      "status": "pass",
+      "observed": "relay",
+      "evidence": "Observed route \"relay\"."
+    },
+    {
+      "assertion_id": "no-reopened-interview",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "Observed 0 blocking question(s)."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Observed escalation \"none\"."
+    },
+    {
+      "assertion_id": "no-tracker-mutation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No issue_mutation observed."
+    },
+    {
+      "assertion_id": "no-relay-invocation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No external_message observed."
+    }
+  ],
+  "observed_output_fields": [
+    "Feature-Spec-title",
+    "Problem",
+    "User-visible-outcome",
+    "Chosen-approach",
+    "Important-rejected-alternatives",
+    "Scope",
+    "Non-goals",
+    "Constraints-and-compatibility",
+    "Acceptance-criteria",
+    "Verification-strategy",
+    "Architecture-level-decisions",
+    "Unresolved-human-decisions",
+    "Artifact-lifetime",
+    "Execution-Handoff",
+    "Existing-client-response-fields-preserved",
+    "Rollback-without-data-loss-preserved",
+    "Relay-plan-consumer-ready"
+  ],
+  "observed_route": "relay",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "2026-07-11 isolated Claude Code CLI replay; exit 0; diff 0 byte(s); independent fixture verification exit not run. Raw artifacts remain outside the repository."
+}

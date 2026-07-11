@@ -68,16 +68,23 @@ a separate finalization.
 The 2026-07-12 R2 evidence audit found that retained parent evidence for
 `implement.independent-isolated` and `implement.shared-schema-serializes` no
 longer established a complete authoritative lineage; broken worker-output
-links were not treated as proof. Both cases were therefore rerun from a clean
-baseline on actual Claude Code in sanitized disposable Git repositories. The
-independent case recorded two real `Agent` lifecycles running concurrently in
-one shared checkout, changes only to the alpha and beta leaf artifacts, parent
-inspection of the combined and final diffs, and a parent-owned passing check.
-The shared-schema case recorded two real `Agent` lifecycles in strict order:
-worker 1 completed the schema, lock, and first-consumer changes; the parent
-inspected that actual diff before dispatching worker 2; then the parent
+links were not treated as proof. The selected 2026-07-12 correction lineage for
+the independent case reran on actual Claude Code in one sanitized disposable
+parent Git repository. The parent emulated two isolated worker workspaces as
+separate linked worktrees and branches from the same clean baseline, then
+started exactly two real `Agent` lifecycles concurrently in alpha-then-beta
+order; both were active before either completed, and they completed in the same
+order. Alpha changed only `src/alpha.js` and passed its leaf-local check; beta
+changed only `src/beta.js` and passed its leaf-local check. The parent separately
+inspected both worker diffs, integrated the inspected patches alpha then beta
+without commits, inspected the integrated and final two-file parent diffs, and
+ran authoritative `npm test` at exit 0. Parent and worker refs remained at the
+baseline. The shared-schema case retains its R2 single-lineage evidence: two
+real `Agent` lifecycles ran in strict order, the parent inspected worker 1's
+schema, lock, and first-consumer artifacts before dispatching worker 2, then
 inspected the four-file integrated and final diffs and ran the passing check.
-Each compact row now cites only its one selected successful lineage.
+Each compact row cites only its one selected successful lineage; both used no
+commits, while raw transcripts and machine paths stay outside the repository.
 
 ## Matrix result
 
@@ -127,9 +134,11 @@ model did not change. Calibration changed only evidence-backed host capability
 mappings:
 
 - Claude Code worker dispatch, bounded dispatch, lifecycle collection,
-  repository editing, and verification are observed. Shared-checkout workers
-  are not described as isolated workspaces; isolated-workspace capability is
-  `unverified` because no negative capability preflight proved it unavailable.
+  repository editing, and verification are observed. Isolated workspace is
+  `emulated`: the selected 2026-07-12 lineage composed two separate linked Git
+  worktrees and branches from one baseline, ran one concurrent `Agent` per
+  worktree, inspected each leaf diff, integrated both without commits, and
+  passed parent-owned authoritative verification.
 - Codex repository work, actual worker lifecycle behavior, and same-thread
   blocking-question/resume behavior are observed for the named cases; commit
   authority remains unverified.

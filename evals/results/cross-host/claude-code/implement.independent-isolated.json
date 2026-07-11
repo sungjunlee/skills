@@ -131,5 +131,5 @@
   "side_effects": [
     "repository_write"
   ],
-  "evidence_note": "2026-07-12 selected single Claude Code lineage; exit 0; 2 real Agent lifecycles started and completed concurrently in one shared-checkout dispatch batch. Agents changed src/alpha.js and src/beta.js only (375-byte diff); the parent inspected the combined and final diffs and ran authoritative npm test at exit 0. No isolated workspace is claimed. Raw artifacts remain outside the repository."
+  "evidence_note": "2026-07-12 selected single Claude Code lineage; exit 0; 2 isolated worker workspaces were emulated as separate linked Git worktrees/branches from one clean baseline. Exactly 2 real Agent lifecycles ran concurrently (start alpha, start beta; complete alpha, complete beta): alpha changed only src/alpha.js and passed its leaf check, while beta changed only src/beta.js and passed its leaf check. The parent separately inspected both worker artifacts/diffs, integrated alpha then beta without commits, inspected the integrated and final two-file diffs, and ran authoritative npm test at exit 0. Parent and worker refs remained at the baseline; no commits or forbidden side effects occurred. Raw artifacts remain outside the repository."
 }

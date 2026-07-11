@@ -53,4 +53,19 @@ The complete Feature Spec plus this handoff is the source artifact for `dev-back
 
 ## Contract contradictions
 
-If a durable repository contract contradicts the settled source, name the exact contract path and section under `Unresolved human decisions`. Do not choose a winner, amend `spec/*`, or route into execution until a human resolves it. In unattended flows, recording the decision is the non-blocking completion behavior.
+If a durable repository contract contradicts the settled source, name the exact contract path and section under `Unresolved human decisions`. Do not choose a winner, amend `spec/*`, or route into execution until a human resolves it. A contradiction overrides a preselected execution route.
+
+Emit exactly this closed handoff:
+
+```markdown
+## Human Decision Handoff
+
+Route: blocked-human-decision
+Source intent: <the settled decision that conflicts>
+Conflicting contract: <exact repository path and section, plus the incompatible requirement>
+Decision required: <the choice a human must make before compilation can resume>
+Execution status: blocked pending human decision
+Resume with: feature-spec after the contradiction is resolved
+```
+
+In unattended flows, return the complete spec with this handoff and ask no question. The route ends the current compilation successfully without selecting `implement`, `relay`, or a decomposition successor; it does not authorize execution or contract edits.

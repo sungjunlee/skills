@@ -42,5 +42,5 @@ Use these headings exactly and in this order. Replace the final heading as direc
 <Response-only, suggested durable path, or authorized repository path, with rationale.>
 
 ## Execution Handoff
-<Use the closed single-unit form from routing.md. Replace this heading with `## Decomposition Handoff` when decomposition is required.>
+<Use the closed single-unit form from routing.md. Replace this heading with `## Decomposition Handoff` when decomposition is required or `## Human Decision Handoff` with route `blocked-human-decision` when a repository-contract contradiction blocks execution.>
 ```

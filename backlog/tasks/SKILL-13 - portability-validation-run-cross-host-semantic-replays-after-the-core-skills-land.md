@@ -29,7 +29,7 @@ Claude Code and Codex are required execution hosts. OpenCode, Cursor, and Pi mus
 2. clear small request -> short brainstorming pass without redundant questions
 3. settled Design Handoff -> feature spec
 4. complete tracker task -> feature spec without reopening settled decisions
-5. feature requiring decomposition -> `shape` recommendation
+5. feature requiring decomposition -> tracker-neutral decomposition handoff plus an observed `shape` recommendation or `shape unavailable`
 6. localized implementation -> inline
 7. dependent implementation units -> serial workers
 8. safely independent units -> bounded parallel

@@ -32,7 +32,7 @@ The skill should ask only questions that materially change the decision, inspect
 5. Produce the Design Handoff below.
 6. Recommend a successor based on the result:
    - `feature-spec` when the direction is selected but implementation intent needs synthesis.
-   - dev-backlog `shape` when an adequate source artifact already needs decomposition/tracking.
+   - a tracker-neutral decomposition handoff when an adequate source artifact needs decomposition/tracking; recommend dev-backlog `shape` only when observed available, otherwise record `shape unavailable`.
    - `implement` or relay when the work is already a settled single unit.
    - stop after the handoff when the user requested exploration only.
 7. Never rely on implicit skill chaining; express the recommendation as output.

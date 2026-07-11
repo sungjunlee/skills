@@ -16,7 +16,7 @@ The repository can execute settled current-session work through a safe portable 
 
 ### Batch 1 — current-session implementation
 
-- [ ] #11 implement: add portable current-session execution with relay escalation (~2 days; blocks #13)
+- [~] #11 implement: add portable current-session execution with relay escalation (~2 days; blocks #13) [branch:issue-11-implement] [run:issue-11-20260711071500000-a11ce011]
 
 ### Batch 2 — cross-host integration gate
 
@@ -32,4 +32,5 @@ The repository can execute settled current-session work through a safe portable 
 
 ## Progress
 
+- 2026-07-11 16:09: [actor:codex] #11 dispatched to isolated branch `issue-11-implement` with frozen Done Criteria and hardened review assurance.
 - 2026-07-11 16:04: [actor:codex] Planning pipeline sprint closed after PRs #16, #19, and #20; implementation-validation sprint opened with #11 next.

@@ -86,6 +86,23 @@ Each compact row now cites only its one selected successful lineage.
 | Cursor | CLI 2026.07.09-a3815c0 | 0 | 0 | 12 | Startup failed before model execution while creating host project state |
 | Pi | 0.80.6 | 0 | 0 | 12 | No authenticated provider/model was available |
 
+### Case status matrix
+
+| Case | Claude Code | Codex | OpenCode | Cursor | Pi |
+| --- | --- | --- | --- | --- | --- |
+| `bs.vague-feature` | pass | pass | fail | unverified | unverified |
+| `bs.clear-low-risk` | pass | pass | fail | unverified | unverified |
+| `feature-spec.design-handoff` | pass | pass | pass | unverified | unverified |
+| `feature-spec.tracker-task-ac-preservation` | pass | pass | pass | unverified | unverified |
+| `feature-spec.decomposition-shape-unavailable` | pass | pass | pass | unverified | unverified |
+| `implement.localized-safe` | pass | pass | pass | unverified | unverified |
+| `implement.dependent-units` | pass | pass | fail | unverified | unverified |
+| `implement.independent-isolated` | pass | pass | fail | unverified | unverified |
+| `implement.shared-schema-serializes` | pass | pass | fail | unverified | unverified |
+| `implement.high-risk-relay` | pass | pass | pass | unverified | unverified |
+| `implement.worker-unavailable-degrades` | pass | pass | pass | unverified | unverified |
+| `implement.worker-partial-failure` | pass | pass | fail | unverified | unverified |
+
 OpenCode failures are not waived: `bs.vague-feature` returned a complete
 one-shot handoff in phase 1 instead of a genuine stop/resume question turn;
 `bs.clear-low-risk` omitted the observable `implement` route;

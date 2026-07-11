@@ -48,6 +48,18 @@ function slug(value) {
   return value.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-").replaceAll(/^-|-$/g, "");
 }
 
+function expectedReportStatusMatrix(pairs) {
+  const rows = [
+    `| Case | ${expectedHosts.join(" | ")} |`,
+    `| --- | ${expectedHosts.map(() => "---").join(" | ")} |`,
+  ];
+  for (const { case_id: caseId } of canonicalCases) {
+    const statuses = expectedHosts.map((host) => pairs.get(`${host}\u0000${caseId}`)?.status ?? "missing");
+    rows.push(`| \`${caseId}\` | ${statuses.join(" | ")} |`);
+  }
+  return rows.join("\n");
+}
+
 async function jsonFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
@@ -186,6 +198,10 @@ function collectErrors(ctx) {
     scanHygiene(relative, text, errors);
   }
 
+  if (!ctx.reportText.includes(expectedReportStatusMatrix(pairs))) {
+    errors.push("report case status matrix must exactly match all 60 compact results");
+  }
+
   // Hygiene scan of the report and committed fixtures. The answer script is the
   // one file allowed to contain the artifact/question delimiter templates it defines.
   scanHygiene(reportRelative, ctx.reportText, errors);
@@ -294,6 +310,16 @@ function runSelfTests(baseCtx) {
       expect: /raw transcript marker/,
     },
     {
+      name: "report matrix status drift",
+      mutate: (c) => {
+        c.reportText = c.reportText.replace(
+          "| `bs.vague-feature` | pass | pass | fail | unverified | unverified |",
+          "| `bs.vague-feature` | pass | pass | pass | unverified | unverified |",
+        );
+      },
+      expect: /report case status matrix must exactly match/,
+    },
+    {
       name: "canonical case substitution",
       mutate: (c) => {
         c.matrix.required_cases[0] = {
@@ -338,7 +364,7 @@ if (selfTest) {
     console.error(failures.join("\n"));
     process.exitCode = 1;
   } else {
-    console.log("Self-tests passed: clean baseline plus 10 negative rejections, including canonical case substitution, omission, and reordering drift.");
+    console.log("Self-tests passed: clean baseline plus 11 negative rejections, including report status drift and canonical case substitution, omission, and reordering drift.");
   }
 } else {
   const errors = collectErrors(ctx);

@@ -39,6 +39,22 @@ Source:
 - `skills/planning/feature-spec/references/routing.md`
 - `skills/planning/feature-spec/references/host-mappings.md`
 
+### Engineering
+
+#### implement
+
+Execute a settled feature spec, tracker task, or clear prompt in the current checkout with the lightest safe current-session engine.
+
+`implement` performs a pre-edit safety gate, chooses inline, serial-worker, or bounded-parallel execution, and keeps diff inspection and authoritative verification with the orchestrator. Work that needs durable recovery, isolated lifecycle, or elevated-risk handling is returned as a relay handoff before mutation; relay is never invoked silently.
+
+Source:
+
+- `skills/engineering/implement/SKILL.md`
+- `skills/engineering/implement/agents/openai.yaml`
+- `skills/engineering/implement/references/routing.md`
+- `skills/engineering/implement/references/worker-contract.md`
+- `skills/engineering/implement/references/host-mappings.md`
+
 ### Productivity
 
 #### delegate
@@ -133,6 +149,15 @@ evals/
 scripts/
   verify-replays.mjs
 skills/
+  engineering/
+    implement/
+      SKILL.md
+      agents/
+        openai.yaml
+      references/
+        host-mappings.md
+        routing.md
+        worker-contract.md
   planning/
     brainstorming/
       SKILL.md

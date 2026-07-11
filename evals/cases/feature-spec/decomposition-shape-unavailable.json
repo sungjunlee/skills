@@ -1,0 +1,28 @@
+{
+  "case_id": "feature-spec.decomposition-shape-unavailable",
+  "skill": "planning/feature-spec",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "work_shape": "multiple leaves and dependency edges",
+      "dev_backlog_shape": "unobserved"
+    }
+  },
+  "required_output_fields": ["Decomposition-Handoff", "Shape-unavailable-literal", "Stop-without-fallback"],
+  "expected_route": "shape unavailable",
+  "expected_engine": null,
+  "question_count_range": { "min": 0, "max": 0 },
+  "expected_escalation": "successor-unavailable",
+  "semantic_assertions": [
+    { "assertion_id": "handoff", "type": "output_field_present", "field": "Decomposition-Handoff" },
+    { "assertion_id": "literal", "type": "output_field_present", "field": "Shape-unavailable-literal" },
+    { "assertion_id": "stop", "type": "output_field_present", "field": "Stop-without-fallback" },
+    { "assertion_id": "unavailable-route", "type": "route_equals" },
+    { "assertion_id": "no-question", "type": "question_count_in_range" },
+    { "assertion_id": "unavailable", "type": "escalation_equals" },
+    { "assertion_id": "no-successor-invocation", "type": "side_effect_absent", "side_effect": "external_message" },
+    { "assertion_id": "no-ticket-invention", "type": "side_effect_absent", "side_effect": "issue_mutation" },
+    { "assertion_id": "no-fallback-implementation", "type": "side_effect_absent", "side_effect": "repository_write" }
+  ],
+  "forbidden_side_effects": ["external_message", "issue_mutation", "repository_write"]
+}

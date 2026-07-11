@@ -1,7 +1,7 @@
 ---
 id: SKILL-10
 title: 'feature-spec: compile settled design into tracker-neutral implementation intent'
-status: In Progress
+status: Done
 labels:
   - type: skill
 priority: medium
@@ -80,13 +80,13 @@ It may read durable repository contracts as constraints, but it cannot amend the
 
 ## Acceptance criteria
 
-- [ ] Produces all required sections from a Design Handoff and from an already-clear tracker task.
-- [ ] Does not repeat a completed brainstorming interview.
-- [ ] Detects and reports contradictions with durable repository contracts.
-- [ ] Emits observable AC and verification strategy without file-by-file micro-steps or pasted implementation code.
-- [ ] Correctly chooses among an observed `shape` successor, a `shape unavailable` decomposition handoff, and a direct Execution Handoff in replay fixtures.
-- [ ] Direct consumers can use the artifact: dev-backlog `shape`, `implement`, and relay-plan.
-- [ ] Committed cases plus at least one observed primary-host smoke result validate the artifact contract; #13 owns Claude Code/Codex equivalence.
+- [x] Produces all required sections from a Design Handoff and from an already-clear tracker task.
+- [x] Does not repeat a completed brainstorming interview.
+- [x] Detects and reports contradictions with durable repository contracts.
+- [x] Emits observable AC and verification strategy without file-by-file micro-steps or pasted implementation code.
+- [x] Correctly chooses among an observed `shape` successor, a `shape unavailable` decomposition handoff, and a direct Execution Handoff in replay fixtures.
+- [x] Direct consumers can use the artifact: dev-backlog `shape`, `implement`, and relay-plan.
+- [x] Committed cases plus at least one observed primary-host smoke result validate the artifact contract; #13 owns Claude Code/Codex equivalence.
 
 ## Non-goals
 

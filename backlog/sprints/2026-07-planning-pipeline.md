@@ -1,6 +1,6 @@
 ---
 milestone: Epic 8 - Planning pipeline
-status: active
+status: completed
 started: 2026-07-11
 due: TBD
 objectives: []
@@ -20,8 +20,8 @@ The repository can turn vague intent into a portable Design Handoff and tracker-
 
 ### Batch 2 — planning primitives
 
-- [~] #9 brainstorming: add a thin explicit-only Design Handoff primitive (~1 day) [branch:issue-9-brainstorming] [run:issue-9-20260711062943735-3d84d7c2]
-- [~] #10 feature-spec: compile settled design into tracker-neutral implementation intent (~1 day) [branch:issue-10-feature-spec] [run:issue-10-20260711062943733-89214aa4]
+- [x] #9 brainstorming: add a thin explicit-only Design Handoff primitive (~1 day) → PR #19 (merged)
+- [x] #10 feature-spec: compile settled design into tracker-neutral implementation intent (~1 day) → PR #20 (merged)
 
 ## Running Context
 
@@ -31,6 +31,7 @@ The repository can turn vague intent into a portable Design Handoff and tracker-
 - Consumer issues add committed cases and focused host smoke evidence. #13 remains the authority for the complete Claude Code/Codex cross-host matrix.
 - #9 and #10 use isolated branches. Because both touch README and eval surfaces, merge one first and rebase the other before final review.
 - Replay discovery must infer case/result kinds from containment under recursive `evals/cases/` and `evals/results/` trees, not only immediate parent names or filename prefixes.
+- In parallel relay batches that both edit README, merge one PR first, then rebase the remaining branch only after its review-fix commits are complete; re-dispatch from `changes_requested` restores the canonical remote branch and can supersede an early local rebase.
 
 ## Progress
 
@@ -38,3 +39,5 @@ The repository can turn vague intent into a portable Design Handoff and tracker-
 - 2026-07-11 15:04: [actor:codex] #12 dispatched through relay with delayed publication; run `issue-12-20260711060421727-70124bfe` is in flight on `issue-12-portability-foundation`.
 - 2026-07-11 15:23: [actor:codex] #12 → PR #16 → reviewed (LGTM, round 3) → merged; nested replay document inference was fixed before publication.
 - 2026-07-11 15:29: [actor:codex] #9 and #10 dispatched in parallel from merged #12 foundation with isolated branches and delayed publication.
+- 2026-07-11 16:02: [actor:codex] #9 → PR #19 (LGTM, round 2) and #10 → PR #20 (LGTM, round 4) merged; Planning pipeline complete.
+- 2026-07-11: Sprint closed. 3/3 tasks completed.

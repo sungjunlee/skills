@@ -16,7 +16,7 @@ The repository can turn vague intent into a portable Design Handoff and tracker-
 
 ### Batch 1 — shared foundation
 
-- [~] #12 portability foundation: define the engine capability contract and replay harness (~1-2 days; blocks #9 and #10) → branch `issue-12-portability-foundation`, run `issue-12-20260711060421727-70124bfe`
+- [~] #12 portability foundation: define the engine capability contract and replay harness (~1-2 days; blocks #9 and #10) [branch:issue-12-portability-foundation] [run:issue-12-20260711060421727-70124bfe]
 
 ### Batch 2 — planning primitives
 

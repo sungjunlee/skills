@@ -1,0 +1,10 @@
+{
+  "name": "sungjunlee-skills",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/verify-replays.mjs",
+    "verify": "node scripts/verify-replays.mjs"
+  }
+}

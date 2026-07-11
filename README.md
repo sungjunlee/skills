@@ -60,7 +60,24 @@ These are intentionally not included here because they are heavier workflows rat
 
 ## Install
 
-Copy or symlink the desired skill directory into your agent's configured skills directory.
+Skills in this repository use the required nested path
+`skills/<category>/<skill-name>/`. Ask the `skills` CLI to scan the full depth;
+without `--full-depth`, nested skills may not be discovered.
+
+List all discoverable skills before installation:
+
+```bash
+npx skills add . --list --full-depth
+```
+
+Install from this repository with the same full-depth scan:
+
+```bash
+npx skills add . --full-depth
+```
+
+Alternatively, copy or symlink the desired skill directory into your agent's
+configured skills directory.
 
 For example, to install `gosu-review`:
 
@@ -73,6 +90,15 @@ Adjust the destination for your runtime. Codex and Claude Code may use different
 ## Repo Layout
 
 ```text
+docs/
+  engine-capability-contract.md
+evals/
+  schema/
+  fixtures/
+  cases/
+  results/
+scripts/
+  verify-replays.mjs
 skills/
   productivity/
     delegate/
@@ -90,3 +116,17 @@ skills/
 - Prefer strong workflow rules over long explanations.
 - Use references only for optional seeds, examples, or checklists.
 - Avoid pretending to use tools that are unavailable.
+
+## Maintainer Verification
+
+Run the semantic replay verifier and confirm nested skill discovery before
+landing changes:
+
+```bash
+npm test
+npx skills add . --list --full-depth
+git diff --check
+```
+
+The engine capability contract in `docs/` is maintainer guidance. Runtime
+skills must remain self-contained and must not depend on reading it.

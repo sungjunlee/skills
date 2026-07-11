@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sungjunlee/skills/evals/schema/replay-result.schema.json",
+  "title": "Semantic replay result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "host",
+    "host_version",
+    "skill_revision",
+    "status",
+    "assertion_results",
+    "observed_output_fields",
+    "observed_route",
+    "observed_engine",
+    "question_count",
+    "observed_escalation",
+    "side_effects",
+    "evidence_note"
+  ],
+  "properties": {
+    "case_id": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "host": { "type": "string", "minLength": 1 },
+    "host_version": { "type": "string", "minLength": 1 },
+    "skill_revision": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["pass", "fail", "unverified"] },
+    "assertion_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assertion_id", "status", "observed", "evidence"],
+        "properties": {
+          "assertion_id": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["pass", "fail", "unverified"] },
+          "observed": {
+            "oneOf": [
+              { "type": "boolean" },
+              { "type": "string" },
+              { "type": "integer" },
+              { "type": "null" }
+            ]
+          },
+          "evidence": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "observed_output_fields": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]*$" }
+    },
+    "observed_route": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "observed_engine": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "question_count": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "null" }
+      ]
+    },
+    "observed_escalation": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "side_effects": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "repository_write",
+          "commit",
+          "push",
+          "pull_request",
+          "issue_mutation",
+          "external_message",
+          "secret_capture",
+          "raw_transcript_write"
+        ]
+      }
+    },
+    "evidence_note": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "case_id": "foundation.inline-pass",
+  "host": "fixture-host",
+  "host_version": "schema-smoke-v1",
+  "skill_revision": "foundation-fixture-v1",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "summary-present",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compact result recorded the summary field."
+    },
+    {
+      "assertion_id": "inline-route",
+      "status": "pass",
+      "observed": "inline",
+      "evidence": "The fixture selected the inline route."
+    },
+    {
+      "assertion_id": "no-questions",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The fixture recorded zero blocking questions."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "The fixture recorded no escalation."
+    },
+    {
+      "assertion_id": "no-publish",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture recorded no push side effect."
+    }
+  ],
+  "observed_output_fields": ["summary"],
+  "observed_route": "inline",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Synthetic schema and semantic verifier smoke evidence; no host support claim."
+}

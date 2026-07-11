@@ -321,9 +321,12 @@ async function jsonFiles(target) {
 
 function documentKind(filename) {
   const basename = path.basename(filename);
-  const parent = path.basename(path.dirname(filename));
-  if (basename.startsWith("case.") || parent === "cases") return "case";
-  if (basename.startsWith("result.") || parent === "results") return "result";
+  const caseRelative = path.relative(locations.cases, filename);
+  const resultRelative = path.relative(locations.results, filename);
+  if (!caseRelative.startsWith(`..${path.sep}`) && !path.isAbsolute(caseRelative)) return "case";
+  if (!resultRelative.startsWith(`..${path.sep}`) && !path.isAbsolute(resultRelative)) return "result";
+  if (basename.startsWith("case.")) return "case";
+  if (basename.startsWith("result.")) return "result";
   throw new Error(`${path.relative(root, filename)}: cannot infer replay document kind`);
 }
 

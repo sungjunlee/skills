@@ -1,7 +1,7 @@
 ---
 id: SKILL-11
 title: 'implement: add portable current-session execution with relay escalation'
-status: To Do
+status: In Progress
 labels:
   - type: skill
 priority: medium

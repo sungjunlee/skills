@@ -131,5 +131,5 @@
   "side_effects": [
     "repository_write"
   ],
-  "evidence_note": "2026-07-11 isolated Claude Code CLI replay; exit 0; diff 836 byte(s); independent fixture verification exit 0. Raw artifacts remain outside the repository."
+  "evidence_note": "2026-07-12 selected single Claude Code lineage; exit 0; 2 real Agent lifecycles started and completed strictly serially. Agent 1 changed schema.json, package-lock.json, and consumers/a.js; the parent inspected that diff before Agent 2 changed consumers/b.js. The parent inspected the 4-file integrated and final 906-byte diff and ran authoritative npm test at exit 0. Raw artifacts remain outside the repository."
 }

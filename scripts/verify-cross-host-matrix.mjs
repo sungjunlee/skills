@@ -15,6 +15,20 @@ if (unknownFlags.length > 0) throw new Error(`Unknown argument(s): ${unknownFlag
 const expectedHosts = ["Claude Code", "Codex", "OpenCode", "Cursor", "Pi"];
 const requiredHosts = new Set(["Claude Code", "Codex"]);
 const validStatuses = new Set(["pass", "fail", "unverified"]);
+const canonicalCases = Object.freeze([
+  { requirement: 1, case_id: "bs.vague-feature", path: "evals/cases/brainstorming.vague-feature.json" },
+  { requirement: 2, case_id: "bs.clear-low-risk", path: "evals/cases/brainstorming.clear-low-risk.json" },
+  { requirement: 3, case_id: "feature-spec.design-handoff", path: "evals/cases/feature-spec/design-handoff.json" },
+  { requirement: 4, case_id: "feature-spec.tracker-task-ac-preservation", path: "evals/cases/feature-spec/tracker-task-ac-preservation.json" },
+  { requirement: 5, case_id: "feature-spec.decomposition-shape-unavailable", path: "evals/cases/feature-spec/decomposition-shape-unavailable.json" },
+  { requirement: 6, case_id: "implement.localized-safe", path: "evals/cases/implement/localized-safe.json" },
+  { requirement: 7, case_id: "implement.dependent-units", path: "evals/cases/implement/dependent-units.json" },
+  { requirement: 8, case_id: "implement.independent-isolated", path: "evals/cases/implement/independent-isolated.json" },
+  { requirement: 9, case_id: "implement.shared-schema-serializes", path: "evals/cases/implement/shared-schema-serializes.json" },
+  { requirement: 10, case_id: "implement.high-risk-relay", path: "evals/cases/implement/high-risk-relay.json" },
+  { requirement: 11, case_id: "implement.worker-unavailable-degrades", path: "evals/cases/implement/worker-unavailable-degrades.json" },
+  { requirement: 12, case_id: "implement.worker-partial-failure", path: "evals/cases/implement/worker-partial-failure.json" },
+].map((entry) => Object.freeze(entry)));
 
 // Hygiene patterns applied to every committed result field, the report, and fixtures.
 const machinePathPattern = /(?:\/Users\/|\/home\/[A-Za-z]|\/private\/var\/folders\/|\/tmp\/[A-Za-z0-9]|[A-Za-z]:\\Users\\)/;
@@ -129,6 +143,9 @@ function collectErrors(ctx) {
   if (!/^[0-9a-f]{40}$/.test(matrix.base_sha)) errors.push("matrix base_sha must be an exact SHA");
   if (!same(matrix.required_hosts, expectedHosts)) errors.push("matrix hosts differ from the canonical five-host order");
   if (matrix.required_cases.length !== 12) errors.push(`expected 12 cases, found ${matrix.required_cases.length}`);
+  if (!same(matrix.required_cases, canonicalCases)) {
+    errors.push("matrix required_cases must exactly match the ordered canonical 12-case contract");
+  }
 
   // Revision contract: an exact, documented value tied to base_sha (no unchecked suffix).
   if (matrix.expected_skill_revision !== matrix.base_sha) {
@@ -276,6 +293,30 @@ function runSelfTests(baseCtx) {
       mutate: (c) => { c.reportText = `${c.reportText}\n"stop_reason": "end_turn"\n`; },
       expect: /raw transcript marker/,
     },
+    {
+      name: "canonical case substitution",
+      mutate: (c) => {
+        c.matrix.required_cases[0] = {
+          requirement: 1,
+          case_id: "bs.substituted-case",
+          path: "evals/cases/brainstorming.substituted-case.json",
+        };
+      },
+      expect: /ordered canonical 12-case contract/,
+    },
+    {
+      name: "canonical case omission",
+      mutate: (c) => { c.matrix.required_cases.splice(4, 1); },
+      expect: /ordered canonical 12-case contract/,
+    },
+    {
+      name: "canonical case reordering",
+      mutate: (c) => {
+        [c.matrix.required_cases[7], c.matrix.required_cases[8]] =
+          [c.matrix.required_cases[8], c.matrix.required_cases[7]];
+      },
+      expect: /ordered canonical 12-case contract/,
+    },
   ];
 
   for (const check of checks) {
@@ -297,7 +338,7 @@ if (selfTest) {
     console.error(failures.join("\n"));
     process.exitCode = 1;
   } else {
-    console.log("Self-tests passed: clean baseline plus 7 negative rejections (missing report, revision mismatch, invalid status, machine-path, credential, artifact-delimiter, and host-transcript hygiene).");
+    console.log("Self-tests passed: clean baseline plus 10 negative rejections, including canonical case substitution, omission, and reordering drift.");
   }
 } else {
   const errors = collectErrors(ctx);

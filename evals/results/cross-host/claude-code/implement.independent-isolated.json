@@ -131,5 +131,5 @@
   "side_effects": [
     "repository_write"
   ],
-  "evidence_note": "2026-07-11 isolated Claude Code CLI replay; exit 0; diff 436 byte(s); independent fixture verification exit 0. Raw artifacts remain outside the repository."
+  "evidence_note": "2026-07-12 selected single Claude Code lineage; exit 0; 2 real Agent lifecycles started and completed concurrently in one shared-checkout dispatch batch. Agents changed src/alpha.js and src/beta.js only (375-byte diff); the parent inspected the combined and final diffs and ran authoritative npm test at exit 0. No isolated workspace is claimed. Raw artifacts remain outside the repository."
 }

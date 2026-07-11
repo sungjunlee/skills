@@ -62,6 +62,20 @@ blocked after the consumer's required check failed; that expected operational
 failure is disclosed in its compact row. No failed execution was combined with
 a separate finalization.
 
+The 2026-07-12 R2 evidence audit found that retained parent evidence for
+`implement.independent-isolated` and `implement.shared-schema-serializes` no
+longer established a complete authoritative lineage; broken worker-output
+links were not treated as proof. Both cases were therefore rerun from a clean
+baseline on actual Claude Code in sanitized disposable Git repositories. The
+independent case recorded two real `Agent` lifecycles running concurrently in
+one shared checkout, changes only to the alpha and beta leaf artifacts, parent
+inspection of the combined and final diffs, and a parent-owned passing check.
+The shared-schema case recorded two real `Agent` lifecycles in strict order:
+worker 1 completed the schema, lock, and first-consumer changes; the parent
+inspected that actual diff before dispatching worker 2; then the parent
+inspected the four-file integrated and final diffs and ran the passing check.
+Each compact row now cites only its one selected successful lineage.
+
 ## Matrix result
 
 | Host | Version | Pass | Fail | Unverified | Observation |
@@ -92,7 +106,8 @@ mappings:
 
 - Claude Code worker dispatch, bounded dispatch, lifecycle collection,
   repository editing, and verification are observed. Shared-checkout workers
-  are not described as isolated workspaces.
+  are not described as isolated workspaces; isolated-workspace capability is
+  `unverified` because no negative capability preflight proved it unavailable.
 - Codex repository work, actual worker lifecycle behavior, and same-thread
   blocking-question/resume behavior are observed for the named cases; commit
   authority remains unverified.
@@ -124,6 +139,8 @@ case assertion from the compact observations, and rejects any non-pass Claude
 Code or Codex row. It also rejects invalid optional statuses, revision drift,
 the wrong or missing dated report, machine paths, credential-like values, and
 raw host transcript markers across all compact results, the report, and the
-cross-host fixtures. Its deterministic negative self-tests cover each new
-failure class. Separate scope, secret/path, and raw-transcript scans confirmed
-that no frozen file or raw evidence entered the committed diff.
+cross-host fixtures. It exact-matches the ordered immutable 12-case contract;
+its deterministic negative self-tests reject case substitution, omission, and
+reordering in addition to every prior failure class. Separate scope,
+secret/path, and raw-transcript scans confirmed that no frozen file or raw
+evidence entered the committed diff.

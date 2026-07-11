@@ -1,7 +1,7 @@
 ---
 id: SKILL-9
 title: 'brainstorming: add a thin explicit-only Design Handoff primitive'
-status: To Do
+status: In Progress
 labels:
   - type: skill
 priority: medium

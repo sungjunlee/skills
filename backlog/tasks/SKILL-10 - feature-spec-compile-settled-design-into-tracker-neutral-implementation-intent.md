@@ -1,7 +1,7 @@
 ---
 id: SKILL-10
 title: 'feature-spec: compile settled design into tracker-neutral implementation intent'
-status: To Do
+status: In Progress
 labels:
   - type: skill
 priority: medium

@@ -1,0 +1,21 @@
+{
+  "case_id": "foundation.inline-pass",
+  "host": "fixture-host",
+  "host_version": "schema-smoke-v1",
+  "skill_revision": "foundation-fixture-v1",
+  "status": "unverified",
+  "assertion_results": [
+    {
+      "assertion_id": "summary-present",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Intentionally invalid result fixture."
+    }
+  ],
+  "observed_output_fields": [],
+  "observed_route": null,
+  "observed_engine": null,
+  "question_count": null,
+  "observed_escalation": null,
+  "side_effects": []
+}

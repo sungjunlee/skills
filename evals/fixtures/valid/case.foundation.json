@@ -1,0 +1,43 @@
+{
+  "case_id": "foundation.inline-pass",
+  "skill": "foundation/engine-contract",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "request_kind": "foundation-smoke"
+    }
+  },
+  "required_output_fields": ["summary"],
+  "expected_route": "inline",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    {
+      "assertion_id": "summary-present",
+      "type": "output_field_present",
+      "field": "summary"
+    },
+    {
+      "assertion_id": "inline-route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "no-questions",
+      "type": "question_count_in_range"
+    },
+    {
+      "assertion_id": "no-escalation",
+      "type": "escalation_equals"
+    },
+    {
+      "assertion_id": "no-publish",
+      "type": "side_effect_absent",
+      "side_effect": "push"
+    }
+  ],
+  "forbidden_side_effects": ["push"]
+}

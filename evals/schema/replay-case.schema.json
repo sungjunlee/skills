@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sungjunlee/skills/evals/schema/replay-case.schema.json",
+  "title": "Semantic replay case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "skill",
+    "input_fixture",
+    "required_output_fields",
+    "expected_route",
+    "expected_engine",
+    "question_count_range",
+    "expected_escalation",
+    "semantic_assertions",
+    "forbidden_side_effects"
+  ],
+  "properties": {
+    "case_id": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "skill": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$" },
+    "input_fixture": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": { "const": "inline" },
+            "value": { "type": "object" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": { "const": "file" },
+            "value": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "required_output_fields": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]*$" }
+    },
+    "expected_route": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "expected_engine": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "question_count_range": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["min", "max"],
+          "properties": {
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "expected_escalation": { "type": "string", "minLength": 1 },
+    "semantic_assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type", "field"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "output_field_present" },
+              "field": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]*$" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "route_equals" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "engine_equals" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "question_count_in_range" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "escalation_equals" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type", "side_effect"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "side_effect_absent" },
+              "side_effect": {
+                "enum": [
+                  "repository_write",
+                  "commit",
+                  "push",
+                  "pull_request",
+                  "issue_mutation",
+                  "external_message",
+                  "secret_capture",
+                  "raw_transcript_write"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "forbidden_side_effects": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "repository_write",
+          "commit",
+          "push",
+          "pull_request",
+          "issue_mutation",
+          "external_message",
+          "secret_capture",
+          "raw_transcript_write"
+        ]
+      }
+    }
+  }
+}

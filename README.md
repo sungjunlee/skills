@@ -29,7 +29,7 @@ Source:
 
 Compile a completed Design Handoff, settled proposal or conversation, or clear tracker task into a tracker-neutral, implementation-ready Feature Spec.
 
-It preserves settled decisions and acceptance criteria, records exact repository-contract contradictions for human resolution, and closes with either one `implement | relay` recommendation or a decomposition handoff. It recommends successors without invoking them or mutating tracker state.
+It preserves settled decisions and acceptance criteria, records exact repository-contract contradictions for human resolution, and closes with exactly one of an `implement | relay` recommendation, a decomposition handoff, or a `blocked-human-decision` Human Decision Handoff. It recommends successors without invoking them or mutating tracker state.
 
 Source:
 

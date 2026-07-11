@@ -20,8 +20,8 @@ The repository can turn vague intent into a portable Design Handoff and tracker-
 
 ### Batch 2 — planning primitives
 
-- [ ] #9 brainstorming: add a thin explicit-only Design Handoff primitive (~1 day; may dispatch in parallel with #10 after #12)
-- [ ] #10 feature-spec: compile settled design into tracker-neutral implementation intent (~1 day; may dispatch in parallel with #9 after #12)
+- [~] #9 brainstorming: add a thin explicit-only Design Handoff primitive (~1 day) [branch:issue-9-brainstorming] [run:issue-9-20260711062943735-3d84d7c2]
+- [~] #10 feature-spec: compile settled design into tracker-neutral implementation intent (~1 day) [branch:issue-10-feature-spec] [run:issue-10-20260711062943733-89214aa4]
 
 ## Running Context
 
@@ -37,3 +37,4 @@ The repository can turn vague intent into a portable Design Handoff and tracker-
 - 2026-07-11 14:55: [actor:codex] Epic #8 reviewed; PR #7 merged; milestones, labels, task mirrors, and this active sprint created. #12 is next.
 - 2026-07-11 15:04: [actor:codex] #12 dispatched through relay with delayed publication; run `issue-12-20260711060421727-70124bfe` is in flight on `issue-12-portability-foundation`.
 - 2026-07-11 15:23: [actor:codex] #12 → PR #16 → reviewed (LGTM, round 3) → merged; nested replay document inference was fixed before publication.
+- 2026-07-11 15:29: [actor:codex] #9 and #10 dispatched in parallel from merged #12 foundation with isolated branches and delayed publication.

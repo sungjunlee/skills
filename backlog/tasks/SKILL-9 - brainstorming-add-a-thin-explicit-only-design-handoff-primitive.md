@@ -115,7 +115,7 @@ Keep the core spine short and understandable alone. Do not add a top-level `refe
 2. **Clear low-risk request:** asks at most one question, does not repeat supplied facts, and either emits a compact handoff or honors the explicitly requested successor.
 3. **Exploration-only request:** emits a handoff and stops without invoking or mutating a successor.
 4. **Existing settled design:** does not reopen the chosen direction unless repository evidence contradicts it.
-5. **Grill request:** distinguishes adversarial stress-testing and recommends the existing grill skill rather than impersonating it.
+5. **Grill request:** distinguishes adversarial stress-testing; recommends a compatible grill capability only when it is observed as available, otherwise records the successor as unavailable and stops after the Design Handoff rather than impersonating it.
 
 Question-count assertions count actual blocking user questions, not rhetorical questions in explanatory prose.
 

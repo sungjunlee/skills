@@ -43,7 +43,7 @@ For multi-session or multi-ticket work, recommend one durable Markdown feature s
 
 ## Routing behavior
 
-- If decomposition, dependency edges, or durable collaboration are required, recommend dev-backlog `shape`.
+- If decomposition, dependency edges, or durable collaboration are required, emit a tracker-neutral decomposition handoff. Recommend dev-backlog `shape` only when that capability is observed as available; otherwise record `shape unavailable` and stop without tracker mutation.
 - If the spec is a settled single unit, emit:
 
 ```markdown
@@ -84,7 +84,7 @@ It may read durable repository contracts as constraints, but it cannot amend the
 - [ ] Does not repeat a completed brainstorming interview.
 - [ ] Detects and reports contradictions with durable repository contracts.
 - [ ] Emits observable AC and verification strategy without file-by-file micro-steps or pasted implementation code.
-- [ ] Correctly chooses between `shape` and a direct Execution Handoff in replay fixtures.
+- [ ] Correctly chooses among an observed `shape` successor, a `shape unavailable` decomposition handoff, and a direct Execution Handoff in replay fixtures.
 - [ ] Direct consumers can use the artifact: dev-backlog `shape`, `implement`, and relay-plan.
 - [ ] Claude Code and Codex replays yield semantically equivalent artifacts.
 
@@ -133,7 +133,7 @@ Blocked by #12. Use its category layout, replay schemas, capability vocabulary, 
 ## Execution Handoff
 ```
 
-`Execution Handoff` is replaced by a `dev-backlog shape` recommendation when decomposition is still required.
+When decomposition is still required, replace `Execution Handoff` with the tracker-neutral decomposition handoff. Add a `dev-backlog shape` recommendation only when that capability is observed as available; otherwise record `shape unavailable`.
 
 ### Persistence authority
 
@@ -149,7 +149,7 @@ Blocked by #12. Use its category layout, replay schemas, capability vocabulary, 
 2. Complete tracker task -> full feature spec preserving supplied AC.
 3. Contradiction with `spec/*` -> reports the exact conflicting contract and leaves a human decision unresolved.
 4. Single settled unit -> Execution Handoff with one evidence-based `implement | relay` recommendation.
-5. Multi-leaf work -> recommends dev-backlog `shape` and does not invent tickets.
+5. Multi-leaf work -> emits a tracker-neutral decomposition handoff; recommends dev-backlog `shape` only when observed available, otherwise records `shape unavailable`; does not invent tickets.
 6. Short-lived task without edit authority -> returns the artifact without writing a file.
 
 ### Observable completion criteria

@@ -135,7 +135,7 @@ An explicit route selection is honored only while its safety assumptions remain 
 
 ```yaml
 status: completed | completed_with_concerns | blocked | escalated
-engine: inline | serial_workers | bounded_parallel | relay
+engine: none | inline | serial_workers | bounded_parallel | relay
 source_artifact: <path, issue URL, or inline description>
 files_changed: []
 verification:
@@ -149,7 +149,7 @@ handoff:
   remaining_scope: []
 ```
 
-A successful status requires actual diff inspection and passing authoritative verification. `completed_with_concerns` cannot hide a failed required check.
+`engine: none` is valid only for a pre-edit `blocked` result where no safe engine was selected. A successful status requires actual diff inspection and passing authoritative verification. `completed_with_concerns` cannot hide a failed required check.
 
 ### Review sizing
 

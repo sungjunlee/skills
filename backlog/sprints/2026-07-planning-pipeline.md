@@ -33,5 +33,5 @@ The repository can turn vague intent into a portable Design Handoff and tracker-
 
 ## Progress
 
-- 2026-07-11 14:55 KST [actor:codex]: Epic #8 reviewed; PR #7 merged; milestones, labels, task mirrors, and this active sprint created. #12 is next.
-- 2026-07-11 15:04 KST [actor:codex]: #12 dispatched through relay with delayed publication; run `issue-12-20260711060421727-70124bfe` is in flight on `issue-12-portability-foundation`.
+- 2026-07-11 14:55: [actor:codex] Epic #8 reviewed; PR #7 merged; milestones, labels, task mirrors, and this active sprint created. #12 is next.
+- 2026-07-11 15:04: [actor:codex] #12 dispatched through relay with delayed publication; run `issue-12-20260711060421727-70124bfe` is in flight on `issue-12-portability-foundation`.

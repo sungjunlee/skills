@@ -1,7 +1,7 @@
 ---
 id: SKILL-12
 title: 'portability foundation: define the engine capability contract and replay harness'
-status: In Progress
+status: Done
 labels:
   - type: foundation
 priority: medium
@@ -131,15 +131,15 @@ The verifier checks schema and semantic assertions. It must not compare exact pr
 
 ## Acceptance criteria
 
-- [ ] Repository paths follow `skills/<category>/<skill-name>/`.
-- [ ] The capability vocabulary and degradation rules are documented once at maintainer level.
-- [ ] Replay case and result schemas reject missing required semantic fields.
-- [ ] `scripts/verify-replays.mjs` returns non-zero for invalid fixtures/results and zero for valid examples.
-- [ ] At least one valid and one intentionally invalid schema fixture exercise the verifier.
-- [ ] `npm test` or `npm run verify` runs the zero-dependency verifier successfully.
-- [ ] README documents the actual nested-skill `npx skills add ... --full-depth` discovery/install requirement where applicable.
-- [ ] No runtime skill depends on reading `docs/`.
-- [ ] No host is marked supported without observed evidence; unknown behavior is `unverified`.
+- [x] Repository paths follow `skills/<category>/<skill-name>/`.
+- [x] The capability vocabulary and degradation rules are documented once at maintainer level.
+- [x] Replay case and result schemas reject missing required semantic fields.
+- [x] `scripts/verify-replays.mjs` returns non-zero for invalid fixtures/results and zero for valid examples.
+- [x] At least one valid and one intentionally invalid schema fixture exercise the verifier.
+- [x] `npm test` or `npm run verify` runs the zero-dependency verifier successfully.
+- [x] README documents the actual nested-skill `npx skills add ... --full-depth` discovery/install requirement where applicable.
+- [x] No runtime skill depends on reading `docs/`.
+- [x] No host is marked supported without observed evidence; unknown behavior is `unverified`.
 
 ## Verification
 

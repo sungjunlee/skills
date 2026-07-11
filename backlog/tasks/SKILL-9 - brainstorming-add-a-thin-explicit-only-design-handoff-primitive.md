@@ -78,7 +78,7 @@ The handoff stays at product/design/architecture altitude. It must not contain f
 - [ ] It emits the complete Design Handoff contract.
 - [ ] It distinguishes exploration from adversarial grilling and implementation planning.
 - [ ] It recommends, but does not automatically invoke, the next owner.
-- [ ] Historical vague-feature prompts are replayed on Claude Code and Codex.
+- [ ] Historical vague-feature prompts are committed as semantic cases and at least one primary host records observed smoke evidence; #13 owns the required Claude Code/Codex matrix.
 - [ ] Replays demonstrate that settled questions are not repeated and trivial work is not over-interviewed.
 - [ ] Installation and discovery work through the repository's normal `npx skills` distribution.
 
@@ -123,7 +123,7 @@ Question-count assertions count actual blocking user questions, not rhetorical q
 
 - `npm test` validates all committed cases and result schemas.
 - `npx skills add . --list --full-depth` discovers `brainstorming`.
-- Both Claude Code and Codex result records satisfy cases 1-4; other hosts may remain `unverified` until #13.
+- At least one primary host records observed results for cases 1-4. Any unexecuted host remains `unverified`; #13 owns the required Claude Code/Codex matrix.
 - No case mutates tracker state, creates implementation files, or invokes a successor implicitly.
 - README paths exactly match the committed folder.
 

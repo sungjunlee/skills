@@ -86,7 +86,7 @@ It may read durable repository contracts as constraints, but it cannot amend the
 - [ ] Emits observable AC and verification strategy without file-by-file micro-steps or pasted implementation code.
 - [ ] Correctly chooses among an observed `shape` successor, a `shape unavailable` decomposition handoff, and a direct Execution Handoff in replay fixtures.
 - [ ] Direct consumers can use the artifact: dev-backlog `shape`, `implement`, and relay-plan.
-- [ ] Claude Code and Codex replays yield semantically equivalent artifacts.
+- [ ] Committed cases plus at least one observed primary-host smoke result validate the artifact contract; #13 owns Claude Code/Codex equivalence.
 
 ## Non-goals
 

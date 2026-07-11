@@ -77,7 +77,7 @@ The skill must not pretend isolation or parallel safety exists. Statuses, verifi
 - [ ] Orchestrator inspects actual diffs and runs authoritative final verification.
 - [ ] Worker failures and partial completion cannot be reported as success.
 - [ ] Risky or durability-heavy fixtures escalate before editing.
-- [ ] Claude Code and Codex complete the same representative fixtures with equivalent output semantics.
+- [ ] Committed cases plus at least one observed primary-host smoke result validate output semantics; #13 owns Claude Code/Codex equivalence.
 - [ ] OpenCode, Cursor, and Pi mappings document supported capabilities and degradation.
 - [ ] The skill remains materially lighter than relay.
 
@@ -176,7 +176,7 @@ handoff:
 - Forbidden-mutation assertions prove escalation cases did not edit the repository.
 - `npm test` passes all schemas and committed cases.
 - `npx skills add . --list --full-depth` discovers `implement`.
-- Claude Code and Codex execute the required local cases; full matrix and calibration close in #13.
+- At least one primary host executes the required local smoke cases; full Claude Code/Codex matrix and calibration close in #13.
 - The skill creates no run manifest, worktree lifecycle, PR/MR lifecycle, or crash-recovery state.
 
 ### Authority boundary

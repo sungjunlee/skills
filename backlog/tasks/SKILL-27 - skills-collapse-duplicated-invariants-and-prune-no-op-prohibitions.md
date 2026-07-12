@@ -1,7 +1,7 @@
 ---
 id: SKILL-27
 title: 'skills: collapse duplicated invariants and prune no-op prohibitions'
-status: To Do
+status: Done
 labels:
   - type: skill
 priority: medium
@@ -30,9 +30,9 @@ Each rule has exactly one home inside its skill; prohibition lists keep only ent
 
 ## Acceptance criteria
 
-- [ ] "Recommend, never invoke" (and its tracker-mutation twin) is stated once per skill; worked-example files illustrate without restating rules.
-- [ ] The escalated/relay field combination is stated once in implement's `SKILL.md`; the post-YAML warning paragraph is gone.
-- [ ] Worker concurrency caps live only in `worker-contract.md`.
-- [ ] Authority and dispatch-packet prohibition lists are pruned to behavior-changing entries (scope, commit/push/PR, tracker mutation).
-- [ ] No semantic change: routes, statuses, artifacts, and escalation rules are untouched.
-- [ ] `npm test` passes.
+- [x] "Recommend, never invoke" (and its tracker-mutation twin) is stated once per skill; worked-example files illustrate without restating rules.
+- [x] The escalated/relay field combination is stated once in implement's `SKILL.md`; the post-YAML warning paragraph is gone.
+- [x] Worker concurrency caps live only in `worker-contract.md`.
+- [x] Authority and dispatch-packet prohibition lists are pruned to behavior-changing entries (scope, commit/push/PR, tracker mutation).
+- [x] No semantic change: routes, statuses, artifacts, and escalation rules are untouched.
+- [x] `npm test` passes.

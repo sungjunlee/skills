@@ -8,7 +8,7 @@
 - With ambiguous authority or destination, return the body plus the suggested path without blocking.
 - For short-lived work, recommend a response-only handoff.
 
-Never publish tracker items, mutate sprint state, amend project contracts, commit merely for persistence, or invoke a successor.
+Never commit merely for persistence.
 
 ## Settled single unit
 
@@ -24,7 +24,7 @@ Recommendation: implement | relay
 Why: <task-specific durability, isolation, review, risk, and parallelism evidence>
 ```
 
-Recommend `implement` when the unit can finish in the current session, the checkout is safe, and orchestrator verification is sufficient. Recommend `relay` when durability, isolation, recovery, PR/MR lifecycle, independent review, long-running work, or elevated change risk is material. Do not invoke either route.
+Recommend `implement` when the unit can finish in the current session, the checkout is safe, and orchestrator verification is sufficient. Recommend `relay` when durability, isolation, recovery, PR/MR lifecycle, independent review, long-running work, or elevated change risk is material.
 
 The complete Feature Spec is the source artifact for `implement` or `relay-plan`; the route label remains `relay` for durable execution.
 
@@ -45,7 +45,7 @@ Recommendation: dev-backlog shape | stop
 Why: <observed capability and task-shape evidence>
 ```
 
-- When multi-leaf or dependency shape is observed and `dev-backlog shape` is observed available, recommend `dev-backlog shape` without invoking it.
+- When multi-leaf or dependency shape is observed and `dev-backlog shape` is observed available, recommend `dev-backlog shape`.
 - When the same work is observed but that successor is not observed available, write the literal `shape unavailable` and stop. Do not fall back to create, plan, implement, or relay.
 - Leaf tasks, if a successor later creates them, should link to the durable spec and carry only slice-specific acceptance criteria.
 

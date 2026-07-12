@@ -19,7 +19,7 @@ Explicit-only. Turn vague intent into one selected direction and a Design Handof
 3. **Compare viable approaches.** Name the genuinely viable approaches and their material trade-offs. Recommend one. Accept an override.
 4. **Resolve what matters.** Settle high-impact uncertainty. Record low-impact uncertainty under *Open decisions requiring a human* instead of prolonging the interview.
 5. **Emit the Design Handoff** below — every field, verbatim labels.
-6. **Recommend a successor** as output only, using the routing table. Never invoke it.
+6. **Recommend a successor** using the routing table.
 
 ## Design Handoff
 
@@ -39,7 +39,7 @@ Why:
 
 ## Successor routing
 
-Recommend exactly one, based on the result. This is text output — never invoke a successor, mutate tracker state, or invent tickets.
+Recommend exactly one, based on the result.
 
 | Result | Recommended next step |
 | --- | --- |

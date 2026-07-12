@@ -8,7 +8,7 @@ A vague "we need some kind of notifications" converges on "in-app notification c
 
 ## Needs decomposition -> tracker-neutral decomposition handoff
 
-A large multi-surface feature (auth + billing + admin) already has an adequate source artifact and now needs trackable units. Emit a tracker-neutral decomposition handoff — the units and their boundaries, with no ticket writes. Recommend dev-backlog `shape` only if that capability is observed on the active host; otherwise write literally `shape unavailable` in the handoff and stop. Never invent tickets or mutate a tracker.
+A large multi-surface feature (auth + billing + admin) already has an adequate source artifact and now needs trackable units. Emit a tracker-neutral decomposition handoff — the units and their boundaries, with no ticket writes. Recommend dev-backlog `shape` only if that capability is observed on the active host; otherwise write literally `shape unavailable` in the handoff and stop.
 
 ## Settled single unit -> implement or relay
 
@@ -20,7 +20,7 @@ The user is thinking out loud and explicitly does not want to commit yet. Emit t
 
 ## Grill request -> compatible grill capability or stop
 
-The user wants an already-chosen plan stress-tested adversarially. That is grilling, not discovery. Recommend a compatible grill capability only when it is observed available on the host. If none is observed, say so plainly and stop after the Design Handoff — do not impersonate an adversarial interviewer.
+The user wants an already-chosen plan stress-tested adversarially. That is grilling, not discovery: apply the routing table's grill row rather than playing the adversarial interviewer yourself.
 
 ## Edge cases
 

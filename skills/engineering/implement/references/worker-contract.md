@@ -12,7 +12,7 @@ Give each worker:
 - local verification responsibility;
 - the status vocabulary below;
 - a prohibition on commits unless separately authorized; and
-- an unconditional prohibition on push, PR/MR operations, tracker or sprint mutation, deployment, global installation, external publication or messaging, relay invocation, and edits outside scope.
+- an unconditional prohibition on edits outside scope, push, PR/MR operations, and tracker or sprint mutation.
 
 Require exactly one report status:
 

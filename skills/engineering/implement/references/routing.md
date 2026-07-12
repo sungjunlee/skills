@@ -6,14 +6,14 @@ Select from evidence before editing. The selected engine changes mechanics, not 
 | --- | --- |
 | `inline` | Work is localized and useful decomposition would add no safety or verification value. |
 | `serial_workers` | Units depend on one another, parallel safety is uncertain, or shared state forces ordered writers. |
-| `bounded_parallel` | Units are independent and use isolated workspaces or provably disjoint files and shared resources. Default to 2 workers; never exceed 4 without an explicit user override. |
+| `bounded_parallel` | Units are independent and use isolated workspaces or provably disjoint files and shared resources. Concurrency caps live in `worker-contract.md`. |
 | `relay` | Work needs durable recovery, a dedicated worktree/branch, frozen rubric and repeated independent review, PR/MR/CI/merge lifecycle, several durable leaves, long-running unattended ownership, or carries security, destructive migration, deployment, data-loss, or comparable risk. |
 
 ## Safety precedence
 
 - Honor a user-selected engine only while its assumptions remain true.
 - Escalate before mutation when relay evidence is already present.
-- If destructive risk, missing authority, overlap, or durability need appears later, stop before the newly unsafe mutation and return an explicit relay handoff. Never invoke relay.
+- If destructive risk, missing authority, overlap, or durability need appears later, stop before the newly unsafe mutation and return an explicit relay handoff.
 - A relay handoff names the settled source artifact, reason, and remaining scope. It is not relay execution.
 
 ## Dirty checkout

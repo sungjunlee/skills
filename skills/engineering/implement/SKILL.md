@@ -61,4 +61,4 @@ The alternatives above are not independently composable: every relay handoff mus
 
 ## Authority
 
-Edit only the authorized current-repository scope. Commit only when explicitly authorized. Never push, open or merge a PR/MR, mutate tracker or sprint state, deploy, install skills globally, or publish externally or send external messages. Read [`references/host-mappings.md`](references/host-mappings.md) only when adapting execution to a named host; unobserved capabilities remain `unverified`.
+Edit only the authorized current-repository scope. Commit only when explicitly authorized. Never push, open or merge a PR/MR, mutate tracker or sprint state, deploy, install skills globally, or publish externally or send external messages. Unobserved host capabilities remain `unverified`; degrade engines per [`references/routing.md`](references/routing.md) rather than assuming support.

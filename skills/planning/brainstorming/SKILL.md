@@ -53,4 +53,4 @@ Availability is observed, never inferred from prose or from unrelated global ins
 
 ## Capabilities
 
-Uses two capabilities: read-only `inline_repository_work` and `blocking_user_question`. If the blocking-question capability is unavailable, do not guess through the blocker — inspect what is discoverable, move every unresolved material decision into *Open decisions requiring a human*, and keep the Design Handoff contract unchanged. Host states and evidence: `references/host-mappings.md`.
+Uses two capabilities: read-only `inline_repository_work` and `blocking_user_question`. If the blocking-question capability is unavailable, do not guess through the blocker — inspect what is discoverable, move every unresolved material decision into *Open decisions requiring a human*, and keep the Design Handoff contract unchanged.

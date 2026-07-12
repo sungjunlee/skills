@@ -40,11 +40,17 @@ the narrower authority actually observed, including approval boundaries.
 
 ## Host mapping rules
 
-Host-specific mappings belong in a consumer skill's `references/` directory.
-Each entry identifies the host and version, maps only the capabilities the
-skill uses, assigns one of the four states above, and links to compact observed
-evidence when the state is `native`, `emulated`, or `unavailable`. Unobserved
-behavior stays `unverified`.
+Host-capability evidence lives in dated reports under `evals/reports/`,
+beside the replay results that produced it. Each entry identifies the host and
+version, maps only the capabilities the consumer skill uses, assigns one of
+the four states above, and links to compact observed evidence when the state
+is `native`, `emulated`, or `unavailable`. Unobserved behavior stays
+`unverified`.
+
+A consumer skill's own `references/` carry only the host-adaptation semantics
+it executes at runtime (degradation order, `unverified` defaults) — never
+dated evidence, because skills install as independent units without this
+repository around them.
 
 Mappings describe how a provider-neutral workflow is executed; they do not
 change its artifacts, status vocabulary, verification rules, or escalation

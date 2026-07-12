@@ -28,4 +28,4 @@ Compile settled intent; do not brainstorm it again.
 
 ## Host adaptation
 
-Core semantics do not vary by host. Read [`references/host-mappings.md`](references/host-mappings.md) only when mapping invocation, repository work, or question capabilities for a host; unobserved capabilities remain `unverified`.
+Core semantics do not vary by host; unobserved host capabilities remain `unverified`, never assumed.

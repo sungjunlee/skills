@@ -8,7 +8,7 @@ invocation:
   triggers:
     - "/brainstorming"
     - "brainstorm this"
-# Host capability states are unverified until observed; see references/host-mappings.md.
+# Host capability states are unverified until observed.
 capabilities:
   inline_repository_work: unverified
   blocking_user_question: unverified

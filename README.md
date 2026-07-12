@@ -22,7 +22,6 @@ Source:
 
 - `skills/planning/brainstorming/SKILL.md`
 - `skills/planning/brainstorming/references/routing.md`
-- `skills/planning/brainstorming/references/host-mappings.md`
 - `skills/planning/brainstorming/agents/openai.yaml`
 
 #### feature-spec
@@ -37,7 +36,6 @@ Source:
 - `skills/planning/feature-spec/agents/openai.yaml`
 - `skills/planning/feature-spec/references/spec-template.md`
 - `skills/planning/feature-spec/references/routing.md`
-- `skills/planning/feature-spec/references/host-mappings.md`
 
 ### Engineering
 
@@ -53,7 +51,6 @@ Source:
 - `skills/engineering/implement/agents/openai.yaml`
 - `skills/engineering/implement/references/routing.md`
 - `skills/engineering/implement/references/worker-contract.md`
-- `skills/engineering/implement/references/host-mappings.md`
 
 ### Productivity
 
@@ -146,6 +143,7 @@ evals/
   fixtures/
   cases/
   results/
+  reports/
 scripts/
   verify-replays.mjs
 skills/
@@ -155,7 +153,6 @@ skills/
       agents/
         openai.yaml
       references/
-        host-mappings.md
         routing.md
         worker-contract.md
   planning/
@@ -168,7 +165,6 @@ skills/
       agents/
         openai.yaml
       references/
-        host-mappings.md
         routing.md
         spec-template.md
   productivity/

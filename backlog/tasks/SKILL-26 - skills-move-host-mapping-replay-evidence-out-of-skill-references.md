@@ -1,7 +1,7 @@
 ---
 id: SKILL-26
 title: 'skills: move host-mapping replay evidence out of skill references'
-status: To Do
+status: Done
 labels:
   - type: skill
 priority: medium
@@ -24,9 +24,9 @@ Skill references carry only runtime host-adaptation semantics; dated capability 
 
 ## Acceptance criteria
 
-- [ ] The dated capability-evidence tables from `brainstorming`, `feature-spec`, and `implement` `references/host-mappings.md` are consolidated into a dated report under `evals/reports/`, preserving every evidence row.
-- [ ] The three `references/host-mappings.md` files are removed; any surviving runtime rule (degradation order, `unverified` default) has exactly one home inside its skill.
-- [ ] No `SKILL.md` or `agents/openai.yaml` points at `references/host-mappings.md` or outside its own skill directory.
-- [ ] `docs/engine-capability-contract.md` § Host mapping rules is amended: evidence rows belong in `evals/reports/`; skill references hold adaptation semantics only.
-- [ ] `README.md` source lists and layout tree no longer list the removed files.
-- [ ] `npm test` passes.
+- [x] The dated capability-evidence tables from `brainstorming`, `feature-spec`, and `implement` `references/host-mappings.md` are consolidated into a dated report under `evals/reports/`, preserving every evidence row.
+- [x] The three `references/host-mappings.md` files are removed; any surviving runtime rule (degradation order, `unverified` default) has exactly one home inside its skill.
+- [x] No `SKILL.md` or `agents/openai.yaml` points at `references/host-mappings.md` or outside its own skill directory.
+- [x] `docs/engine-capability-contract.md` § Host mapping rules is amended: evidence rows belong in `evals/reports/`; skill references hold adaptation semantics only.
+- [x] `README.md` source lists and layout tree no longer list the removed files.
+- [x] `npm test` passes.

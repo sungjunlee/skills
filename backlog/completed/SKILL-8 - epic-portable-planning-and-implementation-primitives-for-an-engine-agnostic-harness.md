@@ -1,7 +1,7 @@
 ---
 id: SKILL-8
 title: 'Epic: portable planning and implementation primitives for an engine-agnostic harness'
-status: To Do
+status: Done
 labels: []
 priority: medium
 milestone:

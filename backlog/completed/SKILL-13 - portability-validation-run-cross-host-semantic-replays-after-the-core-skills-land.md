@@ -1,7 +1,7 @@
 ---
 id: SKILL-13
 title: 'portability validation: run cross-host semantic replays after the core skills land'
-status: In Progress
+status: Done
 labels:
   - type: validation
 priority: medium
@@ -58,14 +58,14 @@ Do not commit raw transcripts, secrets, absolute user paths, or large generated 
 
 ## Acceptance criteria
 
-- [ ] #9, #10, #11, and #12 are complete before execution begins.
-- [ ] Claude Code and Codex pass every required case.
-- [ ] OpenCode, Cursor, and Pi have complete mappings and honest `pass | fail | unverified` results.
-- [ ] `npm test` or `npm run verify` validates all committed replay results.
-- [ ] No required case has a missing result for Claude Code or Codex.
-- [ ] Failures cause either a narrowly scoped fix in the owning skill or a linked follow-up; they are not waived by prose.
-- [ ] The report identifies any routing threshold that changed during calibration.
-- [ ] Final behavior remains within the ownership boundaries in epic #8.
+- [x] #9, #10, #11, and #12 are complete before execution begins.
+- [x] Claude Code and Codex pass every required case.
+- [x] OpenCode, Cursor, and Pi have complete mappings and honest `pass | fail | unverified` results.
+- [x] `npm test` or `npm run verify` validates all committed replay results.
+- [x] No required case has a missing result for Claude Code or Codex.
+- [x] Failures cause either a narrowly scoped fix in the owning skill or a linked follow-up; they are not waived by prose.
+- [x] The report identifies any routing threshold that changed during calibration.
+- [x] Final behavior remains within the ownership boundaries in epic #8.
 
 ## Verification
 

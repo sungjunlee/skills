@@ -1,6 +1,6 @@
 ---
 name: feature-spec
-description: Compile a completed Design Handoff, settled conversation or proposal, or clear tracker task into a tracker-neutral Feature Spec. Use explicitly when product and architecture decisions are settled but implementation intent, acceptance criteria, verification, artifact lifetime, and the next execution or decomposition handoff need synthesis.
+description: Compile settled intent into a tracker-neutral, implementation-ready Feature Spec with exactly one closing handoff.
 disable-model-invocation: true
 ---
 
@@ -28,4 +28,4 @@ Compile settled intent; do not brainstorm it again.
 
 ## Host adaptation
 
-Core semantics do not vary by host. Read [`references/host-mappings.md`](references/host-mappings.md) only when mapping invocation, repository work, or question capabilities for a host; unobserved capabilities remain `unverified`.
+Core semantics do not vary by host; unobserved host capabilities remain `unverified`, never assumed.

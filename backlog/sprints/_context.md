@@ -8,6 +8,9 @@
 - A successor capability must be observed before it is recommended as available. Missing `dev-backlog shape` support produces a tracker-neutral handoff with `shape unavailable`, never an implicit tracker mutation.
 - Replay document kind is inferred from containment under recursive `evals/cases/` and `evals/results/` trees; consumer files may use skill-local subdirectories and free filenames.
 - In parallel relay batches with shared README/eval surfaces, complete review fixes before rebasing the remaining branch onto the first merged PR. A later re-dispatch can restore the canonical remote branch and supersede an early local rebase.
+- `implement` must remain materially lighter than relay: no durable manifest, worktree lifecycle, crash recovery, PR/MR lifecycle, tracker mutation, push, or implicit relay invocation.
+- In `implement`, `engine: none` is valid only for pre-edit `blocked`; relay escalation uses `engine: relay` and occurs before repository mutation. Changing that enum invalidates dated replay evidence, so it needs a fresh replay pass (deferred as #29).
+- Single source of truth is scoped per skill: each skill is an independent distribution unit (installed without `docs/` or `evals/`), so a rule may repeat across skills but must appear only once within a skill, and `SKILL.md` must never point outside its own directory.
 
 ## Conventions
 

@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Execute a settled feature spec, tracker task, or clear prompt in the current checkout with the lightest safe engine, orchestrator-owned verification, and relay escalation before mutation when durable execution is required.
+description: Execute settled work in the current checkout with the lightest safe engine, escalating durable or high-risk work to relay before mutation.
 disable-model-invocation: true
 ---
 
@@ -29,7 +29,7 @@ Execute settled intent continuously in the current session. Do not reopen produc
 
 3. **Execute the full authorized scope.** For worker engines, first read [`references/worker-contract.md`](references/worker-contract.md). Give every worker its mutable scope, frozen scope, expected output, and verification responsibility. Continue across normal units without asking permission. Treat worker status as a report, never completion proof.
 
-   The orchestrator owns decomposition, actual-diff inspection, integration, conflict resolution, authoritative verification, risk-sized review, and truthful final status. If new evidence makes execution unsafe, stop before the unsafe mutation and escalate explicitly; never invoke relay silently.
+   The orchestrator owns decomposition, actual-diff inspection, integration, conflict resolution, authoritative verification, risk-sized review, and truthful final status. If new evidence makes execution unsafe, stop before the unsafe mutation and escalate explicitly.
 
    **Complete when:** every requested unit is integrated or the remaining scope is identified in a non-success handoff, and all actual working-tree changes have been inspected.
 
@@ -57,8 +57,6 @@ handoff:
   remaining_scope: []
 ```
 
-The alternatives above are not independently composable: every relay handoff must use `status: escalated`, `engine: relay`, and `handoff.route: relay` together before repository mutation. Never emit only part of that combination.
-
 ## Authority
 
-Edit only the authorized current-repository scope. Commit only when explicitly authorized. Never push, open or merge a PR/MR, mutate tracker or sprint state, deploy, install skills globally, or publish externally or send external messages. Read [`references/host-mappings.md`](references/host-mappings.md) only when adapting execution to a named host; unobserved capabilities remain `unverified`.
+Edit only the authorized current-repository scope. Commit only when explicitly authorized. Never push, open or merge a PR/MR, or mutate tracker or sprint state. Unobserved host capabilities remain `unverified`; degrade engines per [`references/routing.md`](references/routing.md) rather than assuming support.

@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: Turn a vague idea into one selected direction and a compact Design Handoff, then recommend (never invoke) the next owner. Use on an explicit brainstorm/explore request when intent is still fuzzy and needs collaborative discovery before a spec, decomposition, or implementation. Not for stress-testing an already-chosen plan (that is grill) or writing an executor-ready micro-plan.
+description: Turn a vague idea into one selected direction and a compact Design Handoff, then recommend the next owner.
 disable-model-invocation: true
 ---
 
@@ -19,7 +19,7 @@ Explicit-only. Turn vague intent into one selected direction and a Design Handof
 3. **Compare viable approaches.** Name the genuinely viable approaches and their material trade-offs. Recommend one. Accept an override.
 4. **Resolve what matters.** Settle high-impact uncertainty. Record low-impact uncertainty under *Open decisions requiring a human* instead of prolonging the interview.
 5. **Emit the Design Handoff** below — every field, verbatim labels.
-6. **Recommend a successor** as output only, using the routing table. Never invoke it.
+6. **Recommend a successor** using the routing table.
 
 ## Design Handoff
 
@@ -39,7 +39,7 @@ Why:
 
 ## Successor routing
 
-Recommend exactly one, based on the result. This is text output — never invoke a successor, mutate tracker state, or invent tickets.
+Recommend exactly one, based on the result.
 
 | Result | Recommended next step |
 | --- | --- |
@@ -53,4 +53,4 @@ Availability is observed, never inferred from prose or from unrelated global ins
 
 ## Capabilities
 
-Uses two capabilities: read-only `inline_repository_work` and `blocking_user_question`. If the blocking-question capability is unavailable, do not guess through the blocker — inspect what is discoverable, move every unresolved material decision into *Open decisions requiring a human*, and keep the Design Handoff contract unchanged. Host states and evidence: `references/host-mappings.md`.
+Uses two capabilities: read-only `inline_repository_work` and `blocking_user_question`. If the blocking-question capability is unavailable, do not guess through the blocker — inspect what is discoverable, move every unresolved material decision into *Open decisions requiring a human*, and keep the Design Handoff contract unchanged.

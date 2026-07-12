@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Execute a settled feature spec, tracker task, or clear prompt in the current checkout with the lightest safe engine, orchestrator-owned verification, and relay escalation before mutation when durable execution is required.
+description: Execute settled work in the current checkout with the lightest safe engine, escalating durable or high-risk work to relay before mutation.
 disable-model-invocation: true
 ---
 

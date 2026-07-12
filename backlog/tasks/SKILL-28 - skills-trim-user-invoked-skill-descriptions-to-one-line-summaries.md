@@ -1,7 +1,7 @@
 ---
 id: SKILL-28
 title: 'skills: trim user-invoked skill descriptions to one-line summaries'
-status: To Do
+status: Done
 labels:
   - type: skill
 priority: medium
@@ -22,7 +22,7 @@ Each Epic 8 skill description is a single human-facing sentence.
 
 ## Acceptance criteria
 
-- [ ] `brainstorming`, `feature-spec`, and `implement` descriptions are one sentence each, without trigger or anti-trigger lists.
-- [ ] `agents/openai.yaml` interface strings stay consistent with the trimmed descriptions.
-- [ ] No body or reference content changes under this issue.
-- [ ] `npm test` passes.
+- [x] `brainstorming`, `feature-spec`, and `implement` descriptions are one sentence each, without trigger or anti-trigger lists.
+- [x] `agents/openai.yaml` interface strings stay consistent with the trimmed descriptions.
+- [x] No body or reference content changes under this issue.
+- [x] `npm test` passes.

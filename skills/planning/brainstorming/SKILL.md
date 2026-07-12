@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: Turn a vague idea into one selected direction and a compact Design Handoff, then recommend (never invoke) the next owner. Use on an explicit brainstorm/explore request when intent is still fuzzy and needs collaborative discovery before a spec, decomposition, or implementation. Not for stress-testing an already-chosen plan (that is grill) or writing an executor-ready micro-plan.
+description: Turn a vague idea into one selected direction and a compact Design Handoff, then recommend the next owner.
 disable-model-invocation: true
 ---
 

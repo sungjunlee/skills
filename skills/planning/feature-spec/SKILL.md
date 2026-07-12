@@ -1,6 +1,6 @@
 ---
 name: feature-spec
-description: Compile a completed Design Handoff, settled conversation or proposal, or clear tracker task into a tracker-neutral Feature Spec. Use explicitly when product and architecture decisions are settled but implementation intent, acceptance criteria, verification, artifact lifetime, and the next execution or decomposition handoff need synthesis.
+description: Compile settled intent into a tracker-neutral, implementation-ready Feature Spec with exactly one closing handoff.
 disable-model-invocation: true
 ---
 

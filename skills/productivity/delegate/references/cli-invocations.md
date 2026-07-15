@@ -22,6 +22,8 @@ Append or translate effort only when the resolved profile contains an explicit o
 
 > A `<provider>/*` pattern also matches its bare `<provider>` route. If `<model>` is omitted, drop `-m <model>` from the argv — the CLI uses its configured default.
 
+For CLI-selector routes such as `claude/<model>` or `reasonix/<model>`, `<model>` is the suffix after the first slash. For `opencode/<model>`, resolve that suffix against the live list and pass the returned full id. An `opencode-go/<model>` route is already a live OpenCode `provider/model` id, so preserve the whole route.
+
 Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback. For Cursor, do not synthesize bracket overrides: match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` or `claude-fable-5-xhigh`.
 
 The prompt is already in argv, so connect stdin to DEVNULL for every current route. In a process API, set the child stdin to DEVNULL. In shell form, redirect from the platform's null device (`< /dev/null` on POSIX or `< NUL` in Windows cmd); do not pass the redirect as an argv token. Add a future stdin-consuming route as an explicit exception instead of inheriting an open pipe.

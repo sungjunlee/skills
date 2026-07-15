@@ -13,9 +13,9 @@ Choose the least expensive execution profile likely to finish correctly. Judge t
 
 ## Effort rules
 
-- Omit effort to preserve the provider default unless the user chooses it or the task needs an explicit tradeoff.
-- Treat model tier and effort as independent knobs. Do not assume a smaller model at high effort always beats a larger model at low effort, or vice versa.
-- Reserve `xhigh` and `max` for high-blast-radius, ambiguous, long-horizon, or failed work that lacks a cheaper feedback loop.
+- When recommending, choose a complete model-effort profile from `model-catalog.md`; otherwise omit effort to preserve the provider default.
+- Do not assume model tiers form a cost/performance ladder. A smaller model at high effort can dominate a middle tier, while another task may reverse the result.
+- Use `xhigh` or `max` only when the model-specific start hint supports it or the task is high-blast-radius, ambiguous, long-horizon, or still failing without a cheaper feedback loop.
 - Do not map product-level multi-agent modes such as `ultra` to an effort value unless the selected CLI exposes a verified invocation contract.
 - Prefer tests, type checks, linters, and a different-family reviewer over repeatedly increasing effort on the same model.
 

@@ -14,7 +14,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `claude-fable-5` | Long-running, highly ambitious work that earns frontier spend. | `high` by default; `xhigh` for the most capability-sensitive or long-running autonomous work; step down to `medium` only when cost or interactivity matters more than peak quality | frontier |
 | `claude-opus-4-8` | Complex implementation, planning, or independent review. | `high` | premium |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
-| `grok-4.5` | Coding and agentic work when Grok is an available independent family. | `high`; Cursor's former `xhigh` slug was renamed `high` | value frontier |
+| `grok-4.5` | Tool-heavy coding, long-context knowledge work, or an independent frontier-family review. | `high` for difficult coding and multi-step agent loops; `medium` when latency matters more than maximum reasoning depth | value frontier |
 
 ## Value and open-weight families
 
@@ -31,7 +31,6 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 - [OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
 - [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Fable 5](https://www.anthropic.com/claude/fable), [Opus 4.8](https://www.anthropic.com/news/claude-opus-4-8), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - [xAI Grok 4.5](https://docs.x.ai/developers/grok-4-5)
-- [Cursor Grok 4.5 slug rename](https://forum.cursor.com/t/cursor-grok-4-5-high-fast-doesnt-offer-a-50-discount-at-all/165551/8)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
 - [Moonshot Kimi K2.7 Code model card](https://huggingface.co/moonshotai/Kimi-K2.7-Code)
 - [DeepSeek V4](https://api-docs.deepseek.com/news/news260424/)

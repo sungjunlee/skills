@@ -12,7 +12,7 @@ Choose the least expensive execution profile likely to finish correctly. Judge t
 
 ## Effort rules
 
-- When recommending, choose a complete model-effort profile from `model-catalog.md`; otherwise omit effort to preserve the provider default.
+- When recommending, choose a complete model-effort profile from `model-catalog.md`. Outside that path, honor an explicit user effort; if neither path selects one, preserve the provider default.
 - Choose effort before dispatch from first-pass failure cost, feedback strength, work horizon, and the value of internal exploration; do not require a failed run before selecting `high` or `xhigh`.
 - Do not assume model tiers form a cost/performance ladder. A smaller model at high effort can dominate a middle tier, while another task may reverse the result.
 - Consider `xhigh` or `max` only when the selected route and model support that exact level, then only for high-blast-radius, ambiguous, or long-horizon work without a cheaper feedback loop.

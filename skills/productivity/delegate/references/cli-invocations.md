@@ -8,7 +8,7 @@ Verify each row against your installed CLI: `<cli> run --help` (or `<cli> exec -
 
 ## Per-provider reference
 
-Append the effort argv only when the user explicitly supplies effort.
+Append or translate effort only when the resolved profile contains an explicit or recommendation-selected effort. Otherwise preserve the CLI default.
 
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|

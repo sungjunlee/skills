@@ -2,21 +2,21 @@
 
 Choose the least expensive execution profile likely to finish correctly. Judge task scope, ambiguity, blast radius, feedback strength, privacy, latency, and retry cost — not difficulty alone.
 
-| Work shape | Start with | Escalate when |
+| Work shape | Initial profile | Choose more capability up front when |
 |---|---|---|
-| Search, explanation, or bounded reconnaissance | fast/value model at default or low effort | evidence conflicts or broad repo synthesis is required |
-| Mechanical change with strong tests | fast/value model at medium effort | validation fails after one focused retry |
-| Normal feature or bug fix | balanced model at medium effort | requirements are ambiguous, the change crosses boundaries, or retries repeat |
-| Architecture, migration, auth, payments, or other high-blast-radius work | strong balanced or frontier model at medium/high effort | unresolved tradeoffs or verification gaps remain |
-| Independent review | a different model family at medium/high effort | the reviewer finds systemic risk or cannot trace the changed behavior |
-| Failed delegation | diagnose the failure, then raise one axis: effort or model tier | do not jump to max without identifying why the prior profile failed |
+| Search, explanation, or bounded reconnaissance | fast/value model at default or low effort | evidence is likely to conflict or broad repo synthesis is required |
+| Mechanical change with strong tests | fast/value model at medium effort | tests are incomplete, feedback is weak, or a wrong first pass is costly |
+| Normal feature or bug fix | balanced model at medium effort | requirements are ambiguous, the change crosses boundaries, or retry cost is high |
+| Architecture, migration, auth, payments, or other high-blast-radius work | strong balanced or frontier model at medium/high effort | feedback is weak, the horizon is long, or unresolved tradeoffs require broad exploration |
+| Independent review | a different model family at medium/high effort | systemic risk is plausible or tracing the changed behavior requires deep context |
 
 ## Effort rules
 
 - When recommending, choose a complete model-effort profile from `model-catalog.md`; otherwise omit effort to preserve the provider default.
 - Choose effort before dispatch from first-pass failure cost, feedback strength, work horizon, and the value of internal exploration; do not require a failed run before selecting `high` or `xhigh`.
 - Do not assume model tiers form a cost/performance ladder. A smaller model at high effort can dominate a middle tier, while another task may reverse the result.
-- Use `xhigh` or `max` only when the model-specific effort profile supports it or the task is high-blast-radius, ambiguous, long-horizon, or still failing without a cheaper feedback loop.
+- Consider `xhigh` or `max` only when the selected route and model support that exact level, then only for high-blast-radius, ambiguous, or long-horizon work without a cheaper feedback loop.
+- After a failed delegation, diagnose the profile mismatch and change one axis: effort or model tier. Failure is corrective evidence, not the routing strategy.
 - Do not map product-level multi-agent modes such as `ultra` to an effort value unless the selected CLI exposes a verified invocation contract.
 - Prefer tests, type checks, linters, and a different-family reviewer over repeatedly increasing effort on the same model.
 

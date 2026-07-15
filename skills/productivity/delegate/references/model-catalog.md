@@ -18,13 +18,13 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 ## Value and open-weight families
 
-| Model | Selection hint | Start hint | Cost shape |
+| Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
 | `kimi-k2.7-code` | Coding-focused long-horizon execution with lower thinking-token use than K2.6. | forced thinking on official API | premium open |
 | `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | thinking for ambiguous work | pro value |
 | `minimax-m3` | Long-context, multimodal, or general agentic coding. | thinking on for complex work | mid |
-| `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. | non-thinking; enable thinking after a failed pass | cheap |
+| `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. | non-thinking for clear mechanical work; thinking when ambiguity or weak feedback justifies it up front | cheap |
 
 ## Sources
 
@@ -37,4 +37,4 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 - [DeepSeek V4](https://api-docs.deepseek.com/news/news260424/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
 
-These are profile hints, not rankings. Choose effort before dispatch; a failed pass is evidence for escalation, not a prerequisite. Early field reports often favor Luna `xhigh` over Terra `high`, but results vary by task and quota accounting; test complete model-effort profiles locally. Distinguish API marginal cost from subscription quota pressure when comparing routes.
+These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. Early field reports often favor Luna `xhigh` over Terra `high`, but results vary by task and quota accounting; test complete model-effort profiles locally. Distinguish API marginal cost from subscription quota pressure when comparing routes.

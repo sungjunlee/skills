@@ -65,6 +65,8 @@ When the full `relay-dispatch` flow is overkill — you just want a quick answer
 /delegate reasonix/deepseek-v4-pro "write unit tests for the parser"
 /delegate cline-pass/glm-5.2 "review this diff"
 /delegate opencode/glm-5.2 "summarize this diff"
+/delegate claude/sonnet effort=high "review this migration"
+/delegate codex/gpt-5.6-luna effort=medium "implement this scoped issue"
 /delegate opencode "explain this file"  # no model: CLI default
 ```
 
@@ -74,6 +76,7 @@ Source:
 - `skills/productivity/delegate/references/cli-invocations.md`
 - `skills/productivity/delegate/references/dispatch-guardrails.md`
 - `skills/productivity/delegate/references/model-catalog.md`
+- `skills/productivity/delegate/references/routing-guide.md`
 
 ### Review
 

@@ -8,7 +8,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
-| `gpt-5.6-sol` | Highest-stakes or hardest GPT-5.6 work. | `medium` for bounded hard work with strong checks; `high` when a wrong first pass is costly or feedback is weak; `xhigh` for long-horizon work that benefits from broad exploration and self-checking | flagship |
+| `gpt-5.6-sol` | Highest-stakes or hardest GPT-5.6 work. | `medium` for bounded hard work with strong checks; `high` for high-blast-radius or cross-boundary work with consequential tradeoffs; `xhigh` for long-horizon work that benefits from broad exploration and self-checking | flagship |
 | `gpt-5.6-terra` | Balanced GPT-5.6 tier for ambiguous everyday work. | `medium`; test before using `high`+ as a value step | balanced |
 | `gpt-5.6-luna` | Fast, high-volume, or tightly scoped GPT-5.6 work. | `high`; try `xhigh` for scoped hard work | value |
 | `claude-fable-5` | Long-running, highly ambitious work that earns frontier spend. | `high` by default; `xhigh` for the most capability-sensitive or long-running autonomous work; step down to `medium` only when cost or interactivity matters more than peak quality | frontier |
@@ -21,10 +21,10 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
-| `kimi-k2.7-code` | Coding-focused long-horizon execution with lower thinking-token use than K2.6. | forced thinking on official API | premium open |
-| `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | thinking for ambiguous work | pro value |
-| `minimax-m3` | Long-context, multimodal, or general agentic coding. | thinking on for complex work | mid |
-| `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. | non-thinking for clear mechanical work; thinking when ambiguity or weak feedback justifies it up front | cheap |
+| `kimi-k2.7-code` | Coding-focused long-horizon execution with lower thinking-token use than K2.6. | route default; official API forces thinking | premium open |
+| `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | `high` for ambiguous or multi-stage work; otherwise route default | pro value |
+| `minimax-m3` | Long-context, multimodal, or general agentic coding. | `high` for complex agentic work; otherwise route default | mid |
+| `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. | route default | cheap |
 
 ## Sources
 

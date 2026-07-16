@@ -21,9 +21,9 @@ Execute settled intent continuously in the current session. Do not reopen produc
 
    **Complete when:** the source is executable without re-planning, every pre-existing change is accounted for, scopes and required checks are explicit, and no mutation has occurred.
 
-2. **Select the lightest safe engine.** Read [`references/routing.md`](references/routing.md) before mutation and choose exactly one of `inline`, `serial_workers`, `bounded_parallel`, or `relay`. Honor an explicit route only while its safety assumptions remain true. Use `engine: none` only when the pre-edit gate blocks before an engine can be selected.
+2. **Select the lightest safe engine.** Read [`references/routing.md`](references/routing.md) before mutation and choose exactly one of `inline`, `serial_workers`, or `bounded_parallel`. Honor an explicit route only while its safety assumptions remain true. Use `engine: none` whenever no current-session execution occurred, including a pre-edit block or relay escalation.
 
-   Relay is an escalation handoff: stop before repository mutation and return the inseparable combination `status: escalated`, `engine: relay`, and `handoff.route: relay`. Name `relay-ready`/`relay-plan` as the next owner without invoking it.
+   Relay is an escalation handoff, not an execution engine. Stop before repository mutation, return `status: escalated` with `handoff.route: relay`, and name `relay-ready`/`relay-plan` as the next owner without invoking it.
 
    **Complete when:** task shape, host capability, authority, dirty-state, and durability evidence all support the selected engine.
 
@@ -43,7 +43,7 @@ Execute settled intent continuously in the current session. Do not reopen produc
 
 ```yaml
 status: completed | completed_with_concerns | blocked | escalated
-engine: none | inline | serial_workers | bounded_parallel | relay
+engine: none | inline | serial_workers | bounded_parallel
 source_artifact: <path, issue URL, or inline description>
 files_changed: []
 verification:

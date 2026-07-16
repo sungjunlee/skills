@@ -1,0 +1,24 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-16",
+  "case_id": "implement.invalid-current-relay-engine",
+  "host": "fixture-host",
+  "host_version": "schema-smoke-v2",
+  "skill_revision": "implement-v2",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "engine",
+      "status": "pass",
+      "observed": "relay",
+      "evidence": "Intentionally invalid replay-v2 engine value."
+    }
+  ],
+  "observed_output_fields": ["engine"],
+  "observed_route": "relay",
+  "observed_engine": "relay",
+  "question_count": 0,
+  "observed_escalation": "relay",
+  "side_effects": [],
+  "evidence_note": "Intentionally invalid replay-v2 result fixture."
+}

@@ -1,4 +1,5 @@
 {
+  "contract_version": "replay-v2",
   "case_id": "foundation.inline-pass",
   "skill": "foundation/engine-contract",
   "input_fixture": {

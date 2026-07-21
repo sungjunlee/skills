@@ -16,8 +16,8 @@ A committed, credential-optional delegate evaluation loop produces its first dat
 
 ### Batch 1 — evaluation contract
 
-- [ ] #33 define the committed evaluation case format: work shape, fixture, acceptance checks, candidate profiles, privacy constraints (~1h)
-- [ ] #33 wire schema validation and a credential-free self-test path into npm test (~1h)
+- [x] #33 define the committed evaluation case format: work shape, fixture, acceptance checks, candidate profiles, privacy constraints (~1h) → PR #37 (merged)
+- [x] #33 wire schema validation and a credential-free self-test path into npm test (~1h) → PR #37 (merged)
 
 ### Batch 2 — case matrix
 
@@ -48,4 +48,5 @@ A committed, credential-optional delegate evaluation loop produces its first dat
 - 2026-07-21: PR #36 added K3 and Qwen 3.8 to the delegate model catalog mid-planning; Batch 2 pairing and the Batch 3 capability smoke should re-read the live catalog at execution time instead of trusting this plan's snapshot.
 
 ## Progress
+- 2026-07-21: Batch 1 done via PR #37 (merged, verify CI green): delegate-eval-v1 case/result schemas, credential-free verifier joined to npm test, fixture self-test, shared schema validator extracted to scripts/lib/. AC items 1 and 8 verified. CodeRabbit was rate-limited on both PRs today; verify CI is the effective gate.
 - 2026-07-21: Sprint planned around #33. Predecessor thread closed the same day: PR #34 (issue #29 engine-enum contract) repaired after incomplete relay auto-recovery and merged; CI `verify` workflow added (#35). Created GitHub milestone "Delegate routing validation" and assigned #33 to it.

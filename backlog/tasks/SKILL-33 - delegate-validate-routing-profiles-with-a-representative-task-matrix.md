@@ -49,14 +49,14 @@ Record enough evidence to compare task-specific Pareto candidates rather than pr
 
 ## Acceptance criteria
 
-- [ ] A committed delegate evaluation case format represents work shape, fixture, acceptance checks, candidate profiles, and privacy constraints.
+- [x] A committed delegate evaluation case format represents work shape, fixture, acceptance checks, candidate profiles, and privacy constraints.
 - [ ] At least one case exists for each work shape listed above.
 - [ ] A local runner can execute an explicitly selected subset of cases and profiles without requiring every provider credential.
 - [ ] A low-cost capability smoke verifies live model IDs and supported effort values before paid evaluation runs where the CLI exposes that information.
 - [ ] Evaluation results are append-only dated evidence; existing results are never rewritten to match a new profile contract.
 - [ ] A report groups results by work shape and presents Pareto candidates using quality, latency, and cost or quota signals.
 - [ ] The catalog promotion rule requires repeated local evidence before a profile becomes a default recommendation.
-- [ ] `npm test`, schema validation, and a self-test path run without provider credentials.
+- [x] `npm test`, schema validation, and a self-test path run without provider credentials.
 - [ ] Documentation explains how to run a bounded provider-specific evaluation and how to interpret incomplete or unavailable metrics.
 
 ## Non-goals

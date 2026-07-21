@@ -44,6 +44,10 @@ function same(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
 }
 
+function normalizeNewlines(value) {
+  return value.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
+}
+
 function slug(value) {
   return value.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-").replaceAll(/^-|-$/g, "");
 }
@@ -97,7 +101,9 @@ async function loadContext() {
   }
   const reportRelative = matrix.report ?? `evals/reports/${matrix.execution_date}-epic-8-cross-host.md`;
   const reportPresent = await fileExists(path.join(root, reportRelative));
-  const reportText = reportPresent ? await readFile(path.join(root, reportRelative), "utf8") : "";
+  const reportText = reportPresent
+    ? normalizeNewlines(await readFile(path.join(root, reportRelative), "utf8"))
+    : "";
   const fixtures = [];
   for (const rel of ["evals/fixtures/cross-host/answer-script.md", "evals/fixtures/cross-host/matrix.json"]) {
     fixtures.push({ relative: rel, text: await readFile(path.join(root, rel), "utf8") });

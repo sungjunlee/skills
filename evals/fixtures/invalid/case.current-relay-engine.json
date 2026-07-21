@@ -1,0 +1,36 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "implement.invalid-current-relay-engine",
+  "skill": "engineering/implement",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "invalid-current-relay-engine"
+    }
+  },
+  "required_output_fields": ["engine"],
+  "expected_route": "relay",
+  "expected_engine": "relay",
+  "question_count_range": null,
+  "expected_escalation": "relay",
+  "semantic_assertions": [
+    {
+      "assertion_id": "field-engine",
+      "type": "output_field_present",
+      "field": "engine"
+    },
+    {
+      "assertion_id": "route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "engine",
+      "type": "engine_equals"
+    },
+    {
+      "assertion_id": "escalation",
+      "type": "escalation_equals"
+    }
+  ],
+  "forbidden_side_effects": []
+}

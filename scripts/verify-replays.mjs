@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { createHash } from "node:crypto";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
@@ -9,11 +10,22 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const locations = {
   caseSchema: path.join(root, "evals/schema/replay-case.schema.json"),
   resultSchema: path.join(root, "evals/schema/replay-result.schema.json"),
+  legacyManifest: path.join(root, "evals/contracts/replay-v1.json"),
   valid: path.join(root, "evals/fixtures/valid"),
   invalid: path.join(root, "evals/fixtures/invalid"),
   cases: path.join(root, "evals/cases"),
   results: path.join(root, "evals/results"),
 };
+
+const currentContractVersion = "replay-v2";
+
+function repositoryPath(filename) {
+  return path.relative(root, filename).split(path.sep).join("/");
+}
+
+function normalizeNewlines(value) {
+  return value.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
+}
 
 function same(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
@@ -308,6 +320,83 @@ async function readJson(filename) {
   }
 }
 
+async function canonicalTreeDigest(filenames) {
+  const hash = createHash("sha256");
+  for (const relative of filenames) {
+    const text = normalizeNewlines(await readFile(path.join(root, relative), "utf8"));
+    hash.update(relative);
+    hash.update("\0");
+    hash.update(text);
+    hash.update("\0");
+  }
+  return hash.digest("hex");
+}
+
+function validateLegacyManifest(manifest) {
+  const errors = [];
+  if (manifest.legacy_contract_version !== "replay-v1") {
+    errors.push("legacy_contract_version must be replay-v1");
+  }
+  if (manifest.current_contract_version !== currentContractVersion) {
+    errors.push(`current_contract_version must be ${currentContractVersion}`);
+  }
+  if (manifest.case_schema !== "evals/schema/legacy/replay-case.v1.schema.json") {
+    errors.push("case_schema must name the frozen replay-v1 case schema");
+  }
+  if (manifest.result_schema !== "evals/schema/legacy/replay-result.v1.schema.json") {
+    errors.push("result_schema must name the frozen replay-v1 result schema");
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(manifest.migration_date ?? "")) {
+    errors.push("migration_date must be an ISO date");
+  }
+  if (!/^[0-9a-f]{64}$/.test(manifest.canonical_tree_sha256 ?? "")) {
+    errors.push("canonical_tree_sha256 must be a SHA-256 digest");
+  }
+  if (!Array.isArray(manifest.documents) || manifest.documents.length === 0) {
+    errors.push("documents must be a non-empty path inventory");
+  } else {
+    const sorted = [...manifest.documents].sort();
+    if (!same(manifest.documents, sorted)) errors.push("documents must be sorted");
+    if (new Set(manifest.documents).size !== manifest.documents.length) {
+      errors.push("documents must not contain duplicate paths");
+    }
+    for (const relative of manifest.documents) {
+      if (
+        typeof relative !== "string" ||
+        path.isAbsolute(relative) ||
+        relative.split(/[\\/]/).includes("..") ||
+        !/^evals\/(?:cases|results)\/.+\.json$/.test(relative)
+      ) {
+        errors.push(`invalid legacy document path ${JSON.stringify(relative)}`);
+      }
+    }
+  }
+  if (!Array.isArray(manifest.supersessions) || manifest.supersessions.length === 0) {
+    errors.push("supersessions must be a non-empty list");
+  }
+  return errors;
+}
+
+async function loadContracts() {
+  const manifest = await readJson(locations.legacyManifest);
+  const manifestErrors = validateLegacyManifest(manifest);
+  if (manifestErrors.length > 0) {
+    throw new Error(manifestErrors.map((error) => `evals/contracts/replay-v1.json: ${error}`).join("\n"));
+  }
+  return {
+    manifest,
+    legacyPaths: new Set(manifest.documents),
+    current: {
+      case: await readJson(locations.caseSchema),
+      result: await readJson(locations.resultSchema),
+    },
+    legacy: {
+      case: await readJson(path.join(root, manifest.case_schema)),
+      result: await readJson(path.join(root, manifest.result_schema)),
+    },
+  };
+}
+
 async function jsonFiles(target) {
   const entries = await readdir(target, { withFileTypes: true });
   const files = [];
@@ -330,55 +419,167 @@ function documentKind(filename) {
   throw new Error(`${path.relative(root, filename)}: cannot infer replay document kind`);
 }
 
-async function loadDocument(filename, schemas) {
+async function loadDocument(filename, contracts) {
   const value = await readJson(filename);
   const kind = documentKind(filename);
+  const relative = repositoryPath(filename);
+  const legacy = contracts.legacyPaths.has(relative);
+  const schemas = legacy ? contracts.legacy : contracts.current;
   const schemaErrors = validateSchema(value, schemas[kind]);
   const contractErrors = schemaErrors.length === 0 && kind === "case" ? validateCaseContract(value) : [];
   return {
     filename,
     kind,
+    contractVersion: legacy ? contracts.manifest.legacy_contract_version : currentContractVersion,
     value,
     errors: [...schemaErrors, ...contractErrors],
   };
 }
 
 function formatErrors(document) {
-  const relative = path.relative(root, document.filename);
+  const relative = repositoryPath(document.filename);
   return document.errors.map((error) => `${relative}: ${error}`);
+}
+
+function replayKey(document) {
+  return `${document.contractVersion}\0${document.value.case_id}`;
 }
 
 function verifyPairs(documents) {
   const errors = [];
   const cases = new Map();
   for (const document of documents.filter((candidate) => candidate.kind === "case")) {
-    const id = document.value.case_id;
-    if (cases.has(id)) errors.push(`duplicate replay case_id ${JSON.stringify(id)}`);
-    else cases.set(id, document.value);
+    const key = replayKey(document);
+    if (cases.has(key)) {
+      errors.push(
+        `duplicate replay case_id ${JSON.stringify(document.value.case_id)} in ${document.contractVersion}`,
+      );
+    } else {
+      cases.set(key, document.value);
+    }
   }
   for (const document of documents.filter((candidate) => candidate.kind === "result")) {
-    const replayCase = cases.get(document.value.case_id);
+    const replayCase = cases.get(replayKey(document));
     if (!replayCase) {
-      errors.push(`${path.relative(root, document.filename)}: no matching case for ${JSON.stringify(document.value.case_id)}`);
+      errors.push(
+        `${repositoryPath(document.filename)}: no matching ${document.contractVersion} case for ${JSON.stringify(document.value.case_id)}`,
+      );
       continue;
     }
     for (const error of validateReplayPair(replayCase, document.value)) {
-      errors.push(`${path.relative(root, document.filename)}: ${error}`);
+      errors.push(`${repositoryPath(document.filename)}: ${error}`);
     }
   }
   return errors;
 }
 
+async function validateContractBoundary(documents, contracts) {
+  const errors = [];
+  const byPath = new Map(documents.map((document) => [repositoryPath(document.filename), document]));
+  const manifest = contracts.manifest;
+
+  for (const relative of manifest.documents) {
+    const document = byPath.get(relative);
+    if (!document) {
+      errors.push(`legacy inventory document is missing: ${relative}`);
+    } else if (document.contractVersion !== manifest.legacy_contract_version) {
+      errors.push(`${relative}: legacy inventory document used ${document.contractVersion}`);
+    }
+  }
+
+  try {
+    const digest = await canonicalTreeDigest([
+      ...manifest.documents,
+      manifest.case_schema,
+      manifest.result_schema,
+    ]);
+    if (digest !== manifest.canonical_tree_sha256) {
+      errors.push(
+        `frozen replay-v1 contract changed: expected ${manifest.canonical_tree_sha256}, found ${digest}`,
+      );
+    }
+  } catch (error) {
+    errors.push(`frozen replay-v1 contract could not be hashed: ${error.message}`);
+  }
+
+  const seenCaseIds = new Set();
+  for (const supersession of manifest.supersessions) {
+    if (seenCaseIds.has(supersession.case_id)) {
+      errors.push(`duplicate supersession for ${JSON.stringify(supersession.case_id)}`);
+      continue;
+    }
+    seenCaseIds.add(supersession.case_id);
+
+    if (!manifest.documents.includes(supersession.legacy_case)) {
+      errors.push(`${supersession.case_id}: legacy_case is outside the frozen inventory`);
+    }
+    if (manifest.documents.includes(supersession.current_case)) {
+      errors.push(`${supersession.case_id}: current_case must not be a replay-v1 path`);
+    }
+    if (!Array.isArray(supersession.current_results) || supersession.current_results.length !== 2) {
+      errors.push(`${supersession.case_id}: current_results must contain Claude Code and Codex evidence`);
+      continue;
+    }
+
+    const legacyCase = byPath.get(supersession.legacy_case);
+    const currentCase = byPath.get(supersession.current_case);
+    if (
+      legacyCase?.kind !== "case" ||
+      legacyCase.errors.length > 0 ||
+      legacyCase.value.case_id !== supersession.case_id
+    ) {
+      errors.push(`${supersession.case_id}: legacy_case does not identify the expected replay-v1 case`);
+    }
+    if (
+      currentCase?.kind !== "case" ||
+      currentCase.errors.length > 0 ||
+      currentCase.contractVersion !== currentContractVersion ||
+      currentCase.value.case_id !== supersession.case_id
+    ) {
+      errors.push(`${supersession.case_id}: current_case does not identify the expected replay-v2 case`);
+    }
+
+    const hosts = [];
+    for (const relative of supersession.current_results) {
+      if (manifest.documents.includes(relative)) {
+        errors.push(`${supersession.case_id}: current result ${relative} must not be a replay-v1 path`);
+      }
+      const result = byPath.get(relative);
+      if (
+        result?.kind !== "result" ||
+        result.errors.length > 0 ||
+        result.contractVersion !== currentContractVersion ||
+        result.value.case_id !== supersession.case_id
+      ) {
+        errors.push(`${supersession.case_id}: ${relative} is not matching replay-v2 evidence`);
+        continue;
+      }
+      hosts.push(result.value.host);
+      if (result.value.observation_date !== manifest.migration_date) {
+        errors.push(`${relative}: observation_date must equal migration_date ${manifest.migration_date}`);
+      }
+      if (!relative.split("/").includes(result.value.observation_date)) {
+        errors.push(`${relative}: path must include its observation_date`);
+      }
+      if (result.value.status !== "pass") {
+        errors.push(`${relative}: superseding evidence must pass`);
+      }
+    }
+    if (!same(hosts.sort(), ["Claude Code", "Codex"])) {
+      errors.push(`${supersession.case_id}: current evidence hosts must be Claude Code and Codex`);
+    }
+  }
+
+  return errors;
+}
+
 async function main() {
-  const schemas = {
-    case: await readJson(locations.caseSchema),
-    result: await readJson(locations.resultSchema),
-  };
+  const contracts = await loadContracts();
   const explicit = process.argv.slice(2);
 
   if (explicit.length > 0) {
     const filenames = explicit.map((filename) => path.resolve(process.cwd(), filename));
-    const documents = await Promise.all(filenames.map((filename) => loadDocument(filename, schemas)));
+    const documents = await Promise.all(filenames.map((filename) => loadDocument(filename, contracts)));
     const errors = documents.flatMap(formatErrors);
     if (errors.length === 0 && documents.some((document) => document.kind === "case")) {
       errors.push(...verifyPairs(documents));
@@ -389,12 +590,12 @@ async function main() {
   }
 
   const validFiles = await jsonFiles(locations.valid);
-  const validDocuments = await Promise.all(validFiles.map((filename) => loadDocument(filename, schemas)));
+  const validDocuments = await Promise.all(validFiles.map((filename) => loadDocument(filename, contracts)));
   const errors = validDocuments.flatMap(formatErrors);
   if (errors.length === 0) errors.push(...verifyPairs(validDocuments));
 
   const invalidFiles = await jsonFiles(locations.invalid);
-  const invalidDocuments = await Promise.all(invalidFiles.map((filename) => loadDocument(filename, schemas)));
+  const invalidDocuments = await Promise.all(invalidFiles.map((filename) => loadDocument(filename, contracts)));
   for (const document of invalidDocuments) {
     if (document.errors.length === 0) {
       errors.push(`${path.relative(root, document.filename)}: intentionally invalid fixture was accepted`);
@@ -406,9 +607,10 @@ async function main() {
     ...(await jsonFiles(locations.results)),
   ];
   const committedDocuments = await Promise.all(
-    committedFiles.map((filename) => loadDocument(filename, schemas)),
+    committedFiles.map((filename) => loadDocument(filename, contracts)),
   );
   errors.push(...committedDocuments.flatMap(formatErrors));
+  errors.push(...(await validateContractBoundary(committedDocuments, contracts)));
   if (errors.length === 0) errors.push(...verifyPairs(committedDocuments));
 
   if (errors.length > 0) throw new Error(errors.join("\n"));

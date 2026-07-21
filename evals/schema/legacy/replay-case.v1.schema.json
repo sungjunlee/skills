@@ -1,11 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/sungjunlee/skills/evals/schema/replay-case.schema.json",
-  "title": "Semantic replay case",
+  "$id": "https://github.com/sungjunlee/skills/evals/schema/legacy/replay-case.v1.schema.json",
+  "title": "Semantic replay case (v1 legacy)",
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "contract_version",
     "case_id",
     "skill",
     "input_fixture",
@@ -18,7 +17,6 @@
     "forbidden_side_effects"
   ],
   "properties": {
-    "contract_version": { "const": "replay-v2" },
     "case_id": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
     "skill": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$" },
     "input_fixture": {
@@ -57,7 +55,7 @@
     },
     "expected_engine": {
       "oneOf": [
-        { "enum": ["none", "inline", "serial_workers", "bounded_parallel"] },
+        { "type": "string", "minLength": 1 },
         { "type": "null" }
       ]
     },

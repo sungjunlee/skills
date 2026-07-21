@@ -1,12 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/sungjunlee/skills/evals/schema/replay-result.schema.json",
-  "title": "Semantic replay result",
+  "$id": "https://github.com/sungjunlee/skills/evals/schema/legacy/replay-result.v1.schema.json",
+  "title": "Semantic replay result (v1 legacy)",
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "contract_version",
-    "observation_date",
     "case_id",
     "host",
     "host_version",
@@ -22,8 +20,6 @@
     "evidence_note"
   ],
   "properties": {
-    "contract_version": { "const": "replay-v2" },
-    "observation_date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
     "case_id": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
     "host": { "type": "string", "minLength": 1 },
     "host_version": { "type": "string", "minLength": 1 },
@@ -64,7 +60,7 @@
     },
     "observed_engine": {
       "oneOf": [
-        { "enum": ["none", "inline", "serial_workers", "bounded_parallel"] },
+        { "type": "string", "minLength": 1 },
         { "type": "null" }
       ]
     },

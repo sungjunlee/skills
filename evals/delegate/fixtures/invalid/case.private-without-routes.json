@@ -1,0 +1,18 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.fixture.private-without-routes",
+  "work_shape": "ambiguous_feature",
+  "fixture": {
+    "kind": "inline",
+    "value": { "request": "Intentionally invalid: private fixture without an approved_routes allowlist." }
+  },
+  "acceptance_checks": [
+    { "check_id": "noop", "kind": "rubric", "spec": "Never validated." }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "luna-xhigh", "model": "luna", "effort": "xhigh" },
+    { "profile_id": "terra-high", "model": "terra", "effort": "high" }
+  ],
+  "pairing_rationale": "Intentionally invalid fixture.",
+  "privacy": { "sensitivity": "private", "approved_routes": [] }
+}

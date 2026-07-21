@@ -1,0 +1,33 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.fixture.mechanical-rename",
+  "profile_id": "sol-high",
+  "model": "gpt-5.6-sol",
+  "effort": "high",
+  "observation_date": "2026-07-21",
+  "executor": {
+    "name": "codex-cli",
+    "version": "0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "tests-pass",
+      "status": "pass",
+      "evidence": "Fixture suite exited 0 after the rename."
+    },
+    {
+      "check_id": "no-stale-name",
+      "status": "pass",
+      "evidence": "No stale identifier remained outside the changelog."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 184,
+    "tokens": { "input": 5200, "output": 1400, "reasoning": null },
+    "cost": { "api_usd": null, "quota_note": "subscription run; no marginal API cost" },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Synthetic fixture result exercising schema and pair validation; not real routing evidence."
+}

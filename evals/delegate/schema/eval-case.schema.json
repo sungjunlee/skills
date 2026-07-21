@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sungjunlee/skills/evals/delegate/schema/eval-case.schema.json",
+  "title": "Delegate evaluation case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "case_id",
+    "work_shape",
+    "fixture",
+    "acceptance_checks",
+    "candidate_profiles",
+    "pairing_rationale",
+    "privacy"
+  ],
+  "properties": {
+    "contract_version": { "const": "delegate-eval-v1" },
+    "case_id": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "work_shape": {
+      "enum": [
+        "mechanical_with_tests",
+        "ambiguous_feature",
+        "cross_component_invariants",
+        "long_horizon_autonomous",
+        "high_blast_radius_analysis",
+        "independent_cross_family_review"
+      ]
+    },
+    "fixture": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": { "const": "inline" },
+            "value": { "type": "object" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": { "const": "file" },
+            "value": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "acceptance_checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check_id", "kind", "spec"],
+        "properties": {
+          "check_id": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+          "kind": { "enum": ["command", "rubric"] },
+          "spec": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "candidate_profiles": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["profile_id", "model", "effort"],
+        "properties": {
+          "profile_id": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+          "model": { "type": "string", "minLength": 1 },
+          "effort": {
+            "oneOf": [
+              { "enum": ["minimal", "low", "medium", "high", "xhigh"] },
+              { "type": "null" }
+            ]
+          }
+        }
+      }
+    },
+    "pairing_rationale": { "type": "string", "minLength": 1 },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sensitivity", "approved_routes"],
+      "properties": {
+        "sensitivity": { "enum": ["public", "synthetic", "internal", "private"] },
+        "approved_routes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

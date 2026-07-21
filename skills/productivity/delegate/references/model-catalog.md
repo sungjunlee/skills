@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-07-15. Treat as stale after 30 days.
+Last checked: 2026-07-21. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. Provider prefixes vary, so adapt the slug to the selected route format.
 
@@ -15,6 +15,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `claude-opus-4-8` | Complex implementation, planning, or independent review. | `high` | premium |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
 | `grok-4.5` | Tool-heavy coding, long-context knowledge work, or an independent frontier-family review. | `high` for difficult coding and multi-step agent loops; `medium` when latency matters more than maximum reasoning depth | value frontier |
+| `kimi-k3` | Long-horizon coding, tool-heavy knowledge work, or multimodal implementation where completion quality matters more than latency. | route default; launch API uses `max` thinking, with `low` and `high` announced for later | frontier; high output-token and latency risk |
 
 ## Value and open-weight families
 
@@ -26,13 +27,20 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `minimax-m3` | Long-context, multimodal, or general agentic coding. | `high` for complex agentic work; otherwise route default | mid |
 | `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. | route default | cheap |
 
+## Preview candidates
+
+| Model | Selection hint | Effort profile | Cost shape |
+|---|---|---|---|
+| `qwen3.8-max-preview` | Evaluation candidate for complex reasoning and coding through Alibaba Token Plan; attractive while the temporary 10x credit promotion lasts, but keep a stable model as the control until independent results and a production release arrive. | route default; thinking is supported, but graded effort behavior is not documented | preview subscription |
+
 ## Sources
 
 - [OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
 - [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Fable 5](https://www.anthropic.com/claude/fable), [Opus 4.8](https://www.anthropic.com/news/claude-opus-4-8), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - [xAI Grok 4.5](https://docs.x.ai/developers/grok-4-5)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
-- [Moonshot Kimi K2.7 Code model card](https://huggingface.co/moonshotai/Kimi-K2.7-Code)
+- [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3) and [Kimi K2.7 Code model card](https://huggingface.co/moonshotai/Kimi-K2.7-Code)
+- [Qwen Cloud text-generation models](https://docs.qwencloud.com/developer-guides/getting-started/text-generation-models) and [Token Plan](https://docs.qwencloud.com/token-plan/overview)
 - [DeepSeek V4](https://api-docs.deepseek.com/news/news260424/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
 

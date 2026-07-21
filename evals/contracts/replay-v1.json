@@ -1,10 +1,10 @@
 {
   "legacy_contract_version": "replay-v1",
   "current_contract_version": "replay-v2",
-  "migration_date": "2026-07-16",
+  "migration_date": "2026-07-21",
   "case_schema": "evals/schema/legacy/replay-case.v1.schema.json",
   "result_schema": "evals/schema/legacy/replay-result.v1.schema.json",
-  "canonical_tree_sha256": "b0a491c0f5484686dd2a8c04f8f7fcd2bc342fc47858f6659752dd8f30e56457",
+  "canonical_tree_sha256": "980bfed022d051f2dae1cdb2927c26fa30a62b7e112fcddbe481ddb212e7a4c0",
   "documents": [
     "evals/cases/brainstorming.clear-low-risk.json",
     "evals/cases/brainstorming.decomposition-shape-unavailable.json",
@@ -114,8 +114,8 @@
       "legacy_case": "evals/cases/implement/high-risk-relay.json",
       "current_case": "evals/cases/implement/v2/high-risk-relay.json",
       "current_results": [
-        "evals/results/implement/v2/2026-07-16/high-risk-relay.claude-code.json",
-        "evals/results/implement/v2/2026-07-16/high-risk-relay.codex.json"
+        "evals/results/implement/v2/2026-07-21/high-risk-relay.claude-code.json",
+        "evals/results/implement/v2/2026-07-21/high-risk-relay.codex.json"
       ]
     },
     {
@@ -123,8 +123,8 @@
       "legacy_case": "evals/cases/implement/selected-implement-becomes-unsafe.json",
       "current_case": "evals/cases/implement/v2/selected-implement-becomes-unsafe.json",
       "current_results": [
-        "evals/results/implement/v2/2026-07-16/selected-implement-becomes-unsafe.claude-code.json",
-        "evals/results/implement/v2/2026-07-16/selected-implement-becomes-unsafe.codex.json"
+        "evals/results/implement/v2/2026-07-21/selected-implement-becomes-unsafe.claude-code.json",
+        "evals/results/implement/v2/2026-07-21/selected-implement-becomes-unsafe.codex.json"
       ]
     }
   ]

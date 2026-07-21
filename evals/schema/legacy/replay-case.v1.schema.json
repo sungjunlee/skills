@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/sungjunlee/skills/evals/schema/replay-case.schema.json",
-  "title": "Semantic replay case",
+  "$id": "https://github.com/sungjunlee/skills/evals/schema/legacy/replay-case.v1.schema.json",
+  "title": "Semantic replay case (v1 legacy)",
   "type": "object",
   "additionalProperties": false,
   "required": [

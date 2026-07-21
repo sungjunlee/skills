@@ -9,7 +9,7 @@
 - Replay document kind is inferred from containment under recursive `evals/cases/` and `evals/results/` trees; consumer files may use skill-local subdirectories and free filenames.
 - In parallel relay batches with shared README/eval surfaces, complete review fixes before rebasing the remaining branch onto the first merged PR. A later re-dispatch can restore the canonical remote branch and supersede an early local rebase.
 - `implement` must remain materially lighter than relay: no durable manifest, worktree lifecycle, crash recovery, PR/MR lifecycle, tracker mutation, push, or implicit relay invocation.
-- In `implement`, engines describe only current-session execution: `none`, `inline`, `serial_workers`, or `bounded_parallel`. Relay escalation occurs before repository mutation and uses `status: escalated`, `engine: none`, and `handoff.route: relay`.
+- In `implement`, engines describe only current-session execution: `none`, `inline`, `serial_workers`, or `bounded_parallel`. Relay escalation uses `status: escalated` with `handoff.route: relay`, stops before the first unsafe mutation, and keeps `engine` reporting what this session actually ran (`none` when nothing ran).
 - Single source of truth is scoped per skill: each skill is an independent distribution unit (installed without `docs/` or `evals/`), so a rule may repeat across skills but must appear only once within a skill, and `SKILL.md` must never point outside its own directory.
 
 ## Conventions

@@ -21,9 +21,9 @@ Execute settled intent continuously in the current session. Do not reopen produc
 
    **Complete when:** the source is executable without re-planning, every pre-existing change is accounted for, scopes and required checks are explicit, and no mutation has occurred.
 
-2. **Select the lightest safe engine.** Read [`references/routing.md`](references/routing.md) before mutation and choose exactly one of `inline`, `serial_workers`, or `bounded_parallel`. Honor an explicit route only while its safety assumptions remain true. Use `engine: none` whenever no current-session execution occurred, including a pre-edit block or relay escalation.
+2. **Select the lightest safe engine.** Read [`references/routing.md`](references/routing.md) before mutation and choose exactly one of `inline`, `serial_workers`, or `bounded_parallel`. Honor an explicit route only while its safety assumptions remain true. The `engine` field always reports what this session actually ran; use `engine: none` whenever no current-session execution occurred, such as a pre-edit block or pre-edit relay escalation.
 
-   Relay is an escalation handoff, not an execution engine. Stop before repository mutation, return `status: escalated` with `handoff.route: relay`, and name `relay-ready`/`relay-plan` as the next owner without invoking it.
+   Relay is an escalation handoff, not an execution engine. Stop before the first unsafe mutation — pre-edit when the risk is already visible, mid-run when new evidence appears — and return `status: escalated` with `handoff.route: relay`, keeping the engine that actually ran. Name `relay-ready`/`relay-plan` as the next owner without invoking it.
 
    **Complete when:** task shape, host capability, authority, dirty-state, and durability evidence all support the selected engine.
 

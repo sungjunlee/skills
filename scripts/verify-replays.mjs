@@ -488,14 +488,18 @@ async function validateContractBoundary(documents, contracts) {
   }
 
   try {
-    const digest = await canonicalTreeDigest(manifest.documents);
+    const digest = await canonicalTreeDigest([
+      ...manifest.documents,
+      manifest.case_schema,
+      manifest.result_schema,
+    ]);
     if (digest !== manifest.canonical_tree_sha256) {
       errors.push(
-        `legacy replay inventory changed: expected ${manifest.canonical_tree_sha256}, found ${digest}`,
+        `frozen replay-v1 contract changed: expected ${manifest.canonical_tree_sha256}, found ${digest}`,
       );
     }
   } catch (error) {
-    errors.push(`legacy replay inventory could not be hashed: ${error.message}`);
+    errors.push(`frozen replay-v1 contract could not be hashed: ${error.message}`);
   }
 
   const seenCaseIds = new Set();
@@ -519,11 +523,16 @@ async function validateContractBoundary(documents, contracts) {
 
     const legacyCase = byPath.get(supersession.legacy_case);
     const currentCase = byPath.get(supersession.current_case);
-    if (legacyCase?.kind !== "case" || legacyCase.value.case_id !== supersession.case_id) {
+    if (
+      legacyCase?.kind !== "case" ||
+      legacyCase.errors.length > 0 ||
+      legacyCase.value.case_id !== supersession.case_id
+    ) {
       errors.push(`${supersession.case_id}: legacy_case does not identify the expected replay-v1 case`);
     }
     if (
       currentCase?.kind !== "case" ||
+      currentCase.errors.length > 0 ||
       currentCase.contractVersion !== currentContractVersion ||
       currentCase.value.case_id !== supersession.case_id
     ) {
@@ -538,6 +547,7 @@ async function validateContractBoundary(documents, contracts) {
       const result = byPath.get(relative);
       if (
         result?.kind !== "result" ||
+        result.errors.length > 0 ||
         result.contractVersion !== currentContractVersion ||
         result.value.case_id !== supersession.case_id
       ) {

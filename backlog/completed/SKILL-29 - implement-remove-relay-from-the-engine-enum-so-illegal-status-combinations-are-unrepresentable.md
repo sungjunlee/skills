@@ -1,7 +1,7 @@
 ---
 id: SKILL-29
 title: 'implement: remove relay from the engine enum so illegal status combinations are unrepresentable'
-status: To Do
+status: Done
 labels:
   - type: skill
   - type: validation

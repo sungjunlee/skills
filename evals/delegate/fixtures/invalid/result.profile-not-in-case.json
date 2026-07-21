@@ -1,0 +1,33 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.fixture.mechanical-rename",
+  "profile_id": "terra-high",
+  "model": "terra",
+  "effort": "high",
+  "observation_date": "2026-07-21",
+  "executor": {
+    "name": "codex-cli",
+    "version": "0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "tests-pass",
+      "status": "pass",
+      "evidence": "Intentionally invalid: profile is not a candidate of the referenced case."
+    },
+    {
+      "check_id": "no-stale-name",
+      "status": "pass",
+      "evidence": "Intentionally invalid: profile is not a candidate of the referenced case."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 90,
+    "tokens": { "input": 1000, "output": 300, "reasoning": null },
+    "cost": { "api_usd": 0.12, "quota_note": null },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Intentionally invalid fixture: terra-high is not a candidate profile of the fixture case."
+}

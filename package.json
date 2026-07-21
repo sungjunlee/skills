@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/verify-replays.mjs",
-    "verify": "node scripts/verify-replays.mjs"
+    "test": "node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs",
+    "verify": "node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs"
   }
 }

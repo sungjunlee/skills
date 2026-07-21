@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sungjunlee/skills/evals/delegate/schema/eval-result.schema.json",
+  "title": "Delegate evaluation result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "case_id",
+    "profile_id",
+    "model",
+    "effort",
+    "observation_date",
+    "executor",
+    "status",
+    "acceptance_results",
+    "measurements",
+    "evidence_note"
+  ],
+  "properties": {
+    "contract_version": { "const": "delegate-eval-v1" },
+    "case_id": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "profile_id": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+    "model": { "type": "string", "minLength": 1 },
+    "effort": {
+      "oneOf": [
+        { "enum": ["minimal", "low", "medium", "high", "xhigh"] },
+        { "type": "null" }
+      ]
+    },
+    "observation_date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "executor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "status": { "enum": ["completed", "failed", "skipped"] },
+    "acceptance_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check_id", "status", "evidence"],
+        "properties": {
+          "check_id": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+          "status": { "enum": ["pass", "fail", "not_run"] },
+          "evidence": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "measurements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wall_clock_seconds",
+        "tokens",
+        "cost",
+        "reviewer_defects",
+        "followup_corrections"
+      ],
+      "properties": {
+        "wall_clock_seconds": {
+          "oneOf": [{ "type": "number", "minimum": 0 }, { "type": "null" }]
+        },
+        "tokens": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input", "output", "reasoning"],
+          "properties": {
+            "input": { "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }] },
+            "output": { "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }] },
+            "reasoning": { "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }] }
+          }
+        },
+        "cost": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["api_usd", "quota_note"],
+          "properties": {
+            "api_usd": { "oneOf": [{ "type": "number", "minimum": 0 }, { "type": "null" }] },
+            "quota_note": { "oneOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }] }
+          }
+        },
+        "reviewer_defects": {
+          "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }]
+        },
+        "followup_corrections": {
+          "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }]
+        }
+      }
+    },
+    "evidence_note": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.fixture.mechanical-rename",
+  "work_shape": "mechanical_with_tests",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Rename the config key retry_count to max_retries across src and tests; the suite must stay green.",
+      "context": "Synthetic fixture repository with a passing test suite."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "tests-pass",
+      "kind": "command",
+      "spec": "The fixture repository test suite exits 0 after the change."
+    },
+    {
+      "check_id": "no-stale-name",
+      "kind": "command",
+      "spec": "No occurrence of retry_count remains outside the changelog."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "sol-high", "model": "gpt-5.6-sol", "effort": "high" },
+    { "profile_id": "sol-xhigh", "model": "gpt-5.6-sol", "effort": "xhigh" }
+  ],
+  "pairing_rationale": "Mechanical work with strong tests should expose whether xhigh effort adds anything over high on the same model.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

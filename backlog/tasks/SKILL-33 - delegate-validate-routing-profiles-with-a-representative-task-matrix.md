@@ -6,8 +6,8 @@ labels:
   - type: skill
   - type: validation
 priority: medium
-milestone: 
-created_date: '2026-07-15'
+milestone: Delegate routing validation
+created_date: '2026-07-21'
 ---
 ## Description
 ## Context

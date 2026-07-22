@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs && node scripts/run-delegate-eval.mjs --dry-run --cases delegate.mechanical.enum-rename,delegate.review.cross-family-diff --profiles grok-medium,grok-high,fable-high",
+    "test": "node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs && node scripts/verify-fixture-generators.mjs && node scripts/run-delegate-eval.mjs --dry-run --cases delegate.mechanical.enum-rename,delegate.review.cross-family-diff --profiles grok-medium,grok-high,fable-high",
     "verify": "node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs"
   }
 }

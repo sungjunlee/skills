@@ -33,6 +33,19 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 |---|---|---|---|
 | `qwen3.8-max-preview` | Evaluation candidate for complex reasoning and coding through Alibaba Token Plan; attractive while the temporary 10x credit promotion lasts, but keep a stable model as the control until independent results and a production release arrive. | route default; thinking is supported, but graded effort behavior is not documented | preview subscription |
 
+## Promotion rule
+
+A model-effort profile becomes a default recommendation for a work shape only
+with repeated local evidence: at least two dated, all-checks-passing results
+for that shape and profile in `evals/delegate/results/` from different
+observation dates, with no unresolved contradicting result for the same
+pairing. A single run, a community report, or a vendor ranking may at most
+sharpen a hint's wording, never set a default. First single-observation
+signals (2026-07-22 bounded run): Grok `medium` dominated `high` on
+strong-test mechanical work; Sol `xhigh` bought a materially richer risk
+register than `high` for modest extra cost; Fable `high` and Grok `high` both
+cleared the cross-family review bar.
+
 ## Sources
 
 - [OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)

@@ -124,6 +124,18 @@ function probe(argv) {
   return result.stdout.trim();
 }
 
+function modelListFinding(executor, profile) {
+  const listing = probe(executor.list_models);
+  if (listing === null) return "model list command failed — model id unverified";
+  const lines = listing.split("\n").map((line) => line.trim());
+  if (lines.includes(profile.model)) return "model id present in live list";
+  const qualified = lines.filter((line) => line.endsWith(`/${profile.model}`));
+  if (qualified.length > 0) {
+    return `model id served only as ${qualified.join(", ")} — dispatch must use that qualified form`;
+  }
+  return "model id NOT in live list — verify before paid runs";
+}
+
 function smokeProfile(executor, profile) {
   const version = probe(executor.availability);
   if (version === null) return `unavailable — ${executor.availability[0]} did not answer`;
@@ -131,10 +143,7 @@ function smokeProfile(executor, profile) {
   if (executor.list_models === null) {
     findings.push("model id unverified — CLI exposes no model list");
   } else {
-    const listing = probe(executor.list_models);
-    if (listing === null) findings.push("model list command failed — model id unverified");
-    else if (listing.includes(profile.model)) findings.push("model id present in live list");
-    else findings.push(`model id NOT in live list — verify before paid runs`);
+    findings.push(modelListFinding(executor, profile));
   }
   if (profile.effort === null) findings.push("effort: CLI default");
   else if (executor.supported_efforts === null) findings.push(`effort ${profile.effort} unverified — no static support data`);

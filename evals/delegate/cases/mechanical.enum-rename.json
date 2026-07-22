@@ -1,0 +1,38 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.mechanical.enum-rename",
+  "work_shape": "mechanical_with_tests",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Rename the order status enum value SHIPPED to DISPATCHED across the service, its serializers, and its tests. Behavior must not change and the full suite must stay green.",
+      "context": "Synthetic small service with complete test coverage over the enum's serialization, state transitions, and API responses. Every rename site is reachable through failing tests."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "suite-green",
+      "kind": "command",
+      "spec": "The fixture repository's full test suite exits 0 after the change."
+    },
+    {
+      "check_id": "no-stale-identifier",
+      "kind": "command",
+      "spec": "No occurrence of SHIPPED remains outside the changelog and migration notes."
+    },
+    {
+      "check_id": "rename-only-diff",
+      "kind": "rubric",
+      "spec": "The diff contains only rename sites and their direct test updates; no drive-by refactoring or formatting churn."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "grok-medium", "model": "grok-4.5", "effort": "medium" },
+    { "profile_id": "grok-high", "model": "grok-4.5", "effort": "high" }
+  ],
+  "pairing_rationale": "Calibrates the Grok medium-versus-high boundary on its cheapest terrain: with strong tests catching every mistake, medium should match high on outcome, making any latency and cost gap the deciding signal.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

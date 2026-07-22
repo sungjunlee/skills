@@ -150,6 +150,16 @@ function resultPathErrors(documents) {
   return errors;
 }
 
+function shapeCoverageErrors(documents, schemas) {
+  const cases = documents.filter((candidate) => candidate.kind === "case");
+  if (cases.length === 0) return [];
+  const shapes = schemas.case.properties.work_shape.enum;
+  const covered = new Set(cases.map((candidate) => candidate.value.work_shape));
+  return shapes
+    .filter((shape) => !covered.has(shape))
+    .map((shape) => `committed delegate cases cover no ${shape} case`);
+}
+
 async function loadAll(target, schemas) {
   const files = await jsonFiles(target);
   return Promise.all(files.map((filename) => loadDocument(filename, schemas)));
@@ -169,6 +179,7 @@ async function main() {
   if (errors.length === 0) {
     errors.push(...resultPathErrors(committed));
     errors.push(...pairErrors(committed));
+    errors.push(...shapeCoverageErrors(committed, schemas));
   }
 
   const validDocuments = await loadAll(locations.valid, schemas);

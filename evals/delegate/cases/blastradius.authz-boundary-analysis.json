@@ -1,0 +1,38 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.blastradius.authz-boundary-analysis",
+  "work_shape": "high_blast_radius_analysis",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Analysis only: propose how to extract the monolith's authorization layer into a separate service. Deliver a design memo; change no code.",
+      "context": "Synthetic monolith where authorization decisions are read in request middleware, background jobs, and a reporting pipeline. The blast radius includes token invalidation, authz decision drift between services during rollout, and audit-log continuity."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "no-repo-mutation",
+      "kind": "command",
+      "spec": "git diff and git status show no repository change from the run."
+    },
+    {
+      "check_id": "risk-register",
+      "kind": "rubric",
+      "spec": "The memo enumerates the blast radius concretely, including token invalidation, cross-service authz drift during rollout, and audit continuity — not generic migration risks."
+    },
+    {
+      "check_id": "rollback-path",
+      "kind": "rubric",
+      "spec": "Every rollout stage has a stated rollback that leaves authorization decisions consistent."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "sol-high", "model": "gpt-5.6-sol", "effort": "high" },
+    { "profile_id": "sol-xhigh", "model": "gpt-5.6-sol", "effort": "xhigh" }
+  ],
+  "pairing_rationale": "High-blast-radius analysis is Sol high's second catalog home; comparing against xhigh tests whether broader exploration surfaces materially more of the risk register, which is the entire deliverable here.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

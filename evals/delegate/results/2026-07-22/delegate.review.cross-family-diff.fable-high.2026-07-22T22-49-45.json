@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "fable-high",
+  "model": "claude-fable-5",
+  "effort": "high",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "claude",
+    "version": "2.1.217 (Claude Code)"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "pass",
+      "evidence": "All three seeded defects reported with correct location and mechanism: the exclusive-end cursor read back as last-consumed index (with the exact fix), the check-then-act reserve race including the counter-drift consequence for release, and the swallowed AbortError collapsing backoff into zero-delay retries."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "pass",
+      "evidence": "Four defects plus three minors. Grader verification: the legacy-cursor cutover break and the raw-error escapes are genuine (this observation caught the legacy-cursor issue the same profile missed in the first observation), the attempts:0 undefined return is genuine, and the negative-limit clamp is genuine. At most two minors (the redundant null-cursor dance, the append-idempotency design note) read as non-defects — within budget."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "pass",
+      "evidence": "Each finding includes the concrete triggering input or interleaving, the observable wrong outcome, and a specific fix, sufficient to write a failing test."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 69,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the claude CLI (claude -p) on a Claude subscription; plain -p output exposes no token usage."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Second observation, same UTC observation date as the first (dispatched 22:49Z; the runner stamps UTC, so this is an intra-date repeat that does not yet satisfy the promotion rule's different-dates requirement). Identical embedded fixture diff. Notably stronger than the first observation: this run caught the deploy-breaking legacy-cursor incompatibility that the first fable-high run missed, in 69s versus 113s. Grader found no incorrect technical claims. Raw transcript in the gitignored drafts directory (2026-07-22T22-49-45, fable-high)."
+}

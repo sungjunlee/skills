@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "grok-high",
+  "model": "grok-4.5",
+  "effort": "high",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "pass",
+      "evidence": "All three seeded defects reported with correct location and mechanism, the off-by-one again with a worked example (total=25/batchSize=10 exporting 23/25 rows, indices 10 and 21 dropped — arithmetic verified), plus the reserve TOCTOU interleaving and the swallowed abort with counted retry."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "pass",
+      "evidence": "Seven findings with a severity table. Grader verification: the completion-from-window-math drift, the legacy-cursor break plus raw-error escapes, and the negative list limit are all genuine. At most one item (the single-process gauge scope note, framed conditionally) reads as a non-defect — within budget."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "pass",
+      "evidence": "Every finding carries a concrete trigger and a specific fix (clamp formulas, rethrow condition, sync-set-before-await), each sufficient to write a failing test; an explicit do-not-land list closes the report."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 78,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Second observation, same UTC observation date as the first (dispatched 22:51Z; intra-date repeat). Identical embedded fixture diff. Consistent with the first observation: this profile caught the legacy-cursor incompatibility on both observations (2/2 on that axis) and matched all seeded defects again, in 78s versus 182s. Grader found no incorrect technical claims. Raw transcript in the gitignored drafts directory (2026-07-22T22-51-21, grok-high)."
+}

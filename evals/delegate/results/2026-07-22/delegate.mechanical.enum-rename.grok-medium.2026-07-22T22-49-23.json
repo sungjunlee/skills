@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.mechanical.enum-rename",
+  "profile_id": "grok-medium",
+  "model": "grok-4.5",
+  "effort": "medium",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail, exit 0."
+    },
+    {
+      "check_id": "no-stale-identifier",
+      "status": "pass",
+      "evidence": "Recursive grep for SHIPPED over the fixture (excluding .git and CHANGELOG.md) matched nothing."
+    },
+    {
+      "check_id": "rename-only-diff",
+      "status": "fail",
+      "evidence": "Beyond the rename sites, the diff rewrites the public display label \"Shipped\" to \"Dispatched\" and edits the api test assertion to match (18 insertions, 18 deletions) — the observable behavior change the task forbade, kept green only by rewriting the guarding assertion. This is the exact failure the first grok-high observation produced, now from grok-medium."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 52,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 1,
+    "followup_corrections": 1
+  },
+  "evidence_note": "Second observation, same UTC observation date as the first (dispatched 22:49Z; intra-date repeat). Fixture rebuilt deterministically by the committed generator, byte-identical terrain to the first observation. Outcome inverts the first observation: grok-medium fell into the display-label trap this time while grok-high avoided it, establishing that the trap outcome is per-run variance rather than a stable profile property — precisely the kind of single-observation noise the promotion rule exists to filter. Wall clock 52s versus 187s for the first observation (provider-side speed also varied). Raw transcript in the gitignored drafts directory (2026-07-22T22-49-23, grok-medium)."
+}

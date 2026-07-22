@@ -1,6 +1,6 @@
 ---
 milestone: Delegate routing validation
-status: active
+status: completed
 started: 2026-07-21
 due: TBD
 objectives: []
@@ -31,13 +31,13 @@ A committed, credential-optional delegate evaluation loop produces its first dat
 
 ### Batch 4 — first bounded evaluation run
 
-- [ ] #33 run 1-2 profile pairs across 2-3 cases and record acceptance, reviewer defects, wall-clock, tokens, and cost vs quota as append-only dated evidence (~2h plus paid calls)
+- [x] #33 run 1-2 profile pairs across 2-3 cases and record acceptance, reviewer defects, wall-clock, tokens, and cost vs quota as append-only dated evidence (~2h plus paid calls) → PR #39 (merged)
 
 ### Batch 5 — report, promotion rule, docs
 
-- [ ] #33 report results grouped by work shape with Pareto candidates on quality, latency, and cost signals (~1h)
-- [ ] #33 add the catalog promotion rule requiring repeated local evidence before a profile becomes a default recommendation (~30min)
-- [ ] #33 document bounded provider-specific runs and how to read incomplete or unavailable metrics (~30min)
+- [x] #33 report results grouped by work shape with Pareto candidates on quality, latency, and cost signals (~1h) → PR #40 (merged)
+- [x] #33 add the catalog promotion rule requiring repeated local evidence before a profile becomes a default recommendation (~30min) → PR #40 (merged)
+- [x] #33 document bounded provider-specific runs and how to read incomplete or unavailable metrics (~30min) → PR #40 (merged)
 
 ## Running Context
 - The #32 catalog stays a stale-prone routing hint, never an authority; live provider model lists win over catalog slugs.
@@ -49,9 +49,14 @@ A committed, credential-optional delegate evaluation loop produces its first dat
 - fixture.value is executor-visible verbatim; grader answer keys belong only in acceptance check specs (the review case leaked its seeded defects this way in Batch 2 and was fixed in Batch 3).
 - 2026-07-22 smoke on this machine: claude CLI 2.1.217 available (fable high/xhigh statically supported); opencode 1.17.18 available with grok-4.5 in its live model list (effort variant support unverified). Batch 4 can run the fable and grok pairs here; sol/terra/luna pairs need the codex route re-smoked at run time.
 - Runner drafts are gitignored under evals/delegate/drafts/; promotion into append-only results/ is a manual curation step after human assessment.
+- Live model lists may serve catalog slugs only under provider-qualified ids (opencode-go/grok-4.5); dispatch templates must use the qualified form and the smoke must match whole list entries, not substrings.
+- Repo-based cases dispatch from inside a disposable seeded fixture repo (runner inherits cwd, one fresh copy per profile); grader answer keys never enter executor-visible fixture text.
 
 ## Progress
+- 2026-07-22: Batch 5 done via PR #40 (merged, verify CI green): work-shape-grouped Pareto report for the bounded run, catalog promotion rule (two dated all-passing results from different dates before any default), bounded-run + incomplete-metric docs, and the smoke model-list fix (whole-entry match reporting provider-qualified serving). AC items 6, 7, and 9 verified — all nine #33 ACs now checked. Follow-up issues filed: #41 (fixture repos for the three unrun shapes), #42 (K3/Qwen evidence-or-unvalidated marking), #43 (spec-charter).
+- 2026-07-22: Batch 4 done via PR #39 (merged, verify CI green): six real dispatches promoted to evals/delegate/results/2026-07-22/ — grok-medium beat grok-high on mechanical (3/3 vs 2/3, half the wall clock; high changed the public label and rewrote the guarding assertion), sol-high/sol-xhigh both passed blastradius with xhigh materially richer (+34% time, +9% tokens), fable-high/grok-high both found all seeded review defects with grok-high additionally catching a legacy-cursor deploy break. Registry fixed to provider-qualified opencode-go/{model} after the smoke substring false positive; review fixture diff authored by codex (sol) to preserve the cross-family premise, and grader verification found two genuine unseeded defects, recorded honestly. AC items 3 (re-verified live) and 5 verified. Paid calls: 6 dispatches + 1 fixture authoring, all bounded.
 - 2026-07-22: Batch 3 done via commit f1edcc6 — pushed to main directly by mistake (branch step skipped after the Batch 2 merge); push-triggered verify CI green, runner/smoke/registry negative-tested locally before push. Runner + smoke + executor registry landed; review-case answer-key leak fixed. AC items 3 and 4 verified.
 - 2026-07-22: Batch 2 done via PR #38 (merged; verify CI + CodeRabbit both green): six-shape case matrix committed, one calibration pair per shape placed where catalog hints diverge; cross-family review uses fable-high vs grok-high because same-family pairs cannot exercise that shape. Verifier now enforces shape coverage. K3/Qwen excluded per non-goal. AC item 2 verified.
 - 2026-07-21: Batch 1 done via PR #37 (merged, verify CI green): delegate-eval-v1 case/result schemas, credential-free verifier joined to npm test, fixture self-test, shared schema validator extracted to scripts/lib/. AC items 1 and 8 verified. CodeRabbit was rate-limited on both PRs today; verify CI is the effective gate.
 - 2026-07-21: Sprint planned around #33. Predecessor thread closed the same day: PR #34 (issue #29 engine-enum contract) repaired after incomplete relay auto-recovery and merged; CI `verify` workflow added (#35). Created GitHub milestone "Delegate routing validation" and assigned #33 to it.
+- 2026-07-22: Sprint closed. 10/10 tasks completed.

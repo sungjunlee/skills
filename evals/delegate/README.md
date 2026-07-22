@@ -61,3 +61,40 @@ routes outside their `approved_routes`. Executors run sandboxed (codex uses
 `--sandbox workspace-write`, not the delegate skill's bypass flags). A
 timed-out run is reported as `failed` (`dispatch_timeout`) and is never
 retried automatically.
+
+## Bounded run procedure
+
+A bounded run is explicitly invoked, never scheduled. The 2026-07-22 run
+(`reports/2026-07-22-bounded-run.md`) followed this shape:
+
+1. `--smoke` the exact (case, profile) selection first and fix any route
+   problem it reports — e.g. a model served only under a provider-qualified
+   id, which the bare catalog slug will not dispatch.
+2. Dispatch one lane per executor CLI, sequential within the lane, so
+   wall-clock comparisons are not skewed by local contention or provider
+   rate limiting; lanes on different executors may run in parallel.
+3. The runner's dispatch inherits its working directory. Run repository
+   fixtures from inside a disposable seeded git repo — one fresh copy per
+   profile, suite verified green and `git status` clean before dispatch.
+   Analysis-only cases run from a seeded empty repo so `no-repo-mutation`
+   checks stay verifiable.
+4. Grade command checks mechanically (test suite, grep, git status) and
+   rubric checks with written evidence grounded in the recorded output.
+5. Copy the draft into `results/<observation_date>/`, fill the acceptance
+   and measurement fields, and run `npm test` before committing.
+
+## Interpreting incomplete metrics
+
+- `null` means the CLI did not expose the value — never a guess, never zero.
+  Plain `claude -p` and `opencode run` expose no token usage; codex prints
+  an unsplit total, which belongs in `quota_note`, not divided across the
+  token fields.
+- `api_usd` and `quota_note` are different economies; never sum or compare
+  them directly. Subscription-routed runs leave `api_usd` null.
+- `wall_clock_seconds` is measured uniformly by the runner and is the only
+  latency signal comparable across executors.
+- A `failed` result with `dispatch_timeout` may still have consumed provider
+  quota; it is evidence of the failure, never a slot to retry silently.
+- Promotion to a catalog default follows the repeated-evidence rule in
+  `skills/productivity/delegate/references/model-catalog.md`; a single dated
+  run is a hint with evidence, not a default.

@@ -26,8 +26,8 @@ A committed, credential-optional delegate evaluation loop produces its first dat
 
 ### Batch 3 — runner and capability smoke
 
-- [ ] #33 build a local runner that executes an explicitly selected subset of cases and profiles; missing provider credentials skip, never fail (~2h)
-- [ ] #33 add a low-cost live capability smoke verifying model IDs and supported effort values, separate from outcome evaluation (~1h)
+- [x] #33 build a local runner that executes an explicitly selected subset of cases and profiles; missing provider credentials skip, never fail (~2h) → commit f1edcc6 (direct to main; verify CI green)
+- [x] #33 add a low-cost live capability smoke verifying model IDs and supported effort values, separate from outcome evaluation (~1h) → commit f1edcc6
 
 ### Batch 4 — first bounded evaluation run
 
@@ -46,8 +46,12 @@ A committed, credential-optional delegate evaluation loop produces its first dat
 - Evaluation results are append-only dated evidence; a new profile contract never rewrites existing results (mirrors the replay-evidence freeze pattern from #29/PR #34).
 - Paid provider calls happen only in explicitly invoked bounded runs (Batch 4), never in CI; the `verify` workflow must stay credential-free.
 - 2026-07-21: PR #36 added K3 and Qwen 3.8 to the delegate model catalog mid-planning; Batch 2 pairing and the Batch 3 capability smoke should re-read the live catalog at execution time instead of trusting this plan's snapshot.
+- fixture.value is executor-visible verbatim; grader answer keys belong only in acceptance check specs (the review case leaked its seeded defects this way in Batch 2 and was fixed in Batch 3).
+- 2026-07-22 smoke on this machine: claude CLI 2.1.217 available (fable high/xhigh statically supported); opencode 1.17.18 available with grok-4.5 in its live model list (effort variant support unverified). Batch 4 can run the fable and grok pairs here; sol/terra/luna pairs need the codex route re-smoked at run time.
+- Runner drafts are gitignored under evals/delegate/drafts/; promotion into append-only results/ is a manual curation step after human assessment.
 
 ## Progress
+- 2026-07-22: Batch 3 done via commit f1edcc6 — pushed to main directly by mistake (branch step skipped after the Batch 2 merge); push-triggered verify CI green, runner/smoke/registry negative-tested locally before push. Runner + smoke + executor registry landed; review-case answer-key leak fixed. AC items 3 and 4 verified.
 - 2026-07-22: Batch 2 done via PR #38 (merged; verify CI + CodeRabbit both green): six-shape case matrix committed, one calibration pair per shape placed where catalog hints diverge; cross-family review uses fable-high vs grok-high because same-family pairs cannot exercise that shape. Verifier now enforces shape coverage. K3/Qwen excluded per non-goal. AC item 2 verified.
 - 2026-07-21: Batch 1 done via PR #37 (merged, verify CI green): delegate-eval-v1 case/result schemas, credential-free verifier joined to npm test, fixture self-test, shared schema validator extracted to scripts/lib/. AC items 1 and 8 verified. CodeRabbit was rate-limited on both PRs today; verify CI is the effective gate.
 - 2026-07-21: Sprint planned around #33. Predecessor thread closed the same day: PR #34 (issue #29 engine-enum contract) repaired after incomplete relay auto-recovery and merged; CI `verify` workflow added (#35). Created GitHub milestone "Delegate routing validation" and assigned #33 to it.

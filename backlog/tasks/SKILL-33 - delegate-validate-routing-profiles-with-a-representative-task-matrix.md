@@ -50,7 +50,7 @@ Record enough evidence to compare task-specific Pareto candidates rather than pr
 ## Acceptance criteria
 
 - [x] A committed delegate evaluation case format represents work shape, fixture, acceptance checks, candidate profiles, and privacy constraints.
-- [ ] At least one case exists for each work shape listed above.
+- [x] At least one case exists for each work shape listed above.
 - [ ] A local runner can execute an explicitly selected subset of cases and profiles without requiring every provider credential.
 - [ ] A low-cost capability smoke verifies live model IDs and supported effort values before paid evaluation runs where the CLI exposes that information.
 - [ ] Evaluation results are append-only dated evidence; existing results are never rewritten to match a new profile contract.

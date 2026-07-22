@@ -21,8 +21,8 @@ A committed, credential-optional delegate evaluation loop produces its first dat
 
 ### Batch 2 — case matrix
 
-- [ ] #33 author one case per work shape: mechanical-with-tests, ambiguous feature/bugfix, cross-component invariants, long-horizon autonomous, high-blast-radius analysis, independent cross-family review (~1.5h)
-- [ ] #33 attach only meaningful profile pairs per shape: Luna xhigh vs Terra high, Sol high vs xhigh, Fable high vs xhigh, Grok medium vs high (~30min)
+- [x] #33 author one case per work shape: mechanical-with-tests, ambiguous feature/bugfix, cross-component invariants, long-horizon autonomous, high-blast-radius analysis, independent cross-family review (~1.5h) → PR #38 (merged)
+- [x] #33 attach only meaningful profile pairs per shape: Luna xhigh vs Terra high, Sol high vs xhigh, Fable high vs xhigh, Grok medium vs high (~30min) → PR #38 (merged)
 
 ### Batch 3 — runner and capability smoke
 
@@ -48,5 +48,6 @@ A committed, credential-optional delegate evaluation loop produces its first dat
 - 2026-07-21: PR #36 added K3 and Qwen 3.8 to the delegate model catalog mid-planning; Batch 2 pairing and the Batch 3 capability smoke should re-read the live catalog at execution time instead of trusting this plan's snapshot.
 
 ## Progress
+- 2026-07-22: Batch 2 done via PR #38 (merged; verify CI + CodeRabbit both green): six-shape case matrix committed, one calibration pair per shape placed where catalog hints diverge; cross-family review uses fable-high vs grok-high because same-family pairs cannot exercise that shape. Verifier now enforces shape coverage. K3/Qwen excluded per non-goal. AC item 2 verified.
 - 2026-07-21: Batch 1 done via PR #37 (merged, verify CI green): delegate-eval-v1 case/result schemas, credential-free verifier joined to npm test, fixture self-test, shared schema validator extracted to scripts/lib/. AC items 1 and 8 verified. CodeRabbit was rate-limited on both PRs today; verify CI is the effective gate.
 - 2026-07-21: Sprint planned around #33. Predecessor thread closed the same day: PR #34 (issue #29 engine-enum contract) repaired after incomplete relay auto-recovery and merged; CI `verify` workflow added (#35). Created GitHub milestone "Delegate routing validation" and assigned #33 to it.

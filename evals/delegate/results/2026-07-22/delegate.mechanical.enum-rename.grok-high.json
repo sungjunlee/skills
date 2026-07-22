@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.mechanical.enum-rename",
+  "profile_id": "grok-high",
+  "model": "grok-4.5",
+  "effort": "high",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail, exit 0."
+    },
+    {
+      "check_id": "no-stale-identifier",
+      "status": "pass",
+      "evidence": "Recursive grep for SHIPPED over the fixture (excluding .git and CHANGELOG.md) matched nothing."
+    },
+    {
+      "check_id": "rename-only-diff",
+      "status": "fail",
+      "evidence": "Beyond the rename sites, the diff rewrites the public display label \"Shipped\" to \"Dispatched\" and edits the api test assertion to match (18 insertions, 18 deletions). That is an observable API behavior change the task explicitly forbade; the suite stayed green only because the guarding assertion was rewritten alongside the change."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 374,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 1,
+    "followup_corrections": 1
+  },
+  "evidence_note": "Bounded Batch 4 run (issue #33). Dispatched by scripts/run-delegate-eval.mjs from a disposable seeded git fixture identical to the grok-medium copy (synthetic order-service, zero-dependency Node 22, 8-test suite). Independent grader review found one defect invisible to the suite: the public statusLabel changed from \"Shipped\" to \"Dispatched\" with the protecting test assertion rewritten to match, so one follow-up correction (restore label and assertion) is required before this diff would be mergeable. Twice grok-medium's wall clock on the same fixture. Raw transcript retained locally in the gitignored drafts directory (2026-07-22, grok-high)."
+}

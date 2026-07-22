@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.mechanical.enum-rename",
+  "profile_id": "grok-medium",
+  "model": "grok-4.5",
+  "effort": "medium",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail, exit 0."
+    },
+    {
+      "check_id": "no-stale-identifier",
+      "status": "pass",
+      "evidence": "Recursive grep for SHIPPED over the fixture (excluding .git and CHANGELOG.md) matched nothing."
+    },
+    {
+      "check_id": "rename-only-diff",
+      "status": "pass",
+      "evidence": "git diff touches only the enum key/value, computed-key map entries, and direct test references (16 insertions, 16 deletions across 6 files). The public statusLabel stays \"Shipped\", preserving observable behavior as the task required; the executor's own summary states the label was kept deliberately."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 187,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Bounded Batch 4 run (issue #33). Dispatched by scripts/run-delegate-eval.mjs from a disposable seeded git fixture (synthetic order-service, zero-dependency Node 22, 8-test suite covering serialization, transitions, and API responses). Independent grader review of the diff found zero defects: the rename is complete and behavior-preserving, including the deliberate trap of the public display label, which this run left untouched. Raw transcript retained locally in the gitignored drafts directory (2026-07-22, grok-medium)."
+}

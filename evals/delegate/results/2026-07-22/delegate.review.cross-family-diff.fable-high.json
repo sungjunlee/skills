@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "fable-high",
+  "model": "claude-fable-5",
+  "effort": "high",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "claude",
+    "version": "2.1.217 (Claude Code)"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "pass",
+      "evidence": "All three seeded defects reported with correct location and mechanism: the pageWindow off-by-one (start = offset + 1 against an exclusive-end cursor, one row lost per page boundary), the check-then-act race in Metrics.reserve across the awaited gauge call, and the swallowed AbortError in withRetry — including the sharper observation that swallowing the wait rejection turns cancellation into a zero-delay retry loop."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "pass",
+      "evidence": "Nine findings total (six defects, three minor). Grader verification: the decodeCursor error-contract change and the negative-limit-on-shrunken-total edge are genuine unseeded defects present in the generated fixture, and the tag-keying gauge finding is a real metric-correctness flaw. At most one listed item (duration_ms tag inconsistency, filed under Minor) is a style nit rather than a defect — within the two-non-defect budget. No plausible-but-correct code was flagged."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "pass",
+      "evidence": "Every finding states concrete triggering input or interleaving and the observable wrong outcome (e.g. exact row lost at each page boundary, the two-reader interleaving that exceeds the concurrency cap, garbage base64 and encoded-null inputs producing the wrong exception type), each sufficient to write a failing test."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 113,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the claude CLI (claude -p) on a Claude subscription; plain -p output exposes no token usage."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Bounded Batch 4 run (issue #33). The reviewed diff was authored by codex (gpt-5.6-sol, effort high) to seed exactly three defects; grader verification of this report established the fixture actually contains at least two additional genuine defects (decodeCursor error-contract regression, negative list limit when total shrinks below the cursor), which is recorded here because the answer-key check only requires the three seeded defects and both candidate reviewers received the identical fixture. No incorrect claims in the report; usable without follow-up correction. Raw transcript retained locally in the gitignored drafts directory (2026-07-22, fable-high)."
+}

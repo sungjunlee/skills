@@ -10,10 +10,12 @@ default recommendation.
 
 ```
 evals/delegate/
-  schema/    eval-case.schema.json, eval-result.schema.json
-  cases/     committed evaluation cases (one or more per work shape)
-  results/   append-only dated evidence: results/<YYYY-MM-DD>/<file>.json
-  fixtures/  valid/ must pass, invalid/ must be rejected (self-test)
+  schema/         eval-case, eval-result, executors schemas
+  cases/          committed evaluation cases (verifier enforces one per work shape)
+  results/        append-only dated evidence: results/<YYYY-MM-DD>/<file>.json
+  fixtures/       valid/ must pass, invalid/ must be rejected (self-test)
+  executors.json  model → CLI dispatch registry for the runner
+  drafts/         uncurated runner output (gitignored)
 ```
 
 ## Contract
@@ -30,6 +32,32 @@ evals/delegate/
   `observation_date` directory and existing files are never rewritten to match
   a newer contract.
 - `scripts/verify-delegate-evals.mjs` (part of `npm test` and CI) validates
-  schemas, case/result pairing, and the fixtures — all without provider
-  credentials. Paid provider calls happen only in explicitly invoked bounded
-  runs, never in CI.
+  schemas, case/result pairing, work-shape coverage, the executor registry,
+  and the fixtures — all without provider credentials. Paid provider calls
+  happen only in explicitly invoked bounded runs, never in CI.
+
+## Runner
+
+`scripts/run-delegate-eval.mjs` executes an explicitly selected subset — it
+never runs everything implicitly and never fails on a missing provider CLI
+(that run is recorded as `skipped`):
+
+```bash
+# free: resolved argv only, no spawn (this is what CI runs)
+node scripts/run-delegate-eval.mjs --dry-run --cases <id,...> --profiles <id,...>
+
+# low-cost: CLI availability, live model list where exposed, effort support
+node scripts/run-delegate-eval.mjs --smoke --cases <id,...> --profiles <id,...>
+
+# paid: bounded dispatch (default 30-minute hard deadline per run)
+node scripts/run-delegate-eval.mjs --cases <id,...> --profiles <id,...>
+```
+
+Real runs write draft results plus captured stdout/stderr to `drafts/`
+(gitignored). A human assesses the output against the case's acceptance
+checks, fills the measurements, and only then promotes a finished result into
+`results/<observation_date>/`. `internal`/`private` cases refuse dispatch on
+routes outside their `approved_routes`. Executors run sandboxed (codex uses
+`--sandbox workspace-write`, not the delegate skill's bypass flags). A
+timed-out run is reported as `failed` (`dispatch_timeout`) and is never
+retried automatically.

@@ -12,6 +12,8 @@ const base = path.join(root, "evals/delegate");
 const locations = {
   caseSchema: path.join(base, "schema/eval-case.schema.json"),
   resultSchema: path.join(base, "schema/eval-result.schema.json"),
+  registrySchema: path.join(base, "schema/executors.schema.json"),
+  registry: path.join(base, "executors.json"),
   cases: path.join(base, "cases"),
   results: path.join(base, "results"),
   valid: path.join(base, "fixtures/valid"),
@@ -150,6 +152,23 @@ function resultPathErrors(documents) {
   return errors;
 }
 
+function registryCoverageErrors(registry, documents) {
+  const errors = [];
+  const matched = registry.executors.flatMap((executor) => executor.match_models);
+  for (const model of new Set(duplicates(matched))) {
+    errors.push(`evals/delegate/executors.json: model ${JSON.stringify(model)} is matched by multiple executors`);
+  }
+  const caseModels = new Set(
+    documents
+      .filter((candidate) => candidate.kind === "case")
+      .flatMap((candidate) => candidate.value.candidate_profiles.map((profile) => profile.model)),
+  );
+  for (const model of [...caseModels].filter((candidate) => !matched.includes(candidate))) {
+    errors.push(`evals/delegate/executors.json: no executor matches case model ${JSON.stringify(model)}`);
+  }
+  return errors;
+}
+
 function shapeCoverageErrors(documents, schemas) {
   const cases = documents.filter((candidate) => candidate.kind === "case");
   if (cases.length === 0) return [];
@@ -181,6 +200,14 @@ async function main() {
     errors.push(...pairErrors(committed));
     errors.push(...shapeCoverageErrors(committed, schemas));
   }
+
+  const registry = await readJson(locations.registry);
+  const registrySchema = await readJson(locations.registrySchema);
+  const registryErrors = validateSchema(registry, registrySchema).map(
+    (error) => `evals/delegate/executors.json: ${error}`,
+  );
+  errors.push(...registryErrors);
+  if (errors.length === 0) errors.push(...registryCoverageErrors(registry, committed));
 
   const validDocuments = await loadAll(locations.valid, schemas);
   errors.push(...validDocuments.flatMap(formatErrors));

@@ -2,3 +2,7 @@
 skills-lock.json
 
 .DS_Store
+
+# Uncurated delegate evaluation runner output; curated evidence is promoted
+# manually into evals/delegate/results/<date>/.
+evals/delegate/drafts/

@@ -1,0 +1,32 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "executors": [
+    {
+      "executor_id": "codex",
+      "match_models": ["gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"],
+      "availability": ["codex", "--version"],
+      "list_models": null,
+      "dispatch": ["codex", "exec", "--sandbox", "workspace-write", "--skip-git-repo-check", "-m", "{model}"],
+      "effort_argv": ["-c", "model_reasoning_effort={effort}"],
+      "supported_efforts": ["minimal", "low", "medium", "high", "xhigh"]
+    },
+    {
+      "executor_id": "claude",
+      "match_models": ["claude-fable-5", "claude-opus-4-8", "claude-sonnet-5"],
+      "availability": ["claude", "--version"],
+      "list_models": null,
+      "dispatch": ["claude", "-p", "--model", "{model}"],
+      "effort_argv": ["--effort", "{effort}"],
+      "supported_efforts": ["low", "medium", "high", "xhigh", "max"]
+    },
+    {
+      "executor_id": "opencode",
+      "match_models": ["grok-4.5"],
+      "availability": ["opencode", "--version"],
+      "list_models": ["opencode", "models"],
+      "dispatch": ["opencode", "run", "--auto", "-m", "{model}"],
+      "effort_argv": ["--variant", "{effort}"],
+      "supported_efforts": null
+    }
+  ]
+}

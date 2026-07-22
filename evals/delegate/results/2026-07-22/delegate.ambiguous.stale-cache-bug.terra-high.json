@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.ambiguous.stale-cache-bug",
+  "profile_id": "terra-high",
+  "model": "gpt-5.6-terra",
+  "effort": "high",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "regression-test",
+      "status": "pass",
+      "evidence": "The new test (import invalidates cached totals for active sessions) fails on a fresh generator-built fixture without the fix and passes with it; the full suite is 9/9 green after the change."
+    },
+    {
+      "check_id": "root-cause-named",
+      "status": "pass",
+      "evidence": "The report names the exact gap — import appends store rows without invalidating the per-session totals cache — and correctly explains the user-visible symptom mechanism: logout clears that cache, which is why totals recovered only after logout/login. No TTL shortening or blanket cache disabling."
+    },
+    {
+      "check_id": "no-overreach",
+      "status": "pass",
+      "evidence": "The diff touches only src/import.js (+4/-1: optional sessionCache parameter with invalidateAll after the write, existing callers stay compatible) and the import test file; no other subsystem changed."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 75,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 38,847 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "First observation for this case (bounded run for issues #33/#41), dispatched from a fixture built by the committed deterministic generator; grader verified the stale-read premise reproduces on the pristine fixture. Report delivered in Korean. On this observation terra-high matched luna-xhigh on every acceptance check at 75s versus 153s wall clock and 38,847 versus 67,156 reported tokens — evidence against the community claim the pairing was designed to test; luna's only edge was a marginally more thorough regression test. Raw transcript in the gitignored drafts directory (2026-07-22T22-52-14, terra-high)."
+}

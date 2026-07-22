@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.mechanical.enum-rename",
+  "profile_id": "grok-high",
+  "model": "grok-4.5",
+  "effort": "high",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail, exit 0."
+    },
+    {
+      "check_id": "no-stale-identifier",
+      "status": "pass",
+      "evidence": "Recursive grep for SHIPPED over the fixture (excluding .git and CHANGELOG.md) matched nothing."
+    },
+    {
+      "check_id": "rename-only-diff",
+      "status": "pass",
+      "evidence": "git diff touches only the enum key/value, computed-key map entries, and direct test references (16 insertions, 16 deletions across 6 files). The public statusLabel stays \"Shipped\" and its guarding assertion is untouched — the trap this same profile fell into in the first observation."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 39,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Second observation, same UTC observation date as the first (dispatched 22:50Z; intra-date repeat). Fixture rebuilt deterministically by the committed generator. Outcome inverts the first observation: grok-high produced the clean behavior-preserving rename this time (39s versus 374s), while grok-medium fell into the label trap — the two observations together show the trap outcome and the latency gap are per-run variance, not stable profile properties. Raw transcript in the gitignored drafts directory (2026-07-22T22-50-02, grok-high)."
+}

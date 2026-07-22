@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.blastradius.authz-boundary-analysis",
+  "profile_id": "sol-xhigh",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "no-repo-mutation",
+      "status": "pass",
+      "evidence": "git status and git diff in the seeded run directory show no change after the run; the memo's own scope statement records no code changes."
+    },
+    {
+      "check_id": "risk-register",
+      "status": "pass",
+      "evidence": "All three named risks handled concretely: revocation anchored to an explicit invariant (no decision started after a revocation ACK may allow that credential) with the state change and its audit event in one transaction/outbox, subject_epoch collapsing role-revoke and session-revoke, and honest limits stated for already-started requests; drift bounded by same-input/same-version shadow comparison with a five-way mismatch classification and checksum/revision watermarks gating state-ownership transfer; audit continuity via a caller-generated decision_id spanning local, remote, and business events, exactly one authoritative=true evaluator per decision, dedupe on decision_id + evaluator + mode, and periodic reconciliation of audit counts against routing logs."
+    },
+    {
+      "check_id": "rollback-path",
+      "status": "pass",
+      "evidence": "Every behavior-changing stage is guarded: per action/tenant kill switches, cohorts fixed by tenant/action so engines never alternate per request, operator-explicit rollback gated on the legacy projection being verifiably current, automatic local fallback banned, and reverse replication required during the write-ownership rollback window — all preserving decision consistency under rollback."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 203,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 41,446 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Second observation, same UTC observation date as the first (dispatched 22:57Z; intra-date repeat). Same prompt and setup; memo again in Korean. Distinctive depth this run: the time-limited authorization lease for jobs/reports, the grant-manifest join that keeps policy interpretation out of reporting code without per-row decisions, and the revocation-ACK invariant framing. Unlike the first observation pair, this one reads as parity-with-different-emphases rather than clearly-richer: sol-high's second memo matched it on every rubric while sol-xhigh cost +54% wall clock and +94% reported tokens (203s / 41,446 versus 132s / 21,375). Grader found no incorrect technical claims. Raw transcript in the gitignored drafts directory (2026-07-22T22-57-50, sol-xhigh)."
+}

@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.ambiguous.stale-cache-bug",
+  "profile_id": "luna-xhigh",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "regression-test",
+      "status": "pass",
+      "evidence": "The new test (import invalidates cached totals for existing sessions, covering two concurrent sessions) fails on a fresh generator-built fixture without the fix and passes with it; the full suite is 9/9 green after the change."
+    },
+    {
+      "check_id": "root-cause-named",
+      "status": "pass",
+      "evidence": "The report names the exact gap — CSV import never invalidates the per-session aggregate cache, so only existing sessions see stale totals — and explicitly rules out the red herrings: aggregation is synchronous and the edge cache is not wired to this path. No TTL shortening or blanket cache disabling."
+    },
+    {
+      "check_id": "no-overreach",
+      "status": "pass",
+      "evidence": "The diff touches only src/import.js (+4/-1: optional sessionCache parameter with invalidateAll after the write) and the import test file; no other subsystem changed."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 153,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 67,156 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "First observation for this case (bounded run for issues #33/#41), dispatched from a fixture built by the committed deterministic generator; grader verified the stale-read premise reproduces on the pristine fixture. Report delivered in Korean. The two-session regression test is slightly more thorough than the terra-high counterpart's single-session test; the fix is identical in substance. The optional sessionCache parameter leaves non-passing callers uninvalidated, a mild API compromise with no observable defect in this fixture. Raw transcript in the gitignored drafts directory (2026-07-22T22-51-00, luna-xhigh)."
+}

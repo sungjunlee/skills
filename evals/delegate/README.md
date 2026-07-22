@@ -77,7 +77,11 @@ A bounded run is explicitly invoked, never scheduled. The 2026-07-22 run
    fixtures from inside a disposable seeded git repo — one fresh copy per
    profile, suite verified green and `git status` clean before dispatch.
    Analysis-only cases run from a seeded empty repo so `no-repo-mutation`
-   checks stay verifiable.
+   checks stay verifiable. Repository fixtures are built deterministically
+   by the generators in `fixtures/generators/` (`node
+   fixtures/generators/<case>.mjs <target-dir>` builds, verifies green, and
+   git-seeds one copy); `scripts/verify-fixture-generators.mjs` keeps them
+   and their case premises honest in CI.
 4. Grade command checks mechanically (test suite, grep, git status) and
    rubric checks with written evidence grounded in the recorded output.
 5. Copy the draft into `results/<observation_date>/`, fill the acceptance

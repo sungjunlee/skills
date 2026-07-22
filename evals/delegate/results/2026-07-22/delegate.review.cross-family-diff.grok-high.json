@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "grok-high",
+  "model": "grok-4.5",
+  "effort": "high",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "pass",
+      "evidence": "All three seeded defects reported with correct location and mechanism, each with a worked trigger: the pageWindow off-by-one demonstrated with a total=25/limit=10 table showing indices 10 and 20 silently dropped, the check-then-act reserve race across the awaited gauge call, and the swallowed AbortError in withRetry causing cancelled jobs to keep retrying."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "pass",
+      "evidence": "Nine numbered findings plus explicit low/nit items. Grader verification confirms the substantial extras are genuine: the legacy-cursor incompatibility (pre-change base64url numeric cursors hard-fail after deploy) and the decodeCursor error-contract regression are real, and the count-versus-window drift including the negative list limit is real. At most two items (the writes-never-retry scope critique and the single-process-semaphore intent question, both framed conditionally) read as non-defects — within budget. One flag was explicitly self-resolved as fine rather than reported as a defect."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "pass",
+      "evidence": "Findings include concrete reproduction material — a worked page-boundary example, the exact decode path for a legacy cursor string, the interleaving that exceeds the concurrency cap, and the shrink condition producing a negative limit — each sufficient to write a failing test, plus an ordered must-fix list."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 182,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Bounded Batch 4 run (issue #33). Same embedded fixture diff as the fable-high run (authored by codex gpt-5.6-sol). Notable comparative signal: this run caught the deploy-breaking legacy-cursor incompatibility that the fable-high report missed, while matching it on all three seeded defects; grader found no incorrect technical claims. Report usable without follow-up correction. Raw transcript retained locally in the gitignored drafts directory (2026-07-22, grok-high)."
+}

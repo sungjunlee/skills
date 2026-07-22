@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.blastradius.authz-boundary-analysis",
+  "profile_id": "sol-high",
+  "model": "gpt-5.6-sol",
+  "effort": "high",
+  "observation_date": "2026-07-22",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "no-repo-mutation",
+      "status": "pass",
+      "evidence": "git status and git diff in the seeded run directory show no change after the run."
+    },
+    {
+      "check_id": "risk-register",
+      "status": "pass",
+      "evidence": "All three named risks are handled concretely, not generically: token invalidation via a per-session/user revocation_epoch compared against token_iat with a dedicated high-priority propagation path and the grant-vs-revoke consistency asymmetry called out; cross-service decision drift bounded by shadow comparison valid only at identical policy and data revisions, min_data_revision demands, and INDETERMINATE on projection lag; audit continuity via decision persisted with its audit event in one outbox, decision_id deduplication, authoritative=false shadow marking, and a shared schema plus correlation IDs across the cutover. All three call paths (middleware, background jobs, reporting) get per-path semantics."
+    },
+    {
+      "check_id": "rollback-path",
+      "status": "pass",
+      "evidence": "Behavior-changing stages cut over per call type behind separate feature flags declared as individual rollback units; rollback to the local adapter is explicitly gated on the local policy revision and revocation watermark being current, and fallback is forbidden when freshness cannot be proven, which keeps authorization decisions consistent under rollback. Earlier stages (seam introduction, shadow service) are additive no-ops."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 188,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 30,400 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Bounded Batch 4 run (issue #33). Analysis-only dispatch from a seeded near-empty git directory; the memo (delivered in Korean despite an English prompt, presumably from local codex configuration) proposes an in-monolith authorization seam with dual adapters, revision-pinned shadow comparison, and per-call-type cutover. Grader found no incorrect technical claims; the deliverable is usable without follow-up correction. Raw transcript retained locally in the gitignored drafts directory (2026-07-22, sol-high)."
+}

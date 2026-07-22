@@ -6,7 +6,7 @@
     "kind": "inline",
     "value": {
       "request": "Independently review this pull request diff and report genuine defects with file and line references.",
-      "context": "Synthetic diff authored by a GPT-family executor (gpt-5.6-sol). Reviewers must come from a different model family than the author. The fixture text goes to the reviewer verbatim, so the seeded-defect answer key lives only in the grader-side acceptance checks."
+      "context": "Synthetic diff authored by a GPT-family executor (gpt-5.6-sol); review it as you would a normal pull request.\n\nThe diff under review:\n\ndiff --git a/src/export/cursor.js b/src/export/cursor.js\nindex 1915f4a..3472bc9 100644\n--- a/src/export/cursor.js\n+++ b/src/export/cursor.js\n@@ -1,13 +1,29 @@\n-export function encodeOffset(offset) {\n-  return Buffer.from(String(offset), 'utf8').toString('base64url');\n+export function encodeCursor(position) {\n+  return Buffer.from(JSON.stringify(position), 'utf8').toString('base64url');\n }\n \n-export function decodeOffset(value) {\n-  if (!value) return 0;\n+export function decodeCursor(value) {\n+  if (!value) return { offset: 0 };\n \n-  const offset = Number(Buffer.from(value, 'base64url').toString('utf8'));\n-  if (!Number.isSafeInteger(offset) || offset < 0) {\n+  const position = JSON.parse(\n+    Buffer.from(value, 'base64url').toString('utf8'),\n+  );\n+  if (!Number.isSafeInteger(position.offset) || position.offset < 0) {\n     throw new Error('Invalid export cursor');\n   }\n-  return offset;\n+  return position;\n+}\n+\n+export function pageWindow(cursor, limit, total) {\n+  const start = cursor ? cursor.offset + 1 : 0;\n+  const end = Math.min(start + limit, total);\n+\n+  return {\n+    start,\n+    end,\n+    nextCursor:\n+      end < total\n+        ? encodeCursor({ offset: end })\n+        : null,\n+  };\n }\ndiff --git a/src/shared/metrics.js b/src/shared/metrics.js\nindex e723e17..02f118f 100644\n--- a/src/shared/metrics.js\n+++ b/src/shared/metrics.js\n@@ -1,13 +1,30 @@\n export class Metrics {\n   constructor(client) {\n     this.client = client;\n+    this.gauges = new Map();\n   }\n \n   increment(name, tags = {}, amount = 1) {\n     this.client.increment(name, amount, tags);\n   }\n \n+  async reserve(name, maximum, tags = {}) {\n+    const current = this.gauges.get(name) ?? 0;\n+    if (current >= maximum) return false;\n+\n+    const next = current + 1;\n+    await this.client.gauge(name, next, tags);\n+    this.gauges.set(name, next);\n+    return true;\n+  }\n+\n+  async release(name, tags = {}) {\n+    const next = Math.max(0, (this.gauges.get(name) ?? 1) - 1);\n+    this.gauges.set(name, next);\n+    await this.client.gauge(name, next, tags);\n+  }\n+\n   timing(name, milliseconds, tags = {}) {\n     this.client.timing(name, milliseconds, tags);\n   }\n }\ndiff --git a/src/export/worker.js b/src/export/worker.js\nindex 7ef5f77..e2a552b 100644\n--- a/src/export/worker.js\n+++ b/src/export/worker.js\n@@ -1,24 +1,61 @@\n-import { decodeOffset, encodeOffset } from './cursor.js';\n+import { setTimeout as wait } from 'node:timers/promises';\n+import { decodeCursor, pageWindow } from './cursor.js';\n \n-export function createExportWorker({ repository, writer, metrics }) {\n-  return async function run(job) {\n-    const offset = decodeOffset(job.cursor);\n-    const rows = await repository.list(job.accountId, {\n-      offset,\n-      limit: job.batchSize,\n-    });\n-\n-    if (rows.length === 0) {\n-      return { complete: true, cursor: null };\n+async function withRetry(operation, { attempts, baseDelayMs, metrics, signal }) {\n+  for (let attempt = 1; attempt <= attempts; attempt += 1) {\n+    try {\n+      return await operation();\n+    } catch (error) {\n+      if (attempt === attempts) throw error;\n+\n+      try {\n+        await wait(baseDelayMs * 2 ** (attempt - 1), undefined, { signal });\n+      } catch {}\n+      metrics.increment('export.retry');\n     }\n+  }\n+}\n+\n+export function createExportWorker({\n+  repository,\n+  writer,\n+  metrics,\n+  concurrency = 4,\n+  retry = { attempts: 3, baseDelayMs: 100 },\n+}) {\n+  return async function run(job) {\n+    const tags = { queue: job.queue };\n+    const acquired = await metrics.reserve('export.active', concurrency, tags);\n+    if (!acquired) return { deferred: true, cursor: job.cursor ?? null };\n+\n+    const startedAt = Date.now();\n+    try {\n+      const cursor = decodeCursor(job.cursor);\n+      const total = await repository.count(job.accountId);\n+      const window = pageWindow(job.cursor ? cursor : null, job.batchSize, total);\n+      const rows = await withRetry(\n+        () => repository.list(job.accountId, {\n+          offset: window.start,\n+          limit: window.end - window.start,\n+        }),\n+        { ...retry, metrics, signal: job.signal },\n+      );\n+\n+      if (rows.length === 0) {\n+        return { complete: true, cursor: null };\n+      }\n+\n+      await writer.append(job.destination, rows);\n \n-    await writer.append(job.destination, rows);\n-    metrics.increment('export.rows', { account: job.accountId }, rows.length);\n+      metrics.increment('export.rows', { account: job.accountId }, rows.length);\n \n-    const nextOffset = offset + rows.length;\n-    return {\n-      complete: rows.length < job.batchSize,\n-      cursor: rows.length < job.batchSize ? null : encodeOffset(nextOffset),\n-    };\n+      return {\n+        complete: window.nextCursor === null,\n+        cursor: window.nextCursor,\n+      };\n+    } finally {\n+      await metrics.release('export.active', tags);\n+      metrics.timing('export.duration_ms', Date.now() - startedAt);\n+    }\n   };\n }\n"
     }
   },
   "acceptance_checks": [
@@ -27,12 +27,21 @@
     }
   ],
   "candidate_profiles": [
-    { "profile_id": "fable-high", "model": "claude-fable-5", "effort": "high" },
-    { "profile_id": "grok-high", "model": "grok-4.5", "effort": "high" }
+    {
+      "profile_id": "fable-high",
+      "model": "claude-fable-5",
+      "effort": "high"
+    },
+    {
+      "profile_id": "grok-high",
+      "model": "grok-4.5",
+      "effort": "high"
+    }
   ],
   "pairing_rationale": "This shape requires reviewers from outside the author's GPT family, so the issue's same-family pairs cannot exercise it; Fable high versus Grok high compares the premium and value frontier families on the catalog's own independent-review hints at matched effort.",
   "privacy": {
     "sensitivity": "synthetic",
-    "approved_routes": []
+    "approved_routes": [],
+    "notes": "Fixture text reaches the reviewer verbatim; the seeded-defect answer key lives only in the grader-side acceptance check specs."
   }
 }

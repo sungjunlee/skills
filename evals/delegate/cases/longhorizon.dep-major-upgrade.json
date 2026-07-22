@@ -1,0 +1,43 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.longhorizon.dep-major-upgrade",
+  "work_shape": "long_horizon_autonomous",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Upgrade the web framework across a major version in one autonomous run: apply the codemod, migrate deprecated APIs, repair the tests, and finish with a green suite and an upgrade changelog.",
+      "context": "Synthetic mid-size app where the upgrade requires roughly a dozen dependent migration steps whose later steps only surface after earlier ones land. Measures sustained autonomous execution, not a single edit."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "suite-green",
+      "kind": "command",
+      "spec": "The full test suite exits 0 on the upgraded framework version."
+    },
+    {
+      "check_id": "no-abandoned-work",
+      "kind": "command",
+      "spec": "No skipped tests, TODO markers, or commented-out migration steps introduced by the run remain."
+    },
+    {
+      "check_id": "single-run-completion",
+      "kind": "rubric",
+      "spec": "The run reaches a green suite without human intervention; every stall it recovers from is documented in the changelog."
+    },
+    {
+      "check_id": "changelog-complete",
+      "kind": "rubric",
+      "spec": "The upgrade changelog records each migrated API and any behavior-affecting decision."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "fable-high", "model": "claude-fable-5", "effort": "high" },
+    { "profile_id": "fable-xhigh", "model": "claude-fable-5", "effort": "xhigh" }
+  ],
+  "pairing_rationale": "The catalog reserves Fable xhigh for long-running autonomous work; this measures whether xhigh actually reduces stalls and follow-up correction over high on a genuinely long-horizon run, or only adds cost.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.ambiguous.stale-cache-bug",
+  "work_shape": "ambiguous_feature",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Users report the dashboard shows stale totals after a CSV import until they log out and back in. Find the cause and fix it.",
+      "context": "Synthetic web app where import writes bypass the per-session aggregate cache. The report is underdetermined: the executor must localize the invalidation gap among session cache, background aggregation, and CDN layers, then choose a proportionate fix."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "regression-test",
+      "kind": "command",
+      "spec": "A new regression test reproduces the stale read before the fix and passes after it; the full suite stays green."
+    },
+    {
+      "check_id": "root-cause-named",
+      "kind": "rubric",
+      "spec": "The summary names the actual invalidation gap rather than masking it with TTL shortening or blanket cache disabling."
+    },
+    {
+      "check_id": "no-overreach",
+      "kind": "rubric",
+      "spec": "No unrelated subsystem is refactored; the diff stays proportionate to the defect."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "luna-xhigh", "model": "gpt-5.6-luna", "effort": "xhigh" },
+    { "profile_id": "terra-high", "model": "gpt-5.6-terra", "effort": "high" }
+  ],
+  "pairing_rationale": "Tests the community claim that Luna xhigh beats Terra high on Terra's home terrain of ambiguous everyday work, where localization quality rather than raw depth decides the outcome.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

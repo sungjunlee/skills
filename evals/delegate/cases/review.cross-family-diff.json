@@ -1,0 +1,38 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "work_shape": "independent_cross_family_review",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Independently review this pull request diff and report genuine defects with file and line references.",
+      "context": "Synthetic diff authored by a GPT-family executor (gpt-5.6-sol) containing three seeded defects — an off-by-one in pagination bounds, a silently swallowed error in a retry path, and a check-then-act race on a shared counter — plus deliberately plausible but correct surrounding code. Reviewers must come from a different model family than the author."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "seeded-defects-found",
+      "kind": "rubric",
+      "spec": "At least two of the three seeded defects are reported with correct location and mechanism."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "kind": "rubric",
+      "spec": "At most two reported findings are non-defects; plausible-but-correct code is not flagged."
+    },
+    {
+      "check_id": "actionable-report",
+      "kind": "rubric",
+      "spec": "Each finding states the failure scenario concretely enough to write a failing test from it."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "fable-high", "model": "claude-fable-5", "effort": "high" },
+    { "profile_id": "grok-high", "model": "grok-4.5", "effort": "high" }
+  ],
+  "pairing_rationale": "This shape requires reviewers from outside the author's GPT family, so the issue's same-family pairs cannot exercise it; Fable high versus Grok high compares the premium and value frontier families on the catalog's own independent-review hints at matched effort.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

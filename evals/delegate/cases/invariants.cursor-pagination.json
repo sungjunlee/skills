@@ -1,0 +1,38 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.invariants.cursor-pagination",
+  "work_shape": "cross_component_invariants",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Change the activity feed's sort key from created_at to (pinned, created_at). Keep pagination correct for existing clients.",
+      "context": "Synthetic service where the implicit ordering invariant spans three components: the cursor encodes the previous sort key, the client cache keys pages by cursor, and a nightly export job assumes append-only ordering. None of this is documented; only cross-component contract tests reveal it."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "contract-tests-green",
+      "kind": "command",
+      "spec": "Cross-component contract tests covering cursor decoding, client cache keys, and the export job all pass."
+    },
+    {
+      "check_id": "invariant-named",
+      "kind": "rubric",
+      "spec": "The summary states the implicit ordering invariant and which components share it before describing the change."
+    },
+    {
+      "check_id": "stale-cursor-path",
+      "kind": "rubric",
+      "spec": "Cursors issued under the old sort key are handled explicitly (versioned, migrated, or rejected with a defined error), not left to break silently."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "sol-high", "model": "gpt-5.6-sol", "effort": "high" },
+    { "profile_id": "sol-xhigh", "model": "gpt-5.6-sol", "effort": "xhigh" }
+  ],
+  "pairing_rationale": "Sol high is the catalog hint for cross-boundary work with consequential tradeoffs; this measures whether xhigh's broader exploration finds the undocumented third consumer that high might miss.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

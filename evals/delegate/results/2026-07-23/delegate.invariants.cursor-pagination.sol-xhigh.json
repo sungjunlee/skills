@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.invariants.cursor-pagination",
+  "profile_id": "sol-xhigh",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "contract-tests-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 12 tests, 12 pass, 0 fail (the shipped 7 contract tests plus 5 added), exit 0."
+    },
+    {
+      "check_id": "invariant-named",
+      "status": "pass",
+      "evidence": "The report names all three consumers of the ordering invariant and their treatment: composite (pinned, created_at) cursor payload, an explicitly re-namespaced client page cache so pre-change cached pages cannot be reused, and the nightly export kept on the created_at watermark to preserve its append-only guarantee."
+    },
+    {
+      "check_id": "stale-cursor-path",
+      "status": "pass",
+      "evidence": "Legacy created_at-only cursors are detected explicitly and continue their pagination under the legacy ordering until exhaustion, preventing misses and duplicates for in-flight readers; the compatibility contract is documented in the fixture README."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 162,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 39,422 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "First observation for this case (cross_component_invariants), fixture from the committed generator, same dispatch batch as the sol-high observation. Outcome parity with sol-high on every rubric — both found the undocumented export consumer and shielded it — with the distinctive addition of the cache-namespace separation and one more added test, at 162s versus 119s wall clock and 39,422 versus 31,049 reported tokens (+27% tokens). Consistent with the blastradius pattern: xhigh matches high on outcome at higher cost on this shape family. Report delivered in Korean. Raw transcript in the gitignored drafts directory (2026-07-23T02-01-13, sol-xhigh)."
+}

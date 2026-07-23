@@ -1,0 +1,50 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.longhorizon.dep-major-upgrade",
+  "profile_id": "fable-xhigh",
+  "model": "claude-fable-5",
+  "effort": "xhigh",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "claude",
+    "version": "2.1.218 (Claude Code)"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail on the upgraded framework (src/app.js imports vendor/microweb2), exit 0."
+    },
+    {
+      "check_id": "no-abandoned-work",
+      "status": "pass",
+      "evidence": "Recursive grep over src/ and test/ found no TODO markers, skipped tests, or commented-out migration steps; the test count is unchanged."
+    },
+    {
+      "check_id": "single-run-completion",
+      "status": "pass",
+      "evidence": "One dispatch took the fixture from a green v1 suite to a green v2 suite with no human intervention, in 192 seconds; no stalls occurred, so none needed documenting."
+    },
+    {
+      "check_id": "changelog-complete",
+      "status": "pass",
+      "evidence": "The 3.0.0 changelog entry records every migrated API and the behavior-affecting decisions, and additionally states the compatibility intent explicitly (HTTP behavior unchanged, embedding API async — hence the major bump) including the preserved v1 error payload shape."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 192,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the claude CLI (claude -p with the registry's scoped tool grant) on a Claude subscription; plain -p output exposes no token usage."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "First observation for this case (long_horizon_autonomous), fixture from the committed generator, same batch as the fable-high observation. Outcome parity with fable-high on every check — both completed all twelve migration-guide items in a single run — at 192s versus 126s wall clock (+52%), repeating the sol pattern: xhigh matched high on outcome at higher cost. Both runs finished far below the shape's intended long-horizon duration, so this fixture measures completion quality rather than endurance; stressing sustained autonomy needs a heavier fixture. Raw transcript in the gitignored drafts directory (2026-07-23T02-01-49, fable-xhigh)."
+}

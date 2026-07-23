@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "grok-high",
+  "model": "grok-4.5",
+  "effort": "high",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "pass",
+      "evidence": "All three seeded defects reported with correct location and mechanism: the off-by-one with a boundary worked example (total=11/batchSize=10 silently dropping index 10 — arithmetic verified), the check-then-act reserve race with the fix ordering, and the swallowed abort with the rethrow condition."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "pass",
+      "evidence": "Six findings plus an explicit not-defects section that correctly bins the intent questions (process-local gauges, global cap semantics, retry scope) instead of asserting them as defects. Grader verification: the window-versus-rows drift, raw parse errors, and finally-masking are genuine. Zero non-defects asserted. Notably, this run missed the legacy-cursor compatibility break its two 2026-07-22 runs caught — no check requires it, but the intra-profile variance is recorded."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "pass",
+      "evidence": "Each finding has a concrete trigger and fix; the verdict separates must-fix from ship-blockers and the closing note honestly scopes the review to the synthetic diff."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 60,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Fourth observation, second on this UTC date (a clean retry after the 00:02Z empty-output failure; timestamp-suffixed so the failed result stays untouched). The profile now has all-pass results on two distinct dates (2026-07-22 x2, this run) alongside one dispatch-reliability failure, which remains an unresolved contradiction under the promotion rule — fable-high keeps the shape default; grok-high stands as a strong alternative with a 3-of-4 delivery record. Raw transcript in the gitignored drafts directory (2026-07-23T01-57-35, grok-high)."
+}

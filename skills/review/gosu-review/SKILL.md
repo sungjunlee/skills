@@ -42,7 +42,7 @@ See `references/personas.md` for seed patterns. Do not fill the panel by copying
 
 ## Dispatch
 
-Find the available subagent or multi-agent tool, then spawn one real subagent per persona. Spawn all subagents first, then wait for results — do not repeat spawn/wait sequentially. Prefer read-only or explorer-style roles for review when available. If a tool option fails, retry with a simpler call rather than fighting the options. Wait for completion without busy polling.
+Find the available subagent or multi-agent tool, then spawn one real subagent per persona. Dispatch every panelist before reading any result — never run a spawn-then-wait cycle per persona, which turns the panel into a relay. If the host caps concurrency, start the remaining panelists as slots free; that is still a parallel panel. Prefer read-only or explorer-style roles for review when available. If a tool option fails, retry with a simpler call rather than fighting the options. Wait for completion without busy polling.
 
 If subagents cannot be found or called, stop with:
 

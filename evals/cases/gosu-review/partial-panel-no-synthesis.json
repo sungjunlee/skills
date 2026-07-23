@@ -1,0 +1,44 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "gosu-review.partial-panel-no-synthesis",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "most-subagents-fail",
+      "target_request": "/gosu-review skill/SKILL.md",
+      "target_state": "The named file exists and is the only plausible target.",
+      "capabilities": {
+        "subagent_dispatch": "native",
+        "parallel_subagents": "native"
+      },
+      "subagent_behavior": "Exactly one dispatched subagent returns a panel entry; every other dispatch fails without output."
+    }
+  },
+  "required_output_fields": [
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "retry_recommendation"
+  ],
+  "expected_route": null,
+  "expected_engine": "bounded_parallel",
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "expected_escalation": "partial_panel_no_synthesis",
+  "semantic_assertions": [
+    { "assertion_id": "field-panel", "type": "output_field_present", "field": "panel" },
+    { "assertion_id": "field-meta-requested", "type": "output_field_present", "field": "meta.requested" },
+    { "assertion_id": "field-meta-returned", "type": "output_field_present", "field": "meta.returned" },
+    { "assertion_id": "field-retry", "type": "output_field_present", "field": "retry_recommendation" },
+    { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
+    { "assertion_id": "no-confirmation-question", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-partial-panel", "type": "escalation_equals" },
+    { "assertion_id": "no-repository-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit", "push"]
+}

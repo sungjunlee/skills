@@ -1,0 +1,35 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "gosu-review.ambiguous-target",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "several-plausible-targets",
+      "target_request": "/gosu-review",
+      "target_state": "The recent context holds three plausible targets: an edited module, a migration plan discussed just before it, and the repository state overall. None is clearly the most recent artifact.",
+      "capabilities": {
+        "subagent_dispatch": "native",
+        "parallel_subagents": "native"
+      }
+    }
+  },
+  "required_output_fields": ["target_confirmation_question"],
+  "expected_route": null,
+  "expected_engine": "none",
+  "question_count_range": {
+    "min": 1,
+    "max": 1
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-confirmation", "type": "output_field_present", "field": "target_confirmation_question" },
+    { "assertion_id": "engine-none-before-confirmation", "type": "engine_equals" },
+    { "assertion_id": "exactly-one-question", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-repository-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit", "push"]
+}

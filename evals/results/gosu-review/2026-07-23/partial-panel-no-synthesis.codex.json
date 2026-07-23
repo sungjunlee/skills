@@ -1,0 +1,91 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-23",
+  "case_id": "gosu-review.partial-panel-no-synthesis",
+  "host": "Codex",
+  "host_version": "codex-cli 0.144.4 / gpt-5.6-sol",
+  "skill_revision": "4bbaceb90a6d5a3f202cc684928789b29b40b773",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The surviving panelist's raw entry was reproduced with its verdict, sharp take, first fix, blind spot, and score."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported requested: 4 agents."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported returned: 1 agent, matching the fixture's declared subagent behavior."
+    },
+    {
+      "assertion_id": "field-retry",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The reply closed with a retry recommendation to rerun once at least two panelists can respond."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "All four panelists were dispatched together before waiting, as the skill's dispatch section requires."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was unambiguous, so no question was asked."
+    },
+    {
+      "assertion_id": "escalation-partial-panel",
+      "status": "pass",
+      "observed": "partial_panel_no_synthesis",
+      "evidence": "With one of four returning, the run produced no Tensions or Consensus section and said so, rather than synthesizing from a single voice."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status in the fixture repository reported no changes after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit was created; the fixture head remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture repository has no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "panel",
+    "panel.verdict",
+    "panel.sharp_take",
+    "panel.first_fix",
+    "panel.blind_spot",
+    "panel.score",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool",
+    "retry_recommendation"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_escalation": "partial_panel_no_synthesis",
+  "side_effects": [],
+  "evidence_note": "The degradation contract held under the condition it exists for: with only one of four dispatched panelists returning, the host emitted the surviving raw panel entry plus a retry recommendation and produced no synthesis, reporting requested 4 / returned 1 honestly."
+}

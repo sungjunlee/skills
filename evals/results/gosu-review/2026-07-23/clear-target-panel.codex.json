@@ -1,0 +1,105 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-23",
+  "case_id": "gosu-review.clear-target-panel",
+  "host": "Codex",
+  "host_version": "codex-cli 0.144.4 / gpt-5.6-sol",
+  "skill_revision": "4bbaceb90a6d5a3f202cc684928789b29b40b773",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The selected target was echoed near the top of the output as the skill requires."
+    },
+    {
+      "assertion_id": "field-casting",
+      "status": "pass",
+      "observed": true,
+      "evidence": "A one-line casting summary described the specialized, quality, and adversarial mix."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "pass",
+      "observed": true,
+      "evidence": "One verdict line per panelist preceded the detailed panel section."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Each panelist's raw entry appeared with verdict, sharp take, first fix, and blind spot."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported requested: 4 agents."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported returned: 4."
+    },
+    {
+      "assertion_id": "field-meta-tool",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta named the actual dispatch tool used, collaboration.spawn_agent, rather than a placeholder."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "Panelists ran concurrently against a three-slot concurrency limit, with the fourth starting as a slot freed — bounded parallel dispatch, not serial workers."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "All requested capabilities were available and every panelist returned; nothing degraded."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status in the fixture repository reported no changes after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit was created; the fixture head remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture repository has no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "verdicts",
+    "panel",
+    "consensus",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Happy-path observation: four real subagents dispatched through collaboration.spawn_agent, all four returned, and the output carried the full shape including a consensus section. Worth recording for future contract work: the host's concurrency limit was three, so the fourth panelist started as a slot freed. That is still bounded-parallel dispatch rather than serial workers, but the skill's \"spawn all subagents first, then wait\" wording assumes unbounded fan-out and does not describe this case."
+}

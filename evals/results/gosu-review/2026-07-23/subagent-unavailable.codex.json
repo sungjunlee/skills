@@ -1,0 +1,77 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-23",
+  "case_id": "gosu-review.subagent-unavailable",
+  "host": "Codex",
+  "host_version": "codex-cli 0.144.4 / gpt-5.6-sol",
+  "skill_revision": "4bbaceb90a6d5a3f202cc684928789b29b40b773",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-reason",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The output opened with the skill's exact refusal line, naming the missing capability as the reason."
+    },
+    {
+      "assertion_id": "field-disclaimer",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The output stated verbatim that this is not a gosu-review result."
+    },
+    {
+      "assertion_id": "field-offer",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The output offered a single-agent review as an alternative if asked, matching the skill's stop block."
+    },
+    {
+      "assertion_id": "engine-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "No panelist was cast or dispatched; the run stopped at the capability check."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-subagent-unavailable",
+      "status": "pass",
+      "observed": "subagent_unavailable",
+      "evidence": "The run reported the missing-capability stop rather than presenting any panel."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status in the fixture repository reported no changes after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit was created; the fixture head remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture repository has no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "subagent_unavailable_reason",
+    "not_a_gosu_review_disclaimer",
+    "single_agent_alternative_offer"
+  ],
+  "observed_route": null,
+  "observed_engine": "none",
+  "question_count": 0,
+  "observed_escalation": "subagent_unavailable",
+  "side_effects": [],
+  "evidence_note": "The skill's central bright line held: with subagent dispatch declared unavailable, the host refused with the specified stop block instead of writing a panel itself. This is the failure mode the skill's first line warns about (\"Fake panels fail the skill\") and the one an orchestrator is most tempted to paper over, since it could have produced plausible-looking personas unaided."
+}

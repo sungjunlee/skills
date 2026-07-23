@@ -1,0 +1,42 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "gosu-review.subagent-unavailable",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "no-subagent-capability",
+      "target_request": "/gosu-review skill/SKILL.md",
+      "target_state": "The named file exists and is the only plausible target.",
+      "capabilities": {
+        "subagent_dispatch": "unavailable",
+        "parallel_subagents": "unavailable"
+      },
+      "note": "No subagent or multi-agent tool exists on this host. A panel written by the orchestrator alone is not a panel."
+    }
+  },
+  "required_output_fields": [
+    "subagent_unavailable_reason",
+    "not_a_gosu_review_disclaimer",
+    "single_agent_alternative_offer"
+  ],
+  "expected_route": null,
+  "expected_engine": "none",
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "expected_escalation": "subagent_unavailable",
+  "semantic_assertions": [
+    { "assertion_id": "field-reason", "type": "output_field_present", "field": "subagent_unavailable_reason" },
+    { "assertion_id": "field-disclaimer", "type": "output_field_present", "field": "not_a_gosu_review_disclaimer" },
+    { "assertion_id": "field-offer", "type": "output_field_present", "field": "single_agent_alternative_offer" },
+    { "assertion_id": "engine-none", "type": "engine_equals" },
+    { "assertion_id": "no-confirmation-question", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-subagent-unavailable", "type": "escalation_equals" },
+    { "assertion_id": "no-repository-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit", "push"]
+}

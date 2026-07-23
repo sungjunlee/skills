@@ -24,4 +24,4 @@ Choose the least expensive execution profile likely to finish correctly. Judge t
 - Compare expected completion cost, including retries and review, rather than token price alone.
 - Apply privacy, data-residency, and provider-policy constraints before comparing cost.
 - Separate API marginal pricing from subscription quota consumption and rate limits.
-- Treat vendor benchmarks as capability signals and community reports as hypotheses. Promote a route to a default only after it works on representative local tasks.
+- Treat vendor benchmarks as capability signals and community reports as hypotheses. Promoting a route to a default requires repeated dated local evidence — see the promotion rule in `model-catalog.md`.

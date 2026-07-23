@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "fable-high",
+  "model": "claude-fable-5",
+  "effort": "high",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "claude",
+    "version": "2.1.217 (Claude Code)"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "pass",
+      "evidence": "All three seeded defects reported with correct location, mechanism, and fix: the exclusive-end cursor consumed with +1 (worked example: total=10/batchSize=5 losing row 5), the check-then-act reserve race across the awaited gauge call including the undercount consequence for release, and the swallowed AbortError making cancellation accelerate retries, with the exact rethrow guard."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "pass",
+      "evidence": "Eight numbered defects plus two items explicitly labeled as observations rather than defects (the per-page count() cost and the deferred-return shape change). Grader verification: the legacy-cursor break, raw-error escapes, tag/counter mismatch, finally-masking, and attempts:0 guard are all genuine; the two labeled observations are accurate and honestly scoped. Zero non-defects asserted as defects."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "pass",
+      "evidence": "Each finding carries a concrete trigger and a specific fix, several with inline patches; severity-ordered with an explicit most-urgent call, each sufficient to write a failing test."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 95,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the claude CLI (claude -p) on a Claude subscription; plain -p output exposes no token usage."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Third observation, first on a distinct UTC observation date (00:02Z). Identical embedded fixture diff. Third consecutive all-pass for this profile on this shape, and the second consecutive report catching the legacy-cursor break; with results now spanning two observation dates and no contradicting result, this profile satisfies the catalog promotion rule for independent_cross_family_review. Raw transcript in the gitignored drafts directory (2026-07-23T00-02-09, fable-high)."
+}

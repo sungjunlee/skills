@@ -60,6 +60,35 @@ Evidence-backed defaults (promoted 2026-07-23 from dated results on
   into a behavior-preserving trap at least once across three observations
   each; per-run variance dominates the medium-versus-high split there.
 
+## Demotion rule
+
+A default is revoked as soon as one dated result fails an acceptance check
+for that shape and profile. Promotion needs repetition because a single pass
+can be luck; demotion needs only one failure because a default is a claim
+that the profile reliably passes, and one counterexample disproves it.
+
+- **Acceptance failure → demote.** The shape falls back to a runner-up only
+  if that profile independently satisfies the promotion rule; otherwise the
+  shape has no default until new evidence promotes one.
+- **Dispatch-reliability failure (empty output, timeout, CLI error) → do not
+  demote; record it.** These say something about the route on that day, not
+  about the profile's judgment. They still block a *pending* promotion under
+  the no-unresolved-contradiction clause, and a profile with repeated
+  reliability failures should be described as unreliable in its hint even
+  while it keeps a default earned on quality.
+- **Staleness does not demote.** Old evidence stays valid until contradicted;
+  the catalog's 30-day staleness note is about model availability and vendor
+  facts, not about outcomes already observed locally.
+
+Demotion changes catalog wording only. The failing result and every earlier
+passing result stay exactly as committed — a revoked default must remain
+traceable to the evidence that both created and ended it.
+
+Applied retroactively on 2026-07-23: no current default is affected. The
+failures on record (the Grok mechanical label-trap inversions and the one
+Grok review empty-output run) belong to shapes and profiles that never held
+a default.
+
 ## Sources
 
 - [OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)

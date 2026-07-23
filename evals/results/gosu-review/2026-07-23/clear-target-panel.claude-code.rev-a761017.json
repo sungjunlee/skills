@@ -1,0 +1,106 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-23",
+  "case_id": "gosu-review.clear-target-panel",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.218 / claude-opus-4-8",
+  "skill_revision": "a7610171ae928e95e3c284c8eae8067a023087d0",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The selected target was echoed near the top of the output."
+    },
+    {
+      "assertion_id": "field-casting",
+      "status": "pass",
+      "observed": true,
+      "evidence": "A one-line casting summary described the panel mix."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "pass",
+      "observed": true,
+      "evidence": "One verdict line per panelist preceded the detailed panel section."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Five panel entries appeared in the entry shape the brief now carries inline."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported the number of agents requested."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported the number that returned."
+    },
+    {
+      "assertion_id": "field-meta-tool",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta named the dispatch tool used."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "The run reported dispatching five subagents before reading any result."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Every dispatched panelist returned; nothing degraded."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status in the fixture repository reported no changes after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit was created; the fixture head remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture repository has no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "verdicts",
+    "tensions",
+    "consensus",
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Confirming observation for the inlined entry shape (revision a761017): the workaround reported at revision 2a96f3a — the orchestrator having to supply the panel-entry shape itself because the brief pointed at a section subagents never receive — did not recur, and entries came back in the briefed shape. The run's own panel then produced a finding that limits this very result: neither the skill's output shape nor this case's presence-only assertions can distinguish a real panel from a fabricated one, since an orchestrator that wrote the entries itself would emit the same fields and the same meta counts. This result is therefore evidence that the entry-shape fix works, and is not evidence that the panel was real. The strongest existing evidence for real dispatch remains the subagent-unavailable case, where refusing is only costly if the alternative — fabricating — was available."
+}

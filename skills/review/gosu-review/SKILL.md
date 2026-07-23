@@ -51,7 +51,7 @@ subagent unavailable: <reason>
 This is not a gosu-review result. I can do a single-agent review instead if you ask.
 ```
 
-Give each subagent this brief:
+Give each subagent this brief. Subagents see only the brief, so it carries the entry shape itself — never point them at a section of this file.
 
 ```text
 You are reviewing as: <persona>
@@ -60,7 +60,12 @@ Target: <path, diff, repo scope, or artifact>
 Context: <5-10 lines: what, why, constraints>
 Focus: <persona-specific mandate>
 
-Return one panel entry using the shape defined in the Output section.
+Return exactly one panel entry, these fields and nothing else:
+- verdict: ship | fix | rethink
+- sharp take: one strong sentence
+- first fix: one concrete action
+- blind spot: one unique concern
+- score: optional N/100, with one short reason
 ```
 
 ## Output

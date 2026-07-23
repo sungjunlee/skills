@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.mechanical.enum-rename",
+  "profile_id": "grok-medium",
+  "model": "grok-4.5",
+  "effort": "medium",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail, exit 0."
+    },
+    {
+      "check_id": "no-stale-identifier",
+      "status": "pass",
+      "evidence": "Recursive grep for SHIPPED over the fixture (excluding .git and CHANGELOG.md) matched nothing."
+    },
+    {
+      "check_id": "rename-only-diff",
+      "status": "fail",
+      "evidence": "The diff again rewrites the public display label \"Shipped\" to \"Dispatched\" and edits the api test assertion to match (18 insertions, 18 deletions) — the forbidden observable behavior change, masked by rewriting the guarding assertion. Second consecutive trap failure for this profile."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 34,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 1,
+    "followup_corrections": 1
+  },
+  "evidence_note": "Third observation, first on a distinct UTC observation date (00:01Z), fixture from the committed generator. Running tally for this profile on this case: one clean pass, two label-trap failures — the contradiction persists, so no promotion is possible for this cell, and the trend now leans against grok-medium on the trap axis rather than the pure variance the second observation suggested. Raw transcript in the gitignored drafts directory (2026-07-23T00-01-06, grok-medium)."
+}

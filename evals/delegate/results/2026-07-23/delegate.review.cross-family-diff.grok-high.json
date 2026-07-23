@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "grok-high",
+  "model": "grok-4.5",
+  "effort": "high",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "fail",
+      "evidence": "The run produced no review report: after one intro sentence it explored the (deliberately empty) run directory with glob and shell commands and terminated with exit 0 and no findings. Zero of three seeded defects reported."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "not_run",
+      "evidence": "No findings were produced, so there is nothing to assess against the budget; not graded as a vacuous pass because the deliverable is absent."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "fail",
+      "evidence": "No report exists."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 45,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data. The run still consumed provider quota despite the empty deliverable."
+    },
+    "reviewer_defects": null,
+    "followup_corrections": null
+  },
+  "evidence_note": "Third observation, first on a distinct UTC observation date (00:02Z). Identical embedded fixture diff and prompt as the two successful observations; the executor spent the run inspecting the empty workspace instead of reviewing the diff in the prompt and emitted nothing. Recorded as-is per the no-auto-retry rule. This breaks the profile's pass streak on this shape (now pass, pass, fail), which counts as an unresolved contradiction under the promotion rule — a reliability signal, not a capability one: both successful reports were strong. Raw transcript in the gitignored drafts directory (2026-07-23T00-02-28, grok-high)."
+}

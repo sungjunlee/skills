@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.blastradius.authz-boundary-analysis",
+  "profile_id": "sol-high",
+  "model": "gpt-5.6-sol",
+  "effort": "high",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "no-repo-mutation",
+      "status": "pass",
+      "evidence": "git status in the seeded run directory shows no change after the run."
+    },
+    {
+      "check_id": "risk-register",
+      "status": "pass",
+      "evidence": "All three named risks handled concretely: revocation with epoch-based session checks and per-decision evaluation_mode (enforced/shadow/fallback) captured in audit; drift bounded by revision-pinned shadow comparison with cause classification; audit continuity via a durable outbox, decision_id dedupe, and per-producer sequences with cutover markers."
+    },
+    {
+      "check_id": "rollback-path",
+      "status": "pass",
+      "evidence": "Rollback is designed as switching the enforcement path back to a legacy evaluator that reads the new policy data (reverse-replicated during the rollback window) rather than re-authorizing the stale monolith database — keeping decisions consistent under rollback; automatic fallback stays banned."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 168,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 23,425 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Third observation, first on a distinct UTC observation date (00:06Z). Third consecutive all-pass; with results spanning two observation dates and no contradiction, this profile satisfies the promotion rule for high_blast_radius_analysis. Across three observations it matched sol-xhigh on every rubric at a consistently lower reported token count (30,400/21,375/23,425 versus 33,215/41,446/34,936), making it the Pareto default for this shape. Raw transcript in the gitignored drafts directory (2026-07-23T00-06-44, sol-high)."
+}

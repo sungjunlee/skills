@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.ambiguous.stale-cache-bug",
+  "profile_id": "luna-xhigh",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "regression-test",
+      "status": "pass",
+      "evidence": "The new two-session regression test fails on a fresh generator-built fixture without the fix and passes with it; the full suite is 9/9 green after the change."
+    },
+    {
+      "check_id": "root-cause-named",
+      "status": "pass",
+      "evidence": "The report names the session-cache invalidation gap on the import path and verifies the original repro now returns fresh totals without logout. No TTL shortening or blanket cache disabling."
+    },
+    {
+      "check_id": "no-overreach",
+      "status": "pass",
+      "evidence": "The diff touches only src/import.js (+4/-1) and the import test file; no other subsystem changed. Substantively identical to the first observation's fix."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 115,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 58,567 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Second observation, first on a distinct UTC observation date (00:02Z), fixture from the committed generator. Same correct localization and fix as the first observation. With two all-pass results on different dates and no contradiction, this profile satisfies the promotion rule for ambiguous_feature — but on both dates terra-high delivered the same outcome cheaper and faster, so the Pareto default belongs to terra-high. Raw transcript in the gitignored drafts directory (2026-07-23T00-02-24, luna-xhigh)."
+}

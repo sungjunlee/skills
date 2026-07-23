@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.mechanical.enum-rename",
+  "profile_id": "grok-high",
+  "model": "grok-4.5",
+  "effort": "high",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "opencode",
+    "version": "1.17.18"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail, exit 0."
+    },
+    {
+      "check_id": "no-stale-identifier",
+      "status": "pass",
+      "evidence": "Recursive grep for SHIPPED over the fixture (excluding .git and CHANGELOG.md) matched nothing."
+    },
+    {
+      "check_id": "rename-only-diff",
+      "status": "pass",
+      "evidence": "git diff touches only rename sites, direct test references, and one test-title wording update (17 insertions, 17 deletions across 6 files); the public statusLabel stays \"Shipped\" with its guarding assertion intact."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 37,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the opencode CLI on the opencode-go/grok-4.5 gateway route; the CLI run output exposes no token or billing data."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Third observation, first on a distinct UTC observation date (00:01Z), fixture from the committed generator. Running tally for this profile on this case: two clean passes, one label-trap failure — the first-observation failure still counts as an unresolved contradiction under the promotion rule, so no promotion, but the trend now favors grok-high on the trap axis. Raw transcript in the gitignored drafts directory (2026-07-23T00-01-43, grok-high)."
+}

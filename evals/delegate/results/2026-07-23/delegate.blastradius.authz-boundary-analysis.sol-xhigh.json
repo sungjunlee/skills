@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.blastradius.authz-boundary-analysis",
+  "profile_id": "sol-xhigh",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "no-repo-mutation",
+      "status": "pass",
+      "evidence": "git status in the seeded run directory shows no change after the run; the memo asserts the clean work tree."
+    },
+    {
+      "check_id": "risk-register",
+      "status": "pass",
+      "evidence": "All three named risks handled concretely: invalidation split into auth-token versus entitlement responsibility with session introspection/epoch checks and versioned cache-key rules; drift bounded by shadow comparison over policy revision and fact versions with a four-way cause classification and a zero-unexplained-ALLOW-drift gate; audit continuity via a durable journal written before any authoritative ALLOW, decision_id/evaluation_id dedupe, and explicit cutover markers (last monolith authority, first service authority, revision watermark)."
+    },
+    {
+      "check_id": "rollback-path",
+      "status": "pass",
+      "evidence": "Fixed cohorts with no mid-request or result-based fallback — rejected explicitly because induced failures could downgrade to the more permissive legacy evaluator; post-ownership-transfer rollback keeps the writer in the new service to avoid reverse dual-writes; break-glass confined to a short-lived audited procedure."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 165,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 34,936 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Third observation, first on a distinct UTC observation date (00:09Z). Third consecutive all-pass; with two observation dates and no contradiction this profile also satisfies the promotion rule, but across three observations it never beat sol-high on a rubric while costing more tokens every time (and only matched wall clock once), so it remains the depth alternative rather than the default. Distinctive this run: the rejected-alternatives analysis including the attacker-induced-fallback rationale. Raw transcript in the gitignored drafts directory (2026-07-23T00-09-29, sol-xhigh)."
+}

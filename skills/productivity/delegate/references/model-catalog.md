@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-07-21. Treat as stale after 30 days.
+Last checked: 2026-07-23. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. Provider prefixes vary, so adapt the slug to the selected route format.
 
@@ -40,11 +40,25 @@ with repeated local evidence: at least two dated, all-checks-passing results
 for that shape and profile in `evals/delegate/results/` from different
 observation dates, with no unresolved contradicting result for the same
 pairing. A single run, a community report, or a vendor ranking may at most
-sharpen a hint's wording, never set a default. First single-observation
-signals (2026-07-22 bounded run): Grok `medium` dominated `high` on
-strong-test mechanical work; Sol `xhigh` bought a materially richer risk
-register than `high` for modest extra cost; Fable `high` and Grok `high` both
-cleared the cross-family review bar.
+sharpen a hint's wording, never set a default.
+
+Evidence-backed defaults (promoted 2026-07-23 from dated results on
+2026-07-22 and 2026-07-23; see `evals/delegate/reports/`):
+
+- **Ambiguous everyday feature/bugfix work → Terra `high`.** Matched Luna
+  `xhigh` on quality both dates at lower latency and tokens; the community
+  Luna-over-Terra claim did not survive local evidence. Luna `xhigh` also
+  passed both dates and remains a valid alternative.
+- **High-blast-radius analysis → Sol `high`.** Matched Sol `xhigh` on every
+  rubric across three paired observations at consistently lower token cost;
+  keep `xhigh` for runs where register depth is the deliverable.
+- **Independent cross-family review → Fable `high`.** Three all-pass reports
+  across two dates with zero incorrect claims. Grok `high` reviews were
+  strong twice but produced one empty-output run, an unresolved reliability
+  contradiction.
+- **Mechanical work with strong tests: no default.** Both Grok profiles fell
+  into a behavior-preserving trap at least once across three observations
+  each; per-run variance dominates the medium-versus-high split there.
 
 ## Sources
 
@@ -57,4 +71,4 @@ cleared the cross-family review bar.
 - [DeepSeek V4](https://api-docs.deepseek.com/news/news260424/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
 
-These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. Early field reports often favor Luna `xhigh` over Terra `high`, but results vary by task and quota accounting; test complete model-effort profiles locally. Distinguish API marginal cost from subscription quota pressure when comparing routes.
+These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. Early field reports favored Luna `xhigh` over Terra `high`, but local dated evidence (2026-07-22/23) found Terra `high` matching Luna `xhigh` at lower cost on ambiguous work — test complete model-effort profiles locally rather than trusting rankings. Distinguish API marginal cost from subscription quota pressure when comparing routes.

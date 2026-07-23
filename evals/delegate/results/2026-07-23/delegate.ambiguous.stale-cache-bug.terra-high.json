@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.ambiguous.stale-cache-bug",
+  "profile_id": "terra-high",
+  "model": "gpt-5.6-terra",
+  "effort": "high",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "regression-test",
+      "status": "pass",
+      "evidence": "The new two-session regression test fails on a fresh generator-built fixture without the fix and passes with it; the full suite is 9/9 green after the change."
+    },
+    {
+      "check_id": "root-cause-named",
+      "status": "pass",
+      "evidence": "The report names the exact gap — import adds rows without clearing the per-session totals cache — and again ties it to the logout-clears-cache symptom mechanism. No TTL shortening or blanket cache disabling."
+    },
+    {
+      "check_id": "no-overreach",
+      "status": "pass",
+      "evidence": "The diff touches only src/import.js (+4/-1, optional cache argument invalidated after a successful import) and the import test file; no other subsystem changed."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 91,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 39,533 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Second observation, first on a distinct UTC observation date (00:03Z), fixture from the committed generator. This run also upgraded its regression test to cover two sessions, closing the one edge luna-xhigh held in the first observation. Two all-pass results on different dates with no contradiction: this profile satisfies the promotion rule for ambiguous_feature, and on both dates it matched luna-xhigh's quality at lower latency and tokens (91s/39,533 versus 115s/58,567 today; 75s/38,847 versus 153s/67,156 on 2026-07-22) — the evidence-backed Pareto default for this shape, against the community claim. Raw transcript in the gitignored drafts directory (2026-07-23T00-03-56, terra-high)."
+}

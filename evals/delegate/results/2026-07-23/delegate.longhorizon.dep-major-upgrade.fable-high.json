@@ -1,0 +1,50 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.longhorizon.dep-major-upgrade",
+  "profile_id": "fable-high",
+  "model": "claude-fable-5",
+  "effort": "high",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "claude",
+    "version": "2.1.218 (Claude Code)"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail on the upgraded framework (src/app.js imports vendor/microweb2), exit 0."
+    },
+    {
+      "check_id": "no-abandoned-work",
+      "status": "pass",
+      "evidence": "Recursive grep over src/ and test/ found no TODO markers, skipped tests, or commented-out migration steps; the test count is unchanged (8 before, 8 after), so nothing was weakened to get green."
+    },
+    {
+      "check_id": "single-run-completion",
+      "status": "pass",
+      "evidence": "One dispatch took the fixture from a green v1 suite to a green v2 suite with no human intervention, in 126 seconds; no stalls occurred, so none needed documenting."
+    },
+    {
+      "check_id": "changelog-complete",
+      "status": "pass",
+      "evidence": "The 3.0.0 changelog entry records every migrated API (imports/constructor and router codemod, nested config, async ctx handlers with reply helpers, middleware contract, hooks, query/body access, template syntax, test dispatch migration) and explicitly separates four behavior-affecting decisions with rationale — including dropping a dead config key because v2 rejects unknown sections, and strict template rendering replacing v1's silent empty substitution."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 126,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the claude CLI (claude -p with the registry's scoped tool grant) on a Claude subscription; plain -p output exposes no token usage."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "First observation for this case (long_horizon_autonomous), fixture from the committed generator, and the first dispatch through the claude executor's scoped tool grant (PR #48). All twelve migration-guide items were completed in a single 126-second run — substantially below the case's expected long-horizon duration, so this observation measures completion quality more than endurance; a heavier fixture would be needed to stress sustained autonomy. Raw transcript in the gitignored drafts directory (2026-07-23T01-58-37, fable-high)."
+}

@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.invariants.cursor-pagination",
+  "profile_id": "sol-high",
+  "model": "gpt-5.6-sol",
+  "effort": "high",
+  "observation_date": "2026-07-23",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.144.4"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "contract-tests-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 11 tests, 11 pass, 0 fail (the shipped 7 contract tests plus 4 added), exit 0."
+    },
+    {
+      "check_id": "invariant-named",
+      "status": "pass",
+      "evidence": "The report enumerates the ordering invariant's three consumers — the cursor payload, the cursor-keyed client cache, and the export watermark — and treats them separately: the sort change goes to (pinned, created_at), while the export job deliberately keeps the created_at watermark so pin changes cannot affect incremental export."
+    },
+    {
+      "check_id": "stale-cursor-path",
+      "status": "pass",
+      "evidence": "Old-sort cursors are handled explicitly: a versioned composite cursor (version 2 with lastPinned) replaces the implicit shape, decodeCursor accepts exactly the legacy and v2 shapes and rejects everything else with the domain error, and legacy cursors continue their pagination under the legacy ordering to completion so in-flight readers neither miss nor duplicate rows. Legacy and composite cursors produce distinct cache keys."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 119,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 31,049 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "First observation for this case (cross_component_invariants), fixture from the committed generator. The undocumented third consumer (export watermark) was found and deliberately shielded from the sort change, which is the exact discovery this shape tests. Compatibility contract documented in the fixture README. Report delivered in Korean. Raw transcript in the gitignored drafts directory (2026-07-23T01-58-31, sol-high)."
+}

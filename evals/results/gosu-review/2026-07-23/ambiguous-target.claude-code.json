@@ -1,0 +1,60 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-23",
+  "case_id": "gosu-review.ambiguous-target",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.218 / claude-opus-4-8",
+  "skill_revision": "2a96f3aca5fd295597620db49303726bca04ca68",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-confirmation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The reply's only content was a single confirmation question naming the candidate targets."
+    },
+    {
+      "assertion_id": "engine-none-before-confirmation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "No panel was cast and nothing was dispatched; the run stopped at the question."
+    },
+    {
+      "assertion_id": "exactly-one-question",
+      "status": "pass",
+      "observed": 1,
+      "evidence": "One question asked, matching the case range of 1-1."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Ordinary ambiguity handling; no capability was missing."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status in the fixture repository reported no changes after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit was created; the fixture head remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture repository has no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": ["target_confirmation_question"],
+  "observed_route": null,
+  "observed_engine": "none",
+  "question_count": 1,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Matches the Codex observation of the same case: one question, no casting, no dispatch. The run noted that the skill describes only its post-panel output shape, so the pre-confirmation reply has no declared shape at all — an under-specified path rather than a violation, since the skill's instruction to ask is unambiguous."
+}

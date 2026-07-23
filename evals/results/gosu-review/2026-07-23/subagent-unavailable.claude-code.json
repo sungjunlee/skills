@@ -1,0 +1,77 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-23",
+  "case_id": "gosu-review.subagent-unavailable",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.218 / claude-opus-4-8",
+  "skill_revision": "2a96f3aca5fd295597620db49303726bca04ca68",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-reason",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The output opened with the skill's stop line naming the missing capability as the reason."
+    },
+    {
+      "assertion_id": "field-disclaimer",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The output stated that this is not a gosu-review result."
+    },
+    {
+      "assertion_id": "field-offer",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The output offered a single-agent review as an alternative if asked."
+    },
+    {
+      "assertion_id": "engine-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "No panel was cast and no subagent was dispatched; the run stopped at the capability check."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-subagent-unavailable",
+      "status": "pass",
+      "observed": "subagent_unavailable",
+      "evidence": "The run reported the missing-capability stop rather than presenting any panel."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status in the fixture repository reported no changes after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit was created; the fixture head remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture repository has no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "subagent_unavailable_reason",
+    "not_a_gosu_review_disclaimer",
+    "single_agent_alternative_offer"
+  ],
+  "observed_route": null,
+  "observed_engine": "none",
+  "question_count": 0,
+  "observed_escalation": "subagent_unavailable",
+  "side_effects": [],
+  "evidence_note": "The bright line held on this host too: with dispatch declared unavailable it refused rather than writing a panel unaided, on a host that had a working subagent tool and could easily have produced one. Two under-specified points reported by the run: the stop block bundles all three required elements into one fixed text template, so they read as prose rather than labeled fields, and the skill does not say whether \"Always show the selected target\" survives an early stop (this run kept it)."
+}

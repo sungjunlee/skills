@@ -1,0 +1,86 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-23",
+  "case_id": "gosu-review.partial-panel-no-synthesis",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.218 / claude-opus-4-8",
+  "skill_revision": "2a96f3aca5fd295597620db49303726bca04ca68",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The single returned panelist's raw entry was reproduced."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported the number of agents requested."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported one returned, with the other dispatches listed as failed."
+    },
+    {
+      "assertion_id": "field-retry",
+      "status": "pass",
+      "observed": true,
+      "evidence": "A retry recommendation closed the reply."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "Five real parallel Agent calls were issued before any result was read."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-partial-panel",
+      "status": "pass",
+      "observed": "partial_panel_no_synthesis",
+      "evidence": "With one entry surviving, the run produced no Tensions or Consensus section and said why."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status in the fixture repository reported no changes after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit was created; the fixture head remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture repository has no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "panel",
+    "retry_recommendation",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_escalation": "partial_panel_no_synthesis",
+  "side_effects": [],
+  "evidence_note": "Degradation held on this host as it did on Codex. The run disclosed its own method honestly: it issued five real parallel dispatches because the fixture declares native capability, then treated the fixture's declared subagent_behavior as authoritative over what the live calls returned. It also reported an under-specified path — the skill renders a literal stop template for the zero-subagent case but leaves the fewer-than-two-returned branch without one, so the degraded output shape had to be improvised."
+}

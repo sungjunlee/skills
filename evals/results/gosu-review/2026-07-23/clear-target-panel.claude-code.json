@@ -1,0 +1,106 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-23",
+  "case_id": "gosu-review.clear-target-panel",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.218 / claude-opus-4-8",
+  "skill_revision": "2a96f3aca5fd295597620db49303726bca04ca68",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The selected target was echoed near the top of the output."
+    },
+    {
+      "assertion_id": "field-casting",
+      "status": "pass",
+      "observed": true,
+      "evidence": "A one-line casting summary described the specialized, quality, and adversarial mix."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "pass",
+      "observed": true,
+      "evidence": "One verdict line per panelist preceded the detailed panel section."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Five raw panel entries appeared, each attributed to the subagent that returned it."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported the number of agents requested."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported the number that returned, matching the five entries shown."
+    },
+    {
+      "assertion_id": "field-meta-tool",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta named the dispatch tool actually used."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "The run stated it dispatched all five panelists before reading any result, which is exactly what the reworded dispatch rule asks for."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Every dispatched panelist returned; nothing degraded."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status in the fixture repository reported no changes after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit was created; the fixture head remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture repository has no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "verdicts",
+    "tensions",
+    "consensus",
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Cross-host counterpart to the Codex observation at the same revision. Surfaced a contract defect the case does not assert on: the Dispatch brief tells each subagent to return an entry \"using the shape defined in the Output section\", but subagents never receive SKILL.md, so the orchestrator had to inline the panel-entry shape into every brief. Three of the five panelists independently flagged the same dangling reference. The run also disclosed that synthesis contained no findings it authored itself, which is the skill's do-not-invent rule holding under observation."
+}

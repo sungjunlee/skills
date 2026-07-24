@@ -1,0 +1,27 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "fixture.host-subagent-dispatch-count",
+  "skill": "fixture/test",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "host-observed-dispatch-count"
+    }
+  },
+  "required_output_fields": ["summary"],
+  "expected_route": null,
+  "expected_engine": "bounded_parallel",
+  "question_count_range": null,
+  "host_subagent_dispatch_count_range": {
+    "min": 4,
+    "max": 6
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-summary", "type": "output_field_present", "field": "summary" },
+    { "assertion_id": "host-dispatch-count", "type": "host_subagent_dispatch_count_in_range" },
+    { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" }
+  ],
+  "forbidden_side_effects": []
+}

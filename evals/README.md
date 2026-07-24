@@ -19,9 +19,19 @@ to its case by `case_id`. File names are free-form in those directories; all
 `.json` files are discovered recursively.
 
 The assertion vocabulary is closed and scalar: output-field presence, selected
-route or engine, question-count range, escalation value, and absence of a
-named side effect. The verifier derives these outcomes from the result's
-observed fields. It does not execute arbitrary expressions or compare prose.
+route or engine, question-count range, host-observed subagent-dispatch-count
+range, escalation value, and absence of a named side effect. The verifier
+derives these outcomes from the result's observed fields. It does not execute
+arbitrary expressions or compare prose.
+
+`host_subagent_dispatch_count_in_range` has a stricter evidence boundary than
+model-output assertions. The observer must count host-native subagent tool-call
+events in the run's tool stream; an orchestrator's own `requested`, `returned`,
+or tool-name prose is not evidence for this field. Raw transcripts remain
+outside the repository, and the replay result keeps only the observed scalar
+plus a concise provenance note. Passing this assertion proves that real
+dispatch events occurred. It does not prove that the returned voices were
+independent, diverse, or high quality.
 
 Run the full committed suite with:
 

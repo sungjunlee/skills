@@ -74,6 +74,12 @@
         { "type": "null" }
       ]
     },
+    "observed_host_subagent_dispatch_count": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "null" }
+      ]
+    },
     "observed_escalation": {
       "oneOf": [
         { "type": "string", "minLength": 1 },

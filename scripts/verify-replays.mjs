@@ -43,6 +43,15 @@ function validateCaseContract(replayCase) {
     errors.push("question_count_range.min must not exceed question_count_range.max");
   }
   if (
+    replayCase.host_subagent_dispatch_count_range !== undefined &&
+    replayCase.host_subagent_dispatch_count_range.min >
+      replayCase.host_subagent_dispatch_count_range.max
+  ) {
+    errors.push(
+      "host_subagent_dispatch_count_range.min must not exceed host_subagent_dispatch_count_range.max",
+    );
+  }
+  if (
     replayCase.input_fixture.kind === "file" &&
     (path.isAbsolute(replayCase.input_fixture.value) ||
       replayCase.input_fixture.value.split(/[\\/]/).includes(".."))
@@ -71,6 +80,10 @@ function validateCaseContract(replayCase) {
     ["route_equals", replayCase.expected_route !== null],
     ["engine_equals", replayCase.expected_engine !== null],
     ["question_count_in_range", replayCase.question_count_range !== null],
+    [
+      "host_subagent_dispatch_count_in_range",
+      replayCase.host_subagent_dispatch_count_range !== undefined,
+    ],
     ["escalation_equals", true],
   ];
   for (const [type, expected] of singletonExpectations) {
@@ -113,6 +126,15 @@ function assertionObservation(assertion, replayCase, result) {
     case "question_count_in_range": {
       const observed = result.question_count;
       const range = replayCase.question_count_range;
+      return {
+        observed,
+        passed:
+          Number.isInteger(observed) && observed >= range.min && observed <= range.max,
+      };
+    }
+    case "host_subagent_dispatch_count_in_range": {
+      const observed = result.observed_host_subagent_dispatch_count;
+      const range = replayCase.host_subagent_dispatch_count_range;
       return {
         observed,
         passed:

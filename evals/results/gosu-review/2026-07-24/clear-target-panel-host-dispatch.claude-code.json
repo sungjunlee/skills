@@ -1,0 +1,113 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-24",
+  "case_id": "gosu-review.clear-target-panel-host-dispatch",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.218 / claude-opus-4-8",
+  "skill_revision": "3fcd04646898d7efd48bc030b534fddabc260ca8",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The selected target appeared immediately below the gosu-review heading."
+    },
+    {
+      "assertion_id": "field-casting",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The output named the five-person specialist, quality, and adversarial cast."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "pass",
+      "observed": true,
+      "evidence": "One verdict line appeared for each returned panelist."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Five detailed panel entries preserved the required entry fields."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported five requested agents."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported five returned agents."
+    },
+    {
+      "assertion_id": "field-meta-tool",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta named the native Agent dispatch tool."
+    },
+    {
+      "assertion_id": "host-dispatch-count",
+      "status": "pass",
+      "observed": 5,
+      "evidence": "The host stream contained five root Agent tool-use events, five task_started events, and five matching task completion notifications; the final response's own Meta line was not used for this count."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "The host issued the five Agent calls as one parallel batch before synthesis."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The named target was unambiguous, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "All five dispatched panelists returned and the normal synthesis path completed."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The disposable fixture repository remained clean after the run; harness logs were stored outside it."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture HEAD remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture had no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "verdicts",
+    "tensions",
+    "consensus",
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_host_subagent_dispatch_count": 5,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Cross-host dispatch-proof observation. The host-side count came from Claude Code's stream-json output, which recorded five root Agent tool-use events, five task starts, and five completion notifications outside the orchestrator's final response. Raw host artifacts remain outside the repository. This proves that real subagent dispatch events occurred; it does not prove that the returned voices were independent, diverse, high quality, or reproduced verbatim."
+}

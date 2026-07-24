@@ -75,6 +75,15 @@
         { "type": "null" }
       ]
     },
+    "host_subagent_dispatch_count_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 0 }
+      }
+    },
     "expected_escalation": { "type": "string", "minLength": 1 },
     "semantic_assertions": {
       "type": "array",
@@ -116,6 +125,15 @@
             "properties": {
               "assertion_id": { "type": "string", "minLength": 1 },
               "type": { "const": "question_count_in_range" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "host_subagent_dispatch_count_in_range" }
             }
           },
           {

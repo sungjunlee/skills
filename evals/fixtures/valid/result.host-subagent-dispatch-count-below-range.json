@@ -1,0 +1,43 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-24",
+  "case_id": "fixture.host-subagent-dispatch-count",
+  "host": "synthetic",
+  "host_version": "fixture",
+  "skill_revision": "fixture",
+  "status": "fail",
+  "assertion_results": [
+    {
+      "assertion_id": "field-summary",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Synthetic output-field observation."
+    },
+    {
+      "assertion_id": "host-dispatch-count",
+      "status": "fail",
+      "observed": 3,
+      "evidence": "Synthetic below-range dispatch count for verifier failure-path coverage."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "Synthetic engine observation."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Synthetic escalation observation."
+    }
+  ],
+  "observed_output_fields": ["summary"],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": null,
+  "observed_host_subagent_dispatch_count": 3,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Synthetic below-range verifier coverage for host-observed dispatch counts; no host support claim."
+}

@@ -27,6 +27,7 @@ Then mix the panel. Default includes one challenger:
 - 2-3 context-specific experts (e.g. "B2B SaaS onboarding PM", "education content editor", "internal tooling operator", "open-source maintainer", "regulatory risk reviewer", "first-time user advocate")
 - 1-2 general quality experts (e.g. architect, implementation expert, QA expert)
 - 1 adversarial or surprising outsider (e.g. copy editor, cost watcher, skeptical user, future maintainer, new teammate, customer support rep)
+- 1 ruthless simplifier who reviews for what to remove
 
 For each panelist, define:
 
@@ -39,6 +40,8 @@ All three go into that panelist's brief verbatim. They are the subagent's search
 The persona description you write here is what the subagent sees as `You are reviewing as: <persona>`. A label like `PM` produces a generic review; a `PM who shipped three onboarding rewrites and watched activation keep dropping in steps 2-4` produces a gosu one. Pick the scar.
 
 At least one panelist must be explicitly adversarial unless the target is purely exploratory. Use two challengers only when the user asks for challenge, red-team, or adversarial review, or when the target is high-risk. A challenger tries to break the artifact, not balance praise.
+
+One seat belongs to subtraction. A panel judged on findings drifts additive — every reviewer proposes something to add, and nobody is accountable for what the artifact would be like with less. Cast a ruthless simplifier whose fix path is removal: cut the step, drop the reference, delete the option, merge the two documents, and say so when the artifact should not exist at all. On a four-person panel this can share the challenger's seat; past that keep them apart, because a challenger asks how this breaks and a simplifier asks what here is not carrying its weight.
 
 See `references/personas.md` for seed patterns. Do not fill the panel by copying that list.
 
@@ -101,7 +104,7 @@ Show panel voices first, then synthesize. Lead with a one-line verdict summary s
 ```text
 # gosu-review: <target>
 target: <selected target>
-casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial, one line>
+casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial + 1 simplifier, one line>
 
 **Verdicts**                          # one line per panelist
 - <persona>: <verdict> — <sharp take>
@@ -128,6 +131,7 @@ Rules:
 - Do not invent findings during synthesis.
 - Carry each finding's evidence through. A finding with no evidence stays in Panel and never reaches Consensus.
 - Report an empty findings list as-is. Never backfill a panelist who found nothing.
+- When a removal and an addition name the same element, that is a Tension, not two Consensus items. Do not let the additive side win by default because more panelists proposed additions.
 - If fewer than 2 agents return, skip synthesis and show only raw notes plus a retry recommendation.
 
 ## Optional References

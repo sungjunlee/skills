@@ -1,0 +1,111 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-25",
+  "case_id": "gosu-review.evidence-anchored-panel",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.220 / claude-opus-5[1m]",
+  "skill_revision": "94560a322999cd8f4bc22e7fd5f6f590bf53f059",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The selected target was echoed near the top of the output, naming SKILL.md plus the four references."
+    },
+    {
+      "assertion_id": "field-casting",
+      "status": "pass",
+      "observed": true,
+      "evidence": "A one-line casting summary described the two specialized, two quality, and one adversarial seats."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "pass",
+      "observed": true,
+      "evidence": "One verdict line per panelist preceded the detailed panel section."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Five panel entries appeared, each attributed to the subagent that returned it and each carrying its own findings and falsifier."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported five agents requested."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported five returned, matching the five entries shown."
+    },
+    {
+      "assertion_id": "field-meta-tool",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta named the host subagent tool actually used."
+    },
+    {
+      "assertion_id": "evidence-citations",
+      "status": "pass",
+      "observed": 20,
+      "evidence": "Twenty findings across five entries, each carrying a file:line reference or a quotation from the target; counted from the rendered panel, not from orchestrator prose."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "All five panelists were dispatched before any result was read."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Every dispatched panelist returned; nothing degraded."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status --porcelain reported an empty working tree after the run; panelist briefs required read-only review."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "HEAD remained 94560a3 across the run."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No push occurred during the run."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "verdicts",
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_evidence_citation_count": 20,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "First observation of the evidence-bearing brief, run against skills/productivity/delegate. Twenty of twenty findings carried an anchor. Four of five panelists independently left the named target to cross-check evals/delegate/ and scripts/run-delegate-eval.mjs, which the brief did not name — the read-before-writing constraint changed behaviour, not only formatting. Two limits belong on the record: every panelist returned the verdict 'fix', so the verdict axis carried little information in this run, and the orchestrator's Context block mentioned the repository's evidence culture, which may have steered panelists toward evals/. This result says nothing about the forced-finding path; zero panelists returned an empty finding list because the target was defect-rich."
+}

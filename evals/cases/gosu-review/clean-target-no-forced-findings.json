@@ -1,0 +1,52 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "gosu-review.clean-target-no-forced-findings",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "clean-narrow-target",
+      "target_request": "/gosu-review skill/SKILL.md",
+      "target_state": "The named file is short, narrow, and deliberately clean. Several casting axes — cost, abuse, regulatory exposure — have nothing real to say about it.",
+      "capabilities": {
+        "subagent_dispatch": "native",
+        "parallel_subagents": "native"
+      },
+      "subagent_behavior": "Every dispatched subagent returns one panel entry; panelists whose axis turns up nothing return zero findings.",
+      "measurement_limit": "The observer counts panelists whose entry reported zero findings. Passing proves at least one panelist declined to manufacture a concern on an axis the target does not exercise. It does not prove the panelists who did report findings were right, and it is a floor on honesty, not a ceiling on effort."
+    }
+  },
+  "required_output_fields": [
+    "target",
+    "verdicts",
+    "panel",
+    "meta.requested",
+    "meta.returned"
+  ],
+  "expected_route": null,
+  "expected_engine": "bounded_parallel",
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "zero_finding_panelist_count_range": {
+    "min": 1,
+    "max": 6
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-target", "type": "output_field_present", "field": "target" },
+    { "assertion_id": "field-verdicts", "type": "output_field_present", "field": "verdicts" },
+    { "assertion_id": "field-panel", "type": "output_field_present", "field": "panel" },
+    { "assertion_id": "field-meta-requested", "type": "output_field_present", "field": "meta.requested" },
+    { "assertion_id": "field-meta-returned", "type": "output_field_present", "field": "meta.returned" },
+    { "assertion_id": "zero-finding-panelists", "type": "zero_finding_panelist_count_in_range" },
+    { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
+    { "assertion_id": "no-confirmation-question", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-repository-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit", "push"]
+}

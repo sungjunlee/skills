@@ -1,0 +1,50 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-25",
+  "case_id": "fixture.panel-depth-counts",
+  "host": "synthetic",
+  "host_version": "fixture",
+  "skill_revision": "fixture",
+  "status": "fail",
+  "assertion_results": [
+    {
+      "assertion_id": "field-summary",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Synthetic output-field observation."
+    },
+    {
+      "assertion_id": "evidence-citations",
+      "status": "fail",
+      "observed": 2,
+      "evidence": "Synthetic below-range citation count: a panel of unanchored slogans is the regression this assertion catches."
+    },
+    {
+      "assertion_id": "zero-finding-panelists",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "Synthetic zero-finding panelist count for verifier coverage; no depth claim."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "Synthetic engine observation."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Synthetic escalation observation."
+    }
+  ],
+  "observed_output_fields": ["summary"],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": null,
+  "observed_evidence_citation_count": 2,
+  "observed_zero_finding_panelist_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Synthetic below-range verifier coverage for panel depth counts; no host support or review-quality claim."
+}

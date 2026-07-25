@@ -1,0 +1,50 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-25",
+  "case_id": "fixture.panel-depth-counts",
+  "host": "synthetic",
+  "host_version": "fixture",
+  "skill_revision": "fixture",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-summary",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Synthetic output-field observation."
+    },
+    {
+      "assertion_id": "evidence-citations",
+      "status": "pass",
+      "observed": 9,
+      "evidence": "Synthetic evidence-anchored finding count for verifier coverage; no depth claim."
+    },
+    {
+      "assertion_id": "zero-finding-panelists",
+      "status": "pass",
+      "observed": 1,
+      "evidence": "Synthetic zero-finding panelist count for verifier coverage; no depth claim."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "Synthetic engine observation."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Synthetic escalation observation."
+    }
+  ],
+  "observed_output_fields": ["summary"],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": null,
+  "observed_evidence_citation_count": 9,
+  "observed_zero_finding_panelist_count": 1,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Synthetic schema and semantic verifier coverage for panel depth counts; no host support or review-quality claim."
+}

@@ -80,6 +80,18 @@
         { "type": "null" }
       ]
     },
+    "observed_evidence_citation_count": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "null" }
+      ]
+    },
+    "observed_zero_finding_panelist_count": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "null" }
+      ]
+    },
     "observed_escalation": {
       "oneOf": [
         { "type": "string", "minLength": 1 },

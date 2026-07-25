@@ -20,9 +20,21 @@ to its case by `case_id`. File names are free-form in those directories; all
 
 The assertion vocabulary is closed and scalar: output-field presence, selected
 route or engine, question-count range, host-observed subagent-dispatch-count
-range, escalation value, and absence of a named side effect. The verifier
-derives these outcomes from the result's observed fields. It does not execute
-arbitrary expressions or compare prose.
+range, evidence-citation count range, zero-finding-panelist count range,
+escalation value, and absence of a named side effect. The verifier derives these
+outcomes from the result's observed fields. It does not execute arbitrary
+expressions or compare prose.
+
+`evidence_citation_count_in_range` and `zero_finding_panelist_count_in_range`
+are the depth counters. The first counts findings carrying a concrete anchor —
+a file:line reference, a quotation, or a named observed detail — which is the
+closest scalar proxy for "the reviewer opened the artifact instead of
+paraphrasing the brief". The second counts panelists who returned zero findings,
+so a case can require that an honest empty answer stays possible; without it,
+every panelist is pushed to manufacture a concern. Both are counted from the
+run's own output, so they are weaker evidence than the host-observed dispatch
+count below, and neither judges whether an anchor is accurate or a finding is
+correct. They exist so that compaction passes have something to lose.
 
 `host_subagent_dispatch_count_in_range` has a stricter evidence boundary than
 model-output assertions. The observer must count host-native subagent tool-call

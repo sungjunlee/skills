@@ -5,7 +5,7 @@ description: Review the current artifact with a real 4-6 person expert subagent 
 
 # gosu-review
 
-Get a real panel review from multiple experts. Fake panels fail the skill — dispatch actual subagents and preserve their raw notes before synthesis.
+Get a real panel review from multiple experts. Fake panels fail the skill, and so do ungrounded ones — dispatch actual subagents, and keep every finding tied to the evidence that produced it.
 
 ## Target
 
@@ -27,6 +27,7 @@ Then mix the panel. Default includes one challenger:
 - 2-3 context-specific experts (e.g. "B2B SaaS onboarding PM", "education content editor", "internal tooling operator", "open-source maintainer", "regulatory risk reviewer", "first-time user advocate")
 - 1-2 general quality experts (e.g. architect, implementation expert, QA expert)
 - 1 adversarial or surprising outsider (e.g. copy editor, cost watcher, skeptical user, future maintainer, new teammate, customer support rep)
+- 1 ruthless simplifier who reviews for what to remove
 
 For each panelist, define:
 
@@ -34,15 +35,19 @@ For each panelist, define:
 - **Bias**: what they distrust, usually from a specific past failure
 - **Blind spot**: what this persona is uniquely likely to catch
 
+All three go into that panelist's brief verbatim. They are the subagent's search key, not casting notes you keep to yourself.
+
 The persona description you write here is what the subagent sees as `You are reviewing as: <persona>`. A label like `PM` produces a generic review; a `PM who shipped three onboarding rewrites and watched activation keep dropping in steps 2-4` produces a gosu one. Pick the scar.
 
 At least one panelist must be explicitly adversarial unless the target is purely exploratory. Use two challengers only when the user asks for challenge, red-team, or adversarial review, or when the target is high-risk. A challenger tries to break the artifact, not balance praise.
+
+One seat belongs to subtraction. A panel judged on findings drifts additive — every reviewer proposes something to add, and nobody is accountable for what the artifact would be like with less. Cast a ruthless simplifier whose fix path is removal: cut the step, drop the reference, delete the option, merge the two documents, and say so when the artifact should not exist at all. On a four-person panel this can share the challenger's seat; past that keep them apart, because a challenger asks how this breaks and a simplifier asks what here is not carrying its weight.
 
 See `references/personas.md` for seed patterns. Do not fill the panel by copying that list.
 
 ## Dispatch
 
-Find the available subagent or multi-agent tool, then spawn one real subagent per persona. Dispatch every panelist before reading any result — never run a spawn-then-wait cycle per persona, which turns the panel into a relay. If the host caps concurrency, start the remaining panelists as slots free; that is still a parallel panel. Prefer read-only or explorer-style roles for review when available. If a tool option fails, retry with a simpler call rather than fighting the options. Wait for completion without busy polling.
+Find the available subagent or multi-agent tool, then spawn one real subagent per persona. Dispatch every panelist before reading any result — never run a spawn-then-wait cycle per persona, which turns the panel into a relay. If the host caps concurrency, start the remaining panelists as slots free; that is still a parallel panel. Prefer a read-only role that can open whole files and judge them. Avoid locator or search-style roles that return excerpts without a verdict — they find where things are, which is not a review. If a tool option fails, retry with a simpler call rather than fighting the options. Wait for completion without busy polling.
 
 If subagents cannot be found or called, stop with:
 
@@ -55,17 +60,32 @@ Give each subagent this brief. Subagents see only the brief, so it carries the e
 
 ```text
 You are reviewing as: <persona>
+Lens: <what you optimize for>
+Bias: <what you distrust, and the failure that taught you>
+Uniquely likely to catch: <this persona's blind-spot coverage>
 
 Target: <path, diff, repo scope, or artifact>
 Context: <5-10 lines: what, why, constraints>
 Focus: <persona-specific mandate>
 
-Return exactly one panel entry, these fields and nothing else:
+Open the target and read it before you write anything. Your bias is the search
+key: find where that failure pattern shows up here, or say plainly that it does
+not. A claim you did not check against the artifact does not belong in the
+answer.
+
+Return one panel entry:
+
 - verdict: ship | fix | rethink
-- sharp take: one strong sentence
-- first fix: one concrete action
-- blind spot: one unique concern
-- score: optional N/100, with one short reason
+- sharp take: one sentence — the headline, not the argument
+- findings: 0-4 entries, each with
+    what: the claim
+    evidence: file:line, a quote, or the specific detail you observed
+    so what: the concrete failure — who it hurts, when, how badly
+    fix: the change you would make
+- what would change my mind: the observation that would retract your main finding
+
+Length follows what you found. If your axis turns up nothing real, return zero
+findings and say why — that is a useful answer, not a failed one.
 ```
 
 ## Output
@@ -75,17 +95,16 @@ Show panel voices first, then synthesize. Lead with a one-line verdict summary s
 **Panel entry shape** (each subagent returns one):
 
 - **verdict**: `ship` | `fix` | `rethink`
-- **sharp take**: one strong sentence
-- **first fix**: one concrete action
-- **blind spot**: one unique concern
-- **score**: optional N/100, with one short reason
+- **sharp take**: one sentence, the headline
+- **findings**: 0-4, each carrying `what` / `evidence` / `so what` / `fix`
+- **what would change my mind**: the falsifier for the main finding
 
 **Output shape:**
 
 ```text
 # gosu-review: <target>
 target: <selected target>
-casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial, one line>
+casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial + 1 simplifier, one line>
 
 **Verdicts**                          # one line per panelist
 - <persona>: <verdict> — <sharp take>
@@ -97,8 +116,11 @@ casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial, one line>
 - [P1] <action> — <persona names>
 
 ## Panel
-### <persona>
-verdict / sharp take / first fix / blind spot / score
+### <persona> — <verdict>
+<sharp take>
+- <what> — <evidence> → <so what>. Fix: <fix>   # one line per finding
+                                                # or: no finding on this axis — <why>
+would change my mind: <falsifier>
 
 ## Meta
 - requested: N agents / returned: M / tool: <name or "unavailable">
@@ -107,6 +129,9 @@ verdict / sharp take / first fix / blind spot / score
 Rules:
 
 - Do not invent findings during synthesis.
+- Carry each finding's evidence through. A finding with no evidence stays in Panel and never reaches Consensus.
+- Report an empty findings list as-is. Never backfill a panelist who found nothing.
+- When a removal and an addition name the same element, that is a Tension, not two Consensus items. Do not let the additive side win by default because more panelists proposed additions.
 - If fewer than 2 agents return, skip synthesis and show only raw notes plus a retry recommendation.
 
 ## Optional References

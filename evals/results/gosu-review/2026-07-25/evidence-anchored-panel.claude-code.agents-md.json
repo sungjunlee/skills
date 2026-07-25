@@ -1,0 +1,112 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-07-25",
+  "case_id": "gosu-review.evidence-anchored-panel",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.220 / claude-opus-5[1m]",
+  "skill_revision": "9b7d19c059a948783ab9b3565630e866be36405b",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The selected target was echoed near the top of the output, naming AGENTS.md and its symlink."
+    },
+    {
+      "assertion_id": "field-casting",
+      "status": "pass",
+      "observed": true,
+      "evidence": "A one-line casting summary named the two specialized, one quality, one adversarial, and one simplifier seat."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "pass",
+      "observed": true,
+      "evidence": "One verdict line per panelist preceded the detailed panel section."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Five panel entries appeared, each attributed to the subagent that returned it and each carrying its own findings and falsifier."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported five agents requested."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported five returned, matching the five entries shown."
+    },
+    {
+      "assertion_id": "field-meta-tool",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta named the host subagent tool actually used."
+    },
+    {
+      "assertion_id": "evidence-citations",
+      "status": "pass",
+      "observed": 19,
+      "evidence": "Nineteen findings across five entries (3+4+4+4+4), each carrying a file:line reference, a quotation, or a named command output; counted from the rendered panel, not from orchestrator prose."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "All five panelists were dispatched before any result was read."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The target was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Every dispatched panelist returned; nothing degraded."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "git status --porcelain reported an empty working tree after the run; panelist briefs required read-only review."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "HEAD remained 9b7d19c across the run."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No push occurred during the run."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "verdicts",
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_evidence_citation_count": 19,
+  "observed_zero_finding_panelist_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Second observation of the evidence-bearing brief, and the first exercising the simplifier seat, run against AGENTS.md. Nineteen of nineteen findings carried an anchor. The simplifier returned four findings and all four were removals, against nineteen findings from the other four seats that contained exactly one removal proposed as an alternative — the additive drift the seat was added to correct is measurable, and one seat corrected it. The simplifier also volunteered two fields the brief did not request: a 'lost' line per removal, and a 'Survivor' note naming a rule it considered deleting and kept. This run was attempted as the clean-target observation and does not serve as one: AGENTS.md proved to have real defects on every cast axis, so no axis was starved and zero panelists returned an empty finding list. That is a failure of target selection, not evidence about the forced-finding path, and gosu-review.clean-target-no-forced-findings therefore stays unobserved. Partial restraint signals were present short of an empty list — one panelist returned three findings rather than filling the cap of four and appended a 'Checked and holding' list of four rules it verified as sound."
+}

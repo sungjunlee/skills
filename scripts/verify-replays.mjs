@@ -42,14 +42,16 @@ function validateCaseContract(replayCase) {
   ) {
     errors.push("question_count_range.min must not exceed question_count_range.max");
   }
-  if (
-    replayCase.host_subagent_dispatch_count_range !== undefined &&
-    replayCase.host_subagent_dispatch_count_range.min >
-      replayCase.host_subagent_dispatch_count_range.max
-  ) {
-    errors.push(
-      "host_subagent_dispatch_count_range.min must not exceed host_subagent_dispatch_count_range.max",
-    );
+  const optionalRanges = [
+    "host_subagent_dispatch_count_range",
+    "evidence_citation_count_range",
+    "zero_finding_panelist_count_range",
+  ];
+  for (const name of optionalRanges) {
+    const range = replayCase[name];
+    if (range !== undefined && range.min > range.max) {
+      errors.push(`${name}.min must not exceed ${name}.max`);
+    }
   }
   if (
     replayCase.input_fixture.kind === "file" &&
@@ -84,6 +86,14 @@ function validateCaseContract(replayCase) {
       "host_subagent_dispatch_count_in_range",
       replayCase.host_subagent_dispatch_count_range !== undefined,
     ],
+    [
+      "evidence_citation_count_in_range",
+      replayCase.evidence_citation_count_range !== undefined,
+    ],
+    [
+      "zero_finding_panelist_count_in_range",
+      replayCase.zero_finding_panelist_count_range !== undefined,
+    ],
     ["escalation_equals", true],
   ];
   for (const [type, expected] of singletonExpectations) {
@@ -107,6 +117,13 @@ function validateCaseContract(replayCase) {
   return errors;
 }
 
+function countInRange(observed, range) {
+  return {
+    observed,
+    passed: Number.isInteger(observed) && observed >= range.min && observed <= range.max,
+  };
+}
+
 function assertionObservation(assertion, replayCase, result) {
   switch (assertion.type) {
     case "output_field_present": {
@@ -123,24 +140,23 @@ function assertionObservation(assertion, replayCase, result) {
         observed: result.observed_engine,
         passed: result.observed_engine === replayCase.expected_engine,
       };
-    case "question_count_in_range": {
-      const observed = result.question_count;
-      const range = replayCase.question_count_range;
-      return {
-        observed,
-        passed:
-          Number.isInteger(observed) && observed >= range.min && observed <= range.max,
-      };
-    }
-    case "host_subagent_dispatch_count_in_range": {
-      const observed = result.observed_host_subagent_dispatch_count;
-      const range = replayCase.host_subagent_dispatch_count_range;
-      return {
-        observed,
-        passed:
-          Number.isInteger(observed) && observed >= range.min && observed <= range.max,
-      };
-    }
+    case "question_count_in_range":
+      return countInRange(result.question_count, replayCase.question_count_range);
+    case "host_subagent_dispatch_count_in_range":
+      return countInRange(
+        result.observed_host_subagent_dispatch_count,
+        replayCase.host_subagent_dispatch_count_range,
+      );
+    case "evidence_citation_count_in_range":
+      return countInRange(
+        result.observed_evidence_citation_count,
+        replayCase.evidence_citation_count_range,
+      );
+    case "zero_finding_panelist_count_in_range":
+      return countInRange(
+        result.observed_zero_finding_panelist_count,
+        replayCase.zero_finding_panelist_count_range,
+      );
     case "escalation_equals":
       return {
         observed: result.observed_escalation,

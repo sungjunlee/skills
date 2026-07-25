@@ -1,0 +1,56 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "gosu-review.evidence-anchored-panel",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "clear-target-with-checkable-detail",
+      "target_request": "/gosu-review skill/SKILL.md",
+      "target_state": "The named file exists, is the only plausible target, and carries enough concrete detail that a reviewer who opened it can cite specific lines.",
+      "capabilities": {
+        "subagent_dispatch": "native",
+        "parallel_subagents": "native"
+      },
+      "subagent_behavior": "Every dispatched subagent returns one panel entry.",
+      "measurement_limit": "The observer counts findings that carry a concrete anchor — a file:line reference, a quotation from the target, or a named observed detail. Passing proves the panel argued from the artifact rather than from the brief's context blurb. It does not prove the anchors are accurate, that the reasoning is correct, or that the panel was diverse."
+    }
+  },
+  "required_output_fields": [
+    "target",
+    "casting",
+    "verdicts",
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool"
+  ],
+  "expected_route": null,
+  "expected_engine": "bounded_parallel",
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "evidence_citation_count_range": {
+    "min": 4,
+    "max": 24
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-target", "type": "output_field_present", "field": "target" },
+    { "assertion_id": "field-casting", "type": "output_field_present", "field": "casting" },
+    { "assertion_id": "field-verdicts", "type": "output_field_present", "field": "verdicts" },
+    { "assertion_id": "field-panel", "type": "output_field_present", "field": "panel" },
+    { "assertion_id": "field-meta-requested", "type": "output_field_present", "field": "meta.requested" },
+    { "assertion_id": "field-meta-returned", "type": "output_field_present", "field": "meta.returned" },
+    { "assertion_id": "field-meta-tool", "type": "output_field_present", "field": "meta.tool" },
+    { "assertion_id": "evidence-citations", "type": "evidence_citation_count_in_range" },
+    { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
+    { "assertion_id": "no-confirmation-question", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-repository-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit", "push"]
+}

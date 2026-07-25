@@ -1,0 +1,32 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "fixture.panel-depth-counts",
+  "skill": "fixture/test",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "panel-depth-counts"
+    }
+  },
+  "required_output_fields": ["summary"],
+  "expected_route": null,
+  "expected_engine": "bounded_parallel",
+  "question_count_range": null,
+  "evidence_citation_count_range": {
+    "min": 4,
+    "max": 24
+  },
+  "zero_finding_panelist_count_range": {
+    "min": 0,
+    "max": 3
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-summary", "type": "output_field_present", "field": "summary" },
+    { "assertion_id": "evidence-citations", "type": "evidence_citation_count_in_range" },
+    { "assertion_id": "zero-finding-panelists", "type": "zero_finding_panelist_count_in_range" },
+    { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" }
+  ],
+  "forbidden_side_effects": []
+}

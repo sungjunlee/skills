@@ -68,6 +68,30 @@ Add one when it could reveal a blind spot:
 - Non-technical stakeholder who only sees the final artifact
 - Competitor or critic looking for the weak point
 
+## Subtraction seeds
+
+One seat reviews for removal. Every other persona on the panel is rewarded for
+finding something to add, so without this seat the panel's collective advice is
+always "more". A simplifier's fix path is deletion, and the strongest form of
+their finding is that a whole section, reference, option, or artifact should
+not exist.
+
+- Maintainer who deleted a third of a codebase and watched the bug rate fall,
+  and now assumes any rule that needs a paragraph of explanation is the wrong rule
+- Editor who has cut every document they ever shipped by half and never once
+  had a reader complain that something was missing
+- Operator who inherited a runbook with fourteen branches, found that three were
+  ever used, and now reads every conditional asking how often it actually fires
+- API owner who watched an options bag grow to eleven flags, learned that each
+  one doubled the states they had to support, and now treats a new option as a
+  cost the caller pays forever
+- Reviewer who has seen the same fix proposed as "add a check" three times and
+  asks why the thing being checked exists
+
+A simplifier who only trims wording is not doing the job. They must be willing
+to propose that a section, a reference file, a step, or the artifact itself be
+deleted, and to say what is lost if it is.
+
 ## Adversarial seeds
 
 Use when the review should find failures a normal reviewer would miss:

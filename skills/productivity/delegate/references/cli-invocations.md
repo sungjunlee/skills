@@ -42,7 +42,7 @@ For CLI-selector routes such as `claude/<model>` or `reasonix/<model>`, `<model>
 
 ## Home route per family
 
-An input that names a model or family without a route resolves to that family's home route. Only an explicit route in the user's input overrides it.
+An input that names a model or family without a route resolves to that family's home route; an explicit route always overrides it, and no combination a CLI supports is ever ruled out.
 
 | Family | Home route | Basis |
 |---|---|---|
@@ -50,30 +50,19 @@ An input that names a model or family without a route resolves to that family's 
 | `claude-*` | `claude/*` | the vendor's own CLI, and the only route exposing all five effort levels |
 | `grok-4.5` | `cursor/cursor-grok-4.5-<effort>` | the vendor's own CLI since Cursor was acquired by xAI |
 
-`codex/*` and `claude/*` are also the executors behind this skill's dated `gpt-5.6-*` and `claude-*` evidence. Grok's home route rests on vendor ownership alone, so treat it as a routing default and not as an evidence-backed one.
+A family absent from the table has no default — `glm-*`, `deepseek-*`, `kimi-*`, `minimax-*`, and `qwen*` each run on several installed routes, so ask which CLI to use.
 
-Grok is the one family whose home route puts the effort inside the id: the slug is `cursor-grok-4.5-<effort>`, never plain `grok-4.5`. Resolve the level first, then take the slug that matches it. `opencode-go/grok-4.5` remains a valid explicit route — name it when you want the plain id, a level Cursor does not list, or comparability with earlier Grok results.
-
-Other families have no home route. `glm-*`, `deepseek-*`, `kimi-*`, `minimax-*`, and `qwen*` are each reachable through several installed routes, so ask which CLI to use instead of picking one.
-
-A home route says which CLI hosts a family. It is not a model-effort profile, so it stands outside the `model-catalog.md` promotion rule, and it never selects an effort — that still comes from the user or the recommendation path.
-
-These are primary-vendor defaults, not a whitelist. Every route-and-model combination its CLI supports stays available on request; a home route means one route is the default for an unrouted family, never that another route is disallowed.
+A home route says which CLI hosts a family, nothing more. It selects no effort — that still comes from the user or the recommendation path — and it is not a model-effort profile, so it stands outside the `model-catalog.md` promotion rule.
 
 ## Effort and id shape
 
 Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback.
 
-`cursor/*` is the one route with no effort argv: there the level is part of the model id. Match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` or `claude-fable-5-xhigh`, and do not synthesize bracket overrides. That makes id shape route-specific, and the two shapes must never cross:
+`cursor/*` is the one route with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` and do not synthesize bracket overrides. Its list is also the only one holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross:
 
 - Never carry an effort suffix into another route. `-m gpt-5.6-sol-high` on `codex/*` names a different, probably nonexistent model, and rule 1's charset accepts it — no syntactic check catches this one.
-- Never send a bare catalog slug to `cursor/*`. `agent models` has no `gpt-5.6-sol`; it has `gpt-5.6-sol-high` and `gpt-5.6-sol-xhigh`.
-- When the requested level has no slug on the route, report that. Cursor lists no Sol `medium`, and no Terra or Luna at all, so a catalog profile naming those is unreachable there — do not substitute a neighboring level or a `-fast` variant.
-- On `cursor/*`, dropping `-m` does not preserve a configured model: it selects `auto`, Cursor's cost-aware automatic selection over its own lineup, Grok included. That is a legitimate mode — pass no model when the user wants Cursor to choose — but it answers a different request than a named family, so a `cursor/*` request that resolves no effort still has no slug: take a listed level or ask.
-
-Because it is the only live list holding effort-bearing ids, a fuzzy family-plus-effort request appears to match `cursor/*` first. A name match in `agent models` is not by itself a route decision — a bare family name resolves by home route, not by whichever list happens to hold a similar string.
-
-The id shape cuts the other way too. An effort-bearing id such as `gpt-5.6-sol-high` or `claude-fable-5-thinking-xhigh` exists on `cursor/*` and nowhere else, so an input naming one is naming that route even without the prefix. Read the shape as the route signal it is instead of sending it to a home route that has no such model.
+- Never send a bare catalog slug to `cursor/*`; conversely, an effort-bearing id names `cursor/*` even without the route prefix, since no other route has one.
+- Dispatch only ids the route's own list holds. When the requested profile has no id there, report that — do not approximate with a neighboring level, a `-fast` variant, or a dropped `-m`. Omitting the model on `cursor/*` selects its `auto` mode, which is a valid request when the user wants Cursor to choose but not a substitute for a named family.
 
 ## Per-route notes
 

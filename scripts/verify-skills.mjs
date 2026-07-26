@@ -76,12 +76,24 @@ async function checkAdapterMirror(skill) {
   ];
 }
 
+async function skillFiles(dir) {
+  const found = [];
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const child = path.join(dir, entry.name);
+    if (entry.isDirectory()) found.push(...(await skillFiles(child)));
+    else if (entry.isFile()) found.push(child);
+  }
+  return found;
+}
+
 async function checkReadme(skills) {
   const errors = [];
   const readme = await readFile(path.join(root, "README.md"), "utf8");
+  // Source lists are exhaustive per skill: a file that ships is a file that is listed.
   for (const skill of skills) {
-    if (!readme.includes(`skills/${skill.category}/${skill.name}/SKILL.md`)) {
-      errors.push(`README.md: no Source entry for skills/${skill.category}/${skill.name}/SKILL.md`);
+    for (const file of await skillFiles(skill.dir)) {
+      const relative = path.relative(root, file).split(path.sep).join("/");
+      if (!readme.includes(relative)) errors.push(`README.md: no Source entry for ${relative}`);
     }
   }
 

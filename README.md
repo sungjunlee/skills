@@ -139,16 +139,18 @@ Adjust the destination for your runtime. Codex and Claude Code may use different
 ## Repo Layout
 
 ```text
+backlog/
 docs/
   engine-capability-contract.md
 evals/
-  schema/
-  fixtures/
   cases/
-  results/
+  contracts/
+  delegate/
+  fixtures/
   reports/
+  results/
+  schema/
 scripts/
-  verify-replays.mjs
 skills/
   engineering/
     implement/
@@ -162,7 +164,9 @@ skills/
     brainstorming/
       SKILL.md
       agents/
+        openai.yaml
       references/
+        routing.md
     feature-spec/
       SKILL.md
       agents/
@@ -174,10 +178,17 @@ skills/
     delegate/
       SKILL.md
       references/
+        cli-invocations.md
+        dispatch-guardrails.md
+        model-catalog.md
+        routing-guide.md
   review/
     gosu-review/
       SKILL.md
       references/
+        cross-examine.md
+        personas.md
+spec/
 ```
 
 ## Conventions

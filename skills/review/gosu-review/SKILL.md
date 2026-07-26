@@ -13,6 +13,8 @@ If the user provides `/gosu-review <target>`, review that target. If not, review
 
 Always show the selected target near the top of the final output. Handle loose references pragmatically: `"this"` or `"the thing above"` → most recent artifact; `"this repo"` or `"overall"` → current repository state; `"the skill wording"` → the relevant `SKILL.md` plus needed `references/*`. If the target is broad, continue but warn once: `Wide scope: casting may be less sharp. Use /gosu-review <narrower scope> for a tighter review.`
 
+When the target is a change rather than an artifact — a diff, a PR, uncommitted work — name it as one, and carry two extra things in every brief: the defect the change claims to fix, and the change's own premise. Panelists judge a fix by whether it fixes that, and a rule that fails its own premise is invisible to anyone reading the result alone. Reviewing an artifact asks what is missing; reviewing a change asks what it just broke — and a change shipped under a safety label is the one least likely to be asked the second question.
+
 ## Cast
 
 Pick 4-6 panelists for this target. The goal is not generic job titles; it is the sharpest reviewers for this artifact. First extract the target's axes:
@@ -40,6 +42,8 @@ All three go into that panelist's brief verbatim. They are the subagent's search
 The persona description you write here is what the subagent sees as `You are reviewing as: <persona>`. A label like `PM` produces a generic review; a `PM who shipped three onboarding rewrites and watched activation keep dropping in steps 2-4` produces a gosu one. Pick the scar.
 
 At least one panelist must be explicitly adversarial unless the target is purely exploratory. Use two challengers only when the user asks for challenge, red-team, or adversarial review, or when the target is high-risk. A challenger tries to break the artifact, not balance praise.
+
+On a change, tilt two of the seats. One asks what else reaches the same sink as the thing being fixed — a patch that closes the reported path and leaves its siblings open is the common shape of an incomplete fix. One knows the platforms, shells, or callers the change now claims to cover, because a fix that is correct where its author tested and wrong elsewhere is worse than the silence it replaced. Neither question means anything against an artifact; both are cheap against a diff.
 
 One seat belongs to subtraction. A panel judged on findings drifts additive — every reviewer proposes something to add, and nobody is accountable for what the artifact would be like with less. Cast a ruthless simplifier whose fix path is removal: cut the step, drop the reference, delete the option, merge the two documents, and say so when the artifact should not exist at all. On a four-person panel this can share the challenger's seat; past that keep them apart, because a challenger asks how this breaks and a simplifier asks what here is not carrying its weight.
 

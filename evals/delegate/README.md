@@ -31,13 +31,14 @@ evals/delegate/
 - Results are **append-only dated evidence**: they live under an
   `observation_date` directory and existing files are never rewritten to match
   a newer contract.
-- `executors.json` is the runner's **transport registry, not the skill's
-  routing preference** — the skill's per-family home route lives in
-  `skills/productivity/delegate/references/cli-invocations.md`. The two
-  deliberately differ for `grok-4.5`: the skill defaults to `cursor/*` on
-  vendor ownership, while the runner keeps `opencode-go/grok-4.5` so dated
-  Grok results stay comparable across observation dates. A result's
-  `executor` field, never the skill's default, says what actually ran.
+- `executors.json` is the runner's **controlled transport, not a replay of the
+  skill's dispatch**. It compares model-effort profiles, so it holds one
+  harness steady across observation dates rather than following the skill's
+  routing — see the sandboxing note under Runner. `grok-4.5` is the widest
+  gap: the skill routes it to `cursor/*` while the runner keeps
+  `opencode-go/grok-4.5`, so a Grok promotion from these results must record
+  that its evidence came from another harness. A result's `executor` field,
+  never the skill's default, says what ran.
 - `scripts/verify-delegate-evals.mjs` (part of `npm test` and CI) validates
   schemas, case/result pairing, work-shape coverage, the executor registry,
   and the fixtures — all without provider credentials. Paid provider calls

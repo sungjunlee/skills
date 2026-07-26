@@ -70,8 +70,9 @@ that the profile reliably passes, and one counterexample disproves it.
 - **Acceptance failure → demote.** The shape falls back to a runner-up only
   if that profile independently satisfies the promotion rule; otherwise the
   shape has no default until new evidence promotes one.
-- **Dispatch-reliability failure (empty output, timeout, CLI error) → do not
-  demote; record it.** These say something about the route on that day, not
+- **Dispatch-reliability failure → do not demote; record it.** These are the
+  `dispatch_*` codes in `dispatch-guardrails.md`; record the code, not a prose
+  paraphrase. These say something about the route on that day, not
   about the profile's judgment. They still block a *pending* promotion under
   the no-unresolved-contradiction clause, and a profile with repeated
   reliability failures should be described as unreliable in its hint even

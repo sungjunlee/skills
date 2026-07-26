@@ -21,6 +21,22 @@ Apply these rules before every provider run.
 2. On timeout, request runtime-native cancellation or send graceful termination.
 3. After a 10-second grace period, force termination and include the child process group or tree when the runtime supports it.
 4. Do not retry automatically. A timed-out agent may already have changed files or spent provider credits.
-5. Report the failure as `dispatch_timeout` with the provider route, elapsed time, deadline, last activity event type and timestamp, and whether termination was graceful, forced, or incomplete. Redact the retained tails and emit them with truncation markers when content was discarded.
+5. Report the failure with its code from the table below. Redact the retained tails and emit them with truncation markers when content was discarded.
 
-A timeout is a failed dispatch, not executor output and not successful completion.
+## Failure codes
+
+A dispatch either returns executor output or reports one of these. None of them is executor output, and none satisfies the skill's done condition.
+
+| Code | Fires when |
+|---|---|
+| `dispatch_unbounded` | no mechanism can enforce the deadline, before launch |
+| `dispatch_launch_failure` | the process never started — binary missing, not executable, argv rejected |
+| `dispatch_timeout` | the deadline elapsed |
+| `dispatch_cli_error` | the process exited nonzero and it was not a timeout |
+| `dispatch_empty_output` | the process exited zero and both the extracted output and raw stdout are empty |
+
+Every report names the provider route, the resolved model and effort, elapsed time, and the retained stderr tail — on the recommendation path the route alone does not say what ran or what it cost. `dispatch_timeout` adds the deadline, the last activity event type and timestamp, and whether termination was graceful, forced, or incomplete.
+
+`dispatch_empty_output` is the one that looks like success, so report the two causes it cannot distinguish: the executor produced nothing, or the prompt never reached it. The prompt is the last argv element on every route, so one that matches a flag the CLI accepts is absorbed as a duplicate flag and the child runs promptless against `DEVNULL` stdin. Check the assembled argv before concluding the model had nothing to say.
+
+A dispatch that ends in any of these codes is a failed dispatch, not executor output and not successful completion.

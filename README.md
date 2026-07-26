@@ -66,6 +66,7 @@ When the full `relay-dispatch` flow is overkill — you just want a quick answer
 /delegate cline-pass/glm-5.2 "review this diff"
 /delegate opencode/glm-5.2 "summarize this diff"
 /delegate claude/sonnet effort=high "review this migration"
+/delegate claude/claude-opus-5 effort=xhigh "analyze this long-horizon refactor"
 /delegate codex/gpt-5.6-luna effort=medium "implement this scoped issue"
 /delegate opencode "explain this file"  # no model: CLI default
 ```

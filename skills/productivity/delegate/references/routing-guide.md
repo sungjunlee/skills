@@ -25,3 +25,6 @@ Choose the least expensive execution profile likely to finish correctly. Judge t
 - Apply privacy, data-residency, and provider-policy constraints before comparing cost.
 - Separate API marginal pricing from subscription quota consumption and rate limits.
 - Treat vendor benchmarks as capability signals and community reports as hypotheses. Promoting a route to a default requires repeated dated local evidence — see the promotion rule in `model-catalog.md`.
+- Treat a successor model as a new profile. Do not transfer a promoted default,
+  effort setting, or reliability conclusion from an earlier model generation;
+  start from current provider guidance and run the local evaluation matrix.

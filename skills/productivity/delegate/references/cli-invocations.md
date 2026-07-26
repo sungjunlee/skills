@@ -29,7 +29,7 @@ Append or translate effort only when the resolved profile contains an explicit o
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|
 | `opencode/*`, `opencode-go/*` | `opencode run --auto -m <model> <prompt>` | `--variant <effort>` (provider-specific) | `DEVNULL` | `opencode models [provider]` |
-| `claude/*` | `claude -p --permission-mode auto --model <model> <prompt>` | `--effort <low\|medium\|high\|xhigh\|max>` | `DEVNULL` | — (use aliases or a full id from current docs) |
+| `claude/*` | `claude -p --permission-mode auto --model <model> <prompt>` | `--effort <low\|medium\|high\|xhigh\|max>` | `DEVNULL` | — (use a full id from current docs, or a latest-family alias only when the user asks for latest) |
 | `codex/*` | `codex exec --dangerously-bypass-approvals-and-sandbox -m <model> <prompt>` | argv entries `-c` + `model_reasoning_effort="<effort>"` (model-specific) | `DEVNULL` | — (check `~/.codex/config.toml` and current docs) |
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `--thinking <off\|minimal\|low\|medium\|high\|xhigh\|max>` | `DEVNULL` | `pi --list-models [search]` |
 | `cursor/*` | `agent --print --yolo --trust --model <model> <prompt>` (binary is `agent`, not `cursor`) | select the matching effort-bearing slug from `agent models`; no separate argv | `DEVNULL` | `agent models` |
@@ -42,10 +42,15 @@ For CLI-selector routes such as `claude/<model>` or `reasonix/<model>`, `<model>
 
 Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback. For Cursor, do not synthesize bracket overrides: match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` or `claude-fable-5-xhigh`.
 
+Claude Code aliases such as `opus`, `sonnet`, and `fable` move with the latest
+family release. Prefer the full model id (for example, `claude-opus-5`) when
+the user names a version or reproducibility matters. The `opus` alias is
+appropriate only for an explicit latest-Opus request.
+
 The prompt is already in argv, so connect stdin to DEVNULL for every current route. In a process API, set the child stdin to DEVNULL. Under rule 2, redirect with `< /dev/null` and never pass the redirect as an argv token. Add a future stdin-consuming route as an explicit exception instead of inheriting an open pipe.
 
 For the OpenCode routes, `--auto` has the same trust implications as other non-interactive permission bypass flags.
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
 
-Use `reasonix/*` only for non-sensitive, general work: it talks directly to DeepSeek API. Do not use `model-catalog.md`; use an explicit DeepSeek-compatible id or the CLI default.
+Use `reasonix/*` only for non-sensitive, general work: it talks directly to DeepSeek API. Do not use `model-catalog.md`; use an explicit current DeepSeek-compatible id or the CLI default. Do not suggest the retired `deepseek-chat` or `deepseek-reasoner` aliases; DeepSeek discontinued them on 2026-07-24 in favor of the V4 ids.

@@ -36,7 +36,7 @@ Append or translate effort only when the resolved profile contains an explicit o
 | `reasonix/*` | `reasonix run -m <model> <prompt>` | `--effort <low\|medium\|high\|max>` | `DEVNULL` | — (no CLI subcommand) |
 | `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | `--thinking <none\|low\|medium\|high\|xhigh>` | `DEVNULL` | — (no CLI subcommand) |
 
-> A `<provider>/*` pattern also matches its bare `<provider>` route. If `<model>` is omitted, drop `-m <model>` from the argv — the CLI uses its configured default, except on `cursor/*`, where the omission selects its `auto` mode rather than a fixed model (see "Effort and id shape").
+> A `<provider>/*` pattern also matches its bare `<provider>` route. If `<model>` is omitted, drop that row's model selector with its value — a bare flag would absorb the prompt — and the CLI uses its configured default, except on `cursor/*`, where the omission selects its `auto` mode rather than a fixed model (see "Effort and id shape").
 
 For CLI-selector routes such as `claude/<model>` or `reasonix/<model>`, `<model>` is the suffix after the first slash. For `opencode/<model>`, resolve that suffix against the live list and pass the returned full id. An `opencode-go/<model>` route is already a live OpenCode `provider/model` id, so preserve the whole route.
 

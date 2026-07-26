@@ -52,7 +52,7 @@ An input that names a model or family without a route resolves to that family's 
 
 A family absent from the table has no default — `glm-*`, `deepseek-*`, `kimi-*`, `minimax-*`, and `qwen*` each run on several installed routes, so ask which CLI to use.
 
-A home route says which CLI hosts a family, nothing more. It selects no effort — that still comes from the user or the recommendation path — and it is not a model-effort profile, so it stands outside the `model-catalog.md` promotion rule.
+A home route says which CLI hosts a family, nothing more; it is not a model-effort profile, so it stands outside the `model-catalog.md` promotion rule. Effort still comes from the user or the recommendation path. Where the route encodes effort in the id, as `cursor/*` does, that level is part of the model's name rather than an option — resolve it from the family's catalog effort profile before building the slug, and ask when the catalog offers none.
 
 ## Effort and id shape
 

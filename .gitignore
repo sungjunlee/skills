@@ -1,3 +1,4 @@
+# Local install state, written by the skills CLI; never committed.
 .agents/
 skills-lock.json
 

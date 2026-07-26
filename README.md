@@ -99,6 +99,7 @@ Source:
 
 - `skills/review/gosu-review/SKILL.md`
 - `skills/review/gosu-review/references/personas.md`
+- `skills/review/gosu-review/references/cross-examine.md`
 
 ## Related Larger Projects
 
@@ -106,7 +107,7 @@ These are intentionally not included here because they are heavier workflows rat
 
 - [dev-backlog](https://github.com/sungjunlee/dev-backlog) — keeps GitHub Issues as the source of truth while adding local sprint files as the execution hub for humans, Claude Code, and Codex.
 - [dev-relay](https://github.com/sungjunlee/dev-relay) — runs a repeatable plan -> dispatch -> review loop where an executor works in an isolated worktree and an independent reviewer checks the PR before merge.
-- [CraftKit](https://github.com/sungjunlee/craftkit) — file-first toolkit for authoring, critiquing, tuning, surveying, and carrying forward prompts and coding-agent skills.
+- [CraftKit](https://github.com/sungjunlee/craftkit) — file-first toolkit for authoring, critiquing, and optimizing prompts and coding-agent skills, plus a repo spec pipeline.
 
 ## Install
 
@@ -140,16 +141,18 @@ Adjust the destination for your runtime. Codex and Claude Code may use different
 ## Repo Layout
 
 ```text
+backlog/
 docs/
   engine-capability-contract.md
 evals/
-  schema/
-  fixtures/
   cases/
-  results/
+  contracts/
+  delegate/
+  fixtures/
   reports/
+  results/
+  schema/
 scripts/
-  verify-replays.mjs
 skills/
   engineering/
     implement/
@@ -163,7 +166,9 @@ skills/
     brainstorming/
       SKILL.md
       agents/
+        openai.yaml
       references/
+        routing.md
     feature-spec/
       SKILL.md
       agents/
@@ -175,10 +180,17 @@ skills/
     delegate/
       SKILL.md
       references/
+        cli-invocations.md
+        dispatch-guardrails.md
+        model-catalog.md
+        routing-guide.md
   review/
     gosu-review/
       SKILL.md
       references/
+        cross-examine.md
+        personas.md
+spec/
 ```
 
 ## Conventions

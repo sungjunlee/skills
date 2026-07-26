@@ -17,4 +17,4 @@ description: Run a prompt with a chosen provider, model, and optional effort in 
    - If the resolved profile includes an explicit or recommended effort, validate and translate it with the provider row. Reject unsupported values; do not forward or silently drop them.
 3. Read `references/dispatch-guardrails.md`, prepare a bounded supervisor, and run the argv in `$PWD` under the provider reference's command-building and stdin contracts — the prompt is one argv element, never a fragment of the command line. Return the executor's stdout, or the provider-specific extracted output when the reference defines one.
 
-**Done when:** the executor exits successfully and its output appears in your response. Report launch failures and timeouts as failures; they do not satisfy this condition.
+**Done when:** the executor exits successfully and non-empty output appears in your response. Anything else is a failed dispatch reported with its code from `references/dispatch-guardrails.md` — including a zero exit that produced nothing, which is a failure and never an empty answer.

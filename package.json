@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs && node scripts/verify-fixture-generators.mjs && node scripts/run-delegate-eval.mjs --dry-run --cases delegate.mechanical.enum-rename,delegate.review.cross-family-diff,delegate.longhorizon.dep-major-upgrade --profiles grok-medium,grok-high,fable-high,opus5-medium,opus5-high,opus5-xhigh",
-    "verify": "node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs"
+    "test": "node scripts/verify-skills.mjs && node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs && node scripts/verify-fixture-generators.mjs && node scripts/run-delegate-eval.mjs --dry-run --cases delegate.mechanical.enum-rename,delegate.review.cross-family-diff,delegate.longhorizon.dep-major-upgrade --profiles grok-medium,grok-high,fable-high,opus5-medium,opus5-high,opus5-xhigh",
+    "verify": "node scripts/verify-skills.mjs && node scripts/verify-replays.mjs && node scripts/verify-delegate-evals.mjs"
   }
 }

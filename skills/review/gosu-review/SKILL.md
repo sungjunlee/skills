@@ -88,6 +88,14 @@ Length follows what you found. If your axis turns up nothing real, return zero
 findings and say why — that is a useful answer, not a failed one.
 ```
 
+## Cross-examine
+
+Run one round, and only when the panel actually conflicts: two entries name the same element and point opposite ways — remove it versus extend it, this mechanism versus that one. One panelist covering ground another missed is not a conflict, and neither is disagreement about severity.
+
+When that happens, put the two panelists back in front of the artifact with each other's position rather than deciding it yourself. Take at most the two sharpest conflicts, and read `references/cross-examine.md` for the brief. Resume the original panelist when the host can — they have already read the target.
+
+Do not force agreement. If both hold with evidence, report the tension unresolved and say what would settle it. An orchestrator's private call is worth less than a disagreement the panel could not close, because the second is a finding about the artifact.
+
 ## Output
 
 Show panel voices first, then synthesize. Lead with a one-line verdict summary so the reader can scan before diving into detail.
@@ -110,7 +118,9 @@ casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial + 1 simplifier,
 - <persona>: <verdict> — <sharp take>
 
 ## Tensions                            # only if personas disagree
-- <A> vs <B>: <what>. Recommendation: <short call>
+- <A> vs <B>: <what>.
+  resolved: <who moved, on what evidence> — <the call>
+  or unresolved: <both positions held> — <what would settle it>
 
 ## Consensus                           # only if 2+ agree
 - [P1] <action> — <persona names>
@@ -132,8 +142,10 @@ Rules:
 - Carry each finding's evidence through. A finding with no evidence stays in Panel and never reaches Consensus.
 - Report an empty findings list as-is. Never backfill a panelist who found nothing.
 - When a removal and an addition name the same element, that is a Tension, not two Consensus items. Do not let the additive side win by default because more panelists proposed additions.
+- Cross-examination is one round. Never open a second, and never adjudicate a tension you did not send back to the panel.
 - If fewer than 2 agents return, skip synthesis and show only raw notes plus a retry recommendation.
 
 ## Optional References
 
 - `references/personas.md` — persona seeds. Use only when casting is not obvious.
+- `references/cross-examine.md` — the round-two brief. Read when the panel conflicts.

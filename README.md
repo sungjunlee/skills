@@ -68,6 +68,8 @@ When the full `relay-dispatch` flow is overkill — you just want a quick answer
 /delegate claude/sonnet effort=high "review this migration"
 /delegate claude/claude-opus-5 effort=xhigh "analyze this long-horizon refactor"
 /delegate codex/gpt-5.6-luna effort=medium "implement this scoped issue"
+/delegate gpt-5.6-sol effort=high "analyze this migration"  # no route: home route -> codex
+/delegate grok-4.5 effort=high "review this diff"  # home route -> cursor/cursor-grok-4.5-high
 /delegate opencode "explain this file"  # no model: CLI default
 ```
 

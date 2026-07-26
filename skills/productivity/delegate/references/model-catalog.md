@@ -2,7 +2,7 @@
 
 Last checked: 2026-07-26. Treat as stale after 30 days.
 
-Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. Provider prefixes vary, so adapt the slug to the selected route format.
+Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
 ## Frontier families
 

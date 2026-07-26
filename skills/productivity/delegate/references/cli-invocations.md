@@ -36,11 +36,35 @@ Append or translate effort only when the resolved profile contains an explicit o
 | `reasonix/*` | `reasonix run -m <model> <prompt>` | `--effort <low\|medium\|high\|max>` | `DEVNULL` | — (no CLI subcommand) |
 | `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | `--thinking <none\|low\|medium\|high\|xhigh>` | `DEVNULL` | — (no CLI subcommand) |
 
-> A `<provider>/*` pattern also matches its bare `<provider>` route. If `<model>` is omitted, drop `-m <model>` from the argv — the CLI uses its configured default.
+> A `<provider>/*` pattern also matches its bare `<provider>` route. If `<model>` is omitted, drop that row's model selector with its value — a bare flag would absorb the prompt — and the CLI uses its configured default, except on `cursor/*`, where the omission selects its `auto` mode rather than a fixed model (see "Effort and id shape").
 
 For CLI-selector routes such as `claude/<model>` or `reasonix/<model>`, `<model>` is the suffix after the first slash. For `opencode/<model>`, resolve that suffix against the live list and pass the returned full id. An `opencode-go/<model>` route is already a live OpenCode `provider/model` id, so preserve the whole route.
 
-Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback. For Cursor, do not synthesize bracket overrides: match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` or `claude-fable-5-xhigh`.
+## Home route per family
+
+An input that names a model or family without a route resolves to that family's home route; an explicit route always overrides it, and no combination a CLI supports is ever ruled out.
+
+| Family | Home route | Basis |
+|---|---|---|
+| `gpt-5.6-*` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
+| `claude-*` | `claude/*` | the vendor's own CLI, and the only route exposing all five effort levels |
+| `grok-4.5` | `cursor/cursor-grok-4.5-<effort>` | the vendor's own CLI since Cursor was acquired by xAI |
+
+A family absent from the table has no default — `glm-*`, `deepseek-*`, `kimi-*`, `minimax-*`, and `qwen*` each run on several installed routes, so ask which CLI to use.
+
+A home route says which CLI hosts a family, nothing more; it is not a model-effort profile, so it stands outside the `model-catalog.md` promotion rule. Effort still comes from the user or the recommendation path. Where the route encodes effort in the id, as `cursor/*` does, that level is part of the model's name rather than an option — resolve it from the family's catalog effort profile before building the slug, and ask when the catalog offers none.
+
+## Effort and id shape
+
+Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback.
+
+`cursor/*` is the one route with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` and do not synthesize bracket overrides. Its list is also the only one holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross:
+
+- Never carry an effort suffix into another route. `-m gpt-5.6-sol-high` on `codex/*` names a different, probably nonexistent model, and rule 1's charset accepts it — no syntactic check catches this one.
+- Never send a bare catalog slug to `cursor/*`; conversely, an effort-bearing id names `cursor/*` even without the route prefix, since no other route has one.
+- Dispatch only ids the route's own list holds. When the requested profile has no id there, report that — do not approximate with a neighboring level, a `-fast` variant, or a dropped `-m`. Omitting the model on `cursor/*` selects its `auto` mode, which is a valid request when the user wants Cursor to choose but not a substitute for a named family.
+
+## Per-route notes
 
 Claude Code aliases such as `opus`, `sonnet`, and `fable` move with the latest
 family release. Prefer the full model id (for example, `claude-opus-5`) when

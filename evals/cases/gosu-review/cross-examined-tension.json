@@ -1,0 +1,57 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "gosu-review.cross-examined-tension",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "panel-conflicts-on-the-same-element",
+      "target_request": "/gosu-review skill/SKILL.md",
+      "target_state": "The named file is the only plausible target. It contains an element two casting axes will read opposite ways: one panelist's axis makes removing it the natural fix, another's makes extending it the natural fix.",
+      "capabilities": {
+        "subagent_dispatch": "native",
+        "parallel_subagents": "native",
+        "subagent_resume": "native"
+      },
+      "subagent_behavior": "Every dispatched subagent returns one panel entry, and at least two entries name the same element with opposite fixes.",
+      "measurement_limit": "The host dispatch count covers the panel plus the cross-examination round, so a count above the panel size proves a second round of subagent work actually occurred. It does not prove the round was sent to the conflicting panelists, that either side revisited the artifact, or that the reported resolution follows from what they returned. A resolution recorded as unresolved is a passing outcome; this case does not require the panel to converge."
+    }
+  },
+  "required_output_fields": [
+    "target",
+    "verdicts",
+    "tensions",
+    "tensions.resolution",
+    "panel",
+    "meta.requested",
+    "meta.returned"
+  ],
+  "expected_route": null,
+  "expected_engine": "bounded_parallel",
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "host_subagent_dispatch_count_range": {
+    "min": 6,
+    "max": 10
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-target", "type": "output_field_present", "field": "target" },
+    { "assertion_id": "field-verdicts", "type": "output_field_present", "field": "verdicts" },
+    { "assertion_id": "field-tensions", "type": "output_field_present", "field": "tensions" },
+    { "assertion_id": "field-tensions-resolution", "type": "output_field_present", "field": "tensions.resolution" },
+    { "assertion_id": "field-panel", "type": "output_field_present", "field": "panel" },
+    { "assertion_id": "field-meta-requested", "type": "output_field_present", "field": "meta.requested" },
+    { "assertion_id": "field-meta-returned", "type": "output_field_present", "field": "meta.returned" },
+    { "assertion_id": "host-dispatch-count", "type": "host_subagent_dispatch_count_in_range" },
+    { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
+    { "assertion_id": "no-confirmation-question", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-repository-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit", "push"]
+}

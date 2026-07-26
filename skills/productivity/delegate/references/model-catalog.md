@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-07-23. Treat as stale after 30 days.
+Last checked: 2026-07-26. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. Provider prefixes vary, so adapt the slug to the selected route format.
 
@@ -12,7 +12,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `gpt-5.6-terra` | Balanced GPT-5.6 tier for ambiguous everyday work. | `medium`; test before using `high`+ as a value step | balanced |
 | `gpt-5.6-luna` | Fast, high-volume, or tightly scoped GPT-5.6 work. | `high`; try `xhigh` for scoped hard work | value |
 | `claude-fable-5` | Long-running, highly ambitious work that earns frontier spend. | `high` by default; `xhigh` for the most capability-sensitive or long-running autonomous work; step down to `medium` only when cost or interactivity matters more than peak quality | frontier |
-| `claude-opus-4-8` | Complex implementation, planning, or independent review. | `high` | premium |
+| `claude-opus-5` | Unvalidated successor hint (no local evaluation evidence): complex agentic coding, long-horizon execution, code review, vision-heavy implementation, or document work when Fable-tier spend is not justified. | `high` by default; `xhigh` for demanding coding and agentic work; reserve `max` for unconstrained frontier problems; re-sweep `low` and `medium` rather than inheriting an older Opus setting | premium |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
 | `grok-4.5` | Tool-heavy coding, long-context knowledge work, or an independent frontier-family review. | `high` for difficult coding and multi-step agent loops; `medium` when latency matters more than maximum reasoning depth | value frontier |
 | `kimi-k3` | Unvalidated hint (no local evaluation evidence; see promotion rule): long-horizon coding, tool-heavy knowledge work, or multimodal implementation where completion quality matters more than latency. | route default; launch API uses `max` thinking, with `low` and `high` announced for later | frontier; high output-token and latency risk |
@@ -60,6 +60,11 @@ Evidence-backed defaults (promoted 2026-07-23 from dated results on
   into a behavior-preserving trap at least once across three observations
   each; per-run variance dominates the medium-versus-high split there.
 
+Claude Opus 5 is a candidate, not a promoted default. Its provider guidance
+supports all five effort levels and recommends a fresh effort sweep instead of
+carrying settings over from an earlier model. Existing Fable or other
+Claude-family evidence does not satisfy the promotion rule for Opus 5.
+
 ## Demotion rule
 
 A default is revoked as soon as one dated result fails an acceptance check
@@ -92,12 +97,12 @@ a default.
 ## Sources
 
 - [OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
-- [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Fable 5](https://www.anthropic.com/claude/fable), [Opus 4.8](https://www.anthropic.com/news/claude-opus-4-8), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
+- [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5](https://www.anthropic.com/claude/fable), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - [xAI Grok 4.5](https://docs.x.ai/developers/grok-4-5)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
 - [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3) and [Kimi K2.7 Code model card](https://huggingface.co/moonshotai/Kimi-K2.7-Code)
 - [Qwen Cloud text-generation models](https://docs.qwencloud.com/developer-guides/getting-started/text-generation-models) and [Token Plan](https://docs.qwencloud.com/token-plan/overview)
-- [DeepSeek V4](https://api-docs.deepseek.com/news/news260424/)
+- [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
 
 These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. Early field reports favored Luna `xhigh` over Terra `high`, but local dated evidence (2026-07-22/23) found Terra `high` matching Luna `xhigh` at lower cost on ambiguous work — test complete model-effort profiles locally rather than trusting rankings. Distinguish API marginal cost from subscription quota pressure when comparing routes.

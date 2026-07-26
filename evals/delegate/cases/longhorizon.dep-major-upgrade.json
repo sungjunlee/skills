@@ -33,9 +33,11 @@
   ],
   "candidate_profiles": [
     { "profile_id": "fable-high", "model": "claude-fable-5", "effort": "high" },
-    { "profile_id": "fable-xhigh", "model": "claude-fable-5", "effort": "xhigh" }
+    { "profile_id": "fable-xhigh", "model": "claude-fable-5", "effort": "xhigh" },
+    { "profile_id": "opus5-high", "model": "claude-opus-5", "effort": "high" },
+    { "profile_id": "opus5-xhigh", "model": "claude-opus-5", "effort": "xhigh" }
   ],
-  "pairing_rationale": "The catalog reserves Fable xhigh for long-running autonomous work; this measures whether xhigh actually reduces stalls and follow-up correction over high on a genuinely long-horizon run, or only adds cost.",
+  "pairing_rationale": "The Fable high/xhigh pair keeps the established effort boundary measurable. The Opus 5 high/xhigh pair runs the fresh successor sweep required by Anthropic's migration guidance, while same-effort comparisons against Fable test whether frontier spend still buys fewer stalls or follow-up corrections on a genuinely long-horizon run.",
   "privacy": {
     "sensitivity": "synthetic",
     "approved_routes": []

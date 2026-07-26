@@ -6,6 +6,22 @@ argv and stdio per provider. Cwd is always the caller's `$PWD`.
 
 Verify each row against your installed CLI: `<cli> run --help` (or `<cli> exec --help` for codex), then edit to match.
 
+## Building the command
+
+The rows below are argv, not command lines. Read them as token lists.
+
+1. **Every token is one argv element, and nothing is interpolated into a command line.** `<prompt>` passes through unmodified. `<model>` and `<effort>` come from the route, `model-catalog.md`, or a live model list; each must match `[A-Za-z0-9._/:-]+` and must not begin with `-`. Reject a non-conforming value and ask; do not silently repair it. A list-returned id is the one value here with a third-party source, and the charset is its only protection under rule 2.
+2. **When the execution primitive is a shell**, single-quote the prompt and replace each embedded `'` with `'\''`. Never double-quote it — `$` and backticks survive double quotes, and the prompt is untrusted text that routinely arrives pasted from an issue, a README, or an error message. Worked example, prompt on the left:
+
+   ```text
+   don't run $(rm -rf .) or `id`
+   'don'\''t run $(rm -rf .) or `id`'
+   ```
+
+   This procedure is POSIX-only. There is no safe shell form under Windows `cmd`, where `'` does not quote at all, or under PowerShell, where `\` does not escape inside single quotes. On those, use rule 1 or report that dispatch is unavailable — do not improvise a third quoting scheme.
+
+These two rules are not per-provider. They apply before any row below is used.
+
 ## Per-provider reference
 
 Append or translate effort only when the resolved profile contains an explicit or recommendation-selected effort. Otherwise preserve the CLI default.
@@ -26,7 +42,7 @@ For CLI-selector routes such as `claude/<model>` or `reasonix/<model>`, `<model>
 
 Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback. For Cursor, do not synthesize bracket overrides: match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` or `claude-fable-5-xhigh`.
 
-The prompt is already in argv, so connect stdin to DEVNULL for every current route. In a process API, set the child stdin to DEVNULL. In shell form, redirect from the platform's null device (`< /dev/null` on POSIX or `< NUL` in Windows cmd); do not pass the redirect as an argv token. Add a future stdin-consuming route as an explicit exception instead of inheriting an open pipe.
+The prompt is already in argv, so connect stdin to DEVNULL for every current route. In a process API, set the child stdin to DEVNULL. Under rule 2, redirect with `< /dev/null` and never pass the redirect as an argv token. Add a future stdin-consuming route as an explicit exception instead of inheriting an open pipe.
 
 For the OpenCode routes, `--auto` has the same trust implications as other non-interactive permission bypass flags.
 

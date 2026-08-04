@@ -12,10 +12,10 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `gpt-5.6-terra` | Balanced GPT-5.6 tier for ambiguous everyday work. | `medium`; test before using `high`+ as a value step | balanced |
 | `gpt-5.6-luna` | Fast, high-volume, or tightly scoped GPT-5.6 work. | `high`; try `xhigh` for scoped hard work | value |
 | `claude-fable-5` | Long-running, highly ambitious work that earns frontier spend. | `high` by default; `xhigh` for the most capability-sensitive or long-running autonomous work; step down to `medium` only when cost or interactivity matters more than peak quality | frontier |
-| `claude-opus-5` | Unvalidated successor hint (no local evaluation evidence): complex agentic coding, long-horizon execution, code review, vision-heavy implementation, or document work when Fable-tier spend is not justified. | `high` by default; `xhigh` for demanding coding and agentic work; reserve `max` for unconstrained frontier problems; re-sweep `low` and `medium` rather than inheriting an older Opus setting | premium |
+| `claude-opus-5` | Complex agentic coding, long-horizon execution, code review, vision-heavy implementation, or document work when Fable-tier spend is not justified. | `high` by default; `xhigh` for demanding coding and agentic work; reserve `max` for unconstrained frontier problems; re-sweep `low` and `medium` rather than inheriting an older Opus setting | premium |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
 | `grok-4.5` | Tool-heavy coding, long-context knowledge work, or an independent frontier-family review. | `high` for difficult coding and multi-step agent loops; `medium` when latency matters more than maximum reasoning depth | value frontier |
-| `kimi-k3` | Unvalidated hint (no local evaluation evidence; see promotion rule): long-horizon coding, tool-heavy knowledge work, or multimodal implementation where completion quality matters more than latency. | route default; launch API uses `max` thinking, with `low` and `high` announced for later | frontier; high output-token and latency risk |
+| `kimi-k3` | Long-horizon coding, tool-heavy knowledge work, or multimodal implementation where completion quality matters more than latency. | route default; launch API uses `max` thinking, with `low` and `high` announced for later | frontier; high output-token and latency risk |
 
 ## Value and open-weight families
 
@@ -31,7 +31,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
-| `qwen3.8-max-preview` | Unvalidated hint (no local evaluation evidence; see promotion rule): evaluation candidate for complex reasoning and coding through Alibaba Token Plan; attractive while the temporary 10x credit promotion lasts, but keep a stable model as the control until independent results and a production release arrive. | route default; thinking is supported, but graded effort behavior is not documented | preview subscription |
+| `qwen3.8-max-preview` | Evaluation candidate for complex reasoning and coding through Alibaba Token Plan; attractive while the temporary 10x credit promotion lasts, but keep a stable model as the control until independent results and a production release arrive. | route default; thinking is supported, but graded effort behavior is not documented | preview subscription |
 
 ## Promotion rule
 

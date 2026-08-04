@@ -6,6 +6,16 @@ shape instead of trusting the catalog. The catalog in
 routing hint; the dated evidence here is what may promote a profile to a
 default recommendation.
 
+## Scope
+
+These are delegation spot-checks: each result asks whether one
+unsupervised, one-shot dispatch of a small trap-bearing fixture survived
+the case's acceptance checks, and what it cost. The only supported
+reading is comparing profiles on the same fixture and observation date.
+Nothing here is an absolute capability score, and a seven-file fixture
+does not model repository scale or mess — a wind tunnel, not a road
+test.
+
 ## Layout
 
 ```

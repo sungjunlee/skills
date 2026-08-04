@@ -28,14 +28,26 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `minimax-m3` | Long-context, multimodal, or general agentic coding. | `high` for complex agentic work; otherwise route default | mid |
 | `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. The 0731 in-place refresh (public beta) sharply raised agentic and coding capability at unchanged prices ($0.14/$0.28 per 1M in/out). | route default | cheap |
 
-## Promotion rule
+## Evidence
 
-A model-effort profile becomes a default recommendation for a work shape only
-with repeated local evidence: at least two dated, all-checks-passing results
-for that shape and profile in `evals/delegate/results/` from different
-observation dates, with no unresolved contradicting result for the same
-pairing. A single run, a community report, or a vendor ranking may at most
-sharpen a hint's wording, never set a default.
+The dated results in `evals/delegate/results/` are delegation
+spot-checks, not a capability benchmark. Each asks one question — did an
+unsupervised one-shot dispatch of a canonical trap-bearing fixture
+survive that case's acceptance checks, and at what cost — so they
+support comparing profiles on the same fixture and date, never absolute
+claims about a model.
+
+The whole rule: a profile becomes a work shape's default only on two
+all-checks-passing results from different observation dates with no
+unresolved contradiction, because one pass can be luck; one failed
+acceptance check revokes the default, because a default claims the
+profile reliably passes. Everything else — a single run, a community
+report, a vendor ranking — may sharpen a hint's wording, never set or
+keep a default. Evidence is per model-effort profile and does not
+transfer to a successor model. Dispatch-reliability failures (the
+`dispatch_*` codes in `dispatch-guardrails.md`) are recorded and block
+pending promotions but do not demote. Results are append-only, and the
+30-day staleness note above covers vendor facts, not observed outcomes.
 
 Evidence-backed defaults (promoted 2026-07-23 from dated results on
 2026-07-22 and 2026-07-23; see `evals/delegate/reports/`):
@@ -54,41 +66,6 @@ Evidence-backed defaults (promoted 2026-07-23 from dated results on
 - **Mechanical work with strong tests: no default.** Both Grok profiles fell
   into a behavior-preserving trap at least once across three observations
   each; per-run variance dominates the medium-versus-high split there.
-
-Claude Opus 5 is a candidate, not a promoted default. Its provider guidance
-supports all five effort levels and recommends a fresh effort sweep instead of
-carrying settings over from an earlier model. Existing Fable or other
-Claude-family evidence does not satisfy the promotion rule for Opus 5.
-
-## Demotion rule
-
-A default is revoked as soon as one dated result fails an acceptance check
-for that shape and profile. Promotion needs repetition because a single pass
-can be luck; demotion needs only one failure because a default is a claim
-that the profile reliably passes, and one counterexample disproves it.
-
-- **Acceptance failure → demote.** The shape falls back to a runner-up only
-  if that profile independently satisfies the promotion rule; otherwise the
-  shape has no default until new evidence promotes one.
-- **Dispatch-reliability failure → do not demote; record it.** These are the
-  `dispatch_*` codes in `dispatch-guardrails.md`; record the code, not a prose
-  paraphrase. These say something about the route on that day, not
-  about the profile's judgment. They still block a *pending* promotion under
-  the no-unresolved-contradiction clause, and a profile with repeated
-  reliability failures should be described as unreliable in its hint even
-  while it keeps a default earned on quality.
-- **Staleness does not demote.** Old evidence stays valid until contradicted;
-  the catalog's 30-day staleness note is about model availability and vendor
-  facts, not about outcomes already observed locally.
-
-Demotion changes catalog wording only. The failing result and every earlier
-passing result stay exactly as committed — a revoked default must remain
-traceable to the evidence that both created and ended it.
-
-Applied retroactively on 2026-07-23: no current default is affected. The
-failures on record (the Grok mechanical label-trap inversions and the one
-Grok review empty-output run) belong to shapes and profiles that never held
-a default.
 
 ## Sources
 

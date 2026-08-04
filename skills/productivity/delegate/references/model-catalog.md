@@ -23,7 +23,6 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
-| `kimi-k2.7-code` | Coding-focused long-horizon execution with lower thinking-token use than K2.6. | route default; official API forces thinking | premium open |
 | `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | `high` for ambiguous or multi-stage work; otherwise route default | pro value |
 | `minimax-m3` | Long-context, multimodal, or general agentic coding. | `high` for complex agentic work; otherwise route default | mid |
 | `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. The 0731 in-place refresh (public beta) sharply raised agentic and coding capability at unchanged prices ($0.14/$0.28 per 1M in/out). | route default | cheap |
@@ -51,7 +50,7 @@ until contradicted by new local runs.
 - [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5](https://www.anthropic.com/claude/fable), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - [xAI Grok 4.5](https://docs.x.ai/developers/grok-4-5)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
-- [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3) and [Kimi K2.7 Code model card](https://huggingface.co/moonshotai/Kimi-K2.7-Code)
+- [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3)
 - [Qwen Cloud text-generation models](https://docs.qwencloud.com/developer-guides/getting-started/text-generation-models) and [Token Plan](https://docs.qwencloud.com/token-plan/overview)
 - [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)

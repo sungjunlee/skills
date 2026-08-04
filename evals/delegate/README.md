@@ -6,6 +6,16 @@ shape instead of trusting the catalog. The catalog in
 routing hint; the dated evidence here is what may promote a profile to a
 default recommendation.
 
+## Scope
+
+These are delegation spot-checks: each result asks whether one
+unsupervised, one-shot dispatch of a small trap-bearing fixture survived
+the case's acceptance checks, and what it cost. The only supported
+reading is comparing profiles on the same fixture and observation date.
+Nothing here is an absolute capability score, and a seven-file fixture
+does not model repository scale or mess — a wind tunnel, not a road
+test.
+
 ## Layout
 
 ```
@@ -107,6 +117,21 @@ A bounded run is explicitly invoked, never scheduled. The 2026-07-22 run
   latency signal comparable across executors.
 - A `failed` result with `dispatch_timeout` may still have consumed provider
   quota; it is evidence of the failure, never a slot to retry silently.
-- Promotion to a catalog default follows the repeated-evidence rule in
-  `skills/productivity/delegate/references/model-catalog.md`; a single dated
-  run is a hint with evidence, not a default.
+## Promotion and demotion
+
+The catalog's Evidence-backed defaults section records outcomes only;
+this is the rule that produces them.
+
+- **Promote** a profile to a work shape's default on two
+  all-checks-passing results from different observation dates with no
+  unresolved contradicting result — one pass can be luck. A single run,
+  a community report, or a vendor ranking may sharpen a hint's wording,
+  never set a default.
+- **Demote** on one failed acceptance check — a default claims the
+  profile reliably passes, and one counterexample disproves it.
+  Dispatch-reliability failures (`dispatch_*` codes) do not demote but
+  block pending promotions; staleness never demotes.
+- Evidence is per model-effort profile and does not transfer to a
+  successor model. Results stay append-only: demotion changes catalog
+  wording only, and every result that created or ended a default stays
+  committed.

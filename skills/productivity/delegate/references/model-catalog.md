@@ -24,7 +24,9 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 |---|---|---|---|
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
 | `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | `high` for ambiguous or multi-stage work; otherwise route default | pro value |
+| `hy3` | Coding, document, and frontend work with grounded low-hallucination behavior; Tencent's open-weight generalist, GA 2026-07-06 (~$0.13/$0.53 per 1M via OpenRouter). | route default is no-think; `low` and `high` thinking modes documented for complex multi-step work | mid |
 | `minimax-m3` | Long-context, multimodal, or general agentic coding. | `high` for complex agentic work; otherwise route default | mid |
+| `mimo-v2.5` | Multimodal work — native image, video, and audio input with 1M context at near-flash prices (~$0.11/$0.22 per 1M via OpenRouter); community reports single out its multimodal quality. On text-only work `deepseek-v4-flash` benchmarks meaningfully higher — pick MiMo for the modalities, not for text. | route default | cheap |
 | `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. The 0731 in-place refresh (public beta) sharply raised agentic and coding capability at unchanged prices ($0.14/$0.28 per 1M in/out). | route default | cheap |
 
 ## Evidence-backed defaults
@@ -51,6 +53,8 @@ until contradicted by new local runs.
 - [xAI Grok 4.5](https://docs.x.ai/developers/grok-4-5)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
 - [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3)
+- [Xiaomi MiMo model releases](https://mimo.mi.com/docs/en-US/updates/model)
+- [Tencent Hunyuan Hy3 release](https://www.tencent.com/en-us/articles/2202386.html)
 - [Qwen Cloud text-generation models](https://docs.qwencloud.com/developer-guides/getting-started/text-generation-models) and [Token Plan](https://docs.qwencloud.com/token-plan/overview)
 - [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)

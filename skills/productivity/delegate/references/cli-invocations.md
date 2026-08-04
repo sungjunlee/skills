@@ -50,7 +50,7 @@ An input that names a model or family without a route resolves to that family's 
 | `claude-*` | `claude/*` | the vendor's own CLI, and the only route exposing all five effort levels |
 | `grok-4.5` | `cursor/cursor-grok-4.5-<effort>` | the vendor's own CLI since Cursor was acquired by xAI |
 
-A family absent from the table has no default — `glm-*`, `deepseek-*`, `kimi-*`, `minimax-*`, and `qwen*` each run on several installed routes, so ask which CLI to use.
+A family absent from the table has no default — `glm-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` each run on several installed routes, so ask which CLI to use.
 
 A home route says which CLI hosts a family, nothing more; it is not a model-effort profile, so it never needs an evidence-backed default. Effort still comes from the user or the recommendation path. Where the route encodes effort in the id, as `cursor/*` does, that level is part of the model's name rather than an option — resolve it from the family's catalog effort profile before building the slug, and ask when the catalog offers none.
 

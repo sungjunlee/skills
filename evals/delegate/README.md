@@ -117,6 +117,21 @@ A bounded run is explicitly invoked, never scheduled. The 2026-07-22 run
   latency signal comparable across executors.
 - A `failed` result with `dispatch_timeout` may still have consumed provider
   quota; it is evidence of the failure, never a slot to retry silently.
-- Promotion to a catalog default follows the repeated-evidence rule in
-  `skills/productivity/delegate/references/model-catalog.md`; a single dated
-  run is a hint with evidence, not a default.
+## Promotion and demotion
+
+The catalog's Evidence-backed defaults section records outcomes only;
+this is the rule that produces them.
+
+- **Promote** a profile to a work shape's default on two
+  all-checks-passing results from different observation dates with no
+  unresolved contradicting result — one pass can be luck. A single run,
+  a community report, or a vendor ranking may sharpen a hint's wording,
+  never set a default.
+- **Demote** on one failed acceptance check — a default claims the
+  profile reliably passes, and one counterexample disproves it.
+  Dispatch-reliability failures (`dispatch_*` codes) do not demote but
+  block pending promotions; staleness never demotes.
+- Evidence is per model-effort profile and does not transfer to a
+  successor model. Results stay append-only: demotion changes catalog
+  wording only, and every result that created or ended a default stays
+  committed.

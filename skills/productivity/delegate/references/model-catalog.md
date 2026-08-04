@@ -28,44 +28,20 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `minimax-m3` | Long-context, multimodal, or general agentic coding. | `high` for complex agentic work; otherwise route default | mid |
 | `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. The 0731 in-place refresh (public beta) sharply raised agentic and coding capability at unchanged prices ($0.14/$0.28 per 1M in/out). | route default | cheap |
 
-## Evidence
+## Evidence-backed defaults
 
-The dated results in `evals/delegate/results/` are delegation
-spot-checks, not a capability benchmark. Each asks one question — did an
-unsupervised one-shot dispatch of a canonical trap-bearing fixture
-survive that case's acceptance checks, and at what cost — so they
-support comparing profiles on the same fixture and date, never absolute
-claims about a model.
+From dated local runs (2026-07-22/23); the grading and promote/revoke
+rules live with the evidence in `evals/delegate/` in the source repo.
+Community reports and vendor rankings never override this list.
 
-The whole rule: a profile becomes a work shape's default only on two
-all-checks-passing results from different observation dates with no
-unresolved contradiction, because one pass can be luck; one failed
-acceptance check revokes the default, because a default claims the
-profile reliably passes. Everything else — a single run, a community
-report, a vendor ranking — may sharpen a hint's wording, never set or
-keep a default. Evidence is per model-effort profile and does not
-transfer to a successor model. Dispatch-reliability failures (the
-`dispatch_*` codes in `dispatch-guardrails.md`) are recorded and block
-pending promotions but do not demote. Results are append-only, and the
-30-day staleness note above covers vendor facts, not observed outcomes.
-
-Evidence-backed defaults (promoted 2026-07-23 from dated results on
-2026-07-22 and 2026-07-23; see `evals/delegate/reports/`):
-
-- **Ambiguous everyday feature/bugfix work → Terra `high`.** Matched Luna
-  `xhigh` on quality both dates at lower latency and tokens; the community
-  Luna-over-Terra claim did not survive local evidence. Luna `xhigh` also
-  passed both dates and remains a valid alternative.
-- **High-blast-radius analysis → Sol `high`.** Matched Sol `xhigh` on every
-  rubric across three paired observations at consistently lower token cost;
-  keep `xhigh` for runs where register depth is the deliverable.
-- **Independent cross-family review → Fable `high`.** Three all-pass reports
-  across two dates with zero incorrect claims. Grok `high` reviews were
-  strong twice but produced one empty-output run, an unresolved reliability
-  contradiction.
-- **Mechanical work with strong tests: no default.** Both Grok profiles fell
-  into a behavior-preserving trap at least once across three observations
-  each; per-run variance dominates the medium-versus-high split there.
+- Ambiguous everyday feature/bugfix work → Terra `high`; Luna `xhigh`
+  also passed both dates and stays a valid alternative.
+- High-blast-radius analysis → Sol `high`; use `xhigh` when register
+  depth is the deliverable.
+- Independent cross-family review → Fable `high`; Grok `high` was
+  strong twice but had one empty-output run.
+- Mechanical work with strong tests: no default — per-run variance
+  dominates, and both Grok efforts tripped a behavior-preserving trap.
 
 ## Sources
 
@@ -78,4 +54,4 @@ Evidence-backed defaults (promoted 2026-07-23 from dated results on
 - [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
 
-These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. Early field reports favored Luna `xhigh` over Terra `high`, but local dated evidence (2026-07-22/23) found Terra `high` matching Luna `xhigh` at lower cost on ambiguous work — test complete model-effort profiles locally rather than trusting rankings. OpenAI's 2026-07-30 reprice (Luna −80%, Terra −20%) postdates that observation: the quality parity stands, but the dollar-cost half of the comparison would look different today. Distinguish API marginal cost from subscription quota pressure when comparing routes.
+These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. OpenAI's 2026-07-30 reprice (Luna −80%, Terra −20%) postdates the cost side of the 2026-07-22/23 observations — the quality parity stands, but re-check dollar costs before letting them decide. Distinguish API marginal cost from subscription quota pressure when comparing routes.

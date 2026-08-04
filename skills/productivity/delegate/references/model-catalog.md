@@ -32,7 +32,9 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 From dated local runs (2026-07-22/23); the grading and promote/revoke
 rules live with the evidence in `evals/delegate/` in the source repo.
-Community reports and vendor rankings never override this list.
+Community reports and vendor rankings never override this list, and the
+30-day staleness note above does not expire it — observed results stand
+until contradicted by new local runs.
 
 - Ambiguous everyday feature/bugfix work → Terra `high`; Luna `xhigh`
   also passed both dates and stays a valid alternative.
@@ -54,4 +56,4 @@ Community reports and vendor rankings never override this list.
 - [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
 
-These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. OpenAI's 2026-07-30 reprice (Luna −80%, Terra −20%) postdates the cost side of the 2026-07-22/23 observations — the quality parity stands, but re-check dollar costs before letting them decide. Distinguish API marginal cost from subscription quota pressure when comparing routes.
+These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. OpenAI's 2026-07-30 reprice (Luna −80%, Terra −20%) postdates the cost side of the 2026-07-22/23 observations — the acceptance-parity finding on those fixtures stands, but re-check dollar costs before letting them decide. Distinguish API marginal cost from subscription quota pressure when comparing routes.

@@ -62,7 +62,8 @@ When the full `relay-dispatch` flow is overkill — you just want a quick answer
 
 ```text
 /delegate opencode-go/deepseek-v4-pro "refactor this function to use streams"
-/delegate reasonix/deepseek-v4-pro "write unit tests for the parser"
+/delegate reasonix/deepseek-v4-pro "write unit tests for the parser"  # DeepSeek 본체 (학습 리스크 있음)
+/delegate pi/alibaba-plan "run this batch"  # provider 지정 (pi는 다중 provider)
 /delegate cline-pass/glm-5.2 "review this diff"
 /delegate opencode/glm-5.2 "summarize this diff"
 /delegate claude/sonnet effort=high "review this migration"
@@ -73,12 +74,17 @@ When the full `relay-dispatch` flow is overkill — you just want a quick answer
 /delegate opencode "explain this file"  # no model: CLI default
 ```
 
+Same model, multiple routes? `references/provider-routing.md` picks the route by
+quota, training risk, and cost windows (single-provider CLIs like codex/claude
+are fixed; multi-provider CLIs like opencode/pi select explicitly).
+
 Source:
 
 - `skills/productivity/delegate/SKILL.md`
 - `skills/productivity/delegate/references/cli-invocations.md`
 - `skills/productivity/delegate/references/dispatch-guardrails.md`
 - `skills/productivity/delegate/references/model-catalog.md`
+- `skills/productivity/delegate/references/provider-routing.md`
 - `skills/productivity/delegate/references/routing-guide.md`
 
 ### Review
@@ -185,6 +191,7 @@ skills/
         cli-invocations.md
         dispatch-guardrails.md
         model-catalog.md
+        provider-routing.md
         routing-guide.md
   review/
     gosu-review/

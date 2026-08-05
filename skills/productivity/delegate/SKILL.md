@@ -7,7 +7,7 @@ description: Run a prompt with a chosen provider, model, and optional effort in 
 
 ## Step
 
-1. Look up the provider in `references/cli-invocations.md`. If the input names a model or family instead of a route, resolve its home route from that file; ask the user which CLI to use only when the family has no home route there.
+1. Look up the provider in `references/cli-invocations.md`. If the input names a model or family instead of a route, resolve its home route from that file; ask the user which CLI to use only when the family has no home route there. When the same model is reachable through multiple routes, consult `references/provider-routing.md` for the route choice (single-provider CLIs are fixed; multi-provider CLIs like `opencode`/`pi` select by quota, training risk, and cost windows).
 2. Resolve an execution profile: model plus optional effort.
    - Accept the canonical input `/delegate <route> [effort=<level>] "<prompt>"`. Recognize at most one unquoted `effort=...` token between the route and prompt, remove it before building argv, and preserve the quoted prompt unchanged. Reject duplicate or empty effort options; treat `effort=...` inside the prompt as prompt text.
    - Keep effort separate from the model id. An explicit user effort wins; otherwise use the effort selected by the recommendation path below. If neither resolves an effort, omit its argv and preserve the CLI default — except on a route that encodes effort in the model id, which has no such default, so resolve a level there before naming the model.

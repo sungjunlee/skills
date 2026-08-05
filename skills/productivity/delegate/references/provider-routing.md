@@ -1,78 +1,71 @@
 # Provider routing
 
-모델 하나가 여러 provider 경로로 제공될 때, 어느 경로로 보낼지 결정하는 참조.
-`cli-invocations.md`가 "CLI를 어떻게 부르는가"라면, 이 문서는 "**같은 모델이라면 어느 provider를 쓸 것인가**".
+Reference for choosing which provider route to use when one model is reachable through multiple providers.
+If `cli-invocations.md` is "how to invoke a CLI", this document is "**which provider to use for the same model**".
 
-> 상태 스냅샷: 2026-08-05. 인증 상태는 수시로 바뀐다 — dispatch 전에 각 CLI의 인증을 가볍게 재확인한다.
-> 모델 존재 여부는 이 문서의 행렬이 아니라 **실제 CLI 모델 목록**이 우선이다 (`opencode models`, `pi --list-models`, `agent models`). 이 행렬은 확인 시점의 스냅샷일 뿐이다.
+This file intentionally contains **no user-specific state** (no subscriptions, balances, expiry dates, or "which CLI is connected to which provider"). Those live in the operator's own routing/ops document. Everything here is general enough to reuse on any machine.
 
-## 1. CLI 성격 분류
+> Model existence and reachable routes are decided by the **live CLI model lists** (`opencode models`, `pi --list-models`, `agent models`, `cline auth`) — never by a static table. A model may appear in multiple providers; check the actual lists at dispatch time.
 
-### 단일 provider (경로 고정 — 선택지 없음)
+## 1. CLI classification
 
-| CLI | 고정 provider | 인증 방식 | 모델 |
+### Single-provider (fixed route — no choice)
+
+| CLI | Fixed provider | Auth | Models |
 |---|---|---|---|
 | `codex/*` | OpenAI (ChatGPT OAuth) | `auth_mode: chatgpt` | gpt-5.6-sol / terra / luna |
 | `claude/*` | Anthropic (claude.ai) | firstParty OAuth | claude-fable-5 / opus-5 / sonnet-5 |
-| `reasonix/*` | DeepSeek 본체 API | DEEPSEEK_API_KEY | deepseek-v4-* |
-| `cursor/*` | Cursor/xAI (Grok 계열) | Cursor OAuth | cursor-grok-4.5-* |
-| `cline-pass/*` | Cline Pass (고정) | cline-pass provider | glm-5.2 등 |
+| `reasonix/*` | DeepSeek first-party API | DEEPSEEK_API_KEY | deepseek-v4-* |
 
-단일 provider CLI는 route 선택이 곧 provider 선택이다. `codex`를 고르면 OpenAI, `claude`를 고르면 Anthropic, `reasonix`를 고르면 DeepSeek 본체, `cursor`를 고르면 Cursor/xAI, `cline-pass`를 고르면 Cline Pass다.
+For a single-provider CLI, choosing the route IS choosing the provider: `codex` → OpenAI, `claude` → Anthropic, `reasonix` → DeepSeek first-party.
 
-### 다중 provider (provider 지정이 의미 있음)
+### Subscription-bounded multi-model (one provider auth, many models)
 
-| CLI | 현재 인증된 provider | 인증 방식 |
-|---|---|---|
-| `opencode/*` | `opencode-go` (Go 구독), `opencode` (무료 모델) | api key (auth.json) |
-| `pi/*` | `opencode-go` (api_key), `alibaba-plan` (OAuth, 2027-07-21 만료) | auth.json |
-
-`opencode`와 `pi`는 provider를 명시적으로 지정할 수 있다 (`opencode-go/deepseek-v4-flash`, `pi --provider alibaba-plan ...`).
-
-## 2. 모델 × route 매트릭스
-
-같은 모델이 어느 경로로 갈 수 있는지. **굵은 경로 = 기본 추천**. 존재 여부는 dispatch 전 실제 모델 목록으로 재확인한다.
-
-| 모델 | 가능한 route | 쿼터 성격 | 리스크/비용 메모 |
+| CLI | Provider/billing | Auth | Models |
 |---|---|---|---|
-| `deepseek-v4-flash` | **`opencode-go`** · `pi/alibaba-plan` · `opencode`(free) · `reasonix`(본체) | 구독(free 포함) vs 선불 | 본체는 학습 리스크 + 피크 2배 → 기본은 구독제로 |
-| `deepseek-v4-pro` | **`opencode-go`** · `pi/alibaba-plan` · `reasonix`(본체) | 구독 vs 선불 | 같은 이유 |
-| `glm-5.2` | **`opencode-go`** · `pi/alibaba-plan` · `opencode` · `cline-pass` | 구독 | 장기 코딩/추론. opencode/cline-pass 경로는 README 예시에도 있음 |
-| `qwen3.7-max` / `qwen3.8-max` | **`pi/alibaba-plan`** · `opencode-go` | 구독 (Alibaba Token Plan) | 오프피크 50% 할인 (KST 23:00–09:00) → 야간 배치 우선. catalog엔 qwen3.8-max만 서술 (qwen3.7-max는 pi 목록엔 있으나 catalog 미서술) |
-| `gpt-5.6-luna` | **`codex`** · `opencode-go` | Pro 구독 vs Go 구독 | codex 0%일 때 opencode-go 폴백 |
-| `grok-4.5` | **`cursor/*`** (xAI 인수 후) · `opencode-go` | 구독 | tool-heavy 작업 |
-| `kimi-k3` / `kimi-k2.7-code` | **`opencode-go`** | Go 구독 | kimi-k2.7-code는 catalog에서 retired됐지만 opencode-go 목록엔 여전히 존재 (dispatch 전 재확인) |
-| `mimo-v2.5` | **`opencode-go`** · `opencode`(free) | Go 구독 | 멀티모달 전용 (텍스트는 deepseek가 우위) |
-| `mimo-v2.5-pro` | `opencode-go` | Go 구독 | catalog에서 pro는 평가 제외 (AA 42, 느림) — 기본 추천 아님 |
-| `minimax-m3` | **`opencode-go`** | Go 구독 | 장문/멀티모달 |
-| `hy3` | **`opencode-go`** | Go 구독 | 저환각. pi/openrouter 경로는 인증 없음 (2026-08-05) |
-| `claude-*` | `claude/*` 단일 | Max 구독 (회사 지원) | 경로 고정 |
-| `gpt-5.6-sol/terra` | `codex/*` 단일 | Pro 구독 | 경로 고정 |
+| `cursor/*` (agent CLI) | Cursor subscription | Cursor OAuth | many families under the cursor plan: cursor-grok-4.5-*, gpt-5.6-sol-*, claude-opus/fable/sonnet-*-*, kimi-k3-*, composer-2.5-*, gpt-5.x-* |
+| `cline/*` | configurable provider; `cline-pass` is one provider id among many | per-provider (`cline auth`: manual key, Azure, base URL) | varies by provider; cline-pass serves glm-5.2 etc. |
 
-## 3. 선택 규칙 (우선순위)
+- `cursor/*` is one subscription (Cursor) that exposes many model families; the route's model id selects the family. Billing is fixed to Cursor, but the model set is broad.
+- `cline/*` is genuinely multi-provider: `-P, --provider <id>` switches provider (default `cline`), `cline auth` adds/authenticates them (manual key, Azure, base URL). `cline-pass` is a provider id used for the Cline Pass quota — not a fixed provider of the whole CLI.
 
-같은 모델이 여러 경로에 있을 때:
+### Multi-provider (provider selection matters)
 
-1. **단일 provider 모델** → 그 경로 그대로. 고민 생략.
-2. **학습 리스크 회피** — 민감/독점 코드는 `reasonix`(DeepSeek 본체, 학습됨)를 피하고 구독제(OpenCode Go, Alibaba)로. 학습에 동의한 일반 작업만 본체 사용.
-3. **쿼터 소진 전략** — 선불 잔액(DeepSeek/OpenRouter)이 있으면 그걸 우선 소진, 구독(Go/Alibaba)은 상시 유지분으로.
-4. **오프피크 할인** — Alibaba Token Plan은 KST 23:00–09:00 50% 할인 → 지연 가능한 무거운 작업은 이 창에.
-5. **피크 요금 회피** — DeepSeek 본체는 KST 10:00–13:00, 15:00–19:00 피크 2배 → 이 시간엔 구독제로.
-6. **codex 0% 대비** — codex 주간 쿼터가 0%면 `gpt-5.6-luna`는 `opencode-go`로 폴백 가능.
+| CLI | Shape | Auth |
+|---|---|---|
+| `opencode/*` | provider-scoped model ids (`opencode-go/...`, `opencode/...` free, or BYOK providers) | api key(s) in auth.json |
+| `pi/*` | provider-scoped (`pi --provider <id>`, e.g. alibaba-plan, opencode-go) | api keys / OAuth in auth.json |
 
-결정 순서: 리스크 → 쿼터 소진 → 비용(피크/할인) → 성능. 사용자가 명시한 provider가 있으면 그게 최우선. 이 문서의 굵은 기본 추천은 사용자가 provider를 지정하지 않았을 때의 기본값이다 — `cli-invocations.md`에서 "ask the user" 조건이 발동하는 family들(glm/deepseek/kimi/minimax/mimo/hy3/qwen)도 이 기본 추천으로 바로 진행하고, 사용자가 provider를 지정했으면 그 지정이 최우선이다.
+`opencode` and `pi` name a provider explicitly (`opencode-go/deepseek-v4-flash`, `pi --provider alibaba-plan ...`). Which providers are actually connected is operator state, not a property of these CLIs.
 
-## 4. 인증 상태 스냅샷 (2026-08-05)
+## 2. Route discovery, not a static matrix
 
-| CLI/provider | 상태 |
-|---|---|
-| codex (ChatGPT) | ✅ 로그인 |
-| claude (claude.ai) | ✅ 로그인 (max) |
-| cursor (agent CLI) | ✅ 로그인 |
-| opencode-go | ✅ key 있음 |
-| pi/alibaba-plan | ✅ OAuth (2027-07-21까지) |
-| pi/nous-portal | ⚠️ 카탈로그 노출, 인증 확인 필요 |
-| reasonix (DeepSeek) | ✅ 키 있음 (심링크) |
-| openrouter | ❌ Hermes .env에 없음 — OpenRouter 모델은 현재 미경유 (pi/openrouter 인증도 없음) |
+Do not maintain a model → route table here. Instead, at dispatch time:
 
-> 참고: `model-catalog.md`의 evidence-backed 기본값은 모델 *성능* 기준이고, 이 문서는 *경로 선택* 기준이다. 성능과 경로를 함께 보려면 두 문서를 같이 읽는다. catalog에서 retired/미서술된 모델이 실제 CLI 목록엔 존재할 수 있으므로, dispatch 직전 실제 목록을 최종 기준으로 삼는다.
+1. Resolve the model/family home route from `cli-invocations.md`.
+2. For multi-provider CLIs, list the live models (`opencode models [provider]`, `pi --list-models`, `agent models`) and see which providers actually expose the model.
+3. Choose among the reachable providers using §3 rules and the operator's own routing document (subscriptions, balances, expiry, quotas).
+
+A static matrix rots: subscriptions change, providers drop models, quotas reset. The live list is the only authority.
+
+## 3. Selection rules (priority)
+
+When the same model exists on multiple routes:
+
+1. **Single-provider models** → use that route. No deliberation.
+2. **Avoid training risk** — for sensitive/proprietary code, avoid first-party APIs that train on input (e.g. some providers' first-party routes) and prefer subscriptions or BYOK routes that do not. Use training-capable first-party only for work where training is acceptable.
+3. **Quota burn strategy** — burn prepaid balances first; keep subscriptions as the always-on pool. Exact balances live in the operator's routing document.
+4. **Off-peak discounts** — if a provider offers off-peak discounts, defer heavy batchable work to that window.
+5. **Peak-rate avoidance** — if a first-party API is more expensive during peak hours, use subscriptions in those hours.
+6. **Quota-exhausted fallback** — when a preferred route is at 0%, fall back to another route that exposes the same model.
+7. **Family-first, then billing** — for families reachable in multiple subscriptions, prefer the native CLI (e.g. `claude/*` for claude models, `codex/*` for gpt-5.6) for full effort control; use a bundled subscription (e.g. `cursor/*`) for 1M-token variants or when that subscription has spare quota. An explicit provider or route named by the user always wins.
+
+Decision order: risk → explicit user route → quota burn → cost (peak/discount) → capability.
+
+## 4. Operator state lives elsewhere
+
+- Subscriptions, prices, expiry, current balances → the operator's own routing/ops document.
+- Auth snapshot (which CLI is logged in, which providers have keys) → check live before dispatch, or read the operator's doc.
+- Model capability/effort hints → `model-catalog.md` (evidence-backed defaults) + `routing-guide.md`.
+
+> Note: `model-catalog.md`'s evidence-backed defaults are about model *capability*; this document is about *route selection*. Read both together for capability + route.

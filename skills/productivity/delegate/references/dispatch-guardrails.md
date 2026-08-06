@@ -40,7 +40,7 @@ A dispatch either returns executor output or reports one of these. None of them 
 | `dispatch_unbounded` | no mechanism can enforce the deadline, before launch |
 | `dispatch_launch_failure` | the process never started — binary missing, not executable, argv rejected |
 | `dispatch_timeout` | the deadline elapsed |
-| `dispatch_cli_error` | the process exited nonzero and it was not a timeout |
+| `dispatch_cli_error` | the process exited nonzero, or was terminated on a definitive provider error, and it was not a timeout |
 | `dispatch_empty_output` | the process exited zero and both the extracted output and raw stdout are empty |
 
 Every report names the provider route, the resolved model and effort, elapsed time, and the retained stderr tail — on the recommendation path the route alone does not say what ran or what it cost. `dispatch_timeout` adds the deadline, the last activity event type and timestamp, and whether termination was graceful, forced, or incomplete.

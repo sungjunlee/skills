@@ -24,7 +24,7 @@
       "match_models": ["grok-4.5"],
       "availability": ["opencode", "--version"],
       "list_models": ["opencode", "models"],
-      "dispatch": ["opencode", "run", "--auto", "-m", "opencode-go/{model}"],
+      "dispatch": ["opencode", "run", "--auto", "--print-logs", "--log-level", "ERROR", "-m", "opencode-go/{model}"],
       "effort_argv": ["--variant", "{effort}"],
       "supported_efforts": null
     }

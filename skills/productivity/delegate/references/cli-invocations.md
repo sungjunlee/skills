@@ -28,7 +28,7 @@ Append or translate effort only when the resolved profile contains an explicit o
 
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|
-| `opencode/*`, `opencode-go/*` | `opencode run --auto -m <model> <prompt>` | `--variant <effort>` (provider-specific) | `DEVNULL` | `opencode models [provider]` |
+| `opencode/*`, `opencode-go/*` | `opencode run --auto --print-logs --log-level ERROR -m <model> <prompt>` | `--variant <effort>` (provider-specific) | `DEVNULL` | `opencode models [provider]` |
 | `claude/*` | `claude -p --permission-mode auto --model <model> <prompt>` | `--effort <low\|medium\|high\|xhigh\|max>` | `DEVNULL` | — (use a full id from current docs, or a latest-family alias only when the user asks for latest) |
 | `codex/*` | `codex exec --dangerously-bypass-approvals-and-sandbox -m <model> <prompt>` | argv entries `-c` + `model_reasoning_effort="<effort>"` (model-specific) | `DEVNULL` | — (check `~/.codex/config.toml` and current docs) |
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `--thinking <off\|minimal\|low\|medium\|high\|xhigh\|max>` | `DEVNULL` | `pi --list-models [search]` |
@@ -73,7 +73,7 @@ appropriate only for an explicit latest-Opus request.
 
 The prompt is already in argv, so connect stdin to DEVNULL for every current route. In a process API, set the child stdin to DEVNULL. Under rule 2, redirect with `< /dev/null` and never pass the redirect as an argv token. Add a future stdin-consuming route as an explicit exception instead of inheriting an open pipe.
 
-For the OpenCode routes, `--auto` has the same trust implications as other non-interactive permission bypass flags.
+For the OpenCode routes, `--auto` has the same trust implications as other non-interactive permission bypass flags. The two log flags are not optional either: without them a fatal provider error prints nothing, the run stays silent as if healthy, and the failure only surfaces as a spent deadline. They leave stdout clean, so extraction is unaffected.
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
 

@@ -15,6 +15,14 @@ Apply these rules before every provider run.
 - Apply a startup or inactivity deadline only when the selected output mode documents an initial or progress event. Record the exact event type that resets the timer before launch.
 - Otherwise rely on the hard deadline. Do not infer progress from file changes because the delegated task may be read-only.
 
+## Surface fatal errors early
+
+A CLI can report a fatal provider error — quota, auth, billing — and keep running, so waiting for exit turns a known failure into a spent deadline. Observed 2026-08-06 with exhausted quotas: codex exited nonzero within seconds; pi printed `429 … quota … reset at <UTC>` and kept running; opencode printed nothing at its default log level and kept running, leaving an exhausted quota indistinguishable from a healthy silent run.
+
+- Treat a definitive provider error on stderr as terminal. Terminate at once and report `dispatch_cli_error` with that line and any reset time it names, rather than waiting for the process to exit or for the deadline.
+- Prefer a route flag that surfaces such errors over discovering them by timeout. `opencode run` needs `--print-logs --log-level ERROR`, which surfaces quota exhaustion about 36 seconds in, after the CLI's internal retries.
+- Send a bounded canary (≤90 s, `Reply with exactly: OK`) only for a route that stays silent and exposes no error channel. A silent canary condemns the route, not the model.
+
 ## Stop and report
 
 1. Drain stdout and stderr concurrently while the process runs. Retain only their final 4 KiB in separate fixed-size failure ring buffers; stream or spool success output needed for extraction instead of accumulating either stream in memory.

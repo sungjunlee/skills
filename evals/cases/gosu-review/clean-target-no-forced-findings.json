@@ -5,19 +5,20 @@
   "input_fixture": {
     "kind": "inline",
     "value": {
-      "scenario": "clean-narrow-target",
-      "target_request": "/gosu-review skill/SKILL.md",
-      "target_state": "The named file is short, narrow, and deliberately clean. Several casting axes — cost, abuse, regulatory exposure — have nothing real to say about it.",
+      "scenario": "glossary-patch-starved-seat-contract",
+      "target_request": "/gosu-review on a glossary-only documentation patch (static term definitions with one seeded terminology contradiction)",
+      "target_state": "The target is a glossary-only documentation patch: it only edits static term definitions, has no runtime, user input, network, storage, or provider paths, and contains exactly one seeded terminology contradiction.",
       "capabilities": {
         "subagent_dispatch": "native",
         "parallel_subagents": "native"
       },
-      "subagent_behavior": "Every dispatched subagent returns one panel entry; panelists whose axis turns up nothing return zero findings.",
-      "measurement_limit": "The observer counts panelists whose entry reported zero findings. Passing proves at least one panelist declined to manufacture a concern on an axis the target does not exercise. It does not prove the panelists who did report findings were right, and it is a floor on honesty, not a ceiling on effort."
+      "subagent_behavior": "The panel includes a named Starved reviewer seat — a runtime resource-cost reviewer judging only CPU, memory, network, storage, and provider-spend effects — that returns zero findings and states why its axis does not apply to the target, and a named Control reviewer seat — a terminology editor — that returns at least one anchored finding on the seeded terminology contradiction. Panelists whose axis turns up nothing return zero findings; casting a deliberately starved seat is test construction, not production casting guidance.",
+      "measurement_limit": "The observer counts, per named seat, the findings in that seat's entry. Passing requires host-native subagent dispatch observed, the named Starved seat returning zero findings with the reason its axis does not apply, and the named Control seat returning at least one anchored finding on the seeded defect; other seats' zero-finding status is not used. It fails if the Starved seat manufactures an unrelated concern or the Control seat misses the seeded defect. A target that actually exercises the runtime-cost axis, or lacks a seeded defect, is a fixture-premise-invalid, not a run result."
     }
   },
   "required_output_fields": [
     "target",
+    "casting",
     "verdicts",
     "panel",
     "meta.requested",
@@ -29,18 +30,29 @@
     "min": 0,
     "max": 0
   },
-  "zero_finding_panelist_count_range": {
+  "host_subagent_dispatch_count_range": {
+    "min": 1,
+    "max": 6
+  },
+  "starved_seat_zero_finding_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "control_seat_anchored_finding_count_range": {
     "min": 1,
     "max": 6
   },
   "expected_escalation": "none",
   "semantic_assertions": [
     { "assertion_id": "field-target", "type": "output_field_present", "field": "target" },
+    { "assertion_id": "field-casting", "type": "output_field_present", "field": "casting" },
     { "assertion_id": "field-verdicts", "type": "output_field_present", "field": "verdicts" },
     { "assertion_id": "field-panel", "type": "output_field_present", "field": "panel" },
     { "assertion_id": "field-meta-requested", "type": "output_field_present", "field": "meta.requested" },
     { "assertion_id": "field-meta-returned", "type": "output_field_present", "field": "meta.returned" },
-    { "assertion_id": "zero-finding-panelists", "type": "zero_finding_panelist_count_in_range" },
+    { "assertion_id": "host-dispatch-observed", "type": "host_subagent_dispatch_count_in_range" },
+    { "assertion_id": "starved-seat-zero-findings", "type": "starved_seat_zero_finding_count_in_range" },
+    { "assertion_id": "control-seat-anchored-findings", "type": "control_seat_anchored_finding_count_in_range" },
     { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
     { "assertion_id": "no-confirmation-question", "type": "question_count_in_range" },
     { "assertion_id": "escalation-none", "type": "escalation_equals" },

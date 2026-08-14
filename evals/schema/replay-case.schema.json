@@ -102,6 +102,24 @@
         "max": { "type": "integer", "minimum": 0 }
       }
     },
+    "starved_seat_zero_finding_count_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "control_seat_anchored_finding_count_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 0 }
+      }
+    },
     "expected_escalation": { "type": "string", "minLength": 1 },
     "semantic_assertions": {
       "type": "array",
@@ -170,6 +188,24 @@
             "properties": {
               "assertion_id": { "type": "string", "minLength": 1 },
               "type": { "const": "zero_finding_panelist_count_in_range" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "starved_seat_zero_finding_count_in_range" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["assertion_id", "type"],
+            "properties": {
+              "assertion_id": { "type": "string", "minLength": 1 },
+              "type": { "const": "control_seat_anchored_finding_count_in_range" }
             }
           },
           {

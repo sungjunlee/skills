@@ -92,6 +92,18 @@
         { "type": "null" }
       ]
     },
+    "observed_starved_seat_zero_finding_count": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "null" }
+      ]
+    },
+    "observed_control_seat_anchored_finding_count": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "null" }
+      ]
+    },
     "observed_escalation": {
       "oneOf": [
         { "type": "string", "minLength": 1 },

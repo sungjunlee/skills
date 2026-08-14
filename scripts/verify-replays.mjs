@@ -46,6 +46,8 @@ function validateCaseContract(replayCase) {
     "host_subagent_dispatch_count_range",
     "evidence_citation_count_range",
     "zero_finding_panelist_count_range",
+    "starved_seat_zero_finding_count_range",
+    "control_seat_anchored_finding_count_range",
   ];
   for (const name of optionalRanges) {
     const range = replayCase[name];
@@ -93,6 +95,14 @@ function validateCaseContract(replayCase) {
     [
       "zero_finding_panelist_count_in_range",
       replayCase.zero_finding_panelist_count_range !== undefined,
+    ],
+    [
+      "starved_seat_zero_finding_count_in_range",
+      replayCase.starved_seat_zero_finding_count_range !== undefined,
+    ],
+    [
+      "control_seat_anchored_finding_count_in_range",
+      replayCase.control_seat_anchored_finding_count_range !== undefined,
     ],
     ["escalation_equals", true],
   ];
@@ -156,6 +166,16 @@ function assertionObservation(assertion, replayCase, result) {
       return countInRange(
         result.observed_zero_finding_panelist_count,
         replayCase.zero_finding_panelist_count_range,
+      );
+    case "starved_seat_zero_finding_count_in_range":
+      return countInRange(
+        result.observed_starved_seat_zero_finding_count,
+        replayCase.starved_seat_zero_finding_count_range,
+      );
+    case "control_seat_anchored_finding_count_in_range":
+      return countInRange(
+        result.observed_control_seat_anchored_finding_count,
+        replayCase.control_seat_anchored_finding_count_range,
       );
     case "escalation_equals":
       return {

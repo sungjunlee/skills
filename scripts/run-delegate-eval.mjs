@@ -106,28 +106,28 @@ function buildPrompt(evalCase) {
   return `Execute the task described in the repository file ${fixture.value}.`;
 }
 
-function fillTokens(tokens, profile) {
-  return tokens.map((token) =>
-    token.replaceAll("{model}", profile.model).replaceAll("{effort}", profile.effort ?? ""),
-  );
-}
-
-function buildArgv(executor, profile) {
-  if (profile.effort === null && executor.dispatch.some((token) => token.includes("{effort}"))) {
+function fillTokens(tokens, executor, profile) {
+  if (profile.effort === null && tokens.some((token) => token.includes("{effort}"))) {
     throw new Error(
       `${executor.executor_id} encodes effort in the model id, so profile ${profile.profile_id} cannot omit it`,
     );
   }
-  const argv = fillTokens(executor.dispatch, profile);
+  return tokens.map((token) =>
+    token.replaceAll("{model}", profile.model).replaceAll("{effort}", profile.effort),
+  );
+}
+
+function buildArgv(executor, profile) {
+  const argv = fillTokens(executor.dispatch, executor, profile);
   if (profile.effort !== null && executor.effort_argv !== null) {
-    argv.push(...fillTokens(executor.effort_argv, profile));
+    argv.push(...fillTokens(executor.effort_argv, executor, profile));
   }
   return argv;
 }
 
 function resolvedModelId(executor, profile) {
   const token = executor.dispatch.find((entry) => entry.includes("{model}"));
-  return token === undefined ? profile.model : fillTokens([token], profile)[0];
+  return token === undefined ? profile.model : fillTokens([token], executor, profile)[0];
 }
 
 function probe(argv) {

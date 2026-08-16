@@ -45,20 +45,14 @@ evals/delegate/
   skill's dispatch**. It compares model-effort profiles, so it holds one
   harness steady across observation dates rather than following the skill's
   routing — see the sandboxing note under Runner. The Grok lane changed
-  harness with the model: `grok-4.5` ran on `opencode-go/grok-4.5` while the
-  skill routed it to `cursor/*`, so a promotion from those results must record
-  that its evidence came from another harness; `grok-4.6` has no `opencode-go`
-  route at all (checked 2026-08-16) and runs on the `cursor/*` home route
-  instead. Comparing Grok generations therefore compares two harnesses as well
-  as two models. A result's `executor` field, never the skill's default, says
-  what ran.
+  harness with the model: `grok-4.5` runs on `opencode-go`, which serves no
+  `grok-4.6` (checked 2026-08-16), so `grok-4.6` runs on the `cursor/*` home
+  route — comparing Grok generations compares two harnesses as well as two
+  models. A result's `executor` field, never the skill's default, says what
+  ran.
 - Where a route encodes effort in the model id, as `cursor/*` does, the
   executor's `dispatch` carries `{effort}` and its `effort_argv` is `null`;
-  such a profile may not omit effort, since there is no id to build without
-  it.
-- A retired model's candidate profile stays in its case so committed results
-  keep resolving. The successor enters under its own version-explicit
-  `profile_id` and starts unevidenced — evidence never transfers.
+  such a profile may not omit effort.
 - `scripts/verify-delegate-evals.mjs` (part of `npm test` and CI) validates
   schemas, case/result pairing, work-shape coverage, the executor registry,
   and the fixtures — all without provider credentials. Paid provider calls

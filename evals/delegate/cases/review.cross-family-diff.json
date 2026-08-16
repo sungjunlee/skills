@@ -53,7 +53,7 @@
       "effort": "high"
     }
   ],
-  "pairing_rationale": "This shape requires reviewers from outside the author's GPT family. Fable high versus Grok high preserves the premium/value comparison, now carried by grok-4.6 on the cursor lane: 4.5's two strong reports and one empty-output run belong to that model alone, so the retired grok-4.5 entry stays only to keep its committed results paired. Opus 5 medium versus high tests Anthropic's claim that review accuracy holds at lower effort and prevents an older Claude profile from being transferred to the successor without evidence.",
+  "pairing_rationale": "This shape requires reviewers from outside the author's GPT family. Fable high versus Grok high preserves the premium/value comparison, now on grok-4.6; the grok-4.5 entry stays so its committed results keep resolving. Opus 5 medium versus high tests Anthropic's claim that review accuracy holds at lower effort and prevents an older Claude profile from being transferred to the successor without evidence.",
   "privacy": {
     "sensitivity": "synthetic",
     "approved_routes": [],

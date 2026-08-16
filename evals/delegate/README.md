@@ -44,11 +44,21 @@ evals/delegate/
 - `executors.json` is the runner's **controlled transport, not a replay of the
   skill's dispatch**. It compares model-effort profiles, so it holds one
   harness steady across observation dates rather than following the skill's
-  routing — see the sandboxing note under Runner. `grok-4.5` is the widest
-  gap: the skill routes it to `cursor/*` while the runner keeps
-  `opencode-go/grok-4.5`, so a Grok promotion from these results must record
-  that its evidence came from another harness. A result's `executor` field,
-  never the skill's default, says what ran.
+  routing — see the sandboxing note under Runner. The Grok lane changed
+  harness with the model: `grok-4.5` ran on `opencode-go/grok-4.5` while the
+  skill routed it to `cursor/*`, so a promotion from those results must record
+  that its evidence came from another harness; `grok-4.6` has no `opencode-go`
+  route at all (checked 2026-08-16) and runs on the `cursor/*` home route
+  instead. Comparing Grok generations therefore compares two harnesses as well
+  as two models. A result's `executor` field, never the skill's default, says
+  what ran.
+- Where a route encodes effort in the model id, as `cursor/*` does, the
+  executor's `dispatch` carries `{effort}` and its `effort_argv` is `null`;
+  such a profile may not omit effort, since there is no id to build without
+  it.
+- A retired model's candidate profile stays in its case so committed results
+  keep resolving. The successor enters under its own version-explicit
+  `profile_id` and starts unevidenced — evidence never transfers.
 - `scripts/verify-delegate-evals.mjs` (part of `npm test` and CI) validates
   schemas, case/result pairing, work-shape coverage, the executor registry,
   and the fixtures — all without provider credentials. Paid provider calls
@@ -76,7 +86,8 @@ Real runs write draft results plus captured stdout/stderr to `drafts/`
 checks, fills the measurements, and only then promotes a finished result into
 `results/<observation_date>/`. `internal`/`private` cases refuse dispatch on
 routes outside their `approved_routes`. Executors run sandboxed (codex uses
-`--sandbox workspace-write`, not the delegate skill's bypass flags). A
+`--sandbox workspace-write` and cursor `--sandbox enabled`, never the delegate
+skill's `--yolo`-style bypass flags). A
 timed-out run is reported as `failed` (`dispatch_timeout`) and is never
 retried automatically.
 

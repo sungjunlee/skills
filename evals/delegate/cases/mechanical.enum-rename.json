@@ -28,9 +28,11 @@
   ],
   "candidate_profiles": [
     { "profile_id": "grok-medium", "model": "grok-4.5", "effort": "medium" },
-    { "profile_id": "grok-high", "model": "grok-4.5", "effort": "high" }
+    { "profile_id": "grok-high", "model": "grok-4.5", "effort": "high" },
+    { "profile_id": "grok46-medium", "model": "grok-4.6", "effort": "medium" },
+    { "profile_id": "grok46-high", "model": "grok-4.6", "effort": "high" }
   ],
-  "pairing_rationale": "Calibrates the Grok medium-versus-high boundary on its cheapest terrain: with strong tests catching every mistake, medium should match high on outcome, making any latency and cost gap the deciding signal.",
+  "pairing_rationale": "Calibrates the Grok medium-versus-high boundary on its cheapest terrain: with strong tests catching every mistake, medium should match high on outcome, making any latency and cost gap the deciding signal. The grok-4.6 pair reruns that boundary on the successor, which starts unevidenced because effort evidence never transfers across models; the grok-4.5 pair is retired from dispatch and kept only so its 2026-07-22/23 results stay paired to this case.",
   "privacy": {
     "sensitivity": "synthetic",
     "approved_routes": []

@@ -48,7 +48,7 @@ An input that names a model or family without a route resolves to that family's 
 |---|---|---|
 | `gpt-5.6-*` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
 | `claude-*` | `claude/*` | the vendor's own CLI, and the only route exposing all five effort levels |
-| `grok-4.5` | `cursor/cursor-grok-4.5-<effort>` | the vendor's own CLI since Cursor was acquired by xAI |
+| `grok-4.6` | `cursor/cursor-grok-4.6-<effort>` | the vendor's own CLI since Cursor was acquired by xAI |
 
 A family absent from the table has no default — `glm-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` each run on several installed routes, so ask which CLI to use.
 

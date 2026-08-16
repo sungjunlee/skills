@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-08-04. Treat as stale after 30 days.
+Last checked: 2026-08-16. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
@@ -14,7 +14,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `claude-fable-5` | Long-running, highly ambitious work that earns frontier spend. | `high` by default; `xhigh` for the most capability-sensitive or long-running autonomous work; step down to `medium` only when cost or interactivity matters more than peak quality | frontier |
 | `claude-opus-5` | Complex agentic coding, long-horizon execution, code review, vision-heavy implementation, or document work when Fable-tier spend is not justified. | `high` by default; `xhigh` for demanding coding and agentic work; reserve `max` for unconstrained frontier problems; re-sweep `low` and `medium` rather than inheriting an older Opus setting | premium |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
-| `grok-4.5` | Tool-heavy coding, long-context knowledge work, or an independent frontier-family review. | `high` for difficult coding and multi-step agent loops; `medium` when latency matters more than maximum reasoning depth | value frontier |
+| `grok-4.6` | Long-running agent loops, tool-heavy coding, and 500K-context knowledge work, or an independent frontier-family review. Released 2026-08-12 as a post-training refresh of 4.5 — longer trajectories with more self-checking, while public coding benchmarks still trail the strongest GPT-5.6 profile, so choose it for persistence and breadth rather than peak code accuracy. | `high` is the vendor default; `xhigh` is new in 4.6 for extended reasoning and long agent trajectories; `medium` when latency matters more than reasoning depth | value frontier; $2/$6 per 1M in/out below 200K prompt tokens, doubling to $4/$12 above it — a real cliff at this window size |
 | `kimi-k3` | Long-horizon coding, tool-heavy knowledge work, or multimodal implementation where completion quality matters more than latency. | route default; launch API uses `max` thinking, with `low` and `high` announced for later | frontier; high output-token and latency risk |
 | `qwen3.8-max` | Complex reasoning and coding through Alibaba's Token Plan; GA on 2026-08-03, replacing the preview. Off-peak Credits run 50% off daily 22:00–08:00 UTC+8 (23:00–09:00 KST), so deferrable work is markedly better value dispatched at night; the vendor may modify the discount. | route default; the thinking toggle (`enable_thinking`) is documented, graded effort behavior is not | subscription |
 
@@ -41,16 +41,19 @@ until contradicted by new local runs.
   also passed both dates and stays a valid alternative.
 - High-blast-radius analysis → Sol `high`; use `xhigh` when register
   depth is the deliverable.
-- Independent cross-family review → Fable `high`; Grok `high` was
-  strong twice but had one empty-output run.
+- Independent cross-family review → Fable `high`. The Grok side of that
+  comparison was `grok-4.5` (strong twice, one empty-output run) and
+  retires with the model — evidence never transfers to a successor, so
+  `grok-4.6` enters this list unevidenced.
 - Mechanical work with strong tests: no default — per-run variance
-  dominates, and both Grok efforts tripped a behavior-preserving trap.
+  dominates, and both `grok-4.5` efforts tripped a behavior-preserving
+  trap.
 
 ## Sources
 
 - [OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
 - [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5](https://www.anthropic.com/claude/fable), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
-- [xAI Grok 4.5](https://docs.x.ai/developers/grok-4-5)
+- [xAI Grok 4.6](https://docs.x.ai/developers/grok-4-6) and [xAI models and pricing](https://docs.x.ai/developers/models)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
 - [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3)
 - [Xiaomi MiMo model releases](https://mimo.mi.com/docs/en-US/updates/model) and [MiMo-V2.5 on OpenRouter](https://openrouter.ai/xiaomi/mimo-v2.5) (price source; route discount included)

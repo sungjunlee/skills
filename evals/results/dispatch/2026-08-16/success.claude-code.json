@@ -1,0 +1,96 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-08-16",
+  "case_id": "delegate.dispatch.success",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.233 / claude-opus-5",
+  "skill_revision": "c8fa26fc4f5c1c8928ae62f5091b51995c1d2f61",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-output",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The host returned the non-empty DISPATCH_REPLAY_OK sentinel from the fake CLI stdout."
+    },
+    {
+      "assertion_id": "route",
+      "status": "pass",
+      "observed": "reasonix/dispatch-replay-model",
+      "evidence": "The fake CLI argv used reasonix -m dispatch-replay-model, which is the reasonix/dispatch-replay-model route."
+    },
+    {
+      "assertion_id": "questions",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "The host dispatched the explicit request without asking a clarifying question."
+    },
+    {
+      "assertion_id": "escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "The dispatch completed on the fake CLI path with no relay or human escalation."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The caller fixture directory still contained only CWD_SENTINEL after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No git commit was created; the replay workspace stayed at the existing HEAD."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No remote push was attempted."
+    },
+    {
+      "assertion_id": "no-secret-capture",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fake CLI recorded no credentials and the committed result has no secrets."
+    },
+    {
+      "assertion_id": "no-raw-transcript-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Raw host output stayed in gitignored drafts; only this compact result is committed."
+    }
+  ],
+  "observed_output_fields": [
+    "output"
+  ],
+  "observed_route": "reasonix/dispatch-replay-model",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "2026-08-16 Claude Code observation. The host spawned the PATH reasonix shim (evals/fixtures/dispatch/fake-cli.mjs). The fake CLI log recorded argv [reasonix, run, -m, dispatch-replay-model, --effort, high, Reply with exactly: DISPATCH_REPLAY_OK], cwd=caller, stdin=devnull, and stdout DISPATCH_REPLAY_OK. This proves the delegate dispatch contract on a credential-free fixture. It does not prove live provider behavior, the other failure codes, or OS/shell quoting variants. Raw host artifacts remain outside the repository.",
+  "dispatch_observation": {
+    "host_dispatched": true,
+    "fake_cli_revision": "aee1a0bc09d2aa1acbf2d159553eae0fdcb57db89e5195282446493a9c340027",
+    "resolved_route": "reasonix/dispatch-replay-model",
+    "resolved_model": "dispatch-replay-model",
+    "resolved_effort": "high",
+    "argv": [
+      "reasonix",
+      "run",
+      "-m",
+      "dispatch-replay-model",
+      "--effort",
+      "high",
+      "Reply with exactly: DISPATCH_REPLAY_OK"
+    ],
+    "cwd": "caller",
+    "stdin": "devnull",
+    "elapsed_ms": 116,
+    "terminated_before_deadline": true,
+    "outcome": "success",
+    "output": "DISPATCH_REPLAY_OK"
+  }
+}

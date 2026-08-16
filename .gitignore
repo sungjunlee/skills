@@ -7,3 +7,7 @@ skills-lock.json
 # Uncurated delegate evaluation runner output; curated evidence is promoted
 # manually into evals/delegate/results/<date>/.
 evals/delegate/drafts/
+
+# Uncurated dispatch-contract replay host output; curated evidence is promoted
+# into evals/results/dispatch/<date>/.
+evals/fixtures/dispatch/drafts/

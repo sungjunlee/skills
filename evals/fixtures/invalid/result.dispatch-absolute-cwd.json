@@ -1,0 +1,38 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-08-16",
+  "case_id": "fixture.dispatch-success",
+  "host": "fixture-host",
+  "host_version": "schema-smoke-v1",
+  "skill_revision": "dispatch-fixture-v1",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-output",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Intentionally invalid result fixture."
+    }
+  ],
+  "observed_output_fields": ["output"],
+  "observed_route": "reasonix/dispatch-replay-model",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Intentionally invalid dispatch observation uses a machine path as cwd.",
+  "dispatch_observation": {
+    "host_dispatched": true,
+    "fake_cli_revision": "fixture",
+    "resolved_route": "reasonix/dispatch-replay-model",
+    "resolved_model": "dispatch-replay-model",
+    "resolved_effort": "high",
+    "argv": ["reasonix", "run"],
+    "cwd": "/tmp/dispatch-replay",
+    "stdin": "devnull",
+    "elapsed_ms": 12,
+    "terminated_before_deadline": true,
+    "outcome": "success",
+    "output": "DISPATCH_REPLAY_OK"
+  }
+}

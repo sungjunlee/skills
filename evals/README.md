@@ -25,6 +25,13 @@ escalation value, and absence of a named side effect. The verifier derives these
 outcomes from the result's observed fields. It does not execute arbitrary
 expressions or compare prose.
 
+Delegate dispatch-contract cases add an optional `dispatch_contract` block on
+the case and a matching `dispatch_observation` on the result. That block is
+the argv/cwd/stdin/outcome evidence for the three credential-free fake-CLI
+replays; it is not a general process-event framework. Paid profile evaluation
+stays in `evals/delegate/`. Re-run a host observation with
+`node scripts/run-dispatch-replay.mjs --host <claude-code|codex> --case <id>`.
+
 `evidence_citation_count_in_range` and `zero_finding_panelist_count_in_range`
 are the depth counters. The first counts findings carrying a concrete anchor —
 a file:line reference, a quotation, or a named observed detail — which is the

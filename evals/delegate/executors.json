@@ -27,6 +27,15 @@
       "dispatch": ["opencode", "run", "--auto", "--print-logs", "--log-level", "ERROR", "-m", "opencode-go/{model}"],
       "effort_argv": ["--variant", "{effort}"],
       "supported_efforts": null
+    },
+    {
+      "executor_id": "cursor",
+      "match_models": ["grok-4.6"],
+      "availability": ["cursor-agent", "--version"],
+      "list_models": ["cursor-agent", "models"],
+      "dispatch": ["cursor-agent", "--print", "--trust", "--sandbox", "enabled", "--model", "cursor-{model}-{effort}"],
+      "effort_argv": null,
+      "supported_efforts": ["low", "medium", "high", "xhigh"]
     }
   ]
 }

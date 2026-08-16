@@ -106,12 +106,28 @@ function buildPrompt(evalCase) {
   return `Execute the task described in the repository file ${fixture.value}.`;
 }
 
+function fillTokens(tokens, executor, profile) {
+  if (profile.effort === null && tokens.some((token) => token.includes("{effort}"))) {
+    throw new Error(
+      `${executor.executor_id} encodes effort in the model id, so profile ${profile.profile_id} cannot omit it`,
+    );
+  }
+  return tokens.map((token) =>
+    token.replaceAll("{model}", profile.model).replaceAll("{effort}", profile.effort),
+  );
+}
+
 function buildArgv(executor, profile) {
-  const argv = executor.dispatch.map((token) => token.replaceAll("{model}", profile.model));
-  if (profile.effort !== null) {
-    argv.push(...executor.effort_argv.map((token) => token.replaceAll("{effort}", profile.effort)));
+  const argv = fillTokens(executor.dispatch, executor, profile);
+  if (profile.effort !== null && executor.effort_argv !== null) {
+    argv.push(...fillTokens(executor.effort_argv, executor, profile));
   }
   return argv;
+}
+
+function resolvedModelId(executor, profile) {
+  const token = executor.dispatch.find((entry) => entry.includes("{model}"));
+  return token === undefined ? profile.model : fillTokens([token], executor, profile)[0];
 }
 
 function probe(argv) {
@@ -124,16 +140,24 @@ function probe(argv) {
   return result.stdout.trim();
 }
 
+function listedIds(listing) {
+  return listing
+    .split("\n")
+    .map((line) => line.trim().split(/\s+/)[0])
+    .filter(Boolean);
+}
+
 function modelListFinding(executor, profile) {
   const listing = probe(executor.list_models);
   if (listing === null) return "model list command failed — model id unverified";
-  const lines = listing.split("\n").map((line) => line.trim());
-  if (lines.includes(profile.model)) return "model id present in live list";
-  const qualified = lines.filter((line) => line.endsWith(`/${profile.model}`));
+  const wanted = resolvedModelId(executor, profile);
+  const ids = listedIds(listing);
+  if (ids.includes(wanted)) return `dispatch id ${wanted} present in live list`;
+  const qualified = ids.filter((id) => id.endsWith(`/${wanted}`));
   if (qualified.length > 0) {
     return `model id served only as ${qualified.join(", ")} — dispatch must use that qualified form`;
   }
-  return "model id NOT in live list — verify before paid runs";
+  return `dispatch id ${wanted} NOT in live list — verify before paid runs`;
 }
 
 function smokeProfile(executor, profile) {

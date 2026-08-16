@@ -38,6 +38,11 @@
       "effort": "high"
     },
     {
+      "profile_id": "grok46-high",
+      "model": "grok-4.6",
+      "effort": "high"
+    },
+    {
       "profile_id": "opus5-medium",
       "model": "claude-opus-5",
       "effort": "medium"
@@ -48,7 +53,7 @@
       "effort": "high"
     }
   ],
-  "pairing_rationale": "This shape requires reviewers from outside the author's GPT family. Fable high versus Grok high preserves the premium/value comparison; Opus 5 medium versus high tests Anthropic's claim that review accuracy holds at lower effort and prevents an older Claude profile from being transferred to the successor without evidence.",
+  "pairing_rationale": "This shape requires reviewers from outside the author's GPT family. fable-high versus grok46-high preserves the premium/value comparison; the grok-4.5 entry stays so its committed results keep resolving. Opus 5 medium versus high tests Anthropic's claim that review accuracy holds at lower effort and prevents an older Claude profile from being transferred to the successor without evidence.",
   "privacy": {
     "sensitivity": "synthetic",
     "approved_routes": [],

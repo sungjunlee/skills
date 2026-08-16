@@ -126,6 +126,54 @@
         ]
       }
     },
-    "evidence_note": { "type": "string", "minLength": 1 }
+    "evidence_note": { "type": "string", "minLength": 1 },
+    "dispatch_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "host_dispatched",
+        "fake_cli_revision",
+        "resolved_route",
+        "resolved_model",
+        "resolved_effort",
+        "argv",
+        "cwd",
+        "stdin",
+        "elapsed_ms",
+        "terminated_before_deadline",
+        "outcome",
+        "output"
+      ],
+      "properties": {
+        "host_dispatched": { "type": "boolean" },
+        "fake_cli_revision": { "type": "string", "minLength": 1 },
+        "resolved_route": {
+          "oneOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+        },
+        "resolved_model": {
+          "oneOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+        },
+        "resolved_effort": {
+          "oneOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+        },
+        "argv": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "cwd": { "enum": ["caller", "other"] },
+        "stdin": { "enum": ["devnull", "piped", "tty", "other"] },
+        "elapsed_ms": { "type": "integer", "minimum": 0 },
+        "terminated_before_deadline": { "type": "boolean" },
+        "outcome": {
+          "oneOf": [
+            { "enum": ["success", "dispatch_empty_output", "dispatch_cli_error"] },
+            { "type": "null" }
+          ]
+        },
+        "output": {
+          "oneOf": [{ "type": "string" }, { "type": "null" }]
+        }
+      }
+    }
   }
 }

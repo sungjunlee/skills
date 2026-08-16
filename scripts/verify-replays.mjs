@@ -124,7 +124,58 @@ function validateCaseContract(replayCase) {
     }
   }
 
+  const dispatch = replayCase.dispatch_contract;
+  if (dispatch) {
+    if (replayCase.expected_route === null) {
+      errors.push("dispatch_contract requires a non-null expected_route");
+    }
+    if (dispatch.expected_outcome === "success" && dispatch.expected_output === null) {
+      errors.push("success dispatch_contract requires a non-null expected_output");
+    }
+    if (dispatch.expected_outcome !== "success" && dispatch.expected_output !== null) {
+      errors.push("failure dispatch_contract expected_output must be null");
+    }
+  }
+
   return errors;
+}
+
+function dispatchDerived(replayCase, result) {
+  const expected = replayCase.dispatch_contract;
+  if (!expected) return { ok: true, failed: [] };
+  const observed = result.dispatch_observation;
+  if (!observed) return { ok: false, failed: ["missing_observation"] };
+
+  const argv = observed.argv ?? [];
+  const prompt = expected.expected_prompt;
+  const checks = [
+    ["host_dispatched", observed.host_dispatched === true],
+    ["route", observed.resolved_route === replayCase.expected_route],
+    ["model", observed.resolved_model === expected.expected_model],
+    ["effort", observed.resolved_effort === expected.expected_effort],
+    ["prompt", argv.length > 0 && argv[argv.length - 1] === prompt && argv.includes(prompt)],
+    ["cwd", observed.cwd === expected.expected_cwd],
+    ["stdin", observed.stdin === expected.expected_stdin],
+    ["outcome", observed.outcome === expected.expected_outcome],
+    [
+      "output",
+      expected.expected_outcome === "success"
+        ? observed.output === expected.expected_output && Boolean(observed.output)
+        : observed.output === null || observed.output === expected.expected_output,
+    ],
+    ["elapsed", Number.isInteger(observed.elapsed_ms) && observed.elapsed_ms >= 0],
+  ];
+  if (expected.expected_outcome === "dispatch_cli_error") {
+    checks.push(["terminated_before_deadline", observed.terminated_before_deadline === true]);
+    checks.push([
+      "elapsed_before_deadline",
+      Number.isInteger(observed.elapsed_ms) && observed.elapsed_ms < expected.deadline_seconds * 1000,
+    ]);
+  }
+  return {
+    ok: checks.every(([, passed]) => passed),
+    failed: checks.filter(([, passed]) => !passed).map(([name]) => name),
+  };
 }
 
 function countInRange(observed, range) {
@@ -216,6 +267,9 @@ function validateReplayPair(replayCase, result) {
         errors.push(`unverified assertion ${JSON.stringify(assertionResult.assertion_id)} must have status unverified and observed null`);
       }
     }
+    if (result.dispatch_observation?.host_dispatched) {
+      errors.push("unverified dispatch result cannot record host_dispatched true");
+    }
     return errors;
   }
 
@@ -242,7 +296,19 @@ function validateReplayPair(replayCase, result) {
     }
   }
 
-  const allPassed = result.assertion_results.every((assertion) => assertion.status === "pass");
+  if (replayCase.dispatch_contract && !result.dispatch_observation) {
+    errors.push("executed dispatch result is missing dispatch_observation");
+  } else if (!replayCase.dispatch_contract && result.dispatch_observation) {
+    errors.push("dispatch_observation is only valid on a dispatch_contract case");
+  }
+
+  const dispatch = dispatchDerived(replayCase, result);
+  if (result.status === "pass" && !dispatch.ok) {
+    errors.push(`pass status requires dispatch contract checks to pass (failed: ${dispatch.failed.join(", ")})`);
+  }
+
+  const allPassed =
+    result.assertion_results.every((assertion) => assertion.status === "pass") && dispatch.ok;
   const expectedOverall = allPassed ? "pass" : "fail";
   if (result.status !== expectedOverall) {
     errors.push(`overall status ${result.status}; assertion results require ${expectedOverall}`);

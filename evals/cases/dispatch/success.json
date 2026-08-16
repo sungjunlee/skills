@@ -1,0 +1,50 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "delegate.dispatch.success",
+  "skill": "productivity/delegate",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "/delegate reasonix/dispatch-replay-model effort=high \"Reply with exactly: DISPATCH_REPLAY_OK\"",
+      "deadline_seconds": 90,
+      "dispatch_target": "PATH reasonix shim to evals/fixtures/dispatch/fake-cli.mjs",
+      "scenario": "success"
+    }
+  },
+  "required_output_fields": ["output"],
+  "expected_route": "reasonix/dispatch-replay-model",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "expected_escalation": "none",
+  "dispatch_contract": {
+    "expected_model": "dispatch-replay-model",
+    "expected_effort": "high",
+    "expected_prompt": "Reply with exactly: DISPATCH_REPLAY_OK",
+    "expected_stdin": "devnull",
+    "expected_cwd": "caller",
+    "expected_outcome": "success",
+    "expected_output": "DISPATCH_REPLAY_OK",
+    "deadline_seconds": 90
+  },
+  "semantic_assertions": [
+    { "assertion_id": "field-output", "type": "output_field_present", "field": "output" },
+    { "assertion_id": "route", "type": "route_equals" },
+    { "assertion_id": "questions", "type": "question_count_in_range" },
+    { "assertion_id": "escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-repository-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" },
+    { "assertion_id": "no-secret-capture", "type": "side_effect_absent", "side_effect": "secret_capture" },
+    { "assertion_id": "no-raw-transcript-write", "type": "side_effect_absent", "side_effect": "raw_transcript_write" }
+  ],
+  "forbidden_side_effects": [
+    "repository_write",
+    "commit",
+    "push",
+    "secret_capture",
+    "raw_transcript_write"
+  ]
+}

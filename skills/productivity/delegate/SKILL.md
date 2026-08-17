@@ -1,6 +1,6 @@
 ---
 name: delegate
-description: Run a prompt with a chosen provider, model, and optional effort in the current directory, then return its output with bounded non-interactive dispatch guardrails. Use for one-shot delegation through an installed CLI such as codex, claude, opencode, pi, cursor, reasonix, or cline-pass.
+description: Run a prompt with a chosen provider, model, and optional effort in the current directory, then return its output with bounded non-interactive dispatch guardrails. Use for one-shot delegation through an installed CLI such as codex, claude, grok, opencode, pi, cursor, reasonix, or cline-pass.
 ---
 
 # delegate

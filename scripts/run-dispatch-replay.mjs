@@ -42,7 +42,7 @@ const HOSTS = {
   },
 };
 
-const BLOCKED_PROVIDERS = ["opencode", "pi", "agent", "cline", "cursor"];
+const BLOCKED_PROVIDERS = ["opencode", "pi", "agent", "grok", "cline", "cursor", "cursor-agent"];
 const PROMPT = "Reply with exactly: DISPATCH_REPLAY_OK";
 const SENTINEL = "DISPATCH_REPLAY_OK";
 const HOST_TIMEOUT_MS = 15 * 60 * 1000;
@@ -94,7 +94,7 @@ function hostPrompt(replayCase) {
     "",
     "Constraints:",
     "- The only allowed child CLI is `reasonix` from PATH. It is a fake fixture in this replay.",
-    "- Do not invoke claude, codex, opencode, pi, cursor, agent, cline, or any networked provider.",
+    "- Do not invoke claude, codex, opencode, pi, grok, cursor, cursor-agent, agent, cline, or any networked provider.",
     "- Build argv per the reasonix row in cli-invocations.md. The quoted prompt is one unchanged argv element and must be last.",
     "- Run the child in this process's current working directory. Connect stdin to DEVNULL.",
     "- Apply dispatch-guardrails.md: bound the child; treat a definitive provider error on stderr as terminal and report dispatch_cli_error immediately; a zero exit with empty extracted and raw stdout is dispatch_empty_output, never an empty answer.",

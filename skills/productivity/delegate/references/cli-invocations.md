@@ -32,7 +32,7 @@ Append or translate effort only when the resolved profile contains an explicit o
 | `claude/*` | `claude -p --permission-mode auto --model <model> <prompt>` | `--effort <low\|medium\|high\|xhigh\|max>` | `DEVNULL` | — (use a full id from current docs, or a latest-family alias only when the user asks for latest) |
 | `codex/*` | `codex exec --dangerously-bypass-approvals-and-sandbox -m <model> <prompt>` | argv entries `-c` + `model_reasoning_effort="<effort>"` (model-specific) | `DEVNULL` | — (check `~/.codex/config.toml` and current docs) |
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `--thinking <off\|minimal\|low\|medium\|high\|xhigh\|max>` | `DEVNULL` | `pi --list-models [search]` |
-| `cursor/*` | `agent --print --yolo --trust --model <model> <prompt>` (binary is `agent`, not `cursor`) | select the matching effort-bearing slug from `agent models`; no separate argv | `DEVNULL` | `agent models` |
+| `cursor/*` | `cursor-agent --print --yolo --trust --model <model> <prompt>` (not `agent`, which is Grok Build) | select the matching effort-bearing slug from `cursor-agent models`; no separate argv | `DEVNULL` | `cursor-agent models` |
 | `grok/*` | `grok --always-approve -m <model> -p <prompt>` (the prompt is `-p`'s value; passed positionally it opens the TUI and fails headless) | `--effort <low\|medium\|high\|xhigh>` | `DEVNULL` | `grok models` |
 | `reasonix/*` | `reasonix run -m <model> <prompt>` | `--effort <low\|medium\|high\|max>` | `DEVNULL` | — (no CLI subcommand) |
 | `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | `--thinking <none\|low\|medium\|high\|xhigh>` | `DEVNULL` | — (no CLI subcommand) |

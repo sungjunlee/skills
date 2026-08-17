@@ -6,9 +6,9 @@ These examples illustrate the routing table in `SKILL.md`. They do not restate i
 
 A vague "we need some kind of notifications" converges on "in-app notification center now, digest email later." The direction is chosen, but the implementation intent (data model, delivery, settings surface) is unsynthesized. Recommend `feature-spec`.
 
-## Needs decomposition -> tracker-neutral decomposition handoff
+## Needs decomposition -> unit boundaries in the Design Handoff, then stop
 
-A large multi-surface feature (auth + billing + admin) already has an adequate source artifact and now needs trackable units. Put those units and their boundaries in the Design Handoff, with no ticket writes, then stop.
+A large multi-surface feature (auth + billing + admin) already has an adequate source artifact and now needs trackable units. Fill Unit boundaries and Dependencies, set Recommended next step to stop, and write no tickets.
 
 ## Settled single unit -> implement or relay
 

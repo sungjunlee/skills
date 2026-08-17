@@ -3,7 +3,9 @@
 Date: 2026-08-17
 
 Planning and implement skills no longer name external products as
-successors. Decomposition emits a tracker-neutral handoff and stops.
+successors. `feature-spec` decomposition emits a tracker-neutral handoff
+and stops. `brainstorming` records unit boundaries in the Design Handoff
+and stops.
 Durable or high-risk work still escalates with the local route label
 `relay`; the skills do not name a next-owner product.
 

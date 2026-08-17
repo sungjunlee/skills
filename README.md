@@ -2,7 +2,7 @@
 
 A small collection of portable agent skills.
 
-These skills are meant to stay compact, composable, and easy to adapt. Each skill should do one useful thing, keep its core workflow in `SKILL.md`, and move only optional supporting material into `references/`.
+These skills are meant to stay compact, composable, and easy to adapt. Each skill should do one useful thing, keep its core workflow in `SKILL.md`, and move only optional supporting material into `references/`. Heavier workflow frameworks live in their own repositories.
 
 ## Skills
 
@@ -69,7 +69,7 @@ These have committed replay and cross-host evidence. They have not been used in 
 
 Turn a vague idea into one selected direction and a compact Design Handoff, then recommend the next owner. Explicit-only and engine-agnostic.
 
-`brainstorming` inspects safely discoverable repository context, asks only decision-changing questions, compares viable approaches, and converges on a Design Handoff. It recommends a successor (`feature-spec`, a tracker-neutral decomposition handoff, `implement`/relay, stop, or a grill capability) as output — it never invokes one, mutates a tracker, or infers capability availability.
+`brainstorming` inspects safely discoverable repository context, asks only decision-changing questions, compares viable approaches, and converges on a Design Handoff. It recommends a successor (`feature-spec`, `implement`/relay, stop, or a grill capability) or records unit boundaries and stops — it never invokes a successor, mutates a tracker, or infers capability availability.
 
 ```text
 /brainstorming "we need some kind of notifications, not sure where to start"
@@ -106,8 +106,6 @@ Source:
 - `skills/engineering/implement/agents/openai.yaml`
 - `skills/engineering/implement/references/routing.md`
 - `skills/engineering/implement/references/worker-contract.md`
-
-Heavier workflow frameworks live in their own repositories; this collection stays small drop-in skills.
 
 ## Install
 

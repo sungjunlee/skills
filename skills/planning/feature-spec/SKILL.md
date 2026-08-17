@@ -18,7 +18,7 @@ Compile settled intent; do not brainstorm it again.
 
    **Complete when:** a fresh agent can identify what users will observe, what is in and out, which constraints bind, how completion is verified, and which human choices remain.
 
-3. Before writing `Artifact lifetime` or the final handoff, read [`references/routing.md`](references/routing.md) and select exactly one closed route. Honor a preselected execution route unless a repository-contract contradiction blocks it. Recommend a successor without invoking it or mutating tracker or sprint state.
+3. Before writing `Artifact lifetime` or the final handoff, read [`references/routing.md`](references/routing.md) and emit exactly one closed handoff. Honor a preselected execution route unless a repository-contract contradiction blocks it. Do not invoke a successor or mutate tracker or sprint state.
 
    **Complete when:** the output contains exactly one of: an evidence-based `implement | relay` recommendation; a decomposition handoff that stops without naming a successor; or a Human Decision Handoff with route `blocked-human-decision` for an unresolved repository-contract contradiction.
 

@@ -1,5 +1,5 @@
 ---
-last_amended: 2026-07-23
+last_amended: 2026-08-17
 revision: 1
 ---
 
@@ -12,8 +12,8 @@ Portable agent skills rot in three ways: prompts bloat past quick comprehension,
 Keep each skill a compact, self-contained `SKILL.md` with optional material in `references/`, and hold the collection to evidence discipline: behavioral and routing claims are backed by dated, append-only evidence from real host runs under `evals/`, with contracts verified by credential-free `npm test` and CI. <!-- src: inferred -->
 
 ## Non-Goals          <!-- Tier 1 · Direction (human-gated) -->
-- Heavier workflow frameworks — dev-backlog, dev-relay, and craftkit live in their own repos; this collection stays small drop-in skills (README boundary).
-- Improving the `spec-*` skills from inside this repo — findings are filed as craftkit issues even when discovered while dogfooding here; this routing ambiguity caused the 2026-06/07 silent fork.
+- Heavier workflow frameworks live in their own repos; this collection stays small drop-in skills.
+- Improving the `spec-*` skills from inside this repo — findings are filed upstream, never here; this routing ambiguity caused the 2026-06/07 silent fork.
 - A universal model leaderboard or live pricing/quota synchronization — the delegate evidence loop compares task-shaped profiles, nothing more (#33 non-goals).
 - Paid provider calls in CI — the `verify` workflow stays credential-free; paid calls happen only in explicitly invoked bounded runs.
 

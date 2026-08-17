@@ -8,7 +8,7 @@ A vague "we need some kind of notifications" converges on "in-app notification c
 
 ## Needs decomposition -> tracker-neutral decomposition handoff
 
-A large multi-surface feature (auth + billing + admin) already has an adequate source artifact and now needs trackable units. Emit a tracker-neutral decomposition handoff — the units and their boundaries, with no ticket writes — and stop. Do not name a tracker successor.
+A large multi-surface feature (auth + billing + admin) already has an adequate source artifact and now needs trackable units. Put those units and their boundaries in the Design Handoff, with no ticket writes, then stop.
 
 ## Settled single unit -> implement or relay
 

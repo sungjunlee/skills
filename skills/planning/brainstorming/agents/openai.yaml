@@ -14,6 +14,6 @@ capabilities:
   blocking_user_question: unverified
 notes: >
   Invocation metadata only. This adapter must not change the Design Handoff
-  contract, its altitude, or the successor-routing rules in SKILL.md. Successor
-  availability (feature-spec, grill, implement, relay) is
-  observed per host, never inferred from prose or global installations.
+  contract, its altitude, or the successor-routing rules in SKILL.md.
+  Successor availability (feature-spec, grill, implement, relay) is observed
+  per host, never inferred from prose or global installations.

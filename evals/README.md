@@ -16,7 +16,9 @@ evals/
 
 Consumer issues add JSON files to `cases/` and `results/`. A result is matched
 to its case by `case_id`. File names are free-form in those directories; all
-`.json` files are discovered recursively.
+`.json` files are discovered recursively. Dated notes under `reports/` record
+contract supersessions; read those before treating an old case as current
+skill text.
 
 The assertion vocabulary is closed and scalar: output-field presence, selected
 route or engine, question-count range, host-observed subagent-dispatch-count

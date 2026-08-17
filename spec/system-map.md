@@ -32,7 +32,7 @@ npm test / .github/workflows/verify.yml
   eval runner (`run-delegate-eval.mjs`), which is never run implicitly.
 - `docs/` is maintainer guidance (engine capability contract vocabulary);
   explicitly not a runtime dependency of any skill.
-- `backlog/` is dev-backlog execution state (sprints, tasks); GitHub Issues
+- `backlog/` is local sprint execution state (sprints, tasks); GitHub Issues
   stay the source of truth and sync is always explicit.
 - `spec/` is the reference axis (charter, this map).
 

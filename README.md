@@ -61,7 +61,7 @@ Source:
 - `skills/review/gosu-review/references/personas.md`
 - `skills/review/gosu-review/references/cross-examine.md`
 
-### Eval-backed, not yet dogfooded
+### Evaluated, not yet used in daily workflows
 
 These have committed replay and cross-host evidence. They have not been used in the daily loop.
 
@@ -106,6 +106,8 @@ Source:
 - `skills/engineering/implement/agents/openai.yaml`
 - `skills/engineering/implement/references/routing.md`
 - `skills/engineering/implement/references/worker-contract.md`
+
+Heavier workflow frameworks live in their own repositories; this collection stays small drop-in skills.
 
 ## Install
 

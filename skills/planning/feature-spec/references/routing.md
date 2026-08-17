@@ -26,7 +26,7 @@ Why: <task-specific durability, isolation, review, risk, and parallelism evidenc
 
 Recommend `implement` when the unit can finish in the current session, the checkout is safe, and orchestrator verification is sufficient. Recommend `relay` when durability, isolation, recovery, PR/MR lifecycle, independent review, long-running work, or elevated change risk is material.
 
-The complete Feature Spec is the source artifact for `implement` or later isolated durable execution; the route label remains `relay` for the durable case.
+The route label for durable execution remains `relay`.
 
 ## Work requiring decomposition
 
@@ -41,7 +41,6 @@ Dependency edges: <known ordering or shared constraints>
 Shared acceptance criteria: <cross-cutting criteria every leaf must preserve>
 Durable spec: <authorized path or suggested path>
 Recommendation: stop
-Why: <why this cannot execute as one unit>
 ```
 
 - When multi-leaf or dependency shape is observed, emit this handoff and stop. Do not invent tickets or continue into execution.

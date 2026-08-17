@@ -26,7 +26,7 @@ Why: <task-specific durability, isolation, review, risk, and parallelism evidenc
 
 Recommend `implement` when the unit can finish in the current session, the checkout is safe, and orchestrator verification is sufficient. Recommend `relay` when durability, isolation, recovery, PR/MR lifecycle, independent review, long-running work, or elevated change risk is material.
 
-The complete Feature Spec is the source artifact for `implement` or `relay-plan`; the route label remains `relay` for durable execution.
+The route label for durable execution remains `relay`.
 
 ## Work requiring decomposition
 
@@ -40,16 +40,13 @@ Leaf boundaries: <observable outcome boundaries, not tickets>
 Dependency edges: <known ordering or shared constraints>
 Shared acceptance criteria: <cross-cutting criteria every leaf must preserve>
 Durable spec: <authorized path or suggested path>
-Successor availability: dev-backlog shape | shape unavailable
-Recommendation: dev-backlog shape | stop
-Why: <observed capability and task-shape evidence>
+Recommendation: stop
 ```
 
-- When multi-leaf or dependency shape is observed and `dev-backlog shape` is observed available, recommend `dev-backlog shape`.
-- When the same work is observed but that successor is not observed available, write the literal `shape unavailable` and stop. Do not fall back to create, plan, implement, or relay.
-- Leaf tasks, if a successor later creates them, should link to the durable spec and carry only slice-specific acceptance criteria.
+- When multi-leaf or dependency shape is observed, emit this handoff and stop. Do not invent tickets or continue into execution.
+- Leaf tasks, if later work creates them, should link to the durable spec and carry only slice-specific acceptance criteria.
 
-The complete Feature Spec plus this handoff is the source artifact for `dev-backlog shape`.
+The complete Feature Spec plus this handoff is the source artifact for later decomposition or tracking.
 
 ## Contract contradictions
 

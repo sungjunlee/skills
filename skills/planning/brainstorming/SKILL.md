@@ -33,9 +33,13 @@ Why this direction:
 Important alternatives rejected:
 Constraints and compatibility requirements:
 Open decisions requiring a human:
+Unit boundaries:
+Dependencies:
 Recommended next step:
 Why:
 ```
+
+Write `None` for Unit boundaries and Dependencies unless the work needs decomposition.
 
 ## Successor routing
 
@@ -44,7 +48,7 @@ Recommend exactly one, based on the result.
 | Result | Recommended next step |
 | --- | --- |
 | Direction selected, implementation intent still needs synthesis | `feature-spec` |
-| An adequate source artifact needs decomposition/tracking | tracker-neutral decomposition handoff; recommend dev-backlog `shape` only when it is observed available, else record literal `shape unavailable` and stop |
+| An adequate source artifact needs decomposition/tracking | fill Unit boundaries and Dependencies; Recommended next step: stop |
 | Already a settled single unit | `implement` (localized) or relay (durable/high-risk), by task-specific evidence |
 | User asked for exploration only | stop after the handoff |
 | User asked to stress-test an already-chosen plan | recommend a compatible grill capability only when it is observed available, else record it unavailable and stop — do not impersonate grill |

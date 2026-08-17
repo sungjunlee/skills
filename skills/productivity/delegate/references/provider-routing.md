@@ -5,7 +5,7 @@ If `cli-invocations.md` is "how to invoke a CLI", this document is "**which prov
 
 This file intentionally contains **no user-specific state** (no subscriptions, balances, expiry dates, or "which CLI is connected to which provider"). Those live in the operator's own routing/ops document. Everything here is general enough to reuse on any machine.
 
-> Model existence and reachable routes are decided by the **live CLI model lists** (`opencode models`, `pi --list-models`, `agent models`, `grok models`) — never by a static table. A model may appear in multiple providers; check the actual lists at dispatch time.
+> Model existence and reachable routes are decided by the **live CLI model lists** (`opencode models`, `pi --list-models`, `cursor-agent models`, `grok models`) — never by a static table. A model may appear in multiple providers; check the actual lists at dispatch time.
 
 ## 1. CLI classification
 
@@ -24,7 +24,7 @@ For a single-provider CLI, choosing the route IS choosing the provider: `codex` 
 
 | CLI | Provider/billing | Auth | Models |
 |---|---|---|---|
-| `cursor/*` (agent CLI) | Cursor subscription | Cursor OAuth | many families under the cursor plan: cursor-grok-4.6-*, gpt-5.6-sol-*, claude-opus/fable/sonnet-*-*, kimi-k3-*, composer-2.5-*, gpt-5.x-* |
+| `cursor/*` (cursor-agent CLI) | Cursor subscription | Cursor OAuth | many families under the cursor plan: cursor-grok-4.6-*, gpt-5.6-sol-*, claude-opus/fable/sonnet-*-*, kimi-k3-*, composer-2.5-*, gpt-5.x-* |
 | `cline/*` | configurable provider; `cline-pass` is one provider id among many | per-provider (`cline auth`: manual key, Azure, base URL) | varies by provider; cline-pass serves glm-5.2 etc. |
 
 - `cursor/*` is one subscription (Cursor) that exposes many model families; the route's model id selects the family. Billing is fixed to Cursor, but the model set is broad.
@@ -44,7 +44,7 @@ For a single-provider CLI, choosing the route IS choosing the provider: `codex` 
 Do not maintain a model → route table here. Instead, at dispatch time:
 
 1. Resolve the model/family home route from `cli-invocations.md`.
-2. For multi-provider CLIs, list the live models (`opencode models [provider]`, `pi --list-models`, `agent models`) and see which providers actually expose the model.
+2. For multi-provider CLIs, list the live models (`opencode models [provider]`, `pi --list-models`, `cursor-agent models`) and see which providers actually expose the model.
 3. Choose among the reachable providers using §3 rules and the operator's own routing document (subscriptions, balances, expiry, quotas).
 
 A static matrix rots: subscriptions change, providers drop models, quotas reset. The live list is the only authority.

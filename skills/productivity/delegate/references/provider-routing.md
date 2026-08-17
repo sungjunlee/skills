@@ -5,7 +5,7 @@ If `cli-invocations.md` is "how to invoke a CLI", this document is "**which prov
 
 This file intentionally contains **no user-specific state** (no subscriptions, balances, expiry dates, or "which CLI is connected to which provider"). Those live in the operator's own routing/ops document. Everything here is general enough to reuse on any machine.
 
-> Model existence and reachable routes are decided by the **live CLI model lists** (`opencode models`, `pi --list-models`, `agent models`, `cline auth`) — never by a static table. A model may appear in multiple providers; check the actual lists at dispatch time.
+> Model existence and reachable routes are decided by the **live CLI model lists** (`opencode models`, `pi --list-models`, `agent models`, `grok models`) — never by a static table. A model may appear in multiple providers; check the actual lists at dispatch time.
 
 ## 1. CLI classification
 
@@ -16,8 +16,9 @@ This file intentionally contains **no user-specific state** (no subscriptions, b
 | `codex/*` | OpenAI (ChatGPT OAuth) | `auth_mode: chatgpt` | gpt-5.6-sol / terra / luna |
 | `claude/*` | Anthropic (claude.ai) | firstParty OAuth | claude-fable-5 / opus-5 / sonnet-5 |
 | `reasonix/*` | DeepSeek first-party API | DEEPSEEK_API_KEY | deepseek-v4-* |
+| `grok/*` | xAI (Grok Build CLI) | grok.com OAuth, or `XAI_API_KEY` where no browser is available | grok-4.6 / grok-4.5 |
 
-For a single-provider CLI, choosing the route IS choosing the provider: `codex` → OpenAI, `claude` → Anthropic, `reasonix` → DeepSeek first-party.
+For a single-provider CLI, choosing the route IS choosing the provider: `codex` → OpenAI, `claude` → Anthropic, `grok` → xAI, `reasonix` → DeepSeek first-party.
 
 ### Subscription-bounded multi-model (one provider auth, many models)
 

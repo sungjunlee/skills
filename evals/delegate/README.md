@@ -46,10 +46,10 @@ evals/delegate/
   harness steady across observation dates rather than following the skill's
   routing — see the sandboxing note under Runner. The Grok lane changed
   harness with the model: `grok-4.5` runs on `opencode-go`, which serves no
-  `grok-4.6` (checked 2026-08-16), so `grok-4.6` runs on the `cursor/*` home
-  route — comparing Grok generations compares two harnesses as well as two
-  models. A result's `executor` field, never the skill's default, says what
-  ran.
+  `grok-4.6` (checked 2026-08-16), so `grok-4.6` runs on a `cursor` lane while
+  the skill's home route for it is `grok/*` — comparing Grok generations
+  compares two harnesses as well as two models. A result's `executor` field,
+  never the skill's default, says what ran.
 - Where a route encodes effort in the model id, as `cursor/*` does, the
   executor's `dispatch` carries `{effort}` and its `effort_argv` is `null`;
   such a profile may not omit effort.

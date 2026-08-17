@@ -5,7 +5,7 @@ If `cli-invocations.md` is "how to invoke a CLI", this document is "**which prov
 
 This file intentionally contains **no user-specific state** (no subscriptions, balances, expiry dates, or "which CLI is connected to which provider"). Those live in the operator's own routing/ops document. Everything here is general enough to reuse on any machine.
 
-> Model existence and reachable routes are decided by the **live CLI model lists** (`opencode models`, `pi --list-models`, `agent models`, `grok models`, `cline auth`) — never by a static table. A model may appear in multiple providers; check the actual lists at dispatch time.
+> Model existence and reachable routes are decided by the **live CLI model lists** (`opencode models`, `pi --list-models`, `agent models`, `grok models`) — never by a static table. A model may appear in multiple providers; check the actual lists at dispatch time.
 
 ## 1. CLI classification
 

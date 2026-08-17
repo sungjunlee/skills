@@ -6,59 +6,13 @@ These skills are meant to stay compact, composable, and easy to adapt. Each skil
 
 ## Skills
 
-### Planning
-
-#### brainstorming
-
-Turn a vague idea into one selected direction and a compact Design Handoff, then recommend the next owner. Explicit-only and engine-agnostic.
-
-`brainstorming` inspects safely discoverable repository context, asks only decision-changing questions, compares viable approaches, and converges on a Design Handoff. It recommends a successor (`feature-spec`, a tracker-neutral decomposition handoff, `implement`/relay, stop, or a grill capability) as output — it never invokes one, mutates a tracker, or infers capability availability.
-
-```text
-/brainstorming "we need some kind of notifications, not sure where to start"
-```
-
-Source:
-
-- `skills/planning/brainstorming/SKILL.md`
-- `skills/planning/brainstorming/references/routing.md`
-- `skills/planning/brainstorming/agents/openai.yaml`
-
-#### feature-spec
-
-Compile a completed Design Handoff, settled proposal or conversation, or clear tracker task into a tracker-neutral, implementation-ready Feature Spec.
-
-It preserves settled decisions and acceptance criteria, records exact repository-contract contradictions for human resolution, and closes with exactly one of an `implement | relay` recommendation, a decomposition handoff, or a `blocked-human-decision` Human Decision Handoff. It recommends successors without invoking them or mutating tracker state.
-
-Source:
-
-- `skills/planning/feature-spec/SKILL.md`
-- `skills/planning/feature-spec/agents/openai.yaml`
-- `skills/planning/feature-spec/references/spec-template.md`
-- `skills/planning/feature-spec/references/routing.md`
-
-### Engineering
-
-#### implement
-
-Execute a settled feature spec, tracker task, or clear prompt in the current checkout with the lightest safe current-session engine.
-
-`implement` performs a pre-edit safety gate, chooses inline, serial-worker, or bounded-parallel execution, and keeps diff inspection and authoritative verification with the orchestrator. Work that needs durable recovery, isolated lifecycle, or elevated-risk handling is returned as a relay handoff before mutation; relay is never invoked silently.
-
-Source:
-
-- `skills/engineering/implement/SKILL.md`
-- `skills/engineering/implement/agents/openai.yaml`
-- `skills/engineering/implement/references/routing.md`
-- `skills/engineering/implement/references/worker-contract.md`
-
-### Productivity
+### In daily use
 
 #### delegate
 
 One-shot delegate a prompt to a chosen agent/model and return its output. No worktree, manifest, or review.
 
-When the full `relay-dispatch` flow is overkill — you just want a quick answer from a specific model — `delegate` shells out directly to the chosen CLI.
+When you just want a quick answer from a specific model, `delegate` shells out directly to the chosen CLI.
 
 ```text
 /delegate opencode-go/deepseek-v4-pro "refactor this function to use streams"
@@ -87,8 +41,6 @@ Source:
 - `skills/productivity/delegate/references/provider-routing.md`
 - `skills/productivity/delegate/references/routing-guide.md`
 
-### Review
-
 #### gosu-review
 
 Run a real multi-subagent panel review on the current artifact.
@@ -109,13 +61,51 @@ Source:
 - `skills/review/gosu-review/references/personas.md`
 - `skills/review/gosu-review/references/cross-examine.md`
 
-## Related Larger Projects
+### Eval-backed, not yet dogfooded
 
-These are intentionally not included here because they are heavier workflows rather than small drop-in skills.
+These have committed replay and cross-host evidence. They have not been used in the daily loop.
 
-- [dev-backlog](https://github.com/sungjunlee/dev-backlog) — keeps GitHub Issues as the source of truth while adding local sprint files as the execution hub for humans, Claude Code, and Codex.
-- [dev-relay](https://github.com/sungjunlee/dev-relay) — runs a repeatable plan -> dispatch -> review loop where an executor works in an isolated worktree and an independent reviewer checks the PR before merge.
-- [CraftKit](https://github.com/sungjunlee/craftkit) — file-first toolkit for authoring, critiquing, and optimizing prompts and coding-agent skills, plus a repo spec pipeline.
+#### brainstorming
+
+Turn a vague idea into one selected direction and a compact Design Handoff, then recommend the next owner. Explicit-only and engine-agnostic.
+
+`brainstorming` inspects safely discoverable repository context, asks only decision-changing questions, compares viable approaches, and converges on a Design Handoff. It recommends a successor (`feature-spec`, a tracker-neutral decomposition handoff, `implement`/relay, stop, or a grill capability) as output — it never invokes one, mutates a tracker, or infers capability availability.
+
+```text
+/brainstorming "we need some kind of notifications, not sure where to start"
+```
+
+Source:
+
+- `skills/planning/brainstorming/SKILL.md`
+- `skills/planning/brainstorming/references/routing.md`
+- `skills/planning/brainstorming/agents/openai.yaml`
+
+#### feature-spec
+
+Compile a completed Design Handoff, settled proposal or conversation, or clear tracker task into a tracker-neutral, implementation-ready Feature Spec.
+
+It preserves settled decisions and acceptance criteria, records exact repository-contract contradictions for human resolution, and closes with exactly one of an `implement | relay` recommendation, a decomposition handoff that stops, or a `blocked-human-decision` Human Decision Handoff. It does not mutate tracker state.
+
+Source:
+
+- `skills/planning/feature-spec/SKILL.md`
+- `skills/planning/feature-spec/agents/openai.yaml`
+- `skills/planning/feature-spec/references/spec-template.md`
+- `skills/planning/feature-spec/references/routing.md`
+
+#### implement
+
+Execute a settled feature spec, tracker task, or clear prompt in the current checkout with the lightest safe current-session engine.
+
+`implement` performs a pre-edit safety gate, chooses inline, serial-worker, or bounded-parallel execution, and keeps diff inspection and authoritative verification with the orchestrator. Work that needs durable recovery, isolated lifecycle, or elevated-risk handling is returned as a relay handoff before mutation; relay is never invoked silently.
+
+Source:
+
+- `skills/engineering/implement/SKILL.md`
+- `skills/engineering/implement/agents/openai.yaml`
+- `skills/engineering/implement/references/routing.md`
+- `skills/engineering/implement/references/worker-contract.md`
 
 ## Install
 

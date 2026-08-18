@@ -1,6 +1,6 @@
 ---
 milestone: wfa-skill-pruning
-status: active
+status: completed
 started: 2026-08-19
 due: TBD
 objectives: [O1]
@@ -32,3 +32,4 @@ The five writing-for-agents findings from #107–#111 are landed: daily skills h
 - 2026-08-19: #107–#111 implemented locally. `npm test` passed. Shared human-decision token is `Unresolved human decisions`. Dirty-disjoint stays inline/serial only (`routing.md`).
 - 2026-08-19: #111 already landed on main via #112; this PR keeps that implement contract and does not add `fresh_context_review`.
 - 2026-08-19: PR #113 opened. Round-2 Opus/Sol both **ship**. Merge #113; bank partial-panel eval as follow-up.
+- 2026-08-19: Sprint closed. 5/5 tasks completed.

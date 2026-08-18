@@ -11,6 +11,7 @@
 - `implement` must remain materially lighter than relay: no durable manifest, worktree lifecycle, crash recovery, PR/MR lifecycle, tracker mutation, push, or implicit relay invocation.
 - In `implement`, engines describe only current-session execution: `none`, `inline`, `serial_workers`, or `bounded_parallel`. Relay escalation uses `status: escalated` with `handoff.route: relay`, stops before the first unsafe mutation, and keeps `engine` reporting what this session actually ran (`none` when nothing ran).
 - Single source of truth is scoped per skill: each skill is an independent distribution unit (installed without `docs/` or `evals/`), so a rule may repeat across skills but must appear only once within a skill, and `SKILL.md` must never point outside its own directory.
+- The operator routing document is optional personal state. When it is absent, `delegate` uses only `provider-routing.md`. Do not merge `routing-guide.md` into `model-catalog.md`.
 
 ## Conventions
 

@@ -10,7 +10,9 @@ Select from evidence before editing. The selected engine changes mechanics, not 
 
 ## Relay escalation
 
-Escalate before mutation when work needs durable recovery, a dedicated worktree/branch, frozen rubric and repeated independent review, PR/MR/CI/merge lifecycle, several durable leaves, long-running unattended ownership, or carries security, destructive migration, deployment, data-loss, or comparable risk. Relay is the next route, not a current-session engine.
+Relay is an escalation handoff, not a current-session engine. Escalate before mutation when work needs durable recovery, a dedicated worktree/branch, frozen rubric and repeated independent review, PR/MR/CI/merge lifecycle, several durable leaves, long-running unattended ownership, or carries security, destructive migration, deployment, data-loss, or comparable risk.
+
+Return `status: escalated` with `handoff.route: relay`, keeping the engine that actually ran (`none` when nothing ran). State the need for isolated durable execution; do not invoke a successor.
 
 ## Safety precedence
 

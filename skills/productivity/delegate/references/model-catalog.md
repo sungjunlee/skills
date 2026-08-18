@@ -31,11 +31,10 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 ## Evidence-backed defaults
 
-From dated local runs (2026-07-22/23); the grading and promote/revoke
-rules live with the evidence in `evals/delegate/` in the source repo.
-Community reports and vendor rankings never override this list, and the
-30-day staleness note above does not expire it — observed results stand
-until contradicted by new local runs.
+From dated local runs (2026-07-22/23). Community reports and vendor
+rankings never override this list, and the 30-day staleness note above
+does not expire it — observed results stand until contradicted by new
+local runs.
 
 - Ambiguous everyday feature/bugfix work → Terra `high`; Luna `xhigh`
   also passed both dates and stays a valid alternative.

@@ -21,7 +21,7 @@ Escalate before mutation when work needs durable recovery, a dedicated worktree/
 
 ## Dirty checkout
 
-- **Disjoint:** proceed inline or serial only after recording the pre-existing paths and proving the authorized writes and verification will not overwrite, stage, format, generate over, or otherwise absorb them. Return `pre_existing_changes_preserved: true` only after final diff inspection.
+- **Disjoint:** proceed `inline` or `serial_workers` only after recording the pre-existing paths and proving the authorized writes and verification will not overwrite, stage, format, generate over, or otherwise absorb them. Dirty-disjoint work must not use `bounded_parallel`. Return `pre_existing_changes_preserved: true` only after final diff inspection.
 - **Overlapping or ambiguous:** do not edit. Return pre-edit `blocked` with `engine: none`, or `escalated` with `engine: none` when isolation/durability requires a relay handoff.
 
 These outcomes must remain observably different: the disjoint path produces and verifies authorized changes while preserving the inventory; the overlapping path records no repository mutation by this run.

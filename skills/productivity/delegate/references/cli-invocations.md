@@ -24,7 +24,7 @@ These two rules are not per-provider. They apply before any row below is used.
 
 ## Per-provider reference
 
-If the resolved profile includes an effort, append or translate it with the Effort argv column. Otherwise omit those tokens.
+If the resolved profile includes an effort, append or translate it with the Effort argv column.
 
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|

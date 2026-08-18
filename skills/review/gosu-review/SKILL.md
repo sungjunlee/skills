@@ -46,7 +46,7 @@ At least one panelist is explicitly adversarial unless the target is purely expl
 
 When casting is not obvious, invent from the seed patterns in `references/personas.md` rather than copying that list.
 
-**Complete when:** 4–6 personas are named, every brief carries a scar plus Lens / Bias / Blind spot, and the mix above is present.
+**Complete when:** 4–6 personas are named, every brief carries a scar plus Lens / Bias / Blind spot, the mix above is present, and the adversarial rule above holds.
 
 ## Dispatch
 
@@ -98,15 +98,13 @@ findings and say why — that is a useful answer, not a failed one.
 
 A conflict is two entries that name the same element and point opposite ways — remove it versus extend it, this mechanism versus that one. One panelist covering ground another missed is not a conflict, and neither is disagreement about severity.
 
-Run one round, only on a conflict, at most the two sharpest by cost of getting them wrong. Put those two panelists back in front of the artifact with each other's position; read `references/cross-examine.md` for the brief. Resume the original panelist when the host can.
-
-If both hold with evidence, report the tension unresolved and say what would settle it.
+Run one round, only on a conflict, at most the two sharpest by cost of getting them wrong. Put those two panelists back in front of the artifact with each other's position; read `references/cross-examine.md` for the brief and how to read the returns.
 
 ## Output
 
-Lead with a one-line verdict summary. Render each returned brief under Panel, then Tensions / Consensus / Meta. Invent nothing in synthesis: a finding with no evidence stays in Panel and never reaches Consensus. An empty findings list stays empty. A removal and an addition on the same element is a Tension, not two Consensus items.
+Lead with a one-line verdict summary. Render in the template order. Panel displays each returned brief; it does not redefine the shape. Invent nothing in synthesis: a finding with no evidence stays in Panel and never reaches Consensus. An empty findings list stays empty. A removal and an addition on the same element is a Tension, not two Consensus items.
 
-A complete gosu-review requires requested and returned both in 4–6. Otherwise label Meta `partial panel` and present it as partial. If fewer than 2 agents return, skip synthesis and show only raw notes plus a retry recommendation.
+A complete gosu-review requires `requested == returned` and both in 4–6. Otherwise label Meta `partial` and present it as partial. If fewer than 2 agents return, skip synthesis and show only raw notes plus a retry recommendation.
 
 ```text
 # gosu-review: <target>

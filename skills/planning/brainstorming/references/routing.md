@@ -18,10 +18,6 @@ A large multi-surface feature (auth + billing + admin) already has an adequate s
 
 The user is thinking out loud and explicitly does not want to commit yet. Emit the Design Handoff and stop.
 
-## Grill request -> compatible grill capability or stop
-
-The user wants an already-chosen plan stress-tested adversarially. That is grilling, not discovery: apply the routing table's grill row.
-
 ## Edge cases
 
 - **Mixed signals.** If a request contains both a vague area and one settled sub-decision, brainstorm only the open area; do not reopen the settled sub-decision unless repository evidence contradicts it.

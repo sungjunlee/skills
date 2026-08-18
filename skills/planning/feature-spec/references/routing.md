@@ -26,8 +26,6 @@ Why: <task-specific durability, isolation, review, risk, and parallelism evidenc
 
 Recommend `implement` when the unit can finish in the current session, the checkout is safe, and orchestrator verification is sufficient. Recommend `relay` when durability, isolation, recovery, PR/MR lifecycle, independent review, long-running work, or elevated change risk is material.
 
-The route label for durable execution remains `relay`.
-
 ## Work requiring decomposition
 
 Emit a tracker-neutral handoff without ticket IDs or invented tracker objects:

@@ -22,10 +22,6 @@ Compile settled intent; do not brainstorm it again.
 
    **Complete when:** the output contains exactly one of: an evidence-based `implement | relay` recommendation; a decomposition handoff that stops without naming a successor; or a Human Decision Handoff with route `blocked-human-decision` for an unresolved repository-contract contradiction.
 
-4. Return the complete spec in the response by default. Write it only with edit authority and an unambiguous destination. Verify all required headings, supplied acceptance criteria, unresolved contradictions, persistence authority, and absence of successor side effects before finishing.
+4. Follow Artifact lifetime in [`references/routing.md`](references/routing.md). Verify all required headings, supplied acceptance criteria, unresolved contradictions, persistence authority, and absence of successor side effects before finishing.
 
-   **Complete when:** the artifact and persistence behavior both match the source and authority actually observed.
-
-## Host adaptation
-
-Core semantics do not vary by host; unobserved host capabilities remain `unverified`, never assumed.
+   **Complete when:** the artifact and persistence behavior both match the source and the authority actually observed.

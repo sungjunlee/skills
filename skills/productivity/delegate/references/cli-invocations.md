@@ -4,7 +4,7 @@ argv and stdio per provider. Cwd is always the caller's `$PWD`.
 
 `delegate` is a one-shot, so the dispatch should not block on permission prompts. Each CLI has a different idiom — the `Run argv` column below shows the full command including the mode flag where one exists.
 
-Verify each row against your installed CLI: `<cli> run --help` (or `<cli> exec --help` for codex), then edit to match.
+These rows are dispatch contracts. A run uses them as written. A maintainer updating this file checks each row against `<cli> run --help` (or `<cli> exec --help` for codex).
 
 ## Building the command
 
@@ -24,7 +24,7 @@ These two rules are not per-provider. They apply before any row below is used.
 
 ## Per-provider reference
 
-Append or translate effort only when the resolved profile contains an explicit or recommendation-selected effort. Otherwise preserve the CLI default.
+If the resolved profile includes an effort, append or translate it with the Effort argv column.
 
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|

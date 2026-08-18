@@ -16,15 +16,9 @@ A large multi-surface feature (auth + billing + admin) already has an adequate s
 
 ## Exploration only -> stop
 
-The user is thinking out loud and explicitly does not want to commit yet. Emit the Design Handoff and stop. Do not recommend or start a successor.
-
-## Grill request -> compatible grill capability or stop
-
-The user wants an already-chosen plan stress-tested adversarially. That is grilling, not discovery: apply the routing table's grill row rather than playing the adversarial interviewer yourself.
+The user is thinking out loud and explicitly does not want to commit yet. Emit the Design Handoff and stop.
 
 ## Edge cases
 
 - **Mixed signals.** If a request contains both a vague area and one settled sub-decision, brainstorm only the open area; do not reopen the settled sub-decision unless repository evidence contradicts it.
-- **Requested route provided.** If the user names the next route ("...then spec it"), honor it without re-asking, provided the Design Handoff still holds.
-- **Delegated judgment.** "You pick" is not a blocker: choose, state why, and record the discarded option under *Important alternatives rejected*.
-- **Contradicting evidence.** Reopen a settled direction only when discoverable repository context directly conflicts with it; name the conflict under *Open decisions requiring a human*.
+- **Contradicting evidence.** Reopen a settled direction only when discoverable repository context directly conflicts with it; name the conflict under *Unresolved human decisions*.

@@ -1,14 +1,12 @@
 # gosu-review persona seeds
 
-This file is a seed list, not a menu. Prefer inventing context-specific experts over copying these labels. The casting rule (2-3 specialized + 1-2 quality + 1 adversarial) lives in the SKILL.md Cast section.
+Seed list, not a menu. Invent context-specific experts from these patterns. Casting rules live in `SKILL.md`.
 
-## What "gosu" means
+## Scar shape
 
-A gosu persona is not a job title. It is a specific practitioner with **scars** — past incidents, near-misses, or repeated patterns that shaped how they think. The scar is what makes them sharp; without it, the persona catches nothing.
-
-- **label**: "PM" — anyone with the title
-- **role**: "B2B SaaS onboarding PM" — a class of practitioners
-- **gosu**: "B2B SaaS PM who shipped three onboarding rewrites, watched activation keep dropping in steps 2-4, and now reviews every flow against the 'first-time user without help' test" — a specific person with a scar
+- **label**: "PM"
+- **role**: "B2B SaaS onboarding PM"
+- **gosu**: "B2B SaaS PM who shipped three onboarding rewrites, watched activation keep dropping in steps 2-4, and now reviews every flow against the 'first-time user without help' test"
 
 - **label**: "security expert"
 - **role**: "internal-tool security reviewer"
@@ -18,19 +16,7 @@ A gosu persona is not a job title. It is a specific practitioner with **scars** 
 - **role**: "support-doc editor"
 - **gosu**: "support-doc editor who has answered the same 200+ tickets about the same misfeature, knows the docs describe what we wish users did, and now reads every doc for 'is this what users actually do'"
 
-A gosu persona names a scar, names what they look for now, and speaks in domain language. A label catches nothing. If you cannot point to a specific past failure that shaped this persona, it is not yet a gosu — go back to the target and find what failure mode matters here.
-
-## Attributes
-
-For each panelist, define:
-
-- **Lens**: what they optimize for
-- **Bias**: what they distrust, usually from a specific past failure
-- **Blind spot**: what this persona is uniquely likely to catch
-
 ## Context-specific seeds
-
-Use these patterns to generate sharper personas:
 
 - `<domain> practitioner who has been bitten by <specific failure>`
 - `<audience> first-time user who hit <specific friction> and abandoned`
@@ -45,8 +31,6 @@ Use these patterns to generate sharper personas:
 
 ## General quality seeds
 
-Use sparingly, when the target needs fundamentals:
-
 - Architect: structure, responsibility, boundaries
 - Implementation expert: edge cases, errors, maintainability
 - QA expert: observable behavior, regressions, failure cases
@@ -58,8 +42,6 @@ Use sparingly, when the target needs fundamentals:
 
 ## Outsider seeds
 
-Add one when it could reveal a blind spot:
-
 - New teammate trying to onboard
 - Customer support person reading the output after a failure
 - Finance person asking what repeated use costs
@@ -70,43 +52,16 @@ Add one when it could reveal a blind spot:
 
 ## Subtraction seeds
 
-One seat reviews for removal. Every other persona on the panel is rewarded for
-finding something to add, so without this seat the panel's collective advice is
-always "more". A simplifier's fix path is deletion, and the strongest form of
-their finding is that a whole section, reference, option, or artifact should
-not exist.
-
-- Maintainer who deleted a third of a codebase and watched the bug rate fall,
-  and now assumes any rule that needs a paragraph of explanation is the wrong rule
-- Editor who has cut every document they ever shipped by half and never once
-  had a reader complain that something was missing
-- Operator who inherited a runbook with fourteen branches, found that three were
-  ever used, and now reads every conditional asking how often it actually fires
-- API owner who watched an options bag grow to eleven flags, learned that each
-  one doubled the states they had to support, and now treats a new option as a
-  cost the caller pays forever
-- Reviewer who has seen the same fix proposed as "add a check" three times and
-  asks why the thing being checked exists
-
-A simplifier who only trims wording is not doing the job. They must be willing
-to propose that a section, a reference file, a step, or the artifact itself be
-deleted, and to say what is lost if it is.
+- Maintainer who deleted a third of a codebase and watched the bug rate fall, and now assumes any rule that needs a paragraph of explanation is the wrong rule
+- Editor who has cut every document they ever shipped by half and never once had a reader complain that something was missing
+- Operator who inherited a runbook with fourteen branches, found that three were ever used, and now reads every conditional asking how often it actually fires
+- API owner who watched an options bag grow to eleven flags, learned that each one doubled the states they had to support, and now treats a new option as a cost the caller pays forever
+- Reviewer who has seen the same fix proposed as "add a check" three times and asks why the thing being checked exists
 
 ## Adversarial seeds
-
-Use when the review should find failures a normal reviewer would miss:
 
 - Red-team reviewer trying to make the artifact fail in public
 - Skeptical buyer looking for the reason not to adopt
 - Abuse-minded operator looking for incentives and misuse paths
 - Future maintainer looking for the hidden cost six months later
 - Incident reviewer asking what would make this embarrassing in hindsight
-
-## Avoid
-
-- Do not fill the panel with only engineering roles unless the target is purely engineering.
-- Do not reuse the same generic panel every time.
-- Do not create personas so broad that they can only say generic things.
-- Do not let the surprising outsider dominate the practical recommendations.
-- Do not make the adversarial reviewer theatrical. They need evidence and a fix path.
-- Do not ship a persona without a scar — a scar is what makes a gosu different from a label.

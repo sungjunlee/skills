@@ -43,11 +43,9 @@ Source:
 
 #### gosu-review
 
-Run a real multi-subagent panel review on the current artifact.
+Review the current artifact with a real 4-6 person expert subagent panel. Explicit-only: invoke with `/gosu-review`.
 
 Single-agent reviews collapse into one voice. `gosu-review` keeps each panelist's independent lens visible, then surfaces the orchestrator's tensions, consensus, and per-persona verdicts.
-
-Use it when you want multiple context-specific experts to review code, a plan, a skill, a document, a decision, or repository state.
 
 ```text
 /gosu-review
@@ -58,6 +56,7 @@ Use it when you want multiple context-specific experts to review code, a plan, a
 Source:
 
 - `skills/review/gosu-review/SKILL.md`
+- `skills/review/gosu-review/agents/openai.yaml`
 - `skills/review/gosu-review/references/personas.md`
 - `skills/review/gosu-review/references/cross-examine.md`
 
@@ -186,6 +185,8 @@ skills/
   review/
     gosu-review/
       SKILL.md
+      agents/
+        openai.yaml
       references/
         cross-examine.md
         personas.md

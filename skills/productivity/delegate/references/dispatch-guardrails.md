@@ -46,5 +46,3 @@ A dispatch either returns executor output or reports one of these.
 Every report names the provider route, the resolved model and effort, elapsed time, and the retained stderr tail — on the recommendation path the route alone does not say what ran or what it cost. `dispatch_timeout` adds the deadline, the last activity event type and timestamp, and whether termination was graceful, forced, or incomplete.
 
 `dispatch_empty_output` is the one that looks like success, so report the two causes it cannot distinguish: the executor produced nothing, or the prompt never reached it. The prompt is the last argv element on every route, so one that matches a flag the CLI accepts is absorbed as a duplicate flag and the child runs promptless against `DEVNULL` stdin. Check the assembled argv before concluding the model had nothing to say.
-
-

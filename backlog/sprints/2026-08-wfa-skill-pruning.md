@@ -29,5 +29,6 @@ The five writing-for-agents findings from #107–#111 are landed: daily skills h
 ## Progress
 
 - 2026-08-19: sprint admitted from the #107–#111 bank. Starting #107.
-- 2026-08-19: #107–#111 implemented locally. `npm test` passed. Shared human-decision token is `Unresolved human decisions`. Dirty-disjoint stays inline/serial only (`routing.md`). Await commit/PR before closing the sprint.
-  
+- 2026-08-19: #107–#111 implemented locally. `npm test` passed. Shared human-decision token is `Unresolved human decisions`. Dirty-disjoint stays inline/serial only (`routing.md`).
+- 2026-08-19: #111 already landed on main via #112; this PR keeps that implement contract and does not add `fresh_context_review`.
+- 2026-08-19: PR #113 opened. Round-2 Opus/Sol both **ship**. Merge #113; bank partial-panel eval as follow-up.

@@ -1,0 +1,51 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "gosu-review.partial-panel-synthesis",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "some-subagents-fail-synthesis-ok",
+      "target_request": "/gosu-review skill/SKILL.md",
+      "target_state": "The named file exists and is the only plausible target.",
+      "capabilities": {
+        "subagent_dispatch": "native",
+        "parallel_subagents": "native"
+      },
+      "subagent_behavior": "The run requests 4–6 agents. Exactly two dispatched subagents return a panel entry; every other dispatch fails without output."
+    }
+  },
+  "required_output_fields": [
+    "verdicts",
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "meta.panel"
+  ],
+  "expected_route": null,
+  "expected_engine": "bounded_parallel",
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "host_subagent_dispatch_count_range": {
+    "min": 4,
+    "max": 6
+  },
+  "expected_escalation": "partial_panel_synthesis",
+  "semantic_assertions": [
+    { "assertion_id": "field-verdicts", "type": "output_field_present", "field": "verdicts" },
+    { "assertion_id": "field-panel", "type": "output_field_present", "field": "panel" },
+    { "assertion_id": "field-meta-requested", "type": "output_field_present", "field": "meta.requested" },
+    { "assertion_id": "field-meta-returned", "type": "output_field_present", "field": "meta.returned" },
+    { "assertion_id": "field-meta-panel", "type": "output_field_present", "field": "meta.panel" },
+    { "assertion_id": "host-dispatch-count", "type": "host_subagent_dispatch_count_in_range" },
+    { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
+    { "assertion_id": "no-confirmation-question", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-partial-panel-synthesis", "type": "escalation_equals" },
+    { "assertion_id": "no-repository-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit", "push"]
+}

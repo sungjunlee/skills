@@ -2,6 +2,8 @@
 
 Last checked: 2026-08-16. Treat as stale after 30 days.
 
+GLM-5.3 / Flash and Gemini 3.7 Flash checked: 2026-08-27.
+
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
 ## Frontier families
@@ -18,10 +20,13 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `kimi-k3` | Long-horizon coding, tool-heavy knowledge work, or multimodal implementation where completion quality matters more than latency. | route default; launch API uses `max` thinking, with `low` and `high` announced for later | frontier; high output-token and latency risk |
 | `qwen3.8-max` | Complex reasoning and coding through Alibaba's Token Plan; GA on 2026-08-03, replacing the preview. Off-peak Credits run 50% off daily 22:00–08:00 UTC+8 (23:00–09:00 KST), so deferrable work is markedly better value dispatched at night; the vendor may modify the discount. | route default; the thinking toggle (`enable_thinking`) is documented, graded effort behavior is not | subscription |
 
-## Value and open-weight families
+## Value and other families
 
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
+| `glm-5.3` | Complex or long-horizon text coding; 1M context. | API `low`/`high`/`max`; default/recommended `max`; always thinking | $1.40/$4.40 per 1M in/out (Z.ai direct API) |
+| `glm-5.3-flash` | Value coding and native multimodal office work; 1M context. | same API effort profile as GLM-5.3 | $0.15/$0.50 standard per 1M in/out (Z.ai direct API); 3× GLM-5.3 quota on Z.ai Coding Plan |
+| `gemini-3.7-flash` | Coding/agents and multimodal design work; 1M context. | API `low`/`medium`/`high`; default `medium`; no `minimal` | $0.75/$3.75 introductory through 2026-12-31, then $1.50/$7.50 per 1M in/out (Google direct API) |
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
 | `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | `high` for ambiguous or multi-stage work; otherwise route default | pro value |
 | `hy3` | Coding, document, and frontend work with grounded low-hallucination behavior; Tencent's open-weight generalist, GA 2026-07-06 (~$0.13/$0.53 per 1M via OpenRouter). | route default is no-think; `low` and `high` thinking modes documented for complex multi-step work | mid |
@@ -60,5 +65,7 @@ local runs.
 - [Qwen Cloud text-generation models](https://docs.qwencloud.com/developer-guides/getting-started/text-generation-models) and [Token Plan](https://docs.qwencloud.com/token-plan/overview)
 - [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
+- [Z.ai GLM-5.3 guide](https://docs.z.ai/guides/llm/glm-5.3), [GLM-5.3 Flash guide](https://docs.z.ai/guides/vlm/glm-5.3-flash), [GLM-5.3 Flash announcement](https://z.ai/blog/glm-5.3-flash), and [Z.ai pricing](https://docs.z.ai/guides/overview/pricing)
+- [Gemini 3.7 Flash model docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash) and [Gemini pricing](https://ai.google.dev/gemini-api/docs/latest-model)
 
 These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. OpenAI's 2026-07-30 reprice (Luna −80%, Terra −20%) postdates the cost side of the 2026-07-22/23 observations — the acceptance-parity finding on those fixtures stands, but re-check dollar costs before letting them decide. Distinguish API marginal cost from subscription quota pressure when comparing routes.

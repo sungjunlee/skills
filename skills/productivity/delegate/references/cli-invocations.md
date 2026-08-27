@@ -51,13 +51,13 @@ An input that names a model or family without a route resolves to that family's 
 | `claude-*` | `claude/*` | the vendor's own CLI, and the only route exposing all five effort levels |
 | `grok-4.6` | `grok/*` | the vendor's own coding CLI |
 
-A family absent from the table has no default — `glm-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` each run on several installed routes, so ask which CLI to use.
+A family absent from the table has no default — `glm-*`, `gemini-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` may run on several routes, so ask which CLI to use.
 
 A home route says which CLI hosts a family, nothing more; it is not a model-effort profile, so it never needs an evidence-backed default. Effort still comes from the user or the recommendation path. Where the route encodes effort in the id, as `cursor/*` does, that level is part of the model's name rather than an option — resolve it from the family's catalog effort profile before building the slug, and ask when the catalog offers none.
 
 ## Effort and id shape
 
-Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback.
+Effort support can vary by model even when the CLI accepts the flag. API effort support does not establish CLI adapter support. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback.
 
 `cursor/*` is the one route with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` and do not synthesize bracket overrides. Its list is also the only one holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross:
 

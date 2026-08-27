@@ -25,7 +25,7 @@ For a single-provider CLI, choosing the route IS choosing the provider: `codex` 
 | CLI | Provider/billing | Auth | Models |
 |---|---|---|---|
 | `cursor/*` | Cursor subscription | Cursor OAuth | many families under the cursor plan: cursor-grok-4.6-*, gpt-5.6-sol-*, claude-opus/fable/sonnet-*-*, kimi-k3-*, composer-2.5-*, gpt-5.x-* |
-| `cline/*` | configurable provider; `cline-pass` is one provider id among many | per-provider (`cline auth`: manual key, Azure, base URL) | varies by provider; cline-pass serves glm-5.2 etc. |
+| `cline/*` | configurable provider; `cline-pass` is one provider id among many | per-provider (`cline auth`: manual key, Azure, base URL) | varies by provider |
 
 - `cursor/*` is one subscription (Cursor) that exposes many model families; the route's model id selects the family. Billing is fixed to Cursor, but the model set is broad.
 - `cline/*` is genuinely multi-provider: `-P, --provider <id>` switches provider (default `cline`), `cline auth` adds/authenticates them (manual key, Azure, base URL). `cline-pass` is a provider id used for the Cline Pass quota — not a fixed provider of the whole CLI.

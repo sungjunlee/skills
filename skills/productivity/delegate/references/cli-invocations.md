@@ -57,7 +57,7 @@ A home route says which CLI hosts a family, nothing more; it is not a model-effo
 
 ## Effort and id shape
 
-Effort support can vary by model even when the CLI accepts the flag. API effort support does not establish CLI adapter support. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback.
+Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback.
 
 `cursor/*` is the one route with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` and do not synthesize bracket overrides. Its list is also the only one holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross:
 

@@ -1,8 +1,6 @@
 # Model catalog
 
-Last checked: 2026-08-16. Treat as stale after 30 days.
-
-GLM-5.3 / Flash and Gemini 3.7 Flash checked: 2026-08-27.
+Last checked: 2026-08-27. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
@@ -65,7 +63,7 @@ local runs.
 - [Qwen Cloud text-generation models](https://docs.qwencloud.com/developer-guides/getting-started/text-generation-models) and [Token Plan](https://docs.qwencloud.com/token-plan/overview)
 - [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
-- [Z.ai GLM-5.3 guide](https://docs.z.ai/guides/llm/glm-5.3), [GLM-5.3 Flash guide](https://docs.z.ai/guides/vlm/glm-5.3-flash), [GLM-5.3 Flash announcement](https://z.ai/blog/glm-5.3-flash), and [Z.ai pricing](https://docs.z.ai/guides/overview/pricing)
+- [Z.ai GLM-5.3 guide](https://docs.z.ai/guides/llm/glm-5.3), [GLM-5.3 Flash guide](https://docs.z.ai/guides/vlm/glm-5.3-flash), and [Z.ai pricing](https://docs.z.ai/guides/overview/pricing)
 - [Gemini 3.7 Flash model docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash) and [Gemini pricing](https://ai.google.dev/gemini-api/docs/latest-model)
 
 These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. OpenAI's 2026-07-30 reprice (Luna −80%, Terra −20%) postdates the cost side of the 2026-07-22/23 observations — the acceptance-parity finding on those fixtures stands, but re-check dollar costs before letting them decide. Distinguish API marginal cost from subscription quota pressure when comparing routes.

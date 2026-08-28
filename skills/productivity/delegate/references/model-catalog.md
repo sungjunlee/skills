@@ -22,8 +22,8 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
-| `glm-5.3` | Complex or long-horizon text coding; 1M context. | API `low`/`high`/`max`; default/recommended `max`; always thinking | $1.40/$4.40 per 1M in/out (Z.ai direct API) |
-| `glm-5.3-flash` | Value coding and native multimodal office work; 1M context. | same API effort profile as GLM-5.3 | $0.15/$0.50 standard per 1M in/out (Z.ai direct API); 3× GLM-5.3 quota on Z.ai Coding Plan |
+| `glm-5.3` | Complex or long-horizon text coding; 1M context. | route default; Z.ai API `low`/`high`/`max` (default `max`, always thinking) | $1.40/$4.40 per 1M in/out (Z.ai direct API) |
+| `glm-5.3-flash` | Value coding and native multimodal office work; 1M context. | route default; same Z.ai API settings as GLM-5.3 | $0.15/$0.50 standard per 1M in/out (Z.ai direct API); 3× GLM-5.3 quota on Z.ai Coding Plan |
 | `gemini-3.7-flash` | Coding/agents and multimodal design work; 1M context. | API `low`/`medium`/`high`; default `medium`; no `minimal` | $0.75/$3.75 introductory through 2026-12-31, then $1.50/$7.50 per 1M in/out (Google direct API) |
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
 | `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | `high` for ambiguous or multi-stage work; otherwise route default | pro value |

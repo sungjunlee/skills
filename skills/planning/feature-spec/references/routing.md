@@ -12,23 +12,21 @@ Never commit merely for persistence.
 
 ## Settled single unit
 
-Emit exactly this handoff, with one recommendation. Honor an already selected route without asking again.
+Emit exactly this handoff. Describe observed execution characteristics only. Do not name, choose, detect, recommend, or invoke `implement`, `relay`, `dev-backlog`, or any other successor. Preserve an explicitly supplied tool decision only under `Constraints`, as source intent.
 
 ```markdown
 ## Execution Handoff
 
-1. implement — current-session execution with inline or bounded workers
-2. relay — isolated durable execution with manifest, PR/MR, independent review, and recovery
-
-Recommendation: implement | relay
-Why: <task-specific durability, isolation, review, risk, and parallelism evidence>
+Durability: <current-session sufficient | durable recovery required>
+Isolation: <shared checkout is safe | isolated workspace required>
+Review: <orchestrator verification sufficient | independent review required>
+Current-session suitability: <can finish in the current session | long-running or elevated-risk handling required>
+Constraints: <binding execution constraints, including any tool decision supplied in the source; or None>
 ```
-
-Recommend `implement` when the unit can finish in the current session, the checkout is safe, and orchestrator verification is sufficient. Recommend `relay` when durability, isolation, recovery, PR/MR lifecycle, independent review, long-running work, or elevated change risk is material.
 
 ## Work requiring decomposition
 
-Emit a tracker-neutral handoff without ticket IDs or invented tracker objects:
+Emit a tracker-neutral handoff without ticket IDs, invented tracker objects, or a successor name:
 
 ```markdown
 ## Decomposition Handoff
@@ -38,29 +36,27 @@ Leaf boundaries: <observable outcome boundaries, not tickets>
 Dependency edges: <known ordering or shared constraints>
 Shared acceptance criteria: <cross-cutting criteria every leaf must preserve>
 Durable spec: <authorized path or suggested path>
-Recommendation: stop
 ```
 
-- When multi-leaf or dependency shape is observed, emit this handoff and stop. Do not invent tickets or continue into execution.
+- When multi-leaf or dependency shape is observed, emit this handoff and stop. Do not invent tickets, continue into execution, or name a successor.
 - Leaf tasks, if later work creates them, should link to the durable spec and carry only slice-specific acceptance criteria.
 
 The complete Feature Spec plus this handoff is the source artifact for later decomposition or tracking.
 
 ## Contract contradictions
 
-If a durable repository contract contradicts the settled source, name the exact contract path and section under `Unresolved human decisions`. Do not choose a winner, amend `spec/*`, or route into execution until a human resolves it. A contradiction overrides a preselected execution route.
+If a durable repository contract contradicts the settled source, name the exact contract path and section under `Unresolved human decisions`. Do not choose a winner, amend `spec/*`, or continue into execution until a human resolves it.
 
 Emit exactly this closed handoff:
 
 ```markdown
 ## Human Decision Handoff
 
-Route: blocked-human-decision
 Source intent: <the settled decision that conflicts>
 Conflicting contract: <exact repository path and section, plus the incompatible requirement>
 Decision required: <the choice a human must make before compilation can resume>
 Execution status: blocked pending human decision
-Resume with: feature-spec after the contradiction is resolved
+Resume: compile again after the contradiction is resolved
 ```
 
-In unattended flows, return the complete spec with this handoff and ask no question. The route ends the current compilation successfully without selecting `implement`, `relay`, or a decomposition successor; it does not authorize execution or contract edits.
+In unattended flows, return the complete spec with this handoff and ask no question. The handoff ends the current compilation successfully without selecting a successor; it does not authorize execution or contract edits.

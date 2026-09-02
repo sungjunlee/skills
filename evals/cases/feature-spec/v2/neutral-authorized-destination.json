@@ -1,0 +1,46 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "feature-spec.neutral-authorized-destination",
+  "skill": "planning/feature-spec",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "fixture_tree": "evals/fixtures/feature-spec/v2/authorized-destination",
+      "source": "SOURCE.md",
+      "lifetime": "durable",
+      "edit_authority": "granted",
+      "destination": "docs/specs/2026-09-02-coverage-summary.md",
+      "flow": "unattended"
+    }
+  },
+  "required_output_fields": [
+    "Artifact-lifetime",
+    "Execution-Handoff",
+    "Persisted-spec-file",
+    "Durability",
+    "Isolation",
+    "Review",
+    "Current-session-suitability"
+  ],
+  "expected_route": "execution",
+  "expected_engine": null,
+  "question_count_range": { "min": 0, "max": 0 },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "lifetime", "type": "output_field_present", "field": "Artifact-lifetime" },
+    { "assertion_id": "handoff", "type": "output_field_present", "field": "Execution-Handoff" },
+    { "assertion_id": "persisted-file", "type": "output_field_present", "field": "Persisted-spec-file" },
+    { "assertion_id": "durability", "type": "output_field_present", "field": "Durability" },
+    { "assertion_id": "isolation", "type": "output_field_present", "field": "Isolation" },
+    { "assertion_id": "review", "type": "output_field_present", "field": "Review" },
+    { "assertion_id": "current-session", "type": "output_field_present", "field": "Current-session-suitability" },
+    { "assertion_id": "handoff-shape", "type": "route_equals" },
+    { "assertion_id": "no-question", "type": "question_count_in_range" },
+    { "assertion_id": "no-escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" },
+    { "assertion_id": "no-tracker-mutation", "type": "side_effect_absent", "side_effect": "issue_mutation" },
+    { "assertion_id": "no-successor-invocation", "type": "side_effect_absent", "side_effect": "external_message" }
+  ],
+  "forbidden_side_effects": ["commit", "push", "issue_mutation", "external_message"]
+}

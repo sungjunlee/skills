@@ -1,0 +1,39 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "feature-spec.neutral-multi-leaf-decomposition",
+  "skill": "planning/feature-spec",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "fixture_tree": "evals/fixtures/feature-spec/v2/multi-leaf-decomposition",
+      "source": "SOURCE.md",
+      "lifetime": "multi-session",
+      "edit_authority": "not-granted",
+      "destination": "unspecified",
+      "flow": "unattended"
+    }
+  },
+  "required_output_fields": [
+    "Decomposition-Handoff",
+    "Leaf-boundaries",
+    "Dependency-edges",
+    "Shared-acceptance-criteria"
+  ],
+  "expected_route": "decomposition",
+  "expected_engine": null,
+  "question_count_range": { "min": 0, "max": 0 },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "handoff", "type": "output_field_present", "field": "Decomposition-Handoff" },
+    { "assertion_id": "leaves", "type": "output_field_present", "field": "Leaf-boundaries" },
+    { "assertion_id": "edges", "type": "output_field_present", "field": "Dependency-edges" },
+    { "assertion_id": "shared-ac", "type": "output_field_present", "field": "Shared-acceptance-criteria" },
+    { "assertion_id": "handoff-shape", "type": "route_equals" },
+    { "assertion_id": "no-question", "type": "question_count_in_range" },
+    { "assertion_id": "no-escalation", "type": "escalation_equals" },
+    { "assertion_id": "no-successor-invocation", "type": "side_effect_absent", "side_effect": "external_message" },
+    { "assertion_id": "no-tracker-mutation", "type": "side_effect_absent", "side_effect": "issue_mutation" },
+    { "assertion_id": "no-write", "type": "side_effect_absent", "side_effect": "repository_write" }
+  ],
+  "forbidden_side_effects": ["external_message", "issue_mutation", "repository_write"]
+}

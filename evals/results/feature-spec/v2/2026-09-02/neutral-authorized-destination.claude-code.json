@@ -1,0 +1,115 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-09-02",
+  "case_id": "feature-spec.neutral-authorized-destination",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.233 / claude-opus-5",
+  "skill_revision": "54967bfc8f733d7fe30a21c5fe31848bfa1791387c9767518c78df80d8dbda5e",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "lifetime",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Artifact-lifetime."
+    },
+    {
+      "assertion_id": "handoff",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Execution-Handoff."
+    },
+    {
+      "assertion_id": "persisted-file",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The authorized path docs/specs/2026-09-02-coverage-summary.md existed after the run and contained the Feature Spec plus Execution Handoff."
+    },
+    {
+      "assertion_id": "durability",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Durability."
+    },
+    {
+      "assertion_id": "isolation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Isolation."
+    },
+    {
+      "assertion_id": "review",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Review."
+    },
+    {
+      "assertion_id": "current-session",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Current-session-suitability."
+    },
+    {
+      "assertion_id": "handoff-shape",
+      "status": "pass",
+      "observed": "execution",
+      "evidence": "Observed handoff shape \"execution\"."
+    },
+    {
+      "assertion_id": "no-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "Observed 0 blocking question(s)."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Observed escalation \"none\"."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit observed in the fixture repository."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No push observed in the fixture repository."
+    },
+    {
+      "assertion_id": "no-tracker-mutation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No issue_mutation observed in the fixture repository."
+    },
+    {
+      "assertion_id": "no-successor-invocation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No external_message observed in the fixture repository."
+    }
+  ],
+  "observed_output_fields": [
+    "Artifact-lifetime",
+    "Execution-Handoff",
+    "Durability",
+    "Isolation",
+    "Review",
+    "Current-session-suitability",
+    "Suggested-path",
+    "Response-body",
+    "Persisted-spec-file",
+    "Unresolved-human-decisions"
+  ],
+  "observed_route": "execution",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [
+    "repository_write"
+  ],
+  "evidence_note": "2026-09-02 isolated Claude Code CLI replay in a disposable fixture repository; exit 0; fixture HEAD unchanged; spec/ untouched. Authorized spec file present at docs/specs/2026-09-02-coverage-summary.md; no commit. Raw artifacts stay outside the repository."
+}

@@ -59,6 +59,7 @@ Source:
 - `skills/review/gosu-review/agents/openai.yaml`
 - `skills/review/gosu-review/references/personas.md`
 - `skills/review/gosu-review/references/cross-examine.md`
+- `skills/review/gosu-review/references/verdict.md`
 
 ### Evaluated, not yet used in daily workflows
 
@@ -190,6 +191,7 @@ skills/
       references/
         cross-examine.md
         personas.md
+        verdict.md
 spec/
 ```
 

@@ -80,6 +80,9 @@ answer.
 Return one panel entry:
 
 - verdict: ship | fix | rethink
+    ship: it would land as-is; remaining findings are optional
+    fix: specific named changes, then it lands
+    rethink: the approach is wrong, not the details; listed fixes would not save it
 - sharp take: one sentence — the headline, not the argument
 - findings: 0-4 entries, each with
     what: the claim
@@ -91,6 +94,8 @@ Return one panel entry:
 Length follows what you found. If your axis turns up nothing real, return zero
 findings and say why — that is a useful answer, not a failed one.
 ```
+
+The brief carries the three-line verdict definition panelists need; `references/verdict.md` has the worked boundaries for choosing between neighbors.
 
 **Complete when:** every cast panelist has been spawned before any result is read, or the unavailable stop block has been returned.
 

@@ -11,3 +11,7 @@ evals/delegate/drafts/
 # Uncurated dispatch-contract replay host output; curated evidence is promoted
 # into evals/results/dispatch/<date>/.
 evals/fixtures/dispatch/drafts/
+
+# Uncurated feature-spec successor-neutral replay host output; curated evidence
+# is promoted into evals/results/feature-spec/v2/<date>/.
+evals/fixtures/feature-spec/drafts/

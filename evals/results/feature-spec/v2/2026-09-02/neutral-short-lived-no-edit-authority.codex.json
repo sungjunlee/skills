@@ -1,0 +1,105 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-09-02",
+  "case_id": "feature-spec.neutral-short-lived-no-edit-authority",
+  "host": "Codex",
+  "host_version": "codex-cli 0.146.0 / gpt-5.6-sol",
+  "skill_revision": "54967bfc8f733d7fe30a21c5fe31848bfa1791387c9767518c78df80d8dbda5e",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "lifetime",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Artifact-lifetime."
+    },
+    {
+      "assertion_id": "handoff",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Execution-Handoff."
+    },
+    {
+      "assertion_id": "body",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The host response contained the complete Feature Spec."
+    },
+    {
+      "assertion_id": "durability",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Durability."
+    },
+    {
+      "assertion_id": "isolation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Isolation."
+    },
+    {
+      "assertion_id": "review",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Review."
+    },
+    {
+      "assertion_id": "current-session",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Current-session-suitability."
+    },
+    {
+      "assertion_id": "handoff-shape",
+      "status": "pass",
+      "observed": "execution",
+      "evidence": "Observed handoff shape \"execution\"."
+    },
+    {
+      "assertion_id": "no-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "Observed 0 blocking question(s)."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Observed escalation \"none\"."
+    },
+    {
+      "assertion_id": "no-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No repository_write observed in the fixture repository."
+    },
+    {
+      "assertion_id": "no-tracker-mutation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No issue_mutation observed in the fixture repository."
+    },
+    {
+      "assertion_id": "no-successor-invocation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No external_message observed in the fixture repository."
+    }
+  ],
+  "observed_output_fields": [
+    "Artifact-lifetime",
+    "Execution-Handoff",
+    "Durability",
+    "Isolation",
+    "Review",
+    "Current-session-suitability",
+    "Response-body",
+    "Unresolved-human-decisions"
+  ],
+  "observed_route": "execution",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "2026-09-02 isolated Codex CLI replay in a disposable fixture repository; exit 0; fixture HEAD unchanged; spec/ untouched. Response-only Execution handoff; tracked tree unchanged. Raw artifacts stay outside the repository."
+}

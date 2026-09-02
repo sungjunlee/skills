@@ -1,0 +1,78 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-09-02",
+  "case_id": "feature-spec.neutral-contract-contradiction",
+  "host": "Codex",
+  "host_version": "codex-cli 0.146.0 / gpt-5.6-sol",
+  "skill_revision": "54967bfc8f733d7fe30a21c5fe31848bfa1791387c9767518c78df80d8dbda5e",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "unresolved",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Unresolved-human-decisions."
+    },
+    {
+      "assertion_id": "exact-contract",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The handoff named spec/capabilities.md, Capability secret-storage, and Hard Constraints."
+    },
+    {
+      "assertion_id": "human-decision-handoff",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The compiled spec contains Human-Decision-Handoff."
+    },
+    {
+      "assertion_id": "handoff-shape",
+      "status": "pass",
+      "observed": "human-decision",
+      "evidence": "Observed handoff shape \"human-decision\"."
+    },
+    {
+      "assertion_id": "unattended-no-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "Observed 0 blocking question(s)."
+    },
+    {
+      "assertion_id": "decision-recorded",
+      "status": "pass",
+      "observed": "human-decision-recorded",
+      "evidence": "Observed escalation \"human-decision-recorded\"."
+    },
+    {
+      "assertion_id": "no-contract-edit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No repository_write observed in the fixture repository."
+    },
+    {
+      "assertion_id": "no-tracker-mutation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No issue_mutation observed in the fixture repository."
+    },
+    {
+      "assertion_id": "no-successor-invocation",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No external_message observed in the fixture repository."
+    }
+  ],
+  "observed_output_fields": [
+    "Artifact-lifetime",
+    "Human-Decision-Handoff",
+    "Response-body",
+    "Unresolved-human-decisions",
+    "Exact-contract-conflict"
+  ],
+  "observed_route": "human-decision",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "human-decision-recorded",
+  "side_effects": [],
+  "evidence_note": "2026-09-02 isolated Codex CLI replay in a disposable fixture repository; exit 0; fixture HEAD unchanged; spec/ untouched. Human Decision Handoff named spec/capabilities.md Capability secret-storage Hard Constraints; no contract edit. Raw artifacts stay outside the repository."
+}

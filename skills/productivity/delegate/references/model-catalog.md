@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-08-27. Treat as stale after 30 days.
+Last checked: 2026-09-03. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
@@ -11,7 +11,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `gpt-5.6-sol` | Highest-stakes or hardest GPT-5.6 work. | `medium` for bounded hard work with strong checks; `high` for high-blast-radius or cross-boundary work with consequential tradeoffs; `xhigh` for long-horizon work that benefits from broad exploration and self-checking | flagship |
 | `gpt-5.6-terra` | Balanced GPT-5.6 tier for ambiguous everyday work. | `medium`; test before using `high`+ as a value step | balanced |
 | `gpt-5.6-luna` | Fast, high-volume, or tightly scoped GPT-5.6 work; repriced −80% on 2026-07-30 ($0.20/$1.20 per 1M in/out). | `high`; `xhigh`–`max` for bounded, genuinely hard work — community reports favor `max` there and warn against it for vague or coordination-heavy tasks | deep value |
-| `claude-fable-5` | Long-running, highly ambitious work that earns frontier spend. | `high` by default; `xhigh` for the most capability-sensitive or long-running autonomous work; step down to `medium` only when cost or interactivity matters more than peak quality | frontier |
+| `claude-fable-5-1` | Long-running, highly ambitious work that earns frontier spend. | `high` by default; `xhigh` for demanding long tasks; `medium` for value; re-evaluate effort on 5.1 | frontier; $10/$50 per 1M in/out, $0.25 cache read |
 | `claude-opus-5` | Complex agentic coding, long-horizon execution, code review, vision-heavy implementation, or document work when Fable-tier spend is not justified. | `high` by default; `xhigh` for demanding coding and agentic work; reserve `max` for unconstrained frontier problems; re-sweep `low` and `medium` rather than inheriting an older Opus setting | premium |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
 | `grok-4.6` | Long-running agent loops, tool-heavy coding, and 500K-context knowledge work, or an independent frontier-family review. Released 2026-08-12; public coding benchmarks still trail the strongest GPT-5.6 profile, so pick it for step persistence and breadth, not peak code accuracy. | `high` is the vendor default; `xhigh` is new in 4.6 for long agent trajectories; `medium` when latency matters more than reasoning depth | value frontier; $2/$6 per 1M in/out below 200K prompt tokens, doubling above it |
@@ -24,7 +24,8 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 |---|---|---|---|
 | `glm-5.3` | Complex or long-horizon text coding; 1M context. | route default; Z.ai API `low`/`high`/`max` (default `max`, always thinking) | $1.40/$4.40 per 1M in/out (Z.ai direct API) |
 | `glm-5.3-flash` | Value coding and native multimodal office work; 1M context. | route default; same Z.ai API settings as GLM-5.3 | $0.15/$0.50 standard per 1M in/out (Z.ai direct API); 3× GLM-5.3 quota on Z.ai Coding Plan |
-| `gemini-3.7-flash` | Coding/agents and multimodal design work; 1M context. | route default; API `low`/`medium`/`high` (default `medium`; no `minimal`) | $0.75/$3.75 introductory through 2026-12-31, then $1.50/$7.50 per 1M in/out (Google direct API) |
+| `gemini-3.8-flash` | Complex, long-horizon coding/agents and multimodal work; 1M context. | route default; API `low`/`medium`/`high` (default `medium`; no `minimal`) | $0.75/$3.75 introductory through 2026-12-31, then $1.50/$7.50 per 1M in/out (Google direct API) |
+| `muse-spark-1.3` | Long-horizon coding and multimodal work; 1M context. | route default; `max` announced but not yet launched | route-priced; Contributor is cheaper in exchange for permission to train on prompts and completions |
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
 | `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | `high` for ambiguous or multi-stage work; otherwise route default | pro value |
 | `hy3` | Coding, document, and frontend work with grounded low-hallucination behavior; Tencent's open-weight generalist, GA 2026-07-06 (~$0.13/$0.53 per 1M via OpenRouter). | route default is no-think; `low` and `high` thinking modes documented for complex multi-step work | mid |
@@ -43,7 +44,7 @@ local runs.
   also passed both dates and stays a valid alternative.
 - High-blast-radius analysis → Sol `high`; use `xhigh` when register
   depth is the deliverable.
-- Independent cross-family review → Fable `high`. The Grok side of that
+- Independent cross-family review → Fable 5 `high` (not yet validated on 5.1). The Grok side of that
   comparison was `grok-4.5` (strong twice, one empty-output run) and
   retires with the model — evidence never transfers to a successor, so
   `grok-4.6` enters this list unevidenced.
@@ -54,7 +55,7 @@ local runs.
 ## Sources
 
 - [OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
-- [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5](https://www.anthropic.com/claude/fable), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
+- [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - [xAI Grok 4.6](https://docs.x.ai/developers/grok-4-6) and [xAI models and pricing](https://docs.x.ai/developers/models)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
 - [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3)
@@ -64,6 +65,7 @@ local runs.
 - [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
 - [Z.ai GLM-5.3 guide](https://docs.z.ai/guides/llm/glm-5.3), [GLM-5.3 Flash guide](https://docs.z.ai/guides/vlm/glm-5.3-flash), and [Z.ai pricing](https://docs.z.ai/guides/overview/pricing)
-- [Gemini 3.7 Flash model docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash) and [Gemini pricing](https://ai.google.dev/gemini-api/docs/latest-model)
+- [Gemini 3.8 Flash model docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) and [Gemini pricing](https://ai.google.dev/gemini-api/docs/latest-model)
+- [Meta Muse Spark 1.3](https://research.meta.ai/blog/introducing-muse-spark-1-3), [OpenCode Zen privacy](https://opencode.ai/docs/zen/#privacy), and [OpenCode Go privacy](https://opencode.ai/docs/go/#privacy)
 
 These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. OpenAI's 2026-07-30 reprice (Luna −80%, Terra −20%) postdates the cost side of the 2026-07-22/23 observations — the acceptance-parity finding on those fixtures stands, but re-check dollar costs before letting them decide. Distinguish API marginal cost from subscription quota pressure when comparing routes.

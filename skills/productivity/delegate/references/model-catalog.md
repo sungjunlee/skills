@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-09-03. Treat as stale after 30 days.
+Last checked: 2026-09-04. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
@@ -11,7 +11,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `gpt-5.6-sol` | Highest-stakes or hardest GPT-5.6 work. | `medium` for bounded hard work with strong checks; `high` for high-blast-radius or cross-boundary work with consequential tradeoffs; `xhigh` for long-horizon work that benefits from broad exploration and self-checking | flagship |
 | `gpt-5.6-terra` | Balanced GPT-5.6 tier for ambiguous everyday work. | `medium`; test before using `high`+ as a value step | balanced |
 | `gpt-5.6-luna` | Fast, high-volume, or tightly scoped GPT-5.6 work; repriced −80% on 2026-07-30 ($0.20/$1.20 per 1M in/out). | `high`; `xhigh`–`max` for bounded, genuinely hard work — community reports favor `max` there and warn against it for vague or coordination-heavy tasks | deep value |
-| `claude-fable-5-1` | Long-running, highly ambitious work that earns frontier spend. | `high` by default; `xhigh` for demanding long tasks; `medium` for value; re-evaluate effort on 5.1 | frontier; $10/$50 per 1M in/out, $0.25 cache read |
+| `claude-fable-5-1` | Long-running, highly ambitious work that earns frontier spend. | `low` for scoped, checkable work that does not rely on broad retrieval; `medium` for most planning and coding already routed to Fable; `high` for difficult or ambiguous work; use `xhigh` or `max` only where evals show a gain on genuinely long-horizon tasks | frontier; $10/$50 per 1M in/out, $0.25 cache read |
 | `claude-opus-5` | Complex agentic coding, long-horizon execution, code review, vision-heavy implementation, or document work when Fable-tier spend is not justified. | `high` by default; `xhigh` for demanding coding and agentic work; reserve `max` for unconstrained frontier problems; re-sweep `low` and `medium` rather than inheriting an older Opus setting | premium |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
 | `grok-4.6` | Long-running agent loops, tool-heavy coding, and 500K-context knowledge work, or an independent frontier-family review. Released 2026-08-12; public coding benchmarks still trail the strongest GPT-5.6 profile, so pick it for step persistence and breadth, not peak code accuracy. | `high` is the vendor default; `xhigh` is new in 4.6 for long agent trajectories; `medium` when latency matters more than reasoning depth | value frontier; $2/$6 per 1M in/out below 200K prompt tokens, doubling above it |

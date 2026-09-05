@@ -13,7 +13,7 @@ This file intentionally contains **no user-specific state** (no subscriptions, b
 
 | CLI | Fixed provider | Auth | Models |
 |---|---|---|---|
-| `codex/*` | OpenAI (ChatGPT OAuth) | `auth_mode: chatgpt` | gpt-5.6-sol / terra / luna |
+| `codex/*` | OpenAI (ChatGPT OAuth) | `auth_mode: chatgpt` | gpt-6-astra / gpt-5.6-sol / terra / luna |
 | `claude/*` | Anthropic (claude.ai) | firstParty OAuth | claude-fable-5-1 / opus-5 / sonnet-5 |
 | `reasonix/*` | DeepSeek first-party API | DEEPSEEK_API_KEY | deepseek-v4-* |
 | `grok/*` | xAI (Grok Build CLI) | grok.com OAuth, or `XAI_API_KEY` where no browser is available | grok-4.6 / grok-4.5 |
@@ -59,7 +59,7 @@ When the same model exists on multiple routes:
 4. **Off-peak discounts** — if a provider offers off-peak discounts, defer heavy batchable work to that window.
 5. **Peak-rate avoidance** — if a first-party API is more expensive during peak hours, use subscriptions in those hours.
 6. **Quota-exhausted fallback** — when a preferred route is at 0%, fall back to another route that exposes the same model.
-7. **Family-first, then billing** — for families reachable in multiple subscriptions, prefer the native CLI (e.g. `claude/*` for claude models, `codex/*` for gpt-5.6) for full effort control; use a bundled subscription (e.g. `cursor/*`) for 1M-token variants or when that subscription has spare quota. An explicit provider or route named by the user always wins.
+7. **Family-first, then billing** — for families reachable in multiple subscriptions, prefer the native CLI (e.g. `claude/*` for claude models, `codex/*` for GPT models) for full effort control; use a bundled subscription (e.g. `cursor/*`) for 1M-token variants or when that subscription has spare quota. An explicit provider or route named by the user always wins.
 
 Decision order: risk → explicit user route → quota burn → cost (peak/discount) → capability.
 

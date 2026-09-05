@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-09-04. Treat as stale after 30 days.
+Last checked: 2026-09-05. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
@@ -8,6 +8,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
+| `gpt-6-astra` | Hardest end-to-end reasoning, coding, computer-use, research, and document work; 1.05M context. | vendor guidance starts migrations from `none` or `minimal` at `low`; re-sweep `low` and `medium` rather than inheriting an older-model setting, and use `high`–`max` only where task evals show a gain | frontier; $10/$50 per 1M in/out, $1 cached input; over 272K input, the full request costs 2× input/cache and 1.5× output |
 | `gpt-5.6-sol` | Highest-stakes or hardest GPT-5.6 work. | `medium` for bounded hard work with strong checks; `high` for high-blast-radius or cross-boundary work with consequential tradeoffs; `xhigh` for long-horizon work that benefits from broad exploration and self-checking | flagship |
 | `gpt-5.6-terra` | Balanced GPT-5.6 tier for ambiguous everyday work. | `medium`; test before using `high`+ as a value step | balanced |
 | `gpt-5.6-luna` | Fast, high-volume, or tightly scoped GPT-5.6 work; repriced −80% on 2026-07-30 ($0.20/$1.20 per 1M in/out). | `high`; `xhigh`–`max` for bounded, genuinely hard work — community reports favor `max` there and warn against it for vague or coordination-heavy tasks | deep value |
@@ -54,7 +55,7 @@ local runs.
 
 ## Sources
 
-- [OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
+- [GPT-6 Astra model](https://developers.openai.com/api/docs/models/gpt-6-astra), [Astra model guidance](https://developers.openai.com/api/docs/guides/latest-model), [OpenAI model catalog](https://developers.openai.com/api/docs/models), and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
 - [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - [xAI Grok 4.6](https://docs.x.ai/developers/grok-4-6) and [xAI models and pricing](https://docs.x.ai/developers/models)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)

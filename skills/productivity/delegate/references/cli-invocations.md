@@ -47,8 +47,9 @@ An input that names a model or family without a route resolves to that family's 
 
 | Family | Home route | Basis |
 |---|---|---|
+| `gpt-6-astra` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
 | `gpt-5.6-*` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
-| `claude-*` | `claude/*` | the vendor's own CLI, and the only route exposing all five effort levels |
+| `claude-*` | `claude/*` | the vendor's own CLI, with all five effort levels |
 | `grok-4.6` | `grok/*` | the vendor's own coding CLI |
 
 A family absent from the table has no default — `glm-*`, `gemini-*`, `muse-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` may run on several routes, so ask which CLI to use.

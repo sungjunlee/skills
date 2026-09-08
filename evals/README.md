@@ -34,6 +34,16 @@ replays; it is not a general process-event framework. Paid profile evaluation
 stays in `evals/delegate/`. Re-run a host observation with
 `node scripts/run-dispatch-replay.mjs --host <claude-code|codex> --case <id>`.
 
+`gosu-review.cross-examined-tension` adds an optional `round_two_contract` on
+the case and a matching `round_two_observation` on the result. That block is
+the Round-two trace: route identity (`resume` or `fresh`), both sides'
+delivery/reread/new-anchor/`hold|concede|refine`/resolved-fix, tension
+derivation, and extra-round count. Aggregate host dispatch count is not a
+substitute. A pass requires a same-element opposite-fix conflict, both sides
+complete, no orchestrator-invented resolution, and no extra round. A
+non-conflicting first panel is fixture-premise-invalid, not pass. Host or
+tool failure is `unverified`, not pass.
+
 `evidence_citation_count_in_range` and `zero_finding_panelist_count_in_range`
 are the depth counters. The first counts findings carrying a concrete anchor —
 a file:line reference, a quotation, or a named observed detail — which is the

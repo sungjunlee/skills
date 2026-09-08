@@ -1,0 +1,42 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-09-08",
+  "case_id": "fixture.round-two-trace",
+  "host": "synthetic",
+  "host_version": "fixture",
+  "skill_revision": "fixture",
+  "status": "unverified",
+  "assertion_results": [
+    {
+      "assertion_id": "field-summary",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Synthetic host/tool failure; the required route was not executed."
+    },
+    {
+      "assertion_id": "host-dispatch-count",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Synthetic host/tool failure; the required route was not executed."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Synthetic host/tool failure; the required route was not executed."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Synthetic host/tool failure; the required route was not executed."
+    }
+  ],
+  "observed_output_fields": ["summary"],
+  "observed_route": null,
+  "observed_engine": null,
+  "question_count": null,
+  "observed_escalation": null,
+  "side_effects": [],
+  "evidence_note": "Synthetic unverified path: host or tool failure prevented the required cross-examination route from running, so the result is not pass."
+}

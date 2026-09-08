@@ -38,6 +38,62 @@ export function dispatchDerived(replayCase, result) {
   };
 }
 
+const ROUND_TWO_POSITIONS = new Set(["hold", "concede", "refine"]);
+const ROUND_TWO_STATUSES = new Set(["resolved", "unresolved"]);
+
+export function roundTwoDerived(replayCase, result) {
+  const expected = replayCase.round_two_contract;
+  if (!expected) return { ok: true, failed: [] };
+  const observed = result.round_two_observation;
+  if (!observed) return { ok: false, failed: ["missing_observation"] };
+
+  const sides = Array.isArray(observed.sides) ? observed.sides : [];
+  const checks = [
+    ["same_element_conflict", observed.same_element_conflict === true],
+    ["route", expected.allowed_routes.includes(observed.route)],
+    ["side_count", sides.length === expected.required_side_count],
+    [
+      "sides",
+      sides.every(
+        (side) =>
+          typeof side.seat === "string" &&
+          side.seat.length > 0 &&
+          side.delivered === true &&
+          side.reread_target === true &&
+          typeof side.new_anchor === "string" &&
+          side.new_anchor.length > 0 &&
+          ROUND_TWO_POSITIONS.has(side.position) &&
+          typeof side.resolved_fix === "string" &&
+          side.resolved_fix.length > 0,
+      ),
+    ],
+    [
+      "extra_rounds",
+      Number.isInteger(observed.extra_rounds) &&
+        observed.extra_rounds >= 0 &&
+        observed.extra_rounds <= expected.max_extra_rounds,
+    ],
+    ["orchestrator_invented_resolution", observed.orchestrator_invented_resolution === false],
+    ["tension_status", ROUND_TWO_STATUSES.has(observed.tension_status)],
+    [
+      "tension_derivation",
+      typeof observed.tension_derivation === "string" && observed.tension_derivation.length > 0,
+    ],
+    [
+      "hold_cannot_resolve",
+      !(
+        sides.length > 0 &&
+        sides.every((side) => side.position === "hold") &&
+        observed.tension_status === "resolved"
+      ),
+    ],
+  ];
+  return {
+    ok: checks.every(([, passed]) => passed),
+    failed: checks.filter(([, passed]) => !passed).map(([name]) => name),
+  };
+}
+
 export function countInRange(observed, range) {
   return {
     observed,
@@ -162,13 +218,29 @@ export function validateReplayPair(replayCase, result) {
     errors.push("dispatch_observation is only valid on a dispatch_contract case");
   }
 
+  if (replayCase.round_two_contract && !result.round_two_observation) {
+    errors.push("executed round-two result is missing round_two_observation");
+  } else if (!replayCase.round_two_contract && result.round_two_observation) {
+    errors.push("round_two_observation is only valid on a round_two_contract case");
+  }
+
   const dispatch = dispatchDerived(replayCase, result);
   if (result.status === "pass" && !dispatch.ok) {
     errors.push(`pass status requires dispatch contract checks to pass (failed: ${dispatch.failed.join(", ")})`);
   }
 
+  const roundTwo = roundTwoDerived(replayCase, result);
+  if (result.status === "pass" && !roundTwo.ok) {
+    errors.push(`pass status requires round-two contract checks to pass (failed: ${roundTwo.failed.join(", ")})`);
+  }
+  if (result.round_two_observation?.same_element_conflict === false && result.status === "pass") {
+    errors.push("a non-conflicting first panel is fixture-premise-invalid, not pass");
+  }
+
   const allPassed =
-    result.assertion_results.every((assertion) => assertion.status === "pass") && dispatch.ok;
+    result.assertion_results.every((assertion) => assertion.status === "pass") &&
+    dispatch.ok &&
+    roundTwo.ok;
   const expectedOverall = allPassed ? "pass" : "fail";
   if (result.status !== expectedOverall) {
     errors.push(`overall status ${result.status}; assertion results require ${expectedOverall}`);

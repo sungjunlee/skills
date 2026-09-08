@@ -1,0 +1,69 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-09-08",
+  "case_id": "fixture.round-two-trace",
+  "host": "synthetic",
+  "host_version": "fixture",
+  "skill_revision": "fixture",
+  "status": "fail",
+  "assertion_results": [
+    {
+      "assertion_id": "field-summary",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Synthetic output-field observation."
+    },
+    {
+      "assertion_id": "host-dispatch-count",
+      "status": "pass",
+      "observed": 8,
+      "evidence": "Synthetic host dispatch count for verifier coverage; no host support claim."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "Synthetic engine observation."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Synthetic escalation observation."
+    }
+  ],
+  "observed_output_fields": ["summary"],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": null,
+  "observed_host_subagent_dispatch_count": 8,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Synthetic fail path: a second extra round ran after the single allowed cross-examination round.",
+  "round_two_observation": {
+    "same_element_conflict": true,
+    "route": "resume",
+    "sides": [
+      {
+        "seat": "simplifier",
+        "delivered": true,
+        "reread_target": true,
+        "new_anchor": "LAYOUT.md:5",
+        "position": "refine",
+        "resolved_fix": "Keep the sentence, drop the second map."
+      },
+      {
+        "seat": "drift-reviewer",
+        "delivered": true,
+        "reread_target": true,
+        "new_anchor": "LAYOUT.md:16",
+        "position": "concede",
+        "resolved_fix": "Keep the sentence, drop the second map."
+      }
+    ],
+    "tension_status": "resolved",
+    "tension_derivation": "One conceded after a second extra round the contract forbids.",
+    "extra_rounds": 1,
+    "orchestrator_invented_resolution": false
+  }
+}

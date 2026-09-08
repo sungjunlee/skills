@@ -1,0 +1,108 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-09-08",
+  "case_id": "gosu-review.cross-examined-tension",
+  "host": "Codex",
+  "host_version": "codex-cli 0.146.0 / gpt-5.6-sol",
+  "skill_revision": "60c744a27bccab0f6f03ff4a10f985f2588f5548",
+  "status": "unverified",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-tensions",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-tensions-resolution",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-meta-cross-examine",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "host-dispatch-count",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    }
+  ],
+  "observed_output_fields": [],
+  "observed_route": null,
+  "observed_engine": null,
+  "question_count": null,
+  "observed_escalation": null,
+  "side_effects": [],
+  "evidence_note": "Attempted Codex observation of the fresh-subagent cross-examination fallback against evals/fixtures/gosu-review/same-element-conflict/LAYOUT.md. This host has no resumable named agent; the required route is collaboration.spawn_agent for both the panel and the two equivalent-context fresh round-two seats. codex exec -m gpt-5.6-sol -s read-only failed immediately with ChatGPT usage limit (retry 2026-09-15 10:56). No spawn events occurred, so there is no Round-two trace. Host/tool failure is unverified, not pass."
+}

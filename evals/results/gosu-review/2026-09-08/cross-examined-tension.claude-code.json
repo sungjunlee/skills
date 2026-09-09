@@ -1,0 +1,147 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-09-08",
+  "case_id": "gosu-review.cross-examined-tension",
+  "host": "Claude Code",
+  "host_version": "CLI 2.1.263 / claude-opus-5[1m]",
+  "skill_revision": "60c744a27bccab0f6f03ff4a10f985f2588f5548",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The selected target was named immediately under the gosu-review heading as LAYOUT.md."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "pass",
+      "observed": true,
+      "evidence": "One verdict line appeared for each of the five returned panelists."
+    },
+    {
+      "assertion_id": "field-tensions",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Tensions named the evals/ add-versus-delete conflict on the canonical layout block."
+    },
+    {
+      "assertion_id": "field-tensions-resolution",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The evals/ tension recorded resolved with the narrowed delete-only fix both round-two returns produced."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Five panel entries preserved verdict, sharp take, findings, and falsifier."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported five agents requested."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta reported five returned, matching the five panel entries."
+    },
+    {
+      "assertion_id": "field-meta-cross-examine",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Meta recorded cross-examine: fresh after resume was attempted and unavailable."
+    },
+    {
+      "assertion_id": "host-dispatch-count",
+      "status": "pass",
+      "observed": 7,
+      "evidence": "The host stream contained seven root Agent tool-use events with seven matching completions in subagent_stats; five were the panel and two were the fresh round-two seats. The final response's Meta line was not used for this count."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "All five panel Agent calls were issued before any of those five returned; the two round-two seats overlapped the same way."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "LAYOUT.md was named explicitly, so no confirmation question was asked."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "Every requested panelist returned and the single cross-examination round completed."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The disposable fixture repository remained clean after the run."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture HEAD remained the seed commit."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "pass",
+      "observed": true,
+      "evidence": "The fixture had no remote and no push was attempted."
+    }
+  ],
+  "observed_output_fields": [
+    "target",
+    "casting",
+    "verdicts",
+    "tensions",
+    "tensions.resolution",
+    "consensus",
+    "panel",
+    "meta.requested",
+    "meta.returned",
+    "meta.tool",
+    "meta.cross_examine"
+  ],
+  "observed_route": null,
+  "observed_engine": "bounded_parallel",
+  "question_count": 0,
+  "observed_host_subagent_dispatch_count": 7,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "First observation of the fresh-subagent cross-examination fallback, on the same-element-conflict LAYOUT.md fixture. Resume was attempted: ListAgents reported no reachable named panelists and SendMessage to both original seats returned unreachable. The orchestrator then dispatched two fresh Explore agents carrying persona, original Context, both positions, and the cross-examine return shape. Both reread LAYOUT.md and returned refine with a new anchor at LAYOUT.md:23-30. The evals/ add-versus-delete conflict resolved to delete :19-21 and :23-30 and add no row; the reported call follows those returns. One round only. Codex remains unverified on this date because ChatGPT usage limit blocked exec. This is evidence of the fresh route, not of resume/fresh semantic equivalence across hosts. Raw host artifacts remain outside the repository.",
+  "round_two_observation": {
+    "same_element_conflict": true,
+    "route": "fresh",
+    "sides": [
+      {
+        "seat": "two-maps maintainer",
+        "delivered": true,
+        "reread_target": true,
+        "new_anchor": "LAYOUT.md:23-30",
+        "position": "refine",
+        "resolved_fix": "Delete :19-21 and the entire second-map section :23-30; add no evals/ row."
+      },
+      {
+        "seat": "ruthless simplifier",
+        "delivered": true,
+        "reread_target": true,
+        "new_anchor": "LAYOUT.md:23-30",
+        "position": "refine",
+        "resolved_fix": "Delete :19-21, delete :23-30 entirely, and drop the trailing comment on :13; add no evals/ row."
+      }
+    ],
+    "tension_status": "resolved",
+    "tension_derivation": "Both seats refined on the same new anchor. The maintainer withdrew the ADD; the simplifier conceded the contradiction was live and widened DELETE to cover :23-30. The recorded call is that narrowed delete, not a merge invented by the orchestrator.",
+    "extra_rounds": 0,
+    "orchestrator_invented_resolution": false
+  }
+}

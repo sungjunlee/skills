@@ -1,0 +1,27 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "fixture.round-two-empty-routes",
+  "skill": "fixture/test",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "round-two-empty-routes"
+    }
+  },
+  "required_output_fields": ["summary"],
+  "expected_route": null,
+  "expected_engine": "bounded_parallel",
+  "question_count_range": null,
+  "expected_escalation": "none",
+  "round_two_contract": {
+    "allowed_routes": [],
+    "required_side_count": 2,
+    "max_extra_rounds": 0
+  },
+  "semantic_assertions": [
+    { "assertion_id": "field-summary", "type": "output_field_present", "field": "summary" },
+    { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" }
+  ],
+  "forbidden_side_effects": []
+}

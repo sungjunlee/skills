@@ -15,3 +15,7 @@ evals/fixtures/dispatch/drafts/
 # Uncurated feature-spec successor-neutral replay host output; curated evidence
 # is promoted into evals/results/feature-spec/v2/<date>/.
 evals/fixtures/feature-spec/drafts/
+
+# Uncurated gosu-review host transcripts; curated evidence is promoted into
+# evals/results/gosu-review/<date>/.
+evals/fixtures/gosu-review/drafts/

@@ -29,7 +29,11 @@ further to check, concede or say the question cannot be settled from the
 artifact alone.
 ```
 
-Resume the original panelist when the host supports it. They have already read the target, so the round is cheap and their new evidence is continuous with their old. Otherwise dispatch a fresh subagent carrying the persona, both positions, and the original context.
+Resume the original panelist when the host can continue that same subagent. They have already read the target, so the round is cheap and their new evidence is continuous with their old.
+
+Otherwise dispatch a fresh subagent. The fresh brief carries the persona line, Lens / Bias / Blind spot, the original Context, both positions, and the return shape above, because the new agent has not read the target. A host that only offers one-shot spawn, not a continuable named agent, is this path.
+
+Each return must cite a new artifact anchor. Holding without one is not holding. One round only. Do not invent a resolution the returns do not support.
 
 ## Reading the result
 

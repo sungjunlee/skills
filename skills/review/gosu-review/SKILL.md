@@ -103,7 +103,7 @@ The brief carries the three-line verdict definition panelists need; `references/
 
 A conflict is two entries that name the same element and point opposite ways — remove it versus extend it, this mechanism versus that one. One panelist covering ground another missed is not a conflict, and neither is disagreement about severity.
 
-Run one round, only on a conflict, at most the two sharpest by cost of getting them wrong. Put those two panelists back in front of the artifact with each other's position; read `references/cross-examine.md` for the brief and how to read the returns.
+Run one round, only on a conflict, at most the two sharpest by cost of getting them wrong. Put those two panelists back in front of the artifact with each other's position; read `references/cross-examine.md` for the brief, the resume-or-fresh route, and how to read the returns. Record the route in Meta: `resume` when the original panelists continued, `fresh` when new subagents carried the persona, original context, and both positions. One round only.
 
 ## Output
 
@@ -136,4 +136,5 @@ would change my mind: <falsifier>
 ## Meta
 - requested: N agents / returned: M / tool: <name or "unavailable">
 - panel: complete | partial
+- cross-examine: none | resume | fresh
 ```

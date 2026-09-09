@@ -6,15 +6,16 @@
     "kind": "inline",
     "value": {
       "scenario": "panel-conflicts-on-the-same-element",
-      "target_request": "/gosu-review skill/SKILL.md",
-      "target_state": "The named file is the only plausible target. It contains an element two casting axes will read opposite ways: one panelist's axis makes removing it the natural fix, another's makes extending it the natural fix.",
+      "fixture_tree": "evals/fixtures/gosu-review/same-element-conflict",
+      "target_request": "/gosu-review LAYOUT.md",
+      "target_state": "LAYOUT.md is the only plausible target. It names one layout block that two casting axes read opposite ways: a simplifier's axis makes removing it the natural fix, a completeness/drift axis makes extending it the natural fix.",
       "capabilities": {
         "subagent_dispatch": "native",
         "parallel_subagents": "native",
         "subagent_resume": "native"
       },
-      "subagent_behavior": "Every dispatched subagent returns one panel entry, and at least two entries name the same element with opposite fixes.",
-      "measurement_limit": "The host dispatch count covers the panel plus the cross-examination round, so a count above the panel size proves a second round of subagent work actually occurred. It does not prove the round was sent to the conflicting panelists, that either side revisited the artifact, or that the reported resolution follows from what they returned. A resolution recorded as unresolved is a passing outcome; this case does not require the panel to converge."
+      "subagent_behavior": "Every dispatched subagent returns one panel entry, and at least two entries name the same element with opposite fixes. Claude Code resumes the two original conflicting panelists; Codex dispatches two fresh subagents carrying persona, original context, and both positions. A first panel that never produces that conflict is fixture-premise-invalid, not a skill failure.",
+      "measurement_limit": "The Round-two trace, not the aggregate host dispatch count, is the claim. Passing proves both conflicting seats received a second turn, the recorded route was resume or fresh, each side reread the target and returned a new artifact anchor, each side's hold|concede|refine and resolved fix were preserved, and the resolved|unresolved status follows from those returns. It does not prove the voices were independent or high quality. A grounded unresolved tension is a passing outcome; convergence is not required. Orchestrator-invented resolution, missing reread or new anchor, or a second extra round fails. Host or tool failure is unverified."
     }
   },
   "required_output_fields": [
@@ -24,7 +25,8 @@
     "tensions.resolution",
     "panel",
     "meta.requested",
-    "meta.returned"
+    "meta.returned",
+    "meta.cross_examine"
   ],
   "expected_route": null,
   "expected_engine": "bounded_parallel",
@@ -33,10 +35,15 @@
     "max": 0
   },
   "host_subagent_dispatch_count_range": {
-    "min": 6,
+    "min": 4,
     "max": 10
   },
   "expected_escalation": "none",
+  "round_two_contract": {
+    "allowed_routes": ["resume", "fresh"],
+    "required_side_count": 2,
+    "max_extra_rounds": 0
+  },
   "semantic_assertions": [
     { "assertion_id": "field-target", "type": "output_field_present", "field": "target" },
     { "assertion_id": "field-verdicts", "type": "output_field_present", "field": "verdicts" },
@@ -45,6 +52,7 @@
     { "assertion_id": "field-panel", "type": "output_field_present", "field": "panel" },
     { "assertion_id": "field-meta-requested", "type": "output_field_present", "field": "meta.requested" },
     { "assertion_id": "field-meta-returned", "type": "output_field_present", "field": "meta.returned" },
+    { "assertion_id": "field-meta-cross-examine", "type": "output_field_present", "field": "meta.cross_examine" },
     { "assertion_id": "host-dispatch-count", "type": "host_subagent_dispatch_count_in_range" },
     { "assertion_id": "engine-bounded-parallel", "type": "engine_equals" },
     { "assertion_id": "no-confirmation-question", "type": "question_count_in_range" },

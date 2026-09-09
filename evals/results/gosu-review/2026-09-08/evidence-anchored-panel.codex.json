@@ -1,0 +1,102 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-09-08",
+  "case_id": "gosu-review.evidence-anchored-panel",
+  "host": "Codex",
+  "host_version": "codex-cli 0.146.0 / gpt-5.6-sol",
+  "skill_revision": "60c744a27bccab0f6f03ff4a10f985f2588f5548",
+  "status": "unverified",
+  "assertion_results": [
+    {
+      "assertion_id": "field-target",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-casting",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-verdicts",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-panel",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-meta-requested",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-meta-returned",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "field-meta-tool",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "evidence-citations",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "engine-bounded-parallel",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "no-confirmation-question",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "no-repository-write",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    },
+    {
+      "assertion_id": "no-push",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "Codex ChatGPT usage limit blocked exec before any panelist was dispatched; retry window 2026-09-15 10:56."
+    }
+  ],
+  "observed_output_fields": [],
+  "observed_route": null,
+  "observed_engine": null,
+  "question_count": null,
+  "observed_escalation": null,
+  "side_effects": [],
+  "evidence_note": "Attempted Codex observation of gosu-review.evidence-anchored-panel against evals/fixtures/gosu-review/same-element-conflict/LAYOUT.md. codex exec -m gpt-5.6-sol -s read-only failed immediately with ChatGPT usage limit (retry 2026-09-15 10:56). No collaboration.spawn_agent events occurred. Host/tool failure is unverified, not pass. Depth counters remain uncounted on Codex until a later run."
+}

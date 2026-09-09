@@ -149,6 +149,21 @@
         "deadline_seconds": { "type": "integer", "minimum": 1 }
       }
     },
+    "round_two_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed_routes", "required_side_count", "max_extra_rounds"],
+      "properties": {
+        "allowed_routes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["resume", "fresh"] }
+        },
+        "required_side_count": { "const": 2 },
+        "max_extra_rounds": { "const": 0 }
+      }
+    },
     "semantic_assertions": {
       "type": "array",
       "minItems": 1,

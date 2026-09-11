@@ -15,7 +15,7 @@ This file intentionally contains **no user-specific state** (no subscriptions, b
 |---|---|---|---|
 | `codex/*` | OpenAI (ChatGPT OAuth) | `auth_mode: chatgpt` | gpt-6-astra / gpt-5.6-sol / terra / luna |
 | `claude/*` | Anthropic (claude.ai) | firstParty OAuth | claude-fable-5-1 / opus-5 / sonnet-5 |
-| `reasonix/*` | DeepSeek first-party API | DEEPSEEK_API_KEY | deepseek-v4-* |
+| `reasonix/*` | DeepSeek first-party API | DEEPSEEK_API_KEY | deepseek-flash |
 | `grok/*` | xAI (Grok Build CLI) | grok.com OAuth, or `XAI_API_KEY` where no browser is available | grok-4.6 / grok-4.5 |
 
 For a single-provider CLI, choosing the route IS choosing the provider: `codex` → OpenAI, `claude` → Anthropic, `grok` → xAI, `reasonix` → DeepSeek first-party.
@@ -37,7 +37,7 @@ For a single-provider CLI, choosing the route IS choosing the provider: `codex` 
 | `opencode/*` | provider-scoped model ids (`opencode-go/...`, `opencode/...` free, or BYOK providers) | api key(s) in auth.json |
 | `pi/*` | provider-scoped (`pi --provider <id>`, e.g. alibaba-plan, opencode-go) | api keys / OAuth in auth.json |
 
-`opencode` and `pi` name a provider explicitly (`opencode-go/deepseek-v4-flash`, `pi --provider alibaba-plan ...`). Which providers are actually connected is operator state, not a property of these CLIs.
+`opencode` and `pi` name a provider explicitly (`opencode-go/deepseek-v4.1-flash`, `pi --provider alibaba-plan ...`). Which providers are actually connected is operator state, not a property of these CLIs.
 
 ## 2. Route discovery, not a static matrix
 

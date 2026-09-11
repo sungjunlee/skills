@@ -34,7 +34,7 @@ If the resolved profile includes an effort, append or translate it with the Effo
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `--thinking <off\|minimal\|low\|medium\|high\|xhigh\|max>` | `DEVNULL` | `pi --list-models [search]` |
 | `cursor/*` | `cursor-agent --print --yolo --trust --model <model> <prompt>` (not `agent`, which is Grok Build) | select the matching effort-bearing slug from `cursor-agent models`; no separate argv | `DEVNULL` | `cursor-agent models` |
 | `grok/*` | `grok --always-approve -m <model> -p <prompt>` (the prompt is `-p`'s value; passed positionally it opens the TUI and fails headless) | `--effort <low\|medium\|high\|xhigh>` | `DEVNULL` | `grok models` |
-| `reasonix/*` | `reasonix run -m <model> <prompt>` | `--effort <low\|medium\|high\|max>` | `DEVNULL` | — (no CLI subcommand) |
+| `reasonix/*` | `reasonix run --model <model> <prompt>` (`-m` is not accepted: exit 2, no output) | `--effort <low\|high\|max>` | `DEVNULL` | `reasonix doctor --json` (configured providers) |
 | `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | `--thinking <none\|low\|medium\|high\|xhigh>` | `DEVNULL` | — (no CLI subcommand) |
 
 > A `<provider>/*` pattern also matches its bare `<provider>` route. If `<model>` is omitted, drop that row's model selector with its value — a bare flag would absorb the prompt — and the CLI uses its configured default, except on `cursor/*`, where the omission selects its `auto` mode rather than a fixed model (see "Effort and id shape").
@@ -79,4 +79,4 @@ For the OpenCode routes, `--auto` has the same trust implications as other non-i
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
 
-Use `reasonix/*` only for non-sensitive, general work: it talks directly to DeepSeek API. Do not use `model-catalog.md`; use an explicit current DeepSeek-compatible id or the CLI default. Do not suggest the retired `deepseek-chat` or `deepseek-reasoner` aliases; DeepSeek discontinued them on 2026-07-24 in favor of the V4 ids.
+Use `reasonix/*` only for non-sensitive, general work: it talks directly to DeepSeek API. `<model>` is a `<provider>/<model>` pair from `reasonix.toml`; an unconfigured pair is rejected. The current DeepSeek id is `deepseek-flash`; older DeepSeek ids are aliases or discontinued.

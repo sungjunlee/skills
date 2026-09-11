@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-09-05. Treat as stale after 30 days.
+Last checked: 2026-09-11. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
@@ -8,7 +8,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
-| `gpt-6-astra` | Hardest end-to-end work and sustained workflows across code, browsers, and professional software; also complex research and document creation. | vendor guidance starts migrations from `none` or `minimal` at `low`; re-sweep `low` and `medium` on the target task rather than inheriting an older-model setting, and use `high`–`max` only where task evals show a gain | frontier; $10/$50 per 1M in/out, $1 cached input; vendor reports lower estimated cost per task on some evals; over 272K input, the full request costs 2× input/cache and 1.5× output |
+| `gpt-6-astra` | Hardest end-to-end work across code, browsers, and professional software; complex research and document creation. Leads independent cross-file code-review evals. Uses fewer turns than Sol and may stop before a multi-step task is done, so state the completion condition. | vendor guidance starts migrations from `none` or `minimal` at `low`; re-sweep `low` and `medium` on the target task rather than inheriting an older-model setting, and use `high`–`max` only where task evals show a gain | frontier; $10/$50 per 1M in/out, $1 cached input; about 1/3 the output tokens of Sol or Fable per task in independent evals; over 272K input, the full request costs 2× input/cache and 1.5× output |
 | `gpt-5.6-sol` | Complex professional work where the established Sol profile already meets the task's acceptance checks. | `medium` is the vendor default and fits bounded hard work with strong checks; `high` for high-blast-radius or cross-boundary work with consequential tradeoffs; `xhigh` for long-horizon work that benefits from broad exploration and self-checking | flagship; $4/$20 per 1M in/out, $0.40 cached input; over 272K input, the full request costs 2× input and 1.5× output |
 | `gpt-5.6-terra` | Balanced GPT-5.6 tier for ambiguous everyday work. | `medium`; test before using `high`+ as a value step | balanced |
 | `gpt-5.6-luna` | Fast, high-volume, or tightly scoped GPT-5.6 work; repriced −80% on 2026-07-30 ($0.20/$1.20 per 1M in/out). | `high`; `xhigh`–`max` for bounded, genuinely hard work — community reports favor `max` there and warn against it for vague or coordination-heavy tasks | deep value |
@@ -28,11 +28,10 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `gemini-3.8-flash` | Complex, long-horizon coding/agents and multimodal work; 1M context. | route default; API `low`/`medium`/`high` (default `medium`; no `minimal`) | $0.75/$3.75 introductory through 2026-12-31, then $1.50/$7.50 per 1M in/out (Google direct API) |
 | `muse-spark-1.3` | Long-horizon coding and multimodal work; 1M context. | route default; `max` announced but not yet launched | route-priced; Contributor is cheaper in exchange for permission to train on prompts and completions |
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
-| `deepseek-v4-pro` | Larger changes when direct-API cost/performance matters. | `high` for ambiguous or multi-stage work; otherwise route default | pro value |
 | `hy3` | Coding, document, and frontend work with grounded low-hallucination behavior; Tencent's open-weight generalist, GA 2026-07-06 (~$0.13/$0.53 per 1M via OpenRouter). | route default is no-think; `low` and `high` thinking modes documented for complex multi-step work | mid |
 | `minimax-m3` | Long-context, multimodal, or general agentic coding. | `high` for complex agentic work; otherwise route default | mid |
-| `mimo-v2.5` | Multimodal work — native image, video, and audio input with 1M context at near-flash prices (~$0.11/$0.22 per 1M via OpenRouter); community reports single out its multimodal quality. On text-only work `deepseek-v4-flash` benchmarks meaningfully higher — pick MiMo for the modalities, not for text. | route default | cheap |
-| `deepseek-v4-flash` | Fast iteration, mechanical work, and cheap retries. The 0731 in-place refresh (public beta) sharply raised agentic and coding capability at unchanged prices ($0.14/$0.28 per 1M in/out). | route default | cheap |
+| `mimo-v2.5` | Multimodal work — native image, video, and audio input with 1M context at near-flash prices (~$0.11/$0.22 per 1M via OpenRouter); community reports single out its multimodal quality. Pick MiMo for video and audio; `deepseek-v4.1-flash` takes image input and benchmarks higher on text. | route default | cheap |
+| `deepseek-v4.1-flash` | Fast iteration, mechanical work, cheap retries, and image input. Released 2026-09-10 as API id `deepseek-flash`; the only DeepSeek profile once `deepseek-v4-pro` routes here on 2026-09-14. Verbose (about 2× the median output tokens in independent runs), so compare cost per task, not per token. | route default; API `low`/`high`/`max` | cheap; $0.30/$1.20 per 1M in/out at peak (weekdays 01:00–04:00 and 06:00–10:00 UTC), half off-peak |
 
 ## Evidence-backed defaults
 
@@ -55,7 +54,7 @@ local runs.
 
 ## Sources
 
-- [GPT-6 Astra model](https://developers.openai.com/api/docs/models/gpt-6-astra), [Astra model guidance](https://developers.openai.com/api/docs/guides/latest-model), [GPT-5.6 Sol model](https://developers.openai.com/api/docs/models/gpt-5.6-sol), [OpenAI model catalog](https://developers.openai.com/api/docs/models), [OpenAI model comparison](https://developers.openai.com/api/docs/models/compare), and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
+- [GPT-6 Astra model](https://developers.openai.com/api/docs/models/gpt-6-astra), [Astra model guidance](https://developers.openai.com/api/docs/guides/latest-model), [Benchmarking GPT-6 Astra](https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra), [Astra code-review evaluation](https://www.coderabbit.ai/blog/gpt-6-astra-code-review-evaluation), [GPT-5.6 Sol model](https://developers.openai.com/api/docs/models/gpt-5.6-sol), [OpenAI model catalog](https://developers.openai.com/api/docs/models), [OpenAI model comparison](https://developers.openai.com/api/docs/models/compare), and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
 - [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - [xAI Grok 4.6](https://docs.x.ai/developers/grok-4-6) and [xAI models and pricing](https://docs.x.ai/developers/models)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
@@ -63,7 +62,7 @@ local runs.
 - [Xiaomi MiMo model releases](https://mimo.mi.com/docs/en-US/updates/model) and [MiMo-V2.5 on OpenRouter](https://openrouter.ai/xiaomi/mimo-v2.5) (price source; route discount included)
 - [Tencent Hunyuan Hy3 release](https://www.tencent.com/en-us/articles/2202386.html) and [Hy3 on OpenRouter](https://openrouter.ai/tencent/hy3) (price source; route discount included)
 - [Qwen Cloud text-generation models](https://docs.qwencloud.com/developer-guides/getting-started/text-generation-models) and [Token Plan](https://docs.qwencloud.com/token-plan/overview)
-- [DeepSeek API changelog](https://api-docs.deepseek.com/updates/)
+- [DeepSeek API changelog](https://api-docs.deepseek.com/updates/) and [DeepSeek models and pricing](https://api-docs.deepseek.com/quick_start/pricing/)
 - [MiniMax M3](https://www.minimax.io/blog/minimax-m3)
 - [Z.ai GLM-5.3 guide](https://docs.z.ai/guides/llm/glm-5.3), [GLM-5.3 Flash guide](https://docs.z.ai/guides/vlm/glm-5.3-flash), and [Z.ai pricing](https://docs.z.ai/guides/overview/pricing)
 - [Gemini 3.8 Flash model docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) and [Gemini pricing](https://ai.google.dev/gemini-api/docs/latest-model)

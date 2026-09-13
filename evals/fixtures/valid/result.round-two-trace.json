@@ -4,7 +4,7 @@
   "case_id": "fixture.round-two-trace",
   "host": "synthetic",
   "host_version": "fixture",
-  "skill_revision": "fixture",
+  "skill_revision": "f16d05ec6b29248d2c61adb1e9263f78e4f7bace1b955014a2d17872cfe4064d",
   "status": "pass",
   "assertion_results": [
     {
@@ -32,7 +32,9 @@
       "evidence": "Synthetic escalation observation."
     }
   ],
-  "observed_output_fields": ["summary"],
+  "observed_output_fields": [
+    "summary"
+  ],
   "observed_route": null,
   "observed_engine": "bounded_parallel",
   "question_count": null,

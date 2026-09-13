@@ -27,7 +27,7 @@
     "case_id": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
     "host": { "type": "string", "minLength": 1 },
     "host_version": { "type": "string", "minLength": 1 },
-    "skill_revision": { "type": "string", "minLength": 1 },
+    "skill_revision": { "type": "string", "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$" },
     "status": { "enum": ["pass", "fail", "unverified"] },
     "assertion_results": {
       "type": "array",

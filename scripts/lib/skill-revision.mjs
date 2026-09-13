@@ -3,7 +3,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 function walk(current, files) {
-  const entries = readdirSync(current, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
+  const entries = readdirSync(current, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name, "en"));
   for (const entry of entries) {
     const child = path.join(current, entry.name);
     if (entry.isDirectory()) walk(child, files);
@@ -13,7 +13,9 @@ function walk(current, files) {
 }
 
 // sha256 over the skill directory: relative path and bytes of every file, in
-// sorted order. This is the `skill_revision` a replay result binds to.
+// sorted order. This is the `skill_revision` a replay result binds to. The
+// byte layout is fixed by committed results; changing it starts a new epoch
+// in which every existing result reads as historical.
 export function sha256Tree(dir) {
   const hash = createHash("sha256");
   for (const filename of walk(dir, [])) {

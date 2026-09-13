@@ -4,7 +4,7 @@
   "case_id": "foundation.inline-pass",
   "host": "fixture-host",
   "host_version": "schema-smoke-v1",
-  "skill_revision": "foundation-fixture-v1",
+  "skill_revision": "84604931571288dda220db556dbd74624b48f0973efef2c532398089fef0a844",
   "status": "unverified",
   "assertion_results": [
     {

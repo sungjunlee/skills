@@ -19,7 +19,9 @@ evals/
 - A result binds to the skill text it observed through `skill_revision`: the
   sha256 tree hash of the skill directory. Print it with
   `node scripts/verify-replays.mjs --skill-revision <category>/<skill>`;
-  `run-feature-spec-replay.mjs` writes it on its own.
+  `run-feature-spec-replay.mjs` writes it on its own. The `replay-v2` result
+  schema accepts only that hash or, in older results, a git commit sha, which
+  always reads as historical.
 - `npm test` prints, per skill, how many results carry the current revision
   (`current`) and how many do not (`historical`). Historical results stay
   committed as dated evidence but do not count as coverage: only a current

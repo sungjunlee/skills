@@ -51,9 +51,19 @@
       "profile_id": "opus5-high",
       "model": "claude-opus-5",
       "effort": "high"
+    },
+    {
+      "profile_id": "sol-high",
+      "model": "gpt-5.6-sol",
+      "effort": "high"
+    },
+    {
+      "profile_id": "astra-medium",
+      "model": "gpt-6-astra",
+      "effort": "medium"
     }
   ],
-  "pairing_rationale": "This shape requires reviewers from outside the author's GPT family. fable-high versus grok46-high preserves the premium/value comparison; the grok-4.5 entry stays so its committed results keep resolving. Opus 5 medium versus high tests Anthropic's claim that review accuracy holds at lower effort and prevents an older Claude profile from being transferred to the successor without evidence.",
+  "pairing_rationale": "This shape requires reviewers from outside the author's GPT family. fable-high versus grok46-high preserves the premium/value comparison; the grok-4.5 entry stays so its committed results keep resolving. Opus 5 medium versus high tests Anthropic's claim that review accuracy holds at lower effort and prevents an older Claude profile from being transferred to the successor without evidence. sol-high and astra-medium share the fixture author's GPT family, so they measure seeded-defect recall only and cannot promote a cross-family default; the pair tests whether Astra at medium matches Sol at high on review accuracy.",
   "privacy": {
     "sensitivity": "synthetic",
     "approved_routes": [],

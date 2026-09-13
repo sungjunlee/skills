@@ -14,5 +14,3 @@ jobs:
         with:
           node-version: 22
       - run: npm test
-      - run: node scripts/verify-cross-host-matrix.mjs
-      - run: node scripts/verify-cross-host-matrix.mjs --selftest

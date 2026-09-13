@@ -5,19 +5,19 @@
 // evals/results/feature-spec/v2/<date>/ after observation.
 
 import { spawn } from "node:child_process";
-import { createHash } from "node:crypto";
 import {
   cpSync,
   existsSync,
   mkdirSync,
   readFileSync,
-  readdirSync,
   statSync,
   writeFileSync,
 } from "node:fs";
 import { execFileSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
+
+import { sha256Tree } from "./lib/skill-revision.mjs";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
@@ -70,28 +70,6 @@ function parseArgs(argv) {
 
 function readJson(filename) {
   return JSON.parse(readFileSync(filename, "utf8"));
-}
-
-function sha256Tree(dir) {
-  const hash = createHash("sha256");
-  const files = [];
-  function walk(current) {
-    for (const entry of readdirSync(current, { withFileTypes: true }).sort((a, b) =>
-      a.name.localeCompare(b.name),
-    )) {
-      const child = path.join(current, entry.name);
-      if (entry.isDirectory()) walk(child);
-      else if (entry.isFile()) files.push(child);
-    }
-  }
-  walk(dir);
-  for (const filename of files) {
-    hash.update(path.relative(dir, filename).split(path.sep).join("/"));
-    hash.update("\0");
-    hash.update(readFileSync(filename));
-    hash.update("\0");
-  }
-  return hash.digest("hex");
 }
 
 function git(cwd, ...args) {

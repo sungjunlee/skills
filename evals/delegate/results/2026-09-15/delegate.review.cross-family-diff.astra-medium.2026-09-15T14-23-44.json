@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "astra-medium",
+  "model": "gpt-6-astra",
+  "effort": "medium",
+  "observation_date": "2026-09-15",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.154.0"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "pass",
+      "evidence": "All three seeded defects reported with correct location, mechanism, and a worked trigger: pageWindow off-by-one demonstrated with total=5/batchSize=2 exporting offsets 0,1 then 3,4 and skipping 2; the check-then-act reserve race with maximum=1 where two concurrent callers both return true; and the empty catch swallowing AbortError so cancellation continues the retry loop and can still reach writer.append()."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "pass",
+      "evidence": "Four findings. Grader verification: the three seeded defects are genuine, and the fourth (legacy numeric cursors such as base64url of \"2\" now JSON-decode to a number whose .offset is undefined) is the same deploy-breaking incompatibility prior reviewers found on this fixture. Zero non-defects asserted as defects."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "pass",
+      "evidence": "Each finding states a concrete failing input or interleaving and a specific fix, and the executor ran a short Node reproduction of the pagination skip, the reserve race, and the legacy-cursor throw before writing the report."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 44,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via Codex 0.154.0 on a ChatGPT subscription (PATH-local binary; the operator's 0.146.0 CLI was left unchanged). Codex reported an unsplit total of 24,553 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Same-date retry of astra-medium after the 14:20Z Codex 0.146.0 HTTP 400; timestamp-suffixed so that failed result stays untouched. Not an auto-retry of empty model output: the first attempt never generated. GPT-family reviewer on a Sol-authored fixture, so this measures seeded-defect recall only and cannot promote a cross-family default. All three seeded defects found, plus the legacy-cursor break sol-high missed on this date. Wall clock 44s versus sol-high's 112s; unsplit token totals were nearly identical (24,553 versus 24,945). One UTC date only — a second dated run is still required before any Evidence-backed default change. Raw transcript in the gitignored drafts directory (2026-09-15T14-23-44, astra-medium)."
+}

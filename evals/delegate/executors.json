@@ -3,7 +3,7 @@
   "executors": [
     {
       "executor_id": "codex",
-      "match_models": ["gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"],
+      "match_models": ["gpt-6-astra", "gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"],
       "availability": ["codex", "--version"],
       "list_models": null,
       "dispatch": ["codex", "exec", "--sandbox", "workspace-write", "--skip-git-repo-check", "-m", "{model}"],
@@ -36,6 +36,15 @@
       "dispatch": ["cursor-agent", "--print", "--trust", "--sandbox", "enabled", "--model", "cursor-{model}-{effort}"],
       "effort_argv": null,
       "supported_efforts": ["low", "medium", "high", "xhigh"]
+    },
+    {
+      "executor_id": "reasonix",
+      "match_models": ["deepseek-flash"],
+      "availability": ["reasonix", "--version"],
+      "list_models": null,
+      "dispatch": ["reasonix", "run", "--permission-mode", "auto", "--print", "--model", "deepseek-flash/{model}"],
+      "effort_argv": ["--effort", "{effort}"],
+      "supported_efforts": ["high", "max"]
     }
   ]
 }

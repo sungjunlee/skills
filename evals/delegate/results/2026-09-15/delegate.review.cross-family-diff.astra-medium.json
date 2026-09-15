@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "astra-medium",
+  "model": "gpt-6-astra",
+  "effort": "medium",
+  "observation_date": "2026-09-15",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.146.0"
+  },
+  "status": "failed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "not_run",
+      "evidence": "No review was produced: Codex 0.146.0 exited 1 with empty stdout after HTTP 400, so the seeded-defect rubric was not graded."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "not_run",
+      "evidence": "No findings were produced."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "not_run",
+      "evidence": "No report exists."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 6,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the operator Codex 0.146.0 on a ChatGPT subscription. The CLI printed a model-metadata warning for gpt-6-astra, then HTTP 400 twice: \"The 'gpt-6-astra' model requires a newer version of Codex.\" Stdout was empty; no token total was reported and no generation ran."
+    },
+    "reviewer_defects": null,
+    "followup_corrections": null
+  },
+  "evidence_note": "First astra-medium dispatch for issue #123 after the 2026-09-15 09:31Z quota reset (14:20Z, same empty-repo lane as sol-high). Codex 0.146.0 cannot request gpt-6-astra (floor is 0.153.1; 0.154.0 lists it in the picker). Recorded as failed; not auto-retried. Dispatch-reliability failure, not a capability observation. A later same-date dispatch on Codex 0.154.0 is timestamp-suffixed so this file stays untouched. Raw transcript in the gitignored drafts directory (2026-09-15T14-20-46, astra-medium)."
+}

@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.review.cross-family-diff",
+  "profile_id": "sol-high",
+  "model": "gpt-5.6-sol",
+  "effort": "high",
+  "observation_date": "2026-09-15",
+  "executor": {
+    "name": "codex",
+    "version": "codex-cli 0.146.0"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "seeded-defects-found",
+      "status": "pass",
+      "evidence": "All three seeded defects reported with correct location and mechanism: the pageWindow off-by-one (cursor stores exclusive end, next page starts at offset+1, so a [0,10) window permanently skips row 10), the check-then-act reserve race across the awaited gauge call, and the empty catch in withRetry swallowing AbortError so cancellation continues the retry loop."
+    },
+    {
+      "check_id": "false-positive-budget",
+      "status": "pass",
+      "evidence": "Four findings. Grader verification: the three seeded defects are genuine, and the fourth (gauges keyed only by metric name while emissions include per-queue tags) is a real metric-correctness flaw already confirmed on this fixture. Zero non-defects asserted as defects."
+    },
+    {
+      "check_id": "actionable-report",
+      "status": "pass",
+      "evidence": "Each finding names file and line, the concrete wrong outcome, and a specific fix (store end-1 or drop the +1; update reservation state before the first await; re-throw abort errors; include tags in the gauge key)."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 112,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the codex CLI on a ChatGPT subscription; codex reported an unsplit total of 24,945 tokens used, which cannot be honestly divided into the schema's input/output/reasoning fields."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "First observation for issue #123 after the 2026-09-15 09:31Z Codex Pro quota reset (dispatched 14:18Z from a seeded empty git repo). Identical embedded fixture diff as the 2026-07-22/23 review runs. This GPT-family reviewer shares the fixture author's family, so the result measures seeded-defect recall only and cannot promote a cross-family default. Did not report the legacy-cursor break that other reviewers have caught on this fixture; that is extra, not a miss of a seeded defect. Raw transcript in the gitignored drafts directory (2026-09-15T14-20-40, sol-high)."
+}

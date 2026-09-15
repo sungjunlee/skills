@@ -5,6 +5,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import { same, validateSchema } from "./lib/schema-validator.mjs";
+import { sha256Tree } from "./lib/skill-revision.mjs";
 import { validateCaseContract, validateLegacyManifest } from "./verify-replays-contract.mjs";
 import { validateReplayPair } from "./verify-replays-pair.mjs";
 
@@ -20,6 +21,7 @@ const locations = {
 };
 
 const currentContractVersion = "replay-v2";
+const skillsRoot = path.join(root, "skills");
 
 function repositoryPath(filename) {
   return path.relative(root, filename).split(path.sep).join("/");
@@ -245,9 +247,44 @@ export async function validateContractBoundary(documents, contracts) {
   return errors;
 }
 
+function tallyEvidence(documents) {
+  const skillByCase = new Map();
+  for (const document of documents.filter((candidate) => candidate.kind === "case")) {
+    skillByCase.set(replayKey(document), document.value.skill);
+  }
+  const revisions = new Map();
+  const tally = new Map();
+  for (const document of documents.filter((candidate) => candidate.kind === "result")) {
+    const skill = skillByCase.get(replayKey(document));
+    if (skill === undefined) continue;
+    if (!revisions.has(skill)) revisions.set(skill, sha256Tree(path.join(skillsRoot, skill)));
+    const bucket = tally.get(skill) ?? { current: 0, historical: 0 };
+    bucket[document.value.skill_revision === revisions.get(skill) ? "current" : "historical"] += 1;
+    tally.set(skill, bucket);
+  }
+  return { revisions, tally };
+}
+
+// A result counts as coverage of the current skill text only when its
+// skill_revision equals the skill directory's tree hash right now.
+export function evidenceSummary(documents) {
+  const { revisions, tally } = tallyEvidence(documents);
+  return [...tally]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([skill, counts]) =>
+      `evidence ${skill}: ${counts.current} current, ${counts.historical} historical (revision ${revisions.get(skill).slice(0, 12)})`,
+    );
+}
+
 export async function main() {
   const contracts = await loadContracts();
   const explicit = process.argv.slice(2);
+
+  if (explicit[0] === "--skill-revision") {
+    if (explicit.length !== 2) throw new Error("usage: --skill-revision <category>/<skill>");
+    console.log(sha256Tree(path.join(skillsRoot, explicit[1])));
+    return;
+  }
 
   if (explicit.length > 0) {
     const filenames = explicit.map((filename) => path.resolve(process.cwd(), filename));
@@ -286,6 +323,7 @@ export async function main() {
   if (errors.length === 0) errors.push(...verifyPairs(committedDocuments));
 
   if (errors.length > 0) throw new Error(errors.join("\n"));
+  for (const line of evidenceSummary(committedDocuments)) console.log(line);
   console.log(
     `Verified ${validDocuments.length} valid fixture(s), rejected ${invalidDocuments.length} invalid fixture(s), and checked ${committedDocuments.length} committed replay document(s).`,
   );

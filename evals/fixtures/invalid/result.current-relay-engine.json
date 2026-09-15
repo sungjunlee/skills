@@ -4,7 +4,7 @@
   "case_id": "implement.invalid-current-relay-engine",
   "host": "fixture-host",
   "host_version": "schema-smoke-v2",
-  "skill_revision": "implement-v2",
+  "skill_revision": "6c1d461f0be1e458dd15f61ae0c04aad9166d1d0a95904c7a415cdcf413ad596",
   "status": "pass",
   "assertion_results": [
     {
@@ -14,7 +14,9 @@
       "evidence": "Intentionally invalid replay-v2 engine value."
     }
   ],
-  "observed_output_fields": ["engine"],
+  "observed_output_fields": [
+    "engine"
+  ],
   "observed_route": "relay",
   "observed_engine": "relay",
   "question_count": 0,

@@ -14,6 +14,26 @@ evals/
   results/      compact observed replay results
 ```
 
+## Evidence policy
+
+- A result binds to the skill text it observed through `skill_revision`: the
+  sha256 tree hash of the skill directory. Print it with
+  `node scripts/verify-replays.mjs --skill-revision <category>/<skill>`;
+  `run-feature-spec-replay.mjs` writes it on its own. The `replay-v2` result
+  schema accepts only that hash or, in older results, a git commit sha, which
+  always reads as historical.
+- `npm test` prints, per skill, how many results carry the current revision
+  (`current`) and how many do not (`historical`). Historical results stay
+  committed as dated evidence but do not count as coverage: only a current
+  result says what the skill does today.
+- Keep one case per decision the skill text makes: a route, a refusal, an
+  escalation, a required output field. A case that no longer maps to a
+  sentence in `SKILL.md` or its references is removed together with its
+  results.
+- New observations run on Claude Code and Codex. The five-host matrix under
+  `results/cross-host/` (2026-07-11) is frozen history: schema-checked, never
+  re-observed, and no longer verified against its matrix fixture.
+
 Consumer issues add JSON files to `cases/` and `results/`. A result is matched
 to its case by `case_id`. File names are free-form in those directories; all
 `.json` files are discovered recursively. Dated notes under `reports/` record

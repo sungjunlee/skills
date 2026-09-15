@@ -69,7 +69,7 @@ Do not store issue-specific acceptance criteria, scoring rubrics, or review note
 
 **In-scope:**
 - The replay case/result schemas, the frozen `replay-v1` legacy contract and its digest pin, and supersession rules
-- `verify-replays.mjs` and `verify-cross-host-matrix.mjs`, including their self-test paths
+- `verify-replays.mjs`, including its per-skill current/historical evidence summary
 - The engine capability vocabulary in `docs/engine-capability-contract.md` as maintainer guidance
 
 **Out-of-scope:**

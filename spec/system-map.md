@@ -28,7 +28,7 @@ npm test / .github/workflows/verify.yml
   frozen `replay-v1`), and the delegate routing loop
   (`evals/delegate/{schema,cases,results,reports,fixtures,executors.json}`).
 - `scripts/` owns verification (`verify-replays`, `verify-delegate-evals`,
-  `verify-fixture-generators`, `verify-cross-host-matrix`) and the bounded
+  `verify-fixture-generators`) and the bounded
   eval runner (`run-delegate-eval.mjs`), which is never run implicitly.
 - `docs/` is maintainer guidance (engine capability contract vocabulary);
   explicitly not a runtime dependency of any skill.

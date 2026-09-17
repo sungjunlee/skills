@@ -16,6 +16,7 @@ const locations = {
   registry: path.join(base, "executors.json"),
   cases: path.join(base, "cases"),
   results: path.join(base, "results"),
+  reports: path.join(base, "reports"),
   valid: path.join(base, "fixtures/valid"),
   invalid: path.join(base, "fixtures/invalid"),
 };
@@ -184,6 +185,56 @@ async function loadAll(target, schemas) {
   return Promise.all(files.map((filename) => loadDocument(filename, schemas)));
 }
 
+// Issue #124 gate: the Astra evidence-status stub declares how many committed
+// results use model gpt-6-astra. The declaration must match the results on
+// disk so a landing #123 run cannot silently outdate the launch-window
+// guidance in model-catalog.md without refreshing the stub.
+const ASTRA_MODEL = "gpt-6-astra";
+const ASTRA_MARKER = /committed_gpt-6-astra_results:\s*(\d+)/;
+
+async function astraEvidenceErrors(documents) {
+  const errors = [];
+  const actual = documents.filter(
+    (candidate) => candidate.kind === "result" && candidate.value.model === ASTRA_MODEL,
+  ).length;
+
+  let entries;
+  try {
+    entries = await readdir(locations.reports, { withFileTypes: true });
+  } catch {
+    entries = [];
+  }
+  const declared = [];
+  for (const entry of entries.sort((left, right) => left.name.localeCompare(right.name))) {
+    if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
+    const filename = path.join(locations.reports, entry.name);
+    const match = ASTRA_MARKER.exec(await readFile(filename, "utf8"));
+    if (match) declared.push({ path: repositoryPath(filename), count: Number(match[1]) });
+  }
+
+  if (declared.length === 0) {
+    if (actual > 0) {
+      errors.push(
+        `committed ${ASTRA_MODEL} result(s) exist but no report declares committed_gpt-6-astra_results (issue #124 gate)`,
+      );
+    }
+    return errors;
+  }
+  if (declared.length > 1) {
+    errors.push(
+      `multiple reports declare committed_gpt-6-astra_results: ${declared.map((entry) => entry.path).join(", ")}`,
+    );
+    return errors;
+  }
+  const stub = declared[0];
+  if (stub.count !== actual) {
+    errors.push(
+      `${stub.path}: declares committed_gpt-6-astra_results ${stub.count} but ${actual} committed ${ASTRA_MODEL} result(s) exist; refresh the Astra evidence status (issue #124)`,
+    );
+  }
+  return errors;
+}
+
 async function main() {
   const schemas = {
     case: await readJson(locations.caseSchema),
@@ -199,6 +250,7 @@ async function main() {
     errors.push(...resultPathErrors(committed));
     errors.push(...pairErrors(committed));
     errors.push(...shapeCoverageErrors(committed, schemas));
+    errors.push(...(await astraEvidenceErrors(committed)));
   }
 
   const registry = await readJson(locations.registry);

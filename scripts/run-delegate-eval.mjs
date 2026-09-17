@@ -223,6 +223,16 @@ function dispatch(run, executor, timeoutMinutes) {
   if (result.status !== 0) {
     return { status: "failed", version, wallClockSeconds, note: `Dispatch exited ${result.status}.`, stdout: result.stdout, stderr: result.stderr };
   }
+  if ((result.stdout ?? "").trim() === "") {
+    return {
+      status: "failed",
+      version,
+      wallClockSeconds,
+      note: "dispatch_empty_output: zero exit with empty stdout; a spent run is evidence, never an empty answer — do not auto-retry.",
+      stdout: result.stdout,
+      stderr: result.stderr,
+    };
+  }
   return { status: "completed", version, wallClockSeconds, note: `Dispatch exited 0 in ${wallClockSeconds}s; output captured for manual assessment.`, stdout: result.stdout, stderr: result.stderr };
 }
 

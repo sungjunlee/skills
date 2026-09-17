@@ -83,7 +83,8 @@ routes outside their `approved_routes`. Executors run sandboxed (codex uses
 `--sandbox workspace-write` and cursor `--sandbox enabled`, never the delegate
 skill's `--yolo`-style bypass flags). A
 timed-out run is reported as `failed` (`dispatch_timeout`) and is never
-retried automatically.
+retried automatically. A zero-exit with empty stdout is `failed`
+(`dispatch_empty_output`) and is never retried automatically.
 
 ## Bounded run procedure
 

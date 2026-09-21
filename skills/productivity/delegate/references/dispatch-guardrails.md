@@ -20,7 +20,7 @@ Apply these rules before every provider run.
 A CLI can report a fatal provider error — quota, auth, billing — and keep running, so waiting for exit turns a known failure into a spent deadline. Observed 2026-08-06: `opencode` without the log flags stayed silent on quota exhaustion.
 
 - Treat a definitive provider error on stderr as terminal. Terminate at once and report `dispatch_cli_error` with that line and any reset time it names, rather than waiting for the process to exit or for the deadline.
-- Prefer a route flag that surfaces such errors over discovering them by timeout. `opencode run` needs `--print-logs --log-level error` (lowercase; opencode 2.0.10 rejects `ERROR` with a CliError and never dispatches); terminate on the first definitive line.
+- Prefer a route flag that surfaces such errors over discovering them by timeout. `opencode run` needs `--print-logs --log-level error` (opencode 2.0.10 rejects `ERROR`); terminate on the first definitive line.
 - Send a bounded canary (≤90 s, `Reply with exactly: OK`) only for a route that stays silent and exposes no error channel. A silent canary condemns the route, not the model.
 
 ## Stop and report

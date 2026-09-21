@@ -28,7 +28,7 @@ If the resolved profile includes an effort, append or translate it with the Effo
 
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|
-| `opencode/*`, `opencode-go/*` | `opencode run --auto --print-logs --log-level error -m <model> <prompt>` (the level is lowercase; `ERROR` is rejected by opencode 2.0.10) | `--variant <effort>` (provider-specific) | `DEVNULL` | `opencode models [provider]` |
+| `opencode/*`, `opencode-go/*` | `opencode run --auto --print-logs --log-level error -m <model> <prompt>` (opencode 2.0.10 rejects `ERROR`) | `--variant <effort>` (provider-specific) | `DEVNULL` | `opencode models [provider]` |
 | `claude/*` | `claude -p --permission-mode auto --model <model> <prompt>` | `--effort <low\|medium\|high\|xhigh\|max>` | `DEVNULL` | — (use a full id from current docs, or a latest-family alias only when the user asks for latest) |
 | `codex/*` | `codex exec --dangerously-bypass-approvals-and-sandbox -m <model> <prompt>` | argv entries `-c` + `model_reasoning_effort="<effort>"` (model-specific) | `DEVNULL` | — (check `~/.codex/config.toml` and current docs) |
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `--thinking <off\|minimal\|low\|medium\|high\|xhigh\|max>` | `DEVNULL` | `pi --list-models [search]` |

@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-09-11. Treat as stale after 30 days.
+Last checked: 2026-09-22. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
@@ -15,7 +15,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `claude-fable-5-1` | Long-running, highly ambitious work that earns frontier spend. | `low` for scoped, checkable work; `medium` for most planning and coding; `high` for difficult or ambiguous work; `xhigh`–`max` only where evals show a gain on long-horizon tasks | frontier; $10/$50 per 1M in/out, $0.25 cache read |
 | `claude-opus-5` | Complex agentic coding, long-horizon execution, code review, vision-heavy implementation, or document work when Fable-tier spend is not justified. | `high`; `xhigh` for demanding coding and agentic work; `max` only for unconstrained frontier problems | premium |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
-| `grok-4.6` | Long-running agent loops, tool-heavy coding, 500K-context knowledge work, or an independent frontier-family review; pick it for step persistence and breadth, not peak code accuracy. | `high` (vendor default); `xhigh` for long agent trajectories; `medium` when latency matters | value frontier; $2/$6 per 1M in/out below 200K prompt tokens, doubling above |
+| `grok-4.7` | Long-running agent loops, tool-heavy coding, 500K-context knowledge and document work; independent frontier-family review. Terminal-heavy work trails Astra/Fable by a wide margin; at `xhigh` output is ~2× Grok 4.6 `high`, so compare cost per task. | `high` (vendor default); `xhigh` for long agent trajectories and legal/office work; `medium`/`low` when latency matters | value frontier; $2/$6 per 1M in/out below 200K prompt tokens, doubling above; `grok-4.7-build-fast` 2× price for 2× speed |
 | `kimi-k3` | Long-horizon coding, tool-heavy knowledge work, or multimodal implementation where completion quality matters more than latency. | route default; API ships `max` thinking, `low` and `high` announced | frontier; high output-token and latency risk |
 | `qwen3.8-max` | Complex reasoning and coding through Alibaba's Token Plan. Off-peak Credits are 50% off daily 22:00–08:00 UTC+8, so defer batchable work to that window. | route default; API has a thinking toggle, no graded effort | subscription |
 
@@ -30,7 +30,8 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `glm-5.2` | Long-horizon coding and reasoning with an open-weight route. | route default | premium open |
 | `hy3` | Coding, document, and frontend work with low-hallucination behavior; open weights. | route default (no-think); `low`/`high` thinking for multi-step work | mid; ~$0.13/$0.53 per 1M via OpenRouter |
 | `minimax-m3` | Long-context, multimodal, or general agentic coding. | `high` for complex agentic work; otherwise route default | mid |
-| `mimo-v2.5` | Video and audio input with 1M context; for image or text-only work `deepseek-v4.1-flash` benchmarks higher. | route default | cheap; ~$0.11/$0.22 per 1M via OpenRouter |
+| `mimo-v2.6-pro` | Top open-weight generalist on independent evals; long-horizon agentic and full-modal work; weak on terminal-heavy tasks. | route default; API thinking on/off only (default on), no graded effort | $0.435/$0.87 per 1M in/out (Xiaomi and OpenRouter); UltraSpeed variant 10× price |
+| `mimo-v2.6-flash` | Cheap full-modal (image/video/audio) work with 1M context and function calling; V2.5 ids retire 2026-10-21. | route default; API thinking on/off only (default on), no graded effort | cheap; $0.14/$0.28 per 1M in/out, batch half price |
 | `deepseek-v4.1-flash` | Fast iteration, mechanical work, cheap retries, and image input; API id `deepseek-flash`, which also serves the retired V4 ids. Verbose (about 2× median output tokens), so compare cost per task, not per token. | route default; API `low`/`high`/`max` | cheap; $0.30/$1.20 per 1M in/out at peak (weekdays 01:00–04:00 and 06:00–10:00 UTC), half off-peak |
 
 ## Evidence-backed defaults
@@ -47,7 +48,7 @@ local runs.
 - Independent cross-family review → Fable 5 `high` (not yet validated on 5.1). The Grok side of that
   comparison was `grok-4.5` (strong twice, one empty-output run) and
   retires with the model — evidence never transfers to a successor, so
-  `grok-4.6` enters this list unevidenced.
+  `grok-4.7` enters this list unevidenced.
 - Mechanical work with strong tests: no default — per-run variance
   dominates, and both `grok-4.5` efforts tripped a behavior-preserving
   trap.
@@ -56,10 +57,10 @@ local runs.
 
 - [GPT-6 Astra model](https://developers.openai.com/api/docs/models/gpt-6-astra), [Astra model guidance](https://developers.openai.com/api/docs/guides/latest-model), [Benchmarking GPT-6 Astra](https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra), [Astra code-review evaluation](https://www.coderabbit.ai/blog/gpt-6-astra-code-review-evaluation), [GPT-5.6 Sol model](https://developers.openai.com/api/docs/models/gpt-5.6-sol), [OpenAI model catalog](https://developers.openai.com/api/docs/models), [OpenAI model comparison](https://developers.openai.com/api/docs/models/compare), and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
 - [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
-- [xAI Grok 4.6](https://docs.x.ai/developers/grok-4-6) and [xAI models and pricing](https://docs.x.ai/developers/models)
+- [xAI Grok 4.7](https://docs.x.ai/developers/grok-4-7), [xAI models and pricing](https://docs.x.ai/developers/models), [Grok 4.7 model card](https://media.x.ai/v1/website/4p7card-5eccc980.pdf), [Grok 4.7 announcement](https://x.ai/news/grok-4-7), and [Benchmarking Grok 4.7](https://artificialanalysis.ai/articles/benchmarking-grok-4-7)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
 - [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3)
-- [Xiaomi MiMo model releases](https://mimo.mi.com/docs/en-US/updates/model) and [MiMo-V2.5 on OpenRouter](https://openrouter.ai/xiaomi/mimo-v2.5) (price source; route discount included)
+- [Xiaomi MiMo model releases](https://mimo.mi.com/docs/en-US/updates/model), [MiMo models](https://mimo.mi.com/docs/en-US/quick-start/summary/model), [MiMo pricing](https://mimo.mi.com/docs/en-US/price/pay-as-you-go), [MiMo deep-thinking mode](https://mimo.mi.com/docs/en-US/quick-start/usage-guide/text-generation/deep-thinking), [Benchmarking MiMo V2.6 Pro](https://artificialanalysis.ai/models/mimo-v2-6-pro), and [OpenRouter model list](https://openrouter.ai/api/v1/models) (xiaomi/mimo-v2.6-\*, x-ai/grok-4.7; price cross-check)
 - [Tencent Hunyuan Hy3 release](https://www.tencent.com/en-us/articles/2202386.html) and [Hy3 on OpenRouter](https://openrouter.ai/tencent/hy3) (price source; route discount included)
 - [Qwen Cloud text-generation models](https://docs.qwencloud.com/developer-guides/getting-started/text-generation-models) and [Token Plan](https://docs.qwencloud.com/token-plan/overview)
 - [DeepSeek API changelog](https://api-docs.deepseek.com/updates/) and [DeepSeek models and pricing](https://api-docs.deepseek.com/quick_start/pricing/)

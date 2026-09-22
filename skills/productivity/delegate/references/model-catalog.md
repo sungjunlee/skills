@@ -1,6 +1,6 @@
 # Model catalog
 
-Last checked: 2026-09-22. Treat as stale after 30 days.
+Last checked: 2026-09-23. Treat as stale after 30 days.
 
 Use only when the user asks for a recommendation or gives a fuzzy model name. Prefer live provider model lists when available. These are bare family slugs, not routes: resolve the route first from the home-route table in `cli-invocations.md`, then adapt the slug to that route's id shape.
 
@@ -8,12 +8,11 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
-| `gpt-6-astra` | Hardest end-to-end work across code, browsers, and professional software; complex research and document creation. Leads independent cross-file code-review evals. Uses fewer turns than Sol and may stop before a multi-step task is done, so state the completion condition. | `low` for scoped, checkable work; `medium` otherwise; `high`–`max` only where task evals show a gain | frontier; $10/$50 per 1M in/out, $1 cached input; about 1/3 the output tokens of Sol or Fable per task; over 272K input, 2× input/cache and 1.5× output |
-| `gpt-5.6-sol` | Complex professional work where the established Sol profile already meets the acceptance checks. | `medium` (vendor default) for bounded hard work with strong checks; `high` for high-blast-radius or cross-boundary work; `xhigh` for long-horizon work that needs broad exploration | flagship; $4/$20 per 1M in/out, $0.40 cached input; over 272K input, 2× input and 1.5× output |
-| `gpt-5.6-terra` | Balanced GPT-5.6 tier for ambiguous everyday work. | `medium`; test before `high` | balanced |
-| `gpt-5.6-luna` | Fast, high-volume, or tightly scoped GPT-5.6 work. | `high`; `xhigh`–`max` only for bounded, genuinely hard work, not vague or coordination-heavy tasks | deep value; $0.20/$1.20 per 1M in/out |
+| `gpt-6-astra` | Hardest end-to-end work across code, browsers, and professional software; complex research and document creation. Leads independent cross-file code-review evals. May stop before a multi-step task is done, so state the completion condition. | `low` for scoped, checkable work; `medium` otherwise; `high`–`max` only where task evals show a gain | frontier; $10/$50 per 1M in/out, $1 cached input; about 1/3 the output tokens of Fable per task; over 272K input, 2× input/cache and 1.5× output |
+| `gpt-6-sol` | Demanding coding, review, and debugging; at `xhigh` it tops Astra `low` on the vendor's agent-workflow eval at about 1/4 the task cost. | `xhigh`; `medium` (vendor default) for scoped, checkable work | flagship; $2/$10 per 1M in/out, $0.20 cached input; over 272K input, 2× input/cache and 1.5× output |
+| `gpt-6-luna` | High-volume, clear-goal work, including bounded coding. | `max`; `medium` (vendor default) for simple extraction and summaries | deep value; $0.10/$0.50 per 1M in/out, $0.01 cached input; over 272K input, 2× input/cache and 1.5× output |
 | `claude-fable-5-1` | Long-running, highly ambitious work that earns frontier spend. | `low` for scoped, checkable work; `medium` for most planning and coding; `high` for difficult or ambiguous work; `xhigh`–`max` only where evals show a gain on long-horizon tasks | frontier; $10/$50 per 1M in/out, $0.25 cache read |
-| `claude-opus-5` | Complex agentic coding, long-horizon execution, code review, vision-heavy implementation, or document work when Fable-tier spend is not justified. | `high`; `xhigh` for demanding coding and agentic work; `max` only for unconstrained frontier problems | premium |
+| `claude-opus-5-5` | Long-running agentic coding, code review, and knowledge work at Fable 5.1 level on most tasks. | `medium` (default); `low` for scoped coding; `xhigh`–`max` only where evals show a gain, since it thinks more per turn there | premium; $4/$20 per 1M in/out, $0.20 cache read |
 | `claude-sonnet-5` | Scaled daily agentic coding and execution. | `medium` | balanced |
 | `grok-4.7` | Long-running agent loops, tool-heavy coding, 500K-context knowledge and document work, or an independent frontier-family review; pick it for persistence and breadth, not terminal-heavy accuracy. | `high` (vendor default); `xhigh` for long agent trajectories, at a steep output-token cost; `medium`/`low` when latency matters | value frontier; $2/$6 per 1M in/out below 200K prompt tokens, doubling above; `grok-4.7-build-fast` 2× price for 2× speed |
 | `kimi-k3` | Long-horizon coding, tool-heavy knowledge work, or multimodal implementation where completion quality matters more than latency. | route default; API ships `max` thinking, `low` and `high` announced | frontier; high output-token and latency risk |
@@ -41,10 +40,9 @@ rankings never override this list, and the 30-day staleness note above
 does not expire it — observed results stand until contradicted by new
 local runs.
 
-- Ambiguous everyday feature/bugfix work → Terra `high`; Luna `xhigh`
-  also passed both dates and stays a valid alternative.
-- High-blast-radius analysis → Sol `high`; use `xhigh` when register
-  depth is the deliverable.
+- Ambiguous everyday work and high-blast-radius analysis: no default —
+  the `gpt-5.6-*` evidence retires with that generation, so `gpt-6-*`
+  enters unevidenced.
 - Independent cross-family review → Fable 5 `high` (not yet validated on 5.1). The Grok side of that
   comparison was `grok-4.5` (strong twice, one empty-output run) and
   retires with the model — evidence never transfers to a successor, so
@@ -55,8 +53,8 @@ local runs.
 
 ## Sources
 
-- [GPT-6 Astra model](https://developers.openai.com/api/docs/models/gpt-6-astra), [Astra model guidance](https://developers.openai.com/api/docs/guides/latest-model), [Benchmarking GPT-6 Astra](https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra), [Astra code-review evaluation](https://www.coderabbit.ai/blog/gpt-6-astra-code-review-evaluation), [GPT-5.6 Sol model](https://developers.openai.com/api/docs/models/gpt-5.6-sol), [OpenAI model catalog](https://developers.openai.com/api/docs/models), [OpenAI model comparison](https://developers.openai.com/api/docs/models/compare), and [GPT-5.6 effort guidance](https://openai.com/index/gpt-5-6/)
-- [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5 changes](https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5), [Opus 5 migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
+- [GPT-6 Astra model](https://developers.openai.com/api/docs/models/gpt-6-astra), [Astra model guidance](https://developers.openai.com/api/docs/guides/latest-model), [Benchmarking GPT-6 Astra](https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra), [Astra code-review evaluation](https://www.coderabbit.ai/blog/gpt-6-astra-code-review-evaluation), [GPT-6 Sol model](https://developers.openai.com/api/docs/models/gpt-6-sol), [GPT-6 Luna model](https://developers.openai.com/api/docs/models/gpt-6-luna), [GPT-6 Sol and Luna announcement](https://openai.com/index/introducing-gpt-6-sol-and-luna/), [GPT-6 Sol and Luna benchmarks](https://venturebeat.com/technology/openai-releases-gpt-6-sol-and-luna-models-slashing-api-costs-50-or-more), [OpenAI model catalog](https://developers.openai.com/api/docs/models), and [OpenAI model comparison](https://developers.openai.com/api/docs/models/compare)
+- [Anthropic effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort), [Opus 5.5 changes](https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5), [Prompting Opus 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5), [Benchmarking Opus 5.5](https://artificialanalysis.ai/articles/claude-opus-5-5), [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview), and [Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - [xAI Grok 4.7](https://docs.x.ai/developers/grok-4-7), [xAI models and pricing](https://docs.x.ai/developers/models), [Grok 4.7 model card](https://media.x.ai/v1/website/4p7card-5eccc980.pdf), [Grok 4.7 announcement](https://x.ai/news/grok-4-7), and [Benchmarking Grok 4.7](https://artificialanalysis.ai/articles/benchmarking-grok-4-7)
 - [Z.ai GLM-5.2](https://z.ai/blog/glm-5.2)
 - [Moonshot Kimi K3](https://www.kimi.com/blog/kimi-k3)

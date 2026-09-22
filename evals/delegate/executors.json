@@ -3,16 +3,16 @@
   "executors": [
     {
       "executor_id": "codex",
-      "match_models": ["gpt-6-astra", "gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"],
+      "match_models": ["gpt-6-astra", "gpt-6-sol", "gpt-6-luna", "gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"],
       "availability": ["codex", "--version"],
       "list_models": null,
       "dispatch": ["codex", "exec", "--sandbox", "workspace-write", "--skip-git-repo-check", "-m", "{model}"],
       "effort_argv": ["-c", "model_reasoning_effort={effort}"],
-      "supported_efforts": ["minimal", "low", "medium", "high", "xhigh"]
+      "supported_efforts": ["minimal", "low", "medium", "high", "xhigh", "max"]
     },
     {
       "executor_id": "claude",
-      "match_models": ["claude-fable-5", "claude-opus-5", "claude-sonnet-5"],
+      "match_models": ["claude-fable-5", "claude-opus-5-5", "claude-opus-5", "claude-sonnet-5"],
       "availability": ["claude", "--version"],
       "list_models": null,
       "dispatch": ["claude", "-p", "--model", "{model}", "--allowedTools", "Read,Glob,Grep,Edit,Write,Bash(node:*),Bash(npm:*),Bash(git:*)"],

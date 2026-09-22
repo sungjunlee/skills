@@ -13,8 +13,8 @@ This file intentionally contains **no user-specific state** (no subscriptions, b
 
 | CLI | Fixed provider | Auth | Models |
 |---|---|---|---|
-| `codex/*` | OpenAI (ChatGPT OAuth) | `auth_mode: chatgpt` | gpt-6-astra / gpt-5.6-sol / terra / luna |
-| `claude/*` | Anthropic (claude.ai) | firstParty OAuth | claude-fable-5-1 / opus-5 / sonnet-5 |
+| `codex/*` | OpenAI (ChatGPT OAuth) | `auth_mode: chatgpt` | gpt-6-astra / gpt-6-sol / gpt-6-luna |
+| `claude/*` | Anthropic (claude.ai) | firstParty OAuth | claude-fable-5-1 / opus-5-5 / sonnet-5 |
 | `reasonix/*` | DeepSeek first-party API | DEEPSEEK_API_KEY | deepseek-flash |
 | `grok/*` | xAI (Grok Build CLI) | grok.com OAuth, or `XAI_API_KEY` where no browser is available | grok-4.7 / grok-4.7-build-fast |
 
@@ -24,7 +24,7 @@ For a single-provider CLI, choosing the route IS choosing the provider: `codex` 
 
 | CLI | Provider/billing | Auth | Models |
 |---|---|---|---|
-| `cursor/*` | Cursor subscription | Cursor OAuth | many families under the cursor plan: grok-4.7-*, gpt-5.6-sol-*, claude-opus/fable/sonnet-*-*, kimi-k3-*, composer-2.5-*, gpt-5.x-* |
+| `cursor/*` | Cursor subscription | Cursor OAuth | many families under the cursor plan: grok-4.7-*, claude-opus/fable/sonnet-*-*, kimi-k3-*, composer-2.5-*, gpt-5.x-* |
 | `cline/*` | configurable provider; `cline-pass` is one provider id among many | per-provider (`cline auth`: manual key, Azure, base URL) | varies by provider |
 
 - `cursor/*` is one subscription (Cursor) that exposes many model families; the route's model id selects the family. Billing is fixed to Cursor, but the model set is broad.

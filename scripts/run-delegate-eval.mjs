@@ -130,6 +130,14 @@ function resolvedModelId(executor, profile) {
   return token === undefined ? profile.model : fillTokens([token], executor, profile)[0];
 }
 
+function placePrompt(argv, prompt) {
+  const index = argv.findIndex((token) => token.includes("{prompt}"));
+  if (index === -1) return [...argv, prompt];
+  const filled = [...argv];
+  filled[index] = filled[index].replaceAll("{prompt}", prompt);
+  return filled;
+}
+
 function probe(argv) {
   const result = spawnSync(argv[0], argv.slice(1), {
     encoding: "utf8",
@@ -143,7 +151,8 @@ function probe(argv) {
 function listedIds(listing) {
   return listing
     .split("\n")
-    .map((line) => line.trim().split(/\s+/)[0])
+    .map((line) => line.trim().replace(/^[*\-•]\s+/, ""))
+    .map((line) => line.split(/\s+/)[0])
     .filter(Boolean);
 }
 
@@ -207,7 +216,7 @@ function dispatch(run, executor, timeoutMinutes) {
   if (version === null) {
     return { status: "skipped", version: null, note: `Skipped: ${executor.availability[0]} unavailable or unauthenticated.` };
   }
-  const argv = [...buildArgv(executor, run.profile), buildPrompt(run.evalCase)];
+  const argv = placePrompt(buildArgv(executor, run.profile), buildPrompt(run.evalCase));
   const started = Date.now();
   const result = spawnSync(argv[0], argv.slice(1), {
     encoding: "utf8",
@@ -260,7 +269,7 @@ async function main() {
     if (violation) throw new Error(violation);
     const label = `${run.evalCase.case_id} × ${run.profile.profile_id} [${executor.executor_id}]`;
     if (args.dryRun) {
-      console.log(`DRY ${label}: ${[...buildArgv(executor, run.profile), "<prompt>"].join(" ")}`);
+      console.log(`DRY ${label}: ${placePrompt(buildArgv(executor, run.profile), "<prompt>").join(" ")}`);
     } else if (args.smoke) {
       console.log(`SMOKE ${label}: ${smokeProfile(executor, run.profile)}`);
     } else {

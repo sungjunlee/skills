@@ -60,7 +60,7 @@ A home route says which CLI hosts a family, nothing more; it is not a model-effo
 
 Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback.
 
-`cursor/*` is the one route with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` and do not synthesize bracket overrides. Its list is also the only one holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross. Grok is the sharpest case of this: Cursor's Grok 4.7 slugs are `grok-4.7-<effort>[-fast]` with no `cursor-` prefix, unlike the `cursor-grok-4.6-<effort>` / `cursor-grok-4.5-<effort>` shape those generations keep, so the live list — not a pattern — decides which shape applies:
+`cursor/*` is the one route with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `gpt-5.6-sol-high` and do not synthesize bracket overrides. Its list is also the only one holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross:
 
 - Never carry an effort suffix into another route. `-m gpt-5.6-sol-high` on `codex/*` names a different, probably nonexistent model, and rule 1's charset accepts it — no syntactic check catches this one.
 - Never send a bare catalog slug to `cursor/*`; conversely, an effort-bearing id names `cursor/*` even without the route prefix, since no other route has one.

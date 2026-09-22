@@ -49,10 +49,7 @@ evals/delegate/
   `grok-4.6` (checked 2026-08-16), so `grok-4.6` runs on a `cursor` lane while
   the skill's home route for it is `grok/*` — comparing Grok generations
   compares two harnesses as well as two models. A result's `executor` field,
-  never the skill's default, says what ran. Cursor's `grok-4.7-*` slugs drop
-  the `cursor-` prefix that `grok-4.6`/`grok-4.5` slugs carry, so the cursor
-  executor's `cursor-{model}-{effort}` dispatch template does not fit 4.7 —
-  a `grok-4.7` lane is not registered yet.
+  never the skill's default, says what ran.
 - Where a route encodes effort in the model id, as `cursor/*` does, the
   executor's `dispatch` carries `{effort}` and its `effort_argv` is `null`;
   such a profile may not omit effort.

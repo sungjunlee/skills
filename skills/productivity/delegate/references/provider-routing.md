@@ -24,7 +24,7 @@ For a single-provider CLI, choosing the route IS choosing the provider: `codex` 
 
 | CLI | Provider/billing | Auth | Models |
 |---|---|---|---|
-| `cursor/*` | Cursor subscription | Cursor OAuth | many families under the cursor plan: grok-4.7-*, claude-opus/fable/sonnet-*-*, kimi-k3-*, composer-2.5-*, gpt-5.x-* |
+| `cursor/*` | Cursor subscription | Cursor OAuth | many families under the cursor plan: grok-4.7-*, claude-opus/fable/sonnet-*-*, kimi-k3-*, composer-2.5-*; GPT runs only on `codex/*` |
 | `cline/*` | configurable provider; `cline-pass` is one provider id among many | per-provider (`cline auth`: manual key, Azure, base URL) | varies by provider |
 
 - `cursor/*` is one subscription (Cursor) that exposes many model families; the route's model id selects the family. Billing is fixed to Cursor, but the model set is broad.
@@ -59,7 +59,7 @@ When the same model exists on multiple routes:
 4. **Off-peak discounts** — if a provider offers off-peak discounts, defer heavy batchable work to that window.
 5. **Peak-rate avoidance** — if a first-party API is more expensive during peak hours, use subscriptions in those hours.
 6. **Quota-exhausted fallback** — when a preferred route is at 0%, fall back to another route that exposes the same model.
-7. **Family-first, then billing** — for families reachable in multiple subscriptions, prefer the native CLI (e.g. `claude/*` for claude models, `codex/*` for GPT models) for full effort control; use a bundled subscription (e.g. `cursor/*`) for 1M-token variants or when that subscription has spare quota. An explicit provider or route named by the user always wins.
+7. **Family-first, then billing** — for families reachable in multiple subscriptions, prefer the native CLI (e.g. `claude/*` for claude models) for full effort control; use a bundled subscription (e.g. `cursor/*`) for 1M-token variants or when that subscription has spare quota. An explicit provider or route named by the user always wins.
 
 Decision order: risk → explicit user route → quota burn → cost (peak/discount) → capability.
 

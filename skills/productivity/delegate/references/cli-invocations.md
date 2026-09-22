@@ -61,7 +61,7 @@ Effort support can vary by model even when the CLI accepts the flag. Reject a va
 
 `cursor/*` is the one route with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `claude-opus-5-5-high` and do not synthesize bracket overrides. Its list is also the only one holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross:
 
-- Never carry an effort suffix into another route. `-m gpt-6-sol-high` on `codex/*` names a different, probably nonexistent model, and rule 1's charset accepts it — no syntactic check catches this one.
+- Never carry an effort suffix into another route. `-m claude-opus-5-5-high` on `claude/*` names a different, probably nonexistent model, and rule 1's charset accepts it — no syntactic check catches this one.
 - Never send a bare catalog slug to `cursor/*`; conversely, an effort-bearing id names `cursor/*` even without the route prefix, since no other route has one.
 - Dispatch only ids the route's own list holds. When the requested profile has no id there, report that — do not approximate with a neighboring level, a `-fast` variant, or a dropped `-m`. Omitting the model on `cursor/*` selects its `auto` mode, which is a valid request when the user wants Cursor to choose but not a substitute for a named family.
 

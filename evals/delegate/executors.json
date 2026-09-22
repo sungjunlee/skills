@@ -8,7 +8,7 @@
       "list_models": null,
       "dispatch": ["codex", "exec", "--sandbox", "workspace-write", "--skip-git-repo-check", "-m", "{model}"],
       "effort_argv": ["-c", "model_reasoning_effort={effort}"],
-      "supported_efforts": ["minimal", "low", "medium", "high", "xhigh", "max"]
+      "supported_efforts": ["low", "medium", "high", "xhigh", "max"]
     },
     {
       "executor_id": "claude",

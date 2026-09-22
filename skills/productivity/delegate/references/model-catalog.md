@@ -9,7 +9,7 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | Model | Selection hint | Effort profile | Cost shape |
 |---|---|---|---|
 | `gpt-6-astra` | Hardest end-to-end work across code, browsers, and professional software; complex research and document creation. Leads independent cross-file code-review evals. May stop before a multi-step task is done, so state the completion condition. | `low` for scoped, checkable work; `medium` otherwise; `high`–`max` only where task evals show a gain | frontier; $10/$50 per 1M in/out, $1 cached input; about 1/3 the output tokens of Fable per task; over 272K input, 2× input/cache and 1.5× output |
-| `gpt-6-sol` | Demanding coding, review, and debugging; at `xhigh` it tops Astra `low` on the vendor's agent-workflow eval at about 1/4 the task cost. | `xhigh`; `medium` (vendor default) for scoped, checkable work | flagship; $2/$10 per 1M in/out, $0.20 cached input; over 272K input, 2× input/cache and 1.5× output |
+| `gpt-6-sol` | Demanding coding, review, and debugging. | `xhigh`, which tops Astra `low` on the vendor's agent-workflow eval at about 1/4 the task cost; `medium` (vendor default) for scoped, checkable work | flagship; $2/$10 per 1M in/out, $0.20 cached input; over 272K input, 2× input/cache and 1.5× output |
 | `gpt-6-luna` | High-volume, clear-goal work, including bounded coding. | `max`; `medium` (vendor default) for simple extraction and summaries | deep value; $0.10/$0.50 per 1M in/out, $0.01 cached input; over 272K input, 2× input/cache and 1.5× output |
 | `claude-fable-5-1` | Long-running, highly ambitious work that earns frontier spend. | `low` for scoped, checkable work; `medium` for most planning and coding; `high` for difficult or ambiguous work; `xhigh`–`max` only where evals show a gain on long-horizon tasks | frontier; $10/$50 per 1M in/out, $0.25 cache read |
 | `claude-opus-5-5` | Long-running agentic coding, code review, and knowledge work at Fable 5.1 level on most tasks. | `medium` (default); `low` for scoped coding; `xhigh`–`max` only where evals show a gain, since it thinks more per turn there | premium; $4/$20 per 1M in/out, $0.20 cache read |
@@ -40,9 +40,8 @@ rankings never override this list, and the 30-day staleness note above
 does not expire it — observed results stand until contradicted by new
 local runs.
 
-- Ambiguous everyday work and high-blast-radius analysis: no default —
-  the `gpt-5.6-*` evidence retires with that generation, so `gpt-6-*`
-  enters unevidenced.
+- Ambiguous everyday work and high-blast-radius analysis: no default;
+  the `gpt-5.6-*` evidence retired with that generation.
 - Independent cross-family review → Fable 5 `high` (not yet validated on 5.1). The Grok side of that
   comparison was `grok-4.5` (strong twice, one empty-output run) and
   retires with the model — evidence never transfers to a successor, so

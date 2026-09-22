@@ -131,11 +131,9 @@ function resolvedModelId(executor, profile) {
 }
 
 function placePrompt(argv, prompt) {
-  const index = argv.findIndex((token) => token.includes("{prompt}"));
-  if (index === -1) return [...argv, prompt];
-  const filled = [...argv];
-  filled[index] = filled[index].replaceAll("{prompt}", prompt);
-  return filled;
+  if (!argv.some((token) => token.includes("{prompt}"))) return [...argv, prompt];
+  // Function replacer: a prompt containing `$&` or `$$` must land verbatim.
+  return argv.map((token) => token.replaceAll("{prompt}", () => prompt));
 }
 
 function probe(argv) {

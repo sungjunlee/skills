@@ -1,0 +1,45 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.mechanical.enum-rename",
+  "profile_id": "grok47-high",
+  "model": "grok-4.7",
+  "effort": "high",
+  "observation_date": "2026-09-22",
+  "executor": {
+    "name": "grok",
+    "version": "grok 1.0.40 (eb1a2256660d) [stable]"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "suite-green",
+      "status": "pass",
+      "evidence": "node --test in the fixture repository after the run: 8 tests, 8 pass, 0 fail, exit 0."
+    },
+    {
+      "check_id": "no-stale-identifier",
+      "status": "pass",
+      "evidence": "Recursive grep for SHIPPED over src/ and test/ matched nothing; CHANGELOG.md untouched."
+    },
+    {
+      "check_id": "rename-only-diff",
+      "status": "pass",
+      "evidence": "git diff touches only the enum key/value, computed-key map entries, and direct test references (17 insertions, 17 deletions across 6 files). The public statusLabel stays \"Shipped\" and the wire code stays 2 — the behavior-preserving trap that both grok-4.5 profiles tripped on 2026-07-22/23 was avoided."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 89,
+    "tokens": {
+      "input": null,
+      "output": null,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Dispatched via the vendor grok CLI under grok.com OAuth with --sandbox workspace; the run output exposes no token or billing data."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "First observation of the grok-4.7 profile and the first run of the grok executor; dispatched 02:44Z from a generator-built fixture (suite green, git clean before dispatch). One observation on one UTC date establishes the lane works, not a default — the promotion rule still needs a second date. Raw transcript in the gitignored drafts directory (2026-09-22T02-44-38, grok47-high)."
+}

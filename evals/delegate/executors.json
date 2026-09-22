@@ -29,12 +29,12 @@
       "supported_efforts": null
     },
     {
-      "executor_id": "cursor",
-      "match_models": ["grok-4.6"],
-      "availability": ["cursor-agent", "--version"],
-      "list_models": ["cursor-agent", "models"],
-      "dispatch": ["cursor-agent", "--print", "--trust", "--sandbox", "enabled", "--model", "cursor-{model}-{effort}"],
-      "effort_argv": null,
+      "executor_id": "grok",
+      "match_models": ["grok-4.7"],
+      "availability": ["grok", "--version"],
+      "list_models": ["grok", "models"],
+      "dispatch": ["grok", "--always-approve", "--sandbox", "workspace", "-m", "{model}", "-p", "{prompt}"],
+      "effort_argv": ["--effort", "{effort}"],
       "supported_efforts": ["low", "medium", "high", "xhigh"]
     },
     {

@@ -44,15 +44,13 @@ evals/delegate/
 - `executors.json` is the runner's **controlled transport, not a replay of the
   skill's dispatch**. It compares model-effort profiles, so it holds one
   harness steady across observation dates rather than following the skill's
-  routing — see the sandboxing note under Runner. The Grok lane changed
-  harness with the model: `grok-4.5` runs on `opencode-go`, which serves no
-  `grok-4.6` (checked 2026-08-16), so `grok-4.6` runs on a `cursor` lane while
-  the skill's home route for it is `grok/*` — comparing Grok generations
-  compares two harnesses as well as two models. A result's `executor` field,
-  never the skill's default, says what ran.
-- Where a route encodes effort in the model id, as `cursor/*` does, the
-  executor's `dispatch` carries `{effort}` and its `effort_argv` is `null`;
-  such a profile may not omit effort.
+  routing — see the sandboxing note under Runner. The Grok lane has changed
+  harness with the model: `grok-4.5` ran on `opencode-go`, which no longer
+  serves it, and `grok-4.7` runs on the vendor `grok` CLI — comparing Grok
+  generations compares two harnesses as well as two models. A result's
+  `executor` field, never the skill's default, says what ran.
+- A `dispatch` token containing `{prompt}` receives the prompt in place;
+  otherwise the prompt is appended as the last argument.
 - `scripts/verify-delegate-evals.mjs` (part of `npm test` and CI) validates
   schemas, case/result pairing, work-shape coverage, the executor registry,
   and the fixtures — all without provider credentials. Paid provider calls
@@ -80,7 +78,7 @@ Real runs write draft results plus captured stdout/stderr to `drafts/`
 checks, fills the measurements, and only then promotes a finished result into
 `results/<observation_date>/`. `internal`/`private` cases refuse dispatch on
 routes outside their `approved_routes`. Executors run sandboxed (codex uses
-`--sandbox workspace-write` and cursor `--sandbox enabled`, never the delegate
+`--sandbox workspace-write` and grok `--sandbox workspace`, never the delegate
 skill's `--yolo`-style bypass flags). A
 timed-out run is reported as `failed` (`dispatch_timeout`) and is never
 retried automatically. A zero-exit with empty stdout is `failed`

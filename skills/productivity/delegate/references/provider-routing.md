@@ -14,7 +14,7 @@ This file intentionally contains **no user-specific state** (no subscriptions, b
 | CLI | Fixed provider | Auth | Models |
 |---|---|---|---|
 | `codex/*` | OpenAI (ChatGPT OAuth) | `auth_mode: chatgpt` | gpt-6-astra / gpt-6-sol / gpt-6-luna |
-| `claude/*` | Anthropic (claude.ai) | firstParty OAuth | claude-fable-5-1 / opus-5-5 / sonnet-5 |
+| `claude/*` | Anthropic (claude.ai) | firstParty OAuth | claude-fable-5-1 / opus-5-5 / sonnet-5-5 |
 | `reasonix/*` | DeepSeek first-party API | DEEPSEEK_API_KEY | deepseek-flash |
 | `grok/*` | xAI (Grok Build CLI) | grok.com OAuth, or `XAI_API_KEY` where no browser is available | grok-4.7 / grok-4.7-build-fast |
 

@@ -104,7 +104,6 @@ Adjust the destination for your runtime. Codex and Claude Code may use different
 ## Repo Layout
 
 ```text
-backlog/
 evals/
   cases/
   delegate/

@@ -28,7 +28,7 @@ Every return needs that new anchor; a hold without one is not a hold. If the
 target cannot settle it, say so and name what would.
 ```
 
-Resume the original subagent when the host can continue it; it has already read the target. Otherwise dispatch a fresh one carrying the seat's question, the Target, the original Origin, Project purpose, and Context, both positions, and the return shape. Record the route in Meta as `resume` or `fresh`. One round only.
+Resume the original subagent when the host can continue it; it has already read the target. Otherwise dispatch a fresh one carrying the seat's vantage, the Target, the original Origin, Project purpose, and Context, both positions, and the return shape. Record the route in Meta as `resume` or `fresh`. One round only.
 
 ## Reading the result
 

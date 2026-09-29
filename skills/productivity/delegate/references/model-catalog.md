@@ -33,23 +33,6 @@ Use only when the user asks for a recommendation or gives a fuzzy model name. Pr
 | `mimo-v2.6-flash` | Cheap full-modal (image/video/audio) work with 1M context and tool calling. | as MiMo V2.6 Pro | cheap; $0.14/$0.28 per 1M in/out, batch half price |
 | `deepseek-v4.1-flash` | Fast iteration, mechanical work, cheap retries, and image input; API id `deepseek-flash`, which also serves the retired V4 ids. Verbose (about 2× median output tokens), so compare cost per task, not per token. | route default; API `low`/`high`/`max` | cheap; $0.30/$1.20 per 1M in/out at peak (weekdays 01:00–04:00 and 06:00–10:00 UTC), half off-peak |
 
-## Evidence-backed defaults
-
-From dated local runs (2026-07-22/23). Community reports and vendor
-rankings never override this list, and the 30-day staleness note above
-does not expire it — observed results stand until contradicted by new
-local runs.
-
-- Ambiguous everyday work and high-blast-radius analysis: no default;
-  the `gpt-5.6-*` evidence retired with that generation.
-- Independent cross-family review → Fable 5 `high` (not yet validated on 5.1). The Grok side of that
-  comparison was `grok-4.5` (strong twice, one empty-output run) and
-  retires with the model — evidence never transfers to a successor, so
-  `grok-4.7` enters this list unevidenced.
-- Mechanical work with strong tests: no default — per-run variance
-  dominates, and both `grok-4.5` efforts tripped a behavior-preserving
-  trap.
-
 ## Sources
 
 - [GPT-6 Astra model](https://developers.openai.com/api/docs/models/gpt-6-astra), [Astra model guidance](https://developers.openai.com/api/docs/guides/latest-model), [Benchmarking GPT-6 Astra](https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra), [Astra code-review evaluation](https://www.coderabbit.ai/blog/gpt-6-astra-code-review-evaluation), [GPT-6 Sol model](https://developers.openai.com/api/docs/models/gpt-6-sol), [GPT-6 Luna model](https://developers.openai.com/api/docs/models/gpt-6-luna), [GPT-6 Sol and Luna announcement](https://openai.com/index/introducing-gpt-6-sol-and-luna/), [GPT-6 Sol and Luna benchmarks](https://venturebeat.com/technology/openai-releases-gpt-6-sol-and-luna-models-slashing-api-costs-50-or-more), [OpenAI model catalog](https://developers.openai.com/api/docs/models), and [OpenAI model comparison](https://developers.openai.com/api/docs/models/compare)
@@ -66,4 +49,4 @@ local runs.
 - [Gemini 3.8 Flash model docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) and [Gemini pricing](https://ai.google.dev/gemini-api/docs/latest-model)
 - [Meta Muse Spark 1.3](https://research.meta.ai/blog/introducing-muse-spark-1-3), [OpenCode Zen privacy](https://opencode.ai/docs/zen/#privacy), and [OpenCode Go privacy](https://opencode.ai/docs/go/#privacy)
 
-These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. Prices moved after the 2026-07-22/23 runs: the acceptance findings stand, but re-check cost before it decides. Distinguish API marginal cost from subscription quota pressure when comparing routes.
+These are profile hints, not rankings. Choose the profile from the task before dispatch; do not treat effort levels as a retry staircase. Distinguish API marginal cost from subscription quota pressure when comparing routes.

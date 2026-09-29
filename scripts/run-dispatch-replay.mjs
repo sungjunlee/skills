@@ -180,6 +180,13 @@ function hostArgv(hostId, prompt) {
     HOSTS[hostId].model,
     "-c",
     "shell_environment_policy.inherit=all",
+    // Codex runs shell tools through a login shell and a shell snapshot that
+    // re-source the user's profile, which can put a real `reasonix` ahead of
+    // the shim dir. Disable both so the shim PATH set below survives.
+    "-c",
+    "allow_login_shell=false",
+    "-c",
+    "features.shell_snapshot=false",
     prompt,
   ];
 }
@@ -212,7 +219,7 @@ function runProcess(argv, options) {
 
 function parseHostReport(text) {
   const pick = (name) => {
-    const match = text.match(new RegExp(`^${name}:\\s*(.*)$`, "mi"));
+    const match = text.match(new RegExp(`^${name}:[ \\t]*(.*)$`, "mi"));
     return match ? match[1].trim() : "";
   };
   const outcome = pick("OUTCOME") || null;
@@ -250,7 +257,9 @@ function readFakeRecord(logPath) {
       .map((line) => line.trim())
       .filter(Boolean)
       .map((line) => JSON.parse(line));
-    const dispatched = [...lines].reverse().find((line) => !line.meta && (line.argv ?? []).includes(PROMPT));
+    // The first non-meta call carrying the expected prompt is the observation;
+    // later diagnostic or retry calls must not replace it.
+    const dispatched = lines.find((line) => !line.meta && (line.argv ?? []).includes(PROMPT));
     return dispatched ?? lines.at(-1) ?? null;
   } catch {
     return null;
@@ -299,7 +308,9 @@ async function main() {
   const deadlineMs = replayCase.dispatch_contract.deadline_seconds * 1000;
   const elapsed = elapsedMs(fakeRecord, report);
   const argv = fakeRecord?.argv ?? [];
-  const modelFromArgv = argv.includes("-m") ? argv[argv.indexOf("-m") + 1] : null;
+  // The reasonix row uses `--model`; accept the `-m` short form too.
+  const modelFlag = ["--model", "-m"].find((flag) => argv.includes(flag));
+  const modelFromArgv = modelFlag ? argv[argv.indexOf(modelFlag) + 1] : null;
   const effortFromArgv = argv.includes("--effort") ? argv[argv.indexOf("--effort") + 1] : null;
   const observation = {
     host_dispatched: Boolean(fakeRecord && argv.includes(PROMPT)),

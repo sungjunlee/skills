@@ -4,7 +4,8 @@
 // Records argv/cwd/stdin, then succeeds, returns empty, or prints a
 // definitive stderr error and hangs. Never talks to a network.
 
-import { appendFileSync, readFileSync, readlinkSync, writeFileSync } from "node:fs";
+import { appendFileSync, fstatSync, readFileSync, readlinkSync, statSync, writeFileSync } from "node:fs";
+import { isatty } from "node:tty";
 import path from "node:path";
 import process from "node:process";
 
@@ -17,17 +18,31 @@ function loadConfig() {
   return JSON.parse(readFileSync(filename, "utf8"));
 }
 
+function sameFile(a, b) {
+  return a.dev === b.dev && a.ino === b.ino && a.rdev === b.rdev;
+}
+
 function classifyStdin() {
-  try {
-    const target = readlinkSync("/proc/self/fd/0");
-    if (target === "/dev/null") return "devnull";
-    if (target.startsWith("pipe:") || target.startsWith("socket:")) return "piped";
-    if (process.stdin.isTTY) return "tty";
-    return "other";
-  } catch {
-    if (process.stdin.isTTY) return "tty";
-    return "other";
+  // Linux exposes the fd target as a link; other platforms (macOS) do not.
+  if (process.platform === "linux") {
+    try {
+      const target = readlinkSync("/proc/self/fd/0");
+      if (target === "/dev/null") return "devnull";
+      if (target.startsWith("pipe:") || target.startsWith("socket:")) return "piped";
+      if (process.stdin.isTTY) return "tty";
+      return "other";
+    } catch {
+      // fall through to the fstat classification
+    }
   }
+  try {
+    const stdin = fstatSync(0);
+    if (sameFile(stdin, statSync("/dev/null"))) return "devnull";
+    if (stdin.isFIFO() || stdin.isSocket()) return "piped";
+  } catch {
+    // fall through
+  }
+  return isatty(0) ? "tty" : "other";
 }
 
 function classifyCwd(expectedCwd) {
@@ -38,18 +53,37 @@ function receivedArgv(argv0) {
   return [argv0, ...process.argv.slice(2)];
 }
 
+// Upsert this process's record by pid so an earlier call (or a later
+// diagnostic call such as `reasonix run --help`) is never clobbered.
 function writeLog(filename, record) {
-  writeFileSync(filename, `${JSON.stringify(record)}\n`);
+  let lines = [];
+  try {
+    lines = readFileSync(filename, "utf8").split("\n").filter(Boolean);
+  } catch {
+    // first write
+  }
+  const mine = JSON.stringify({ ...record, pid: process.pid });
+  const index = lines.findIndex((line) => {
+    try {
+      return JSON.parse(line).pid === process.pid;
+    } catch {
+      return false;
+    }
+  });
+  if (index >= 0) lines[index] = mine;
+  else lines.push(mine);
+  writeFileSync(filename, `${lines.join("\n")}\n`);
 }
 
 function appendLog(filename, record) {
-  appendFileSync(filename, `${JSON.stringify(record)}\n`);
+  appendFileSync(filename, `${JSON.stringify({ ...record, pid: process.pid })}\n`);
 }
 
 function isMetaInvocation(argv) {
   const rest = argv.slice(1);
   if (rest.length === 0) return true;
-  return rest.every((token) => token === "models" || token === "--help" || token === "-h");
+  if (rest.some((token) => token === "--help" || token === "-h" || token === "--version")) return true;
+  return rest.every((token) => token === "models");
 }
 
 async function hangUntilKilled() {

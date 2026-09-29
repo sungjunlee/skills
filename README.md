@@ -43,9 +43,9 @@ Source:
 
 #### gosu-review
 
-Review the current artifact with a real panel of 4-6 independent subagents. Explicit-only: invoke with `/gosu-review`.
+Re-examine something already built with a real panel of 4-6 independent subagents. Explicit-only: invoke with `/gosu-review`.
 
-One independent review already catches most defects. `gosu-review` starts each reviewer from a different question, including whether the premise holds, then surfaces what changes the decision, the tensions, and each seat's verdict.
+A plain review already finds the defects. `gosu-review` asks whether the result is still worth it: each seat looks from a different vantage — the user, the premise, what can be cut, the project's purpose, the alternatives — and the panel surfaces what changes the decision and where the seats disagree.
 
 ```text
 /gosu-review

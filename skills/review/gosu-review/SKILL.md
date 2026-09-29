@@ -1,32 +1,37 @@
 ---
 name: gosu-review
-description: Review the current artifact with a real panel of 4-6 independent subagents, each starting from a different question, one of them whether the premise holds.
+description: Re-examine something already built with a real panel of 4-6 independent subagents, each asking from a different vantage whether it still delivers the value it was built for.
 disable-model-invocation: true
 ---
 
 # gosu-review
 
-One independent reviewer already catches most defects. A panel earns its cost in two places a single pass does not reach: reviewers who start from different questions, so they diverge instead of repeating one pass, and a reviewer who does not accept the premise. Every seat is a real subagent with fresh context, and every finding points at the artifact.
+A plain review already finds the defects in what was built. gosu-review asks what that review does not: now that it exists, is it still worth it — to the people it was built for, to what the project is for, against the alternatives? Each seat is a real subagent with fresh context, looking from a vantage above the change itself. Leave line-level defects to a normal review; a seat that sees a critical one notes it in a line.
 
 ## Target
 
-Review `/gosu-review <target>` when given; otherwise the most recent artifact in the conversation — code just edited, a plan, a skill, a decision, a document. If several are plausible, ask one question, `Do you want me to review X?`, and start nothing else. Read `"this"` as the most recent artifact and `"this repo"` as the current repository state. On a broad target, continue but warn once that a narrower scope gives a sharper review.
+Review `/gosu-review <target>` when given; otherwise the most recent artifact in the conversation — a feature, a change, a plan, a skill, a document. If several are plausible, ask one question, `Do you want me to review X?`, and start nothing else. Read `"this"` as the most recent artifact and `"this repo"` as the current repository state. On a broad target, continue but warn once that a narrower scope gives a sharper review.
 
-When the target is a change — a diff, a PR, uncommitted work — every brief carries the defect it claims to fix and its premise, and a fix is judged by whether it fixes that.
+Gather two things for every brief: the origin — the issue, plan, or request that asked for it and why — and the project's own statement of purpose, such as its README, charter, or spec. When either is missing, say so in the brief rather than inventing it.
 
 ## Seats
 
-Pick 4-6 questions that pull apart on this target, one seat each. Three are always there:
+Pick 4-6 vantages that could reach different answers, one seat each. Three are always there:
 
-- **Premise** — does not accept the framing. Is this the right problem and the right approach? What is the strongest alternative, and should this exist at all?
-- **Break** — tries to make it fail: inputs, callers, states, timing, misuse. Add a second when the user asks for red-team or the target is high-risk.
-- **Subtract** — what can go: a step, an option, a file, the whole thing.
+- **User** — meets it as the person it was built for. Would they notice it, reach for it, trust it? What do they do instead today?
+- **Premise** — knowing what the build revealed, would we build this again, in this shape? Is it the right problem?
+- **Subtract** — what can go with nothing lost: an option, a mode, the whole thing.
 
-Fill the rest with questions only someone close to this target would ask — what a first-time user hits at step 2, what the thousandth run costs, what a maintainer inherits in six months. On a change, one seat asks what else reaches the same sink as the defect, and one knows the platforms or callers the change now claims to cover. A one-line role may sharpen a question; a backstory does not.
+Fill the rest from what the target puts at stake:
+
+- **Project thesis** — does it strengthen what the project says it is for, or pull it sideways?
+- **Alternatives** — what already does this: other tools, built-ins, the obvious manual way. Why would anyone pick this one?
+- **Cost of owning** — what this value costs in complexity, upkeep, and attention over the next year.
+- A specific audience the target serves or burdens: a buyer, a maintainer, a newcomer, an operator.
 
 ## Dispatch
 
-Spawn one real subagent per seat, all before reading any result. If the host caps concurrency, start the rest as slots free. Prefer a read-only role that can open whole files. If a call fails, retry it simpler. Wait without busy polling.
+Spawn one real subagent per seat, all before reading any result. If the host caps concurrency, start the rest as slots free. Prefer a role that can read whole files and, for outward-looking seats, search the web. If a call fails, retry it simpler. Wait without busy polling.
 
 If subagents cannot be found or called, stop with:
 
@@ -38,61 +43,73 @@ This is not a gosu-review result. I can do a single-agent review instead if you 
 Each subagent sees only its brief:
 
 ```text
-You are one of several independent reviewers, each starting from a different
-question. Yours: <question>
+You are one of several independent reviewers of something already built. The
+question is not whether it has bugs but whether it is worth it. Your vantage:
+<vantage and its question>
 <optional one-line role>
 
 Target: <path, diff, repo scope, or artifact>
-Context: <what it is, why it exists, constraints>
-Change (only for a change): <the defect it claims to fix>; <its premise>
+Origin: <what it was meant to achieve, and why; or "not found">
+Project purpose: <what the project says it is for, and where it says so; or "not stated">
+Context: <audience, constraints, anything else>
 
-Read the target before you write. Other seats and a general pass cover the
-obvious defects; go deeper on your question than they would, and list other
-real defects you see in a line each. Tie each finding to the artifact — file:line, a
-quote, or the detail you observed; a claim you did not check does not belong.
-Say plainly when the approach is wrong. Zero findings is a valid answer; say why.
+Read the target, and try it if you can, before you write. Go deeper on your
+vantage than a general reviewer would. Keep what you observed — in the target,
+the origin, or a source you cite — apart from what you judge; a judgment is
+welcome when you say what it rests on. When your vantage looks outward, check
+claims about alternatives or the market against current sources on the web
+rather than memory, and cite them. Leave line-level defects to a normal review;
+note a critical one in a line. Finding nothing that changes the call is a
+valid answer; say why.
 
 Return:
-- verdict: ship (lands as-is) | fix (lands after the changes you name) |
-  rethink (the approach is wrong; fixes would not save it)
+- verdict: keep (worth it as built) | sharpen (worth it after the changes you name) |
+  rethink (the value is real but this is the wrong shape) | drop (not worth keeping)
 - headline: one sentence
-- findings: each with the claim, its evidence, what it breaks and for whom, and the fix
-- what would change your mind
+- points: each with the claim, what it rests on (observed: anchor or source;
+  judged: the observations it builds on, then the reasoning), who it matters
+  to, and what you would do
+- critical defects, only if seen: one line each
+- what would change my mind
 ```
 
 ## Cross-examine
 
-A conflict is two entries that point opposite ways on the same element — remove it versus extend it, this mechanism versus that one. Coverage one seat missed is not a conflict, and neither is severity. On a conflict, run one round on at most the two costliest to get wrong: read `references/cross-examine.md`.
+A conflict is two entries that point opposite ways on the same element — keep it versus drop it, widen it versus cut it. A vantage one seat missed is not a conflict, and neither is severity. On a conflict, run one round on at most the two costliest to get wrong: read `references/cross-examine.md`.
 
 ## Output
 
-Lead with a one-line call. Synthesis invents nothing: a finding without evidence stays in Panel, and agreement is not evidence — the artifact is. A finding only one seat raised stands on its evidence like any other. A removal and an addition on the same element is a Tension.
+Lead with a one-line answer to whether it is still worth it. Synthesis invents nothing: a point reaches the decision only through the observations it rests on, anything else stays in Panel, and agreement is not evidence. A point only one seat raised stands on its basis like any other. Keep versus drop on the same element is a Tension.
 
 ```text
 # gosu-review: <target>
 target: <selected target>
-casting: <the seat questions, one line>
+casting: <the vantages, one line>
 
 **Verdicts**
 - <seat>: <verdict> — <headline>
 
 ## What changes the decision
-- <finding> — <seat(s), or "only <seat>"> — <evidence>
+- <point> — <seat(s), or "only <seat>"> — <observed: anchor/source | judged: basis>
 
 ## Tensions
-- <A> vs <B>: <what>. resolved: <who moved, on what evidence> — <the call>
+- <A> vs <B>: <what>. resolved: <who moved, on what basis> — <the call>
   | unresolved: <both positions> — <what would settle it>
+
+## Critical defects (only if a seat noted one)
+- <defect> — <seat> — <anchor>
 
 ## Panel
 ### <seat> — <verdict>
 <headline>
-- <claim> — <evidence> → <what it breaks>. Fix: <fix>
+- <claim> — <basis> → <who it matters to>. Do: <action>
 would change my mind: <falsifier>
 
 ## Meta
 - requested: N / returned: M / tool: <name>
 - panel: complete | partial
 - cross-examine: none | resume | fresh
+- web: used by <seats> | unavailable | not needed
 ```
 
 The panel is complete when `requested == returned`, both in 4-6; otherwise label it partial. If fewer than 2 return, skip synthesis: show the raw entries and recommend a retry.

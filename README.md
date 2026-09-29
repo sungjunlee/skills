@@ -139,7 +139,6 @@ skills/
         openai.yaml
       references/
         cross-examine.md
-spec/
 ```
 
 ## Conventions

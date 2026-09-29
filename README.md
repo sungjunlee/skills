@@ -28,18 +28,14 @@ When you just want a quick answer from a specific model, `delegate` shells out d
 /delegate opencode "explain this file"  # no model: CLI default
 ```
 
-Same model, multiple routes? `references/provider-routing.md` picks the route by
-quota, training risk, and cost windows (single-provider CLIs like codex/claude
-are fixed; multi-provider CLIs like opencode/pi select explicitly).
+Single-provider CLIs such as codex and claude fix the route; multi-provider
+CLIs such as opencode and pi name the provider explicitly.
 
 Source:
 
 - `skills/productivity/delegate/SKILL.md`
 - `skills/productivity/delegate/references/cli-invocations.md`
-- `skills/productivity/delegate/references/dispatch-guardrails.md`
 - `skills/productivity/delegate/references/model-catalog.md`
-- `skills/productivity/delegate/references/provider-routing.md`
-- `skills/productivity/delegate/references/routing-guide.md`
 
 #### gosu-review
 
@@ -128,10 +124,7 @@ skills/
       SKILL.md
       references/
         cli-invocations.md
-        dispatch-guardrails.md
         model-catalog.md
-        provider-routing.md
-        routing-guide.md
   review/
     gosu-review/
       SKILL.md

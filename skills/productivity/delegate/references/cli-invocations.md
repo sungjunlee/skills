@@ -78,4 +78,6 @@ For the OpenCode routes, `--auto` has the same trust implications as other non-i
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
 
+`opencode`, `pi`, and `cline` reach many providers, and which ones are connected is operator state: name the provider in the route and confirm the model in the live list. `cursor/*` is one subscription over many families, but not GPT; GPT goes to `codex/*`.
+
 Use `reasonix/*` only for non-sensitive, general work: it talks directly to DeepSeek API. `<model>` is a `<provider>/<model>` pair from `reasonix.toml`; an unconfigured pair is rejected. The model half is a DeepSeek API id, currently `deepseek-flash`; older ids are aliases or discontinued.

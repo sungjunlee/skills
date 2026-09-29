@@ -7,17 +7,28 @@ description: Delegate a prompt to an installed CLI in the current directory and 
 
 ## Steps
 
-1. Look up the provider in `references/cli-invocations.md`. If the input names a model or family instead of a route, resolve its home route from that file. When the same model is reachable through multiple routes, consult `references/provider-routing.md` and the operator's own routing document for current subscriptions and balances. If that operator document is absent, apply only the general rules in `provider-routing.md`. Ask which CLI only when the user already named a provider or no family default exists.
-2. Resolve an execution profile: model plus optional effort.
-   - Accept the canonical input `/delegate <route> [effort=<level>] "<prompt>"`. Recognize at most one unquoted `effort=...` token between the route and prompt, remove it before building argv, and preserve the quoted prompt unchanged. Reject duplicate or empty effort options; treat `effort=...` inside the prompt as prompt text.
-   - Keep effort separate from the model id. An explicit user effort wins; otherwise use the effort selected by the recommendation path below. If neither resolves an effort, omit its argv and preserve the CLI default — except on a route that encodes effort in the model id, which has no such default, so resolve a level there before naming the model.
-   - If the provider reference has a list-models command and this is your first dispatch to that provider in this session, run it and treat the result as a session cache.
-   - If the user asks for a recommendation or gives a fuzzy model name, read `references/routing-guide.md`, then consult `references/model-catalog.md` for current family and effort hints. Do not use the catalog for `reasonix/*`.
-   - Match the explicit or recommendation-selected model string to the closest available id — case-insensitive, treat spaces and hyphens as equivalent. Match only within the resolved route, in that route's id shape; a name match in another provider's list never changes the route. If no list is available, pass that model id through as written. If neither path selects a model, use the CLI default. If no good match, ask the user.
-   - Validate a resolved effort with the provider row. Reject unsupported values.
+1. **Route.** Look up the provider in `references/cli-invocations.md`. An explicit user route always wins. A model or family without a route resolves to its home route there. With no home route, follow the operator's own routing notes, and ask which CLI when they do not settle it.
+2. **Profile.** Accept `/delegate <route> [effort=<level>] "<prompt>"`: one unquoted `effort=` token between route and prompt is the effort; anything inside the prompt is prompt text. Keep effort out of the model id, except on routes whose ids encode it. Match the model to an id in the route's own live list when the route has one; if nothing matches, ask. With no model or effort from the user, keep the CLI default.
+   - For a recommendation or a fuzzy model name, read `references/model-catalog.md`. Choose the cheapest profile likely to finish correctly, counting retries and review, and pick a different family for independent review. Do not use the catalog for `reasonix/*`.
+3. **Run.** Build argv from the provider row, with the prompt as one argv element and stdin from DEVNULL, and run it in `$PWD` under the guardrails below. Return the executor's stdout, or the extracted output where the row defines one.
 
-   **Complete when:** route, model id, effort, and argv are resolved and validated; nothing has launched.
+## Guardrails
 
-3. Read `references/dispatch-guardrails.md`, prepare a bounded supervisor, and run the argv in `$PWD` under the provider reference's command-building and stdin contracts — the prompt is one argv element, never a fragment of the command line. Return the executor's stdout, or the provider-specific extracted output when the reference defines one.
+- **Bound the run.** Use the user's duration, else a 30-minute hard deadline, enforced by a real timer: the caller runtime's deadline, a provider timeout, or an installed supervisor. A tool's own foreground limit may be shorter than the deadline; run long dispatches in the background with the timer still bound to the child. If nothing can enforce a deadline, report `dispatch_unbounded` before launch.
+- **Do not read silence as a hang.** Batch text modes print only on completion; rely on the deadline, not on stdout or file changes.
+- **Stop on a fatal provider error.** A CLI can print a quota, auth, or billing error and keep running. Treat a definitive provider error on stderr as terminal: stop the child at once and report `dispatch_cli_error` with that line and any reset time it names.
+- **Never retry automatically.** A timed-out or failed agent may already have changed files or spent credits. On timeout, terminate gracefully, then force-kill the process tree after about 10 seconds.
 
-**Done when:** the executor exits successfully and non-empty output appears in your response. Anything else is a failed dispatch reported with its code from `references/dispatch-guardrails.md` — including a zero exit that produced nothing, which is a failure and never an empty answer.
+## Report
+
+Success is a zero exit with non-empty output. Anything else is a failed dispatch with one code:
+
+| Code | When |
+| --- | --- |
+| `dispatch_unbounded` | no mechanism can enforce the deadline; nothing launched |
+| `dispatch_launch_failure` | the process never started: binary missing, argv rejected |
+| `dispatch_timeout` | the deadline elapsed |
+| `dispatch_cli_error` | nonzero exit, or stopped on a definitive provider error |
+| `dispatch_empty_output` | zero exit, but both extracted output and raw stdout are empty |
+
+Every report names the route, model, effort, and elapsed time, plus the redacted stderr tail on failure. `dispatch_empty_output` looks like success, so check the assembled argv: a prompt that matches a flag the CLI accepts is absorbed as that flag, and the child runs promptless.

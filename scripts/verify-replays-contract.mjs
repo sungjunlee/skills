@@ -1,8 +1,6 @@
 import path from "node:path";
 
-import { duplicates, same } from "./lib/schema-validator.mjs";
-
-const currentContractVersion = "replay-v2";
+import { duplicates } from "./lib/schema-validator.mjs";
 
 export function validateCaseContract(replayCase) {
   const errors = [];
@@ -112,50 +110,5 @@ export function validateCaseContract(replayCase) {
     }
   }
 
-  return errors;
-}
-
-export function validateLegacyManifest(manifest) {
-  const errors = [];
-  if (manifest.legacy_contract_version !== "replay-v1") {
-    errors.push("legacy_contract_version must be replay-v1");
-  }
-  if (manifest.current_contract_version !== currentContractVersion) {
-    errors.push(`current_contract_version must be ${currentContractVersion}`);
-  }
-  if (manifest.case_schema !== "evals/schema/legacy/replay-case.v1.schema.json") {
-    errors.push("case_schema must name the frozen replay-v1 case schema");
-  }
-  if (manifest.result_schema !== "evals/schema/legacy/replay-result.v1.schema.json") {
-    errors.push("result_schema must name the frozen replay-v1 result schema");
-  }
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(manifest.migration_date ?? "")) {
-    errors.push("migration_date must be an ISO date");
-  }
-  if (!/^[0-9a-f]{64}$/.test(manifest.canonical_tree_sha256 ?? "")) {
-    errors.push("canonical_tree_sha256 must be a SHA-256 digest");
-  }
-  if (!Array.isArray(manifest.documents) || manifest.documents.length === 0) {
-    errors.push("documents must be a non-empty path inventory");
-  } else {
-    const sorted = [...manifest.documents].sort();
-    if (!same(manifest.documents, sorted)) errors.push("documents must be sorted");
-    if (new Set(manifest.documents).size !== manifest.documents.length) {
-      errors.push("documents must not contain duplicate paths");
-    }
-    for (const relative of manifest.documents) {
-      if (
-        typeof relative !== "string" ||
-        path.isAbsolute(relative) ||
-        relative.split(/[\\/]/).includes("..") ||
-        !/^evals\/(?:cases|results)\/.+\.json$/.test(relative)
-      ) {
-        errors.push(`invalid legacy document path ${JSON.stringify(relative)}`);
-      }
-    }
-  }
-  if (!Array.isArray(manifest.supersessions) || manifest.supersessions.length === 0) {
-    errors.push("supersessions must be a non-empty list");
-  }
   return errors;
 }

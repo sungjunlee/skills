@@ -24,14 +24,12 @@ npm test / .github/workflows/verify.yml
 - `skills/` owns the runtime prompt surface. Each `SKILL.md` must work
   standalone; it never depends on `docs/`, `evals/`, or repo tooling.
 - `evals/` owns evidence contracts and their history: semantic replays for
-  the implement skill's engine contract (`evals/schema`, `evals/contracts`,
-  frozen `replay-v1`), and the delegate routing loop
+  skill behavior (`evals/schema`, `evals/cases`, `evals/results`), and the
+  delegate routing loop
   (`evals/delegate/{schema,cases,results,reports,fixtures,executors.json}`).
 - `scripts/` owns verification (`verify-replays`, `verify-delegate-evals`,
   `verify-fixture-generators`) and the bounded
   eval runner (`run-delegate-eval.mjs`), which is never run implicitly.
-- `docs/` is maintainer guidance (engine capability contract vocabulary);
-  explicitly not a runtime dependency of any skill.
 - `backlog/` is local sprint execution state (sprints, tasks); GitHub Issues
   stay the source of truth and sync is always explicit.
 - `spec/` is the reference axis (charter, this map).
@@ -80,10 +78,10 @@ npm test / .github/workflows/verify.yml
 
 ## Candidate Capability Boundaries
 
-- `replay-evidence` — evidence: `verify-replays.mjs`, digest-pinned
-  `evals/contracts/replay-v1.json`, dual-host supersession results; owns
-  the replay contract lifecycle (freeze, supersession, digest guard);
-  uncertainty: whether the migration rules generalize beyond replay-v1→v2.
+- `replay-evidence` — evidence: `verify-replays.mjs`, replay-v2 schemas,
+  dual-host dated results; owns the replay contract lifecycle (supersession,
+  current vs historical tally); uncertainty: whether structural assertions
+  measure value over a plain frontier model.
 - `delegate-evaluation-loop` — evidence: delegate-eval-v1 schemas, verifier,
   runner, fixture generators, promotion rule, 28+ dated results; owns the
   bounded-run and promotion lifecycle; uncertainty: demotion semantics
@@ -102,5 +100,4 @@ Constraints that would differ from neighboring candidates.
 - Product direction: [`charter.md`](charter.md)
 - Capability contracts: `capabilities.md` (not yet created — ask spec-grill
   to review the candidates above)
-- Engine capability vocabulary: [`../docs/engine-capability-contract.md`](../docs/engine-capability-contract.md)
 - Delegate evaluation loop: [`../evals/delegate/README.md`](../evals/delegate/README.md)

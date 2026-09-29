@@ -10,11 +10,10 @@ import {
   jsonFiles,
   documentKind,
   verifyPairs,
-  validateContractBoundary,
   main,
 } from "./verify-replays-loader.mjs";
 
-export { validateCaseContract, validateLegacyManifest } from "./verify-replays-contract.mjs";
+export { validateCaseContract } from "./verify-replays-contract.mjs";
 
 export {
   loadContracts,
@@ -22,7 +21,6 @@ export {
   jsonFiles,
   documentKind,
   verifyPairs,
-  validateContractBoundary,
   main,
 };
 

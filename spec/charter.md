@@ -1,6 +1,6 @@
 ---
-last_amended: 2026-08-17
-revision: 1
+last_amended: 2026-09-29
+revision: 2
 ---
 
 # skills Charter
@@ -33,3 +33,4 @@ Keep each skill a compact, self-contained `SKILL.md` with optional material in `
 | 2026-07-21 | replay-v1 is frozen as a digest-pinned legacy contract; supersession requires dual-host (Claude Code + Codex) dated evidence | Contract migrations must not rewrite or orphan collected evidence | — |
 | 2026-07-22 | delegate-eval-v1: append-only dated results, an executor registry, privacy allowlists for internal/private fixtures, and paid calls only in explicitly invoked bounded runs | Routing claims need local evidence rather than vendor rankings, and CI must stay free | — |
 | 2026-07-22 | Catalog promotion rule: at least two dated all-passing results from different observation dates before any profile becomes a shape default | Single observations and community reports were beginning to steer defaults | — |
+| 2026-09-29 | `feature-spec` and `implement` removed, `brainstorming` rewritten as a divergent thinking partner, and the frozen `replay-v1` contract retired with the evidence it pinned; git history keeps it | Nothing consumed the planning chain's handoffs, and its structural evals proved format compliance, not value over a plain frontier model | 2026-07-21 replay-v1 freeze |

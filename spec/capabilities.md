@@ -68,9 +68,8 @@ Do not store issue-specific acceptance criteria, scoring rubrics, or review note
 **Goal:** A behavioral claim a skill makes about itself can be checked against dated transcripts of that skill actually running on real hosts, and old evidence stays readable after the contract changes.
 
 **In-scope:**
-- The replay case/result schemas, the frozen `replay-v1` legacy contract and its digest pin, and supersession rules
+- The replay case/result schemas and supersession rules
 - `verify-replays.mjs`, including its per-skill current/historical evidence summary
-- The engine capability vocabulary in `docs/engine-capability-contract.md` as maintainer guidance
 
 **Out-of-scope:**
 - Model-and-effort routing evidence and its promotion lifecycle — owned by `delegate-evaluation-loop`
@@ -80,7 +79,7 @@ Do not store issue-specific acceptance criteria, scoring rubrics, or review note
 ### Expected Behaviors
 - A contract migration lands as new dated documents that supersede the old ones, leaving every previously committed result file byte-identical.
 - Superseding evidence carries observations from both required hosts on the migration date, with the date present in the result's path.
-- Tampering with any digest-pinned legacy document fails verification with a message naming the frozen contract.
+- When a skill is removed, its cases and results are removed with it; git history keeps them.
 
 ### Hard Constraints
 - Evidence is never written from a summary, a memory of a run, or a re-used transcript; a result exists only after the host actually ran and its observation was recorded, even when regenerating "the same" evidence.
@@ -98,6 +97,7 @@ Do not store issue-specific acceptance criteria, scoring rubrics, or review note
 | date | decision | rationale | supersedes |
 | --- | --- | --- | --- |
 | 2026-07-21 | `replay-v1` frozen as a digest-pinned legacy contract; supersession requires dual-host dated evidence | Contract migrations must not rewrite or orphan collected evidence | — |
+| 2026-09-29 | `replay-v1` retired with `feature-spec` and `implement`; the rewritten `brainstorming` starts without replay evidence | Every pinned document belonged to a removed or rewritten skill | 2026-07-21 freeze |
 
 ---
 

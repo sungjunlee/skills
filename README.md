@@ -59,15 +59,13 @@ Source:
 - `skills/review/gosu-review/agents/openai.yaml`
 - `skills/review/gosu-review/references/cross-examine.md`
 
-### Evaluated, not yet used in daily workflows
-
-These have committed replay and cross-host evidence. They have not been used in the daily loop.
+### Not yet in daily use
 
 #### brainstorming
 
-Turn a vague idea into one selected direction and a compact Design Handoff, then recommend the next owner. Explicit-only and engine-agnostic.
+Divergent, critical thinking partner for an idea before it is built. Explicit-only: invoke with `/brainstorming`.
 
-`brainstorming` inspects safely discoverable repository context, asks only decision-changing questions, compares viable approaches, and converges on a Design Handoff. It recommends a successor (`feature-spec`, `implement`/relay, stop, or a grill capability) or records unit boundaries and stops — it never invokes a successor, mutates a tracker, or infers capability availability.
+It widens the field before narrowing — a reframing, the smallest version or doing nothing, what already exists, a contrary option — attacks each option, asks only questions that change the call, and converges only when asked, into a short brief with acceptance criteria. It stays read-only and suggests a next step without starting it.
 
 ```text
 /brainstorming "we need some kind of notifications, not sure where to start"
@@ -76,34 +74,7 @@ Turn a vague idea into one selected direction and a compact Design Handoff, then
 Source:
 
 - `skills/planning/brainstorming/SKILL.md`
-- `skills/planning/brainstorming/references/routing.md`
 - `skills/planning/brainstorming/agents/openai.yaml`
-
-#### feature-spec
-
-Compile a completed Design Handoff, settled proposal or conversation, or clear tracker task into a tracker-neutral, implementation-ready Feature Spec.
-
-It preserves settled decisions and acceptance criteria, records exact repository-contract contradictions for human resolution, and closes with exactly one successor-neutral Execution, Decomposition, or Human Decision handoff. It does not choose, detect, recommend, or invoke a successor, and it does not mutate tracker state.
-
-Source:
-
-- `skills/planning/feature-spec/SKILL.md`
-- `skills/planning/feature-spec/agents/openai.yaml`
-- `skills/planning/feature-spec/references/spec-template.md`
-- `skills/planning/feature-spec/references/routing.md`
-
-#### implement
-
-Execute a settled feature spec, tracker task, or clear prompt in the current checkout with the lightest safe current-session engine.
-
-`implement` performs a pre-edit safety gate, chooses inline, serial-worker, or bounded-parallel execution, and keeps diff inspection and authoritative verification with the orchestrator. Work that needs durable recovery, isolated lifecycle, or elevated-risk handling is returned as a relay handoff before mutation; relay is never invoked silently.
-
-Source:
-
-- `skills/engineering/implement/SKILL.md`
-- `skills/engineering/implement/agents/openai.yaml`
-- `skills/engineering/implement/references/routing.md`
-- `skills/engineering/implement/references/worker-contract.md`
 
 ## Install
 
@@ -138,11 +109,8 @@ Adjust the destination for your runtime. Codex and Claude Code may use different
 
 ```text
 backlog/
-docs/
-  engine-capability-contract.md
 evals/
   cases/
-  contracts/
   delegate/
   fixtures/
   reports/
@@ -150,28 +118,11 @@ evals/
   schema/
 scripts/
 skills/
-  engineering/
-    implement/
-      SKILL.md
-      agents/
-        openai.yaml
-      references/
-        routing.md
-        worker-contract.md
   planning/
     brainstorming/
       SKILL.md
       agents/
         openai.yaml
-      references/
-        routing.md
-    feature-spec/
-      SKILL.md
-      agents/
-        openai.yaml
-      references/
-        routing.md
-        spec-template.md
   productivity/
     delegate/
       SKILL.md

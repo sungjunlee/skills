@@ -79,13 +79,11 @@ function sha256File(filename) {
 function hostPrompt(replayCase) {
   const skill = path.join(root, "skills/productivity/delegate/SKILL.md");
   const invocations = path.join(root, "skills/productivity/delegate/references/cli-invocations.md");
-  const guardrails = path.join(root, "skills/productivity/delegate/references/dispatch-guardrails.md");
   return [
     "You are running a credential-free dispatch contract replay for the delegate skill.",
     "Read and follow these files:",
     `- ${skill}`,
     `- ${invocations}`,
-    `- ${guardrails}`,
     "",
     "Then execute exactly this request. Do not edit the quoted prompt:",
     replayCase.input_fixture.value.request,
@@ -97,7 +95,7 @@ function hostPrompt(replayCase) {
     "- Do not invoke claude, codex, opencode, pi, grok, cursor, cursor-agent, agent, cline, or any networked provider.",
     "- Build argv per the reasonix row in cli-invocations.md. The quoted prompt is one unchanged argv element and must be last.",
     "- Run the child in this process's current working directory. Connect stdin to DEVNULL.",
-    "- Apply dispatch-guardrails.md: bound the child; treat a definitive provider error on stderr as terminal and report dispatch_cli_error immediately; a zero exit with empty extracted and raw stdout is dispatch_empty_output, never an empty answer.",
+    "- Apply the SKILL.md guardrails: bound the child; treat a definitive provider error on stderr as terminal and report dispatch_cli_error immediately; a zero exit with empty extracted and raw stdout is dispatch_empty_output, never an empty answer.",
     "- Do not write repository files. Do not commit.",
     "",
     "When finished, reply with this compact block and nothing else:",

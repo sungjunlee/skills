@@ -40,6 +40,8 @@ cannot establish a cross-family review default.
 
 ## Gate
 
+Removed 2026-09-29 when the evaluation loop was frozen; kept below as history.
+
 `scripts/verify-delegate-evals.mjs` cross-checks the
 `committed_gpt-6-astra_results` count above against all committed Astra result
 records on disk, including failed dispatches. Update this report whenever

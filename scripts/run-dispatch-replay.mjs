@@ -180,6 +180,13 @@ function hostArgv(hostId, prompt) {
     HOSTS[hostId].model,
     "-c",
     "shell_environment_policy.inherit=all",
+    // Codex runs shell tools through a login shell and a shell snapshot that
+    // re-source the user's profile, which can put a real `reasonix` ahead of
+    // the shim dir. Disable both so the shim PATH set below survives.
+    "-c",
+    "allow_login_shell=false",
+    "-c",
+    "features.shell_snapshot=false",
     prompt,
   ];
 }
@@ -212,7 +219,7 @@ function runProcess(argv, options) {
 
 function parseHostReport(text) {
   const pick = (name) => {
-    const match = text.match(new RegExp(`^${name}:\\s*(.*)$`, "mi"));
+    const match = text.match(new RegExp(`^${name}:[ \\t]*(.*)$`, "mi"));
     return match ? match[1].trim() : "";
   };
   const outcome = pick("OUTCOME") || null;
@@ -250,10 +257,12 @@ function readFakeRecord(logPath) {
       .map((line) => line.trim())
       .filter(Boolean)
       .map((line) => JSON.parse(line));
-    const dispatched = [...lines].reverse().find((line) => !line.meta && (line.argv ?? []).includes(PROMPT));
-    return dispatched ?? lines.at(-1) ?? null;
+    // Exactly one non-meta call may carry the prompt: a second one is a
+    // retry, which the skill forbids, so it never counts as a dispatch.
+    const dispatches = lines.filter((line) => !line.meta && (line.argv ?? []).includes(PROMPT));
+    return { record: dispatches[0] ?? lines.at(-1) ?? null, dispatches: dispatches.length };
   } catch {
-    return null;
+    return { record: null, dispatches: 0 };
   }
 }
 
@@ -295,14 +304,16 @@ async function main() {
   writeFileSync(path.join(runDir, "host.stderr.txt"), host.stderr);
 
   const report = parseHostReport(host.stdout);
-  const fakeRecord = readFakeRecord(logPath);
+  const { record: fakeRecord, dispatches } = readFakeRecord(logPath);
   const deadlineMs = replayCase.dispatch_contract.deadline_seconds * 1000;
   const elapsed = elapsedMs(fakeRecord, report);
   const argv = fakeRecord?.argv ?? [];
-  const modelFromArgv = argv.includes("-m") ? argv[argv.indexOf("-m") + 1] : null;
+  // The reasonix row uses `--model`; accept the `-m` short form too.
+  const modelFlag = ["--model", "-m"].find((flag) => argv.includes(flag));
+  const modelFromArgv = modelFlag ? argv[argv.indexOf(modelFlag) + 1] : null;
   const effortFromArgv = argv.includes("--effort") ? argv[argv.indexOf("--effort") + 1] : null;
   const observation = {
-    host_dispatched: Boolean(fakeRecord && argv.includes(PROMPT)),
+    host_dispatched: dispatches === 1,
     fake_cli_revision: sha256File(fakeCli),
     resolved_route:
       argv[0] && modelFromArgv ? `${argv[0]}/${modelFromArgv}` : report.resolved_route || replayCase.expected_route,

@@ -1,10 +1,14 @@
 # Delegate routing evaluation (delegate-eval-v1)
 
 Evidence loop for issue #33: compare delegate model-effort profiles per work
-shape instead of trusting the catalog. The catalog in
-`skills/productivity/delegate/references/model-catalog.md` stays a stale-prone
-routing hint; the dated evidence here is what may promote a profile to a
-default recommendation.
+shape instead of trusting the catalog.
+
+**Frozen 2026-09-29.** The three defaults promoted on 2026-07-23 retired with
+their models, and none followed: models turned over faster than two dated
+passing runs could accumulate, and evidence never transfers to a successor. The results and reports stay as dated history and `npm test`
+keeps verifying them. The runner still works for an ad-hoc comparison, whose
+findings may sharpen catalog wording but set no default. Nothing needs
+updating when a new model ships.
 
 ## Scope
 
@@ -63,7 +67,7 @@ never runs everything implicitly and never fails on a missing provider CLI
 (that run is recorded as `skipped`):
 
 ```bash
-# free: resolved argv only, no spawn (this is what CI runs)
+# free: resolved argv only, no spawn
 node scripts/run-delegate-eval.mjs --dry-run --cases <id,...> --profiles <id,...>
 
 # low-cost: CLI availability, live model list where exposed, effort support
@@ -121,21 +125,3 @@ A bounded run is explicitly invoked, never scheduled. The 2026-07-22 run
   latency signal comparable across executors.
 - A `failed` result with `dispatch_timeout` may still have consumed provider
   quota; it is evidence of the failure, never a slot to retry silently.
-## Promotion and demotion
-
-The catalog's Evidence-backed defaults section records outcomes only;
-this is the rule that produces them.
-
-- **Promote** a profile to a work shape's default on two
-  all-checks-passing results from different observation dates with no
-  unresolved contradicting result — one pass can be luck. A single run,
-  a community report, or a vendor ranking may sharpen a hint's wording,
-  never set a default.
-- **Demote** on one failed acceptance check — a default claims the
-  profile reliably passes, and one counterexample disproves it.
-  Dispatch-reliability failures (`dispatch_*` codes) do not demote but
-  block pending promotions; staleness never demotes.
-- Evidence is per model-effort profile and does not transfer to a
-  successor model. Results stay append-only: demotion changes catalog
-  wording only, and every result that created or ended a default stays
-  committed.

@@ -23,7 +23,7 @@ When you just want a quick answer from a specific model, `delegate` shells out d
 /delegate claude/sonnet effort=high "review this migration"
 /delegate claude/claude-opus-5-5 effort=xhigh "analyze this long-horizon refactor"
 /delegate codex/gpt-6-luna effort=max "implement this scoped issue"
-/delegate gpt-6-sol effort=xhigh "analyze this migration"  # no route: home route -> codex
+/delegate gpt-6.1-sol effort=xhigh "analyze this migration"  # no route: home route -> codex
 /delegate grok-4.7 effort=high "review this diff"  # no route: home route -> grok
 /delegate opencode "explain this file"  # no model: CLI default
 ```

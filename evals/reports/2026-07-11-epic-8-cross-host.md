@@ -7,7 +7,7 @@
   changes after the run base are bookkeeping files, so the evaluated skill,
   replay, script, package, and README surfaces are byte-identical.
 - Canonical matrix: 12 cases × 5 hosts = 60 unique rows, defined by
-  [`../fixtures/cross-host/matrix.json`](../fixtures/cross-host/matrix.json).
+  [`evals/fixtures/cross-host/matrix.json`](https://github.com/sungjunlee/skills/blob/90300f9/evals/fixtures/cross-host/matrix.json) (removed 2026-09-29).
 - The replay cases, schemas, ownership boundaries, `README.md`,
   `evals/README.md`, and `package.json` did not change.
 - Committed execution inputs are limited to the common answer contract and the

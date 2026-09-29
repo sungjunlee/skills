@@ -20,7 +20,7 @@ Keep each skill a compact, self-contained `SKILL.md` with optional material in `
 ## Objectives         <!-- Tier 2 · Predicates (add/remove human-gated; status proof-gated) -->
 - O1 [active] Every skill under `skills/<category>/<name>/` is discoverable by `npx skills add . --list --full-depth` and keeps its core workflow inside `SKILL.md`, with only optional material in `references/`. · src: inferred
 - O2 [active] `npm test` verifies every committed evidence contract (semantic replay and delegate evaluation) without provider credentials, and CI runs it on every PR and push to main. · src: inferred
-- O3 [active] Evidence under `evals/` is dated and append-only: contract migrations supersede via new dated documents and never rewrite or orphan existing ones. · src: inferred
+- O3 [active] Evidence under `evals/` is dated and append-only: contract migrations supersede via new dated documents and never rewrite or orphan existing ones. Evidence for a removed or fully rewritten skill is removed with it and kept in git history. · src: inferred
 - O4 [active] A delegate routing profile becomes a catalog default only through the promotion rule: at least two dated, all-checks-passing results from different observation dates with no unresolved contradiction. · src: inferred
 - O5 [active] Each of the six delegate work shapes can produce a dated evaluation result from a reproducible fixture on a clean machine. · src: inferred
 

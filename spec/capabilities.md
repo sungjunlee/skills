@@ -79,7 +79,7 @@ Do not store issue-specific acceptance criteria, scoring rubrics, or review note
 ### Expected Behaviors
 - A contract migration lands as new dated documents that supersede the old ones, leaving every previously committed result file byte-identical.
 - Superseding evidence carries observations from both required hosts on the migration date, with the date present in the result's path.
-- When a skill is removed, its cases and results are removed with it; git history keeps them.
+- When a skill is removed or fully rewritten, its cases and results are removed with it; git history keeps them.
 
 ### Hard Constraints
 - Evidence is never written from a summary, a memory of a run, or a re-used transcript; a result exists only after the host actually ran and its observation was recorded, even when regenerating "the same" evidence.

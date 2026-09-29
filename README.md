@@ -159,6 +159,3 @@ npm test
 npx skills add . --list --full-depth
 git diff --check
 ```
-
-The engine capability contract in `docs/` is maintainer guidance. Runtime
-skills must remain self-contained and must not depend on reading it.

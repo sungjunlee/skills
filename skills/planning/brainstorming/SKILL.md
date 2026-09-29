@@ -29,7 +29,9 @@ Take each option seriously enough to break it: how it fails, what it costs to ow
 
 ## Ask
 
-Ask only when the answer would change which option wins, and ask one thing at a time. When you ask, stop and wait for the answer — do not continue as if it had come. If you cannot ask, list the question as an open decision. If the user hands you the judgment, make the call and say why. Challenge a decision the user has settled once, openly, then respect their answer unless the repository contradicts it.
+Ask only what would change the call — which option wins, or what is in scope and what constrains it. Keep it to a few questions at a time. When you ask, stop and wait for the answer — do not continue as if it had come. If you cannot ask, list the questions as open decisions. If the user hands you the judgment, make the call and say why.
+
+Arguing with the request includes decisions the user has already settled: challenge each one once, openly, then respect the answer unless the repository contradicts it.
 
 ## Converge, when asked
 

@@ -65,7 +65,8 @@ npm test / .github/workflows/verify.yml
 ## Project-Wide Invariants
 
 - Evidence is dated and append-only; contract migrations supersede via new
-  dated documents and never rewrite or orphan existing ones.
+  dated documents and never rewrite or orphan existing ones. Evidence for a
+  removed or fully rewritten skill leaves with it and stays in git history.
 - `npm test` and CI stay credential-free; paid provider calls happen only
   in explicitly invoked bounded runs.
 - Executor-visible fixture text never contains grader answer keys.

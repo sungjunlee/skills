@@ -3,9 +3,9 @@
 Evidence loop for issue #33: compare delegate model-effort profiles per work
 shape instead of trusting the catalog.
 
-**Frozen 2026-09-29.** No profile was ever promoted: models turned over faster
-than two dated passing runs could accumulate, and evidence never transfers to
-a successor. The results and reports stay as dated history and `npm test`
+**Frozen 2026-09-29.** The three defaults promoted on 2026-07-23 retired with
+their models, and none followed: models turned over faster than two dated
+passing runs could accumulate, and evidence never transfers to a successor. The results and reports stay as dated history and `npm test`
 keeps verifying them. The runner still works for an ad-hoc comparison, whose
 findings may sharpen catalog wording but set no default. Nothing needs
 updating when a new model ships.

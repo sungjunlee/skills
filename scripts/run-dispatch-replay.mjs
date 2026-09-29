@@ -257,12 +257,12 @@ function readFakeRecord(logPath) {
       .map((line) => line.trim())
       .filter(Boolean)
       .map((line) => JSON.parse(line));
-    // The first non-meta call carrying the expected prompt is the observation;
-    // later diagnostic or retry calls must not replace it.
-    const dispatched = lines.find((line) => !line.meta && (line.argv ?? []).includes(PROMPT));
-    return dispatched ?? lines.at(-1) ?? null;
+    // Exactly one non-meta call may carry the prompt: a second one is a
+    // retry, which the skill forbids, so it never counts as a dispatch.
+    const dispatches = lines.filter((line) => !line.meta && (line.argv ?? []).includes(PROMPT));
+    return { record: dispatches[0] ?? lines.at(-1) ?? null, dispatches: dispatches.length };
   } catch {
-    return null;
+    return { record: null, dispatches: 0 };
   }
 }
 
@@ -304,7 +304,7 @@ async function main() {
   writeFileSync(path.join(runDir, "host.stderr.txt"), host.stderr);
 
   const report = parseHostReport(host.stdout);
-  const fakeRecord = readFakeRecord(logPath);
+  const { record: fakeRecord, dispatches } = readFakeRecord(logPath);
   const deadlineMs = replayCase.dispatch_contract.deadline_seconds * 1000;
   const elapsed = elapsedMs(fakeRecord, report);
   const argv = fakeRecord?.argv ?? [];
@@ -313,7 +313,7 @@ async function main() {
   const modelFromArgv = modelFlag ? argv[argv.indexOf(modelFlag) + 1] : null;
   const effortFromArgv = argv.includes("--effort") ? argv[argv.indexOf("--effort") + 1] : null;
   const observation = {
-    host_dispatched: Boolean(fakeRecord && argv.includes(PROMPT)),
+    host_dispatched: dispatches === 1,
     fake_cli_revision: sha256File(fakeCli),
     resolved_route:
       argv[0] && modelFromArgv ? `${argv[0]}/${modelFromArgv}` : report.resolved_route || replayCase.expected_route,

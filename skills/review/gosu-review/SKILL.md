@@ -1,6 +1,6 @@
 ---
 name: gosu-review
-description: Re-examine something already built with a real panel of 4-6 independent subagents, each asking from a different vantage whether it still delivers the value it was built for.
+description: Post-build value review, not a bug review. A real panel of 4-6 independent subagents re-examines a built feature, PR, plan, or skill from the user's, the premise's, the project's, and the alternatives' vantage, and returns keep/sharpen/rethink/drop verdicts, what changes the decision, where the seats disagree, and lighter shapes worth considering.
 disable-model-invocation: true
 ---
 

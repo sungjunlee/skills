@@ -21,10 +21,11 @@ support. You are not defending your entry.
 Return:
 - position: hold | concede | refine
 - why: what decides it, cited as your points were, with at least one anchor
-  in the target you had not cited before
+  in the target that neither position above cites
 - resolved action: what you would now do
 
-With nothing further to check, say what would settle it.
+Every return needs that new anchor; a hold without one is not a hold. If the
+target cannot settle it, say so and name what would.
 ```
 
 Resume the original subagent when the host can continue it; it has already read the target. Otherwise dispatch a fresh one carrying the seat's question, the Target, the original Origin, Project purpose, and Context, both positions, and the return shape. Record the route in Meta as `resume` or `fresh`. One round only.

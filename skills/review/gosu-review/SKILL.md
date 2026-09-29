@@ -1,6 +1,6 @@
 ---
 name: gosu-review
-description: Post-build value review, not a bug review. A real panel of 4-6 independent subagents re-examines a built feature, PR, plan, or skill from the user's, the premise's, the project's, and the alternatives' vantage, and returns keep/sharpen/rethink/drop verdicts, what changes the decision, where the seats disagree, and lighter shapes worth considering.
+description: Post-build value review, not a bug review. A real panel of 5-6 independent subagents re-examines a built feature, PR, plan, or skill from the vantage of its user, its premise, the project's purpose, the alternatives, and what can be cut, and returns keep/sharpen/rethink/drop verdicts, what changes the decision, where the seats disagree, and lighter shapes worth considering.
 disable-model-invocation: true
 ---
 
@@ -16,18 +16,15 @@ Gather two things for every brief: the origin — the issue, plan, or request th
 
 ## Seats
 
-Pick 4-6 vantages that could reach different answers, one seat each. Three are always there:
+Five seats always sit, one subagent each:
 
 - **User** — meets it as the person it was built for. Would they notice it, reach for it, trust it? What do they do instead today?
 - **Premise** — knowing what the build revealed, would we build this again, in this shape? Is it the right problem?
-- **Subtract** — what can go with nothing lost: an option, a mode, the whole thing.
-
-Fill the rest from what the target puts at stake:
-
 - **Project thesis** — does it strengthen what the project says it is for, or pull it sideways?
 - **Alternatives** — what already does this: other tools, built-ins, the obvious manual way. Why would anyone pick this one?
-- **Cost of owning** — what this value costs in complexity, upkeep, and attention over the next year.
-- A specific audience the target serves or burdens: a buyer, a maintainer, a newcomer, an operator.
+- **Subtract** — what can go with nothing lost: an option, a mode, the whole thing.
+
+Add a sixth when the target puts something else at stake: the cost of owning it over the next year, or a specific audience it serves or burdens — a buyer, a maintainer, a newcomer, an operator.
 
 ## Dispatch
 
@@ -112,4 +109,4 @@ would change my mind: <falsifier>
 - web: used by <seats> | unavailable | not needed
 ```
 
-The panel is complete when `requested == returned`, both in 4-6; otherwise label it partial. If fewer than 2 return, skip synthesis: show the raw entries and recommend a retry.
+The panel is complete when `requested == returned`, both in 5-6; otherwise label it partial. If fewer than 2 return, skip synthesis: show the raw entries and recommend a retry.

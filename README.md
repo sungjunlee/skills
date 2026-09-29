@@ -43,7 +43,7 @@ Source:
 
 #### gosu-review
 
-Post-build value review, not a bug review: a real panel of 4-6 independent subagents asks whether something already built is still worth it. Explicit-only: invoke with `/gosu-review`.
+Post-build value review, not a bug review: a real panel of 5-6 independent subagents asks whether something already built is still worth it. Explicit-only: invoke with `/gosu-review`.
 
 A plain review already finds the defects. `gosu-review` asks whether the result is still worth it: each seat looks from a different vantage — the user, the premise, what can be cut, the project's purpose, the alternatives — and the panel surfaces what changes the decision and where the seats disagree.
 

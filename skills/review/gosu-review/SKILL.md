@@ -1,56 +1,32 @@
 ---
 name: gosu-review
-description: Review the current artifact with a real 4-6 person expert subagent panel.
+description: Review the current artifact with a real panel of 4-6 independent subagents, each starting from a different question, one of them whether the premise holds.
 disable-model-invocation: true
 ---
 
 # gosu-review
 
-Get a real panel review from multiple experts. Fake panels fail the skill, and so do ungrounded ones — dispatch actual subagents, and keep every finding tied to the evidence that produced it.
+One independent reviewer already catches most defects. A panel earns its cost in two places a single pass does not reach: reviewers who start from different questions, so they diverge instead of repeating one pass, and a reviewer who does not accept the premise. Every seat is a real subagent with fresh context, and every finding points at the artifact.
 
 ## Target
 
-If the user provides `/gosu-review <target>`, review that target. If not, review the most recent artifact in the conversation: code just edited, a plan, a skill definition, a design decision, a document, or similar. If several candidates are plausible, ask a short confirmation question before starting: `Do you want me to review X?` Ask only when the target is unclear.
+Review `/gosu-review <target>` when given; otherwise the most recent artifact in the conversation — code just edited, a plan, a skill, a decision, a document. If several are plausible, ask one question, `Do you want me to review X?`, and start nothing else. Read `"this"` as the most recent artifact and `"this repo"` as the current repository state. On a broad target, continue but warn once that a narrower scope gives a sharper review.
 
-Always show the selected target near the top of the final output. Handle loose references pragmatically: `"this"` or `"the thing above"` → most recent artifact; `"this repo"` or `"overall"` → current repository state; `"the skill wording"` → the relevant `SKILL.md` plus needed `references/*`. If the target is broad, continue but warn once: `Wide scope: casting may be less sharp. Use /gosu-review <narrower scope> for a tighter review.`
+When the target is a change — a diff, a PR, uncommitted work — every brief carries the defect it claims to fix and its premise, and a fix is judged by whether it fixes that.
 
-When the target is a change — a diff, a PR, uncommitted work — name it as one. Every brief then carries the defect the change claims to fix, and the change's own premise. Panelists judge a fix by whether it fixes that. Tilt two seats: one asks what else reaches the same sink as the thing being fixed; one knows the platforms, shells, or callers the change now claims to cover.
+## Seats
 
-**Complete when:** exactly one target is named, or one confirmation question is asked and nothing else has started.
+Pick 4-6 questions that pull apart on this target, one seat each. Three are always there:
 
-## Cast
+- **Premise** — does not accept the framing. Is this the right problem and the right approach? What is the strongest alternative, and should this exist at all?
+- **Break** — tries to make it fail: inputs, callers, states, timing, misuse. Add a second when the user asks for red-team or the target is high-risk.
+- **Subtract** — what can go: a step, an option, a file, the whole thing.
 
-Pick 4-6 panelists for this target. Extract the target's axes first:
-
-- Audience: who uses this, and when failure hurts
-- Domain: finance, education, community, internal tools, creator workflows, legal, data, research, etc.
-- Artifact type: code, UX, doc, policy, skill, strategy, operating process, decision
-- Failure mode: trust, cost, comprehension, maintenance, adoption, speed, safety, quality
-
-Then mix the panel:
-
-- 2-3 context-specific experts
-- 1-2 general quality experts
-- 1 adversarial or surprising outsider
-- 1 ruthless simplifier whose fix path is removal — cut the step, drop the reference, delete the option, merge the two documents, or say the artifact should not exist. On a four-person panel this seat may share the challenger's; past that keep them apart.
-
-For each panelist, put these three into the brief verbatim — they are the subagent's search key:
-
-- **Lens**: what they optimize for
-- **Bias**: what they distrust, usually from a specific past failure
-- **Blind spot**: what this persona is uniquely likely to catch
-
-The persona line is `You are reviewing as: <persona>`. Pick the scar: a specific past failure that shaped how they look. A label like `PM` produces a generic review; a `PM who shipped three onboarding rewrites and watched activation keep dropping in steps 2-4` produces a gosu one.
-
-At least one panelist is explicitly adversarial unless the target is purely exploratory. Use two challengers only when the user asks for challenge, red-team, or adversarial review, or when the target is high-risk. A challenger tries to break the artifact.
-
-When casting is not obvious, invent from the seed patterns in `references/personas.md` rather than copying that list.
-
-**Complete when:** 4–6 personas are named, every brief carries a scar plus Lens / Bias / Blind spot, the mix above is present, and the adversarial rule above holds.
+Fill the rest with questions only someone close to this target would ask — what a first-time user hits at step 2, what the thousandth run costs, what a maintainer inherits in six months. On a change, one seat asks what else reaches the same sink as the defect, and one knows the platforms or callers the change now claims to cover. A one-line role may sharpen a question; a backstory does not.
 
 ## Dispatch
 
-Find the available subagent or multi-agent tool, then spawn one real subagent per persona. Dispatch every panelist before reading any result. If the host caps concurrency, start the remaining panelists as slots free; that is still a parallel panel. Prefer a read-only role that can open whole files and judge them. If a tool option fails, retry with a simpler call. Wait for completion without busy polling.
+Spawn one real subagent per seat, all before reading any result. If the host caps concurrency, start the rest as slots free. Prefer a read-only role that can open whole files. If a call fails, retry it simpler. Wait without busy polling.
 
 If subagents cannot be found or called, stop with:
 
@@ -59,82 +35,64 @@ subagent unavailable: <reason>
 This is not a gosu-review result. I can do a single-agent review instead if you ask.
 ```
 
-Give each subagent this brief. Subagents see only the brief, so it carries the entry shape itself.
+Each subagent sees only its brief:
 
 ```text
-You are reviewing as: <persona>
-Lens: <what you optimize for>
-Bias: <what you distrust, and the failure that taught you>
-Uniquely likely to catch: <this persona's blind-spot coverage>
+You are one of several independent reviewers, each starting from a different
+question. Yours: <question>
+<optional one-line role>
 
 Target: <path, diff, repo scope, or artifact>
-Context: <5-10 lines: what, why, constraints>
-Focus: <persona-specific mandate>
-Change (only if the target is a change): claimed defect; the change's premise
+Context: <what it is, why it exists, constraints>
+Change (only for a change): <the defect it claims to fix>; <its premise>
 
-Open the target and read it before you write anything. Your bias is the search
-key: find where that failure pattern shows up here, or say plainly that it does
-not. A claim you did not check against the artifact does not belong in the
-answer.
+Read the target before you write. Other seats and a general pass cover the
+obvious defects; go deeper on your question than they would, and list other
+real defects you see in a line each. Tie each finding to the artifact — file:line, a
+quote, or the detail you observed; a claim you did not check does not belong.
+Say plainly when the approach is wrong. Zero findings is a valid answer; say why.
 
-Return one panel entry:
-
-- verdict: ship | fix | rethink
-    ship: it would land as-is; remaining findings are optional
-    fix: specific named changes, then it lands
-    rethink: the approach is wrong, not the details; listed fixes would not save it
-- sharp take: one sentence — the headline, not the argument
-- findings: 0-4 entries, each with
-    what: the claim
-    evidence: file:line, a quote, or the specific detail you observed
-    so what: the concrete failure — who it hurts, when, how badly
-    fix: the change you would make
-- what would change my mind: the observation that would retract your main finding
-
-Length follows what you found. If your axis turns up nothing real, return zero
-findings and say why — that is a useful answer, not a failed one.
+Return:
+- verdict: ship (lands as-is) | fix (lands after the changes you name) |
+  rethink (the approach is wrong; fixes would not save it)
+- headline: one sentence
+- findings: each with the claim, its evidence, what it breaks and for whom, and the fix
+- what would change your mind
 ```
-
-The brief carries the three-line verdict definition panelists need; `references/verdict.md` has the worked boundaries for choosing between neighbors.
-
-**Complete when:** every cast panelist has been spawned before any result is read, or the unavailable stop block has been returned.
 
 ## Cross-examine
 
-A conflict is two entries that name the same element and point opposite ways — remove it versus extend it, this mechanism versus that one. One panelist covering ground another missed is not a conflict, and neither is disagreement about severity.
-
-Run one round, only on a conflict, at most the two sharpest by cost of getting them wrong. Put those two panelists back in front of the artifact with each other's position; read `references/cross-examine.md` for the brief, the resume-or-fresh route, and how to read the returns. Record the route in Meta: `resume` when the original panelists continued, `fresh` when new subagents carried the persona, original context, and both positions. One round only.
+A conflict is two entries that point opposite ways on the same element — remove it versus extend it, this mechanism versus that one. Coverage one seat missed is not a conflict, and neither is severity. On a conflict, run one round on at most the two costliest to get wrong: read `references/cross-examine.md`.
 
 ## Output
 
-Lead with a one-line verdict summary. Render in the template order. Panel displays each returned brief; it does not redefine the shape. Invent nothing in synthesis: a finding with no evidence stays in Panel and never reaches Consensus. An empty findings list stays empty. A removal and an addition on the same element is a Tension, not two Consensus items.
-
-A complete gosu-review requires `requested == returned` and both in 4–6. Otherwise label Meta `partial` and present it as partial. If fewer than 2 agents return, skip synthesis and show only raw notes plus a retry recommendation.
+Lead with a one-line call. Synthesis invents nothing: a finding without evidence stays in Panel, and agreement is not evidence — the artifact is. A finding only one seat raised stands on its evidence like any other. A removal and an addition on the same element is a Tension.
 
 ```text
 # gosu-review: <target>
 target: <selected target>
-casting: <2-3 specialized + 1-2 quality + 1 outsider/adversarial + 1 simplifier, one line>
+casting: <the seat questions, one line>
 
 **Verdicts**
-- <persona>: <verdict> — <sharp take>
+- <seat>: <verdict> — <headline>
+
+## What changes the decision
+- <finding> — <seat(s), or "only <seat>"> — <evidence>
 
 ## Tensions
-- <A> vs <B>: <what>.
-  resolved: <who moved, on what evidence> — <the call>
-  or unresolved: <both positions held> — <what would settle it>
-
-## Consensus
-- [P1] <action> — <persona names>
+- <A> vs <B>: <what>. resolved: <who moved, on what evidence> — <the call>
+  | unresolved: <both positions> — <what would settle it>
 
 ## Panel
-### <persona> — <verdict>
-<sharp take>
-- <what> — <evidence> → <so what>. Fix: <fix>
+### <seat> — <verdict>
+<headline>
+- <claim> — <evidence> → <what it breaks>. Fix: <fix>
 would change my mind: <falsifier>
 
 ## Meta
-- requested: N agents / returned: M / tool: <name or "unavailable">
+- requested: N / returned: M / tool: <name>
 - panel: complete | partial
 - cross-examine: none | resume | fresh
 ```
+
+The panel is complete when `requested == returned`, both in 4-6; otherwise label it partial. If fewer than 2 return, skip synthesis: show the raw entries and recommend a retry.

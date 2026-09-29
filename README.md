@@ -43,9 +43,9 @@ Source:
 
 #### gosu-review
 
-Review the current artifact with a real 4-6 person expert subagent panel. Explicit-only: invoke with `/gosu-review`.
+Review the current artifact with a real panel of 4-6 independent subagents. Explicit-only: invoke with `/gosu-review`.
 
-Single-agent reviews collapse into one voice. `gosu-review` keeps each panelist's independent lens visible, then surfaces the orchestrator's tensions, consensus, and per-persona verdicts.
+One independent review already catches most defects. `gosu-review` starts each reviewer from a different question, including whether the premise holds, then surfaces what changes the decision, the tensions, and each seat's verdict.
 
 ```text
 /gosu-review
@@ -57,9 +57,7 @@ Source:
 
 - `skills/review/gosu-review/SKILL.md`
 - `skills/review/gosu-review/agents/openai.yaml`
-- `skills/review/gosu-review/references/personas.md`
 - `skills/review/gosu-review/references/cross-examine.md`
-- `skills/review/gosu-review/references/verdict.md`
 
 ### Evaluated, not yet used in daily workflows
 
@@ -190,8 +188,6 @@ skills/
         openai.yaml
       references/
         cross-examine.md
-        personas.md
-        verdict.md
 spec/
 ```
 

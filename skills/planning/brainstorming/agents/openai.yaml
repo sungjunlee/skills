@@ -1,16 +1,6 @@
-# OpenAI / Codex adapter for the brainstorming skill.
-# Explicit-only: the host must never auto-invoke this skill from model reasoning.
-name: brainstorming
+interface:
+  display_name: "Brainstorming"
+  short_description: "Widen and pressure-test an idea before it is built"
+  default_prompt: "Use $brainstorming to widen and pressure-test this idea before choosing a direction."
 policy:
   allow_implicit_invocation: false
-invocation:
-  explicit_only: true
-  triggers:
-    - "/brainstorming"
-    - "brainstorm this"
-# Host capability states are unverified until observed.
-capabilities:
-  inline_repository_work: unverified
-  blocking_user_question: unverified
-notes: >
-  Invocation metadata only. Workflow semantics live in SKILL.md.

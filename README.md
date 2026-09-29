@@ -43,9 +43,9 @@ Source:
 
 #### gosu-review
 
-Review the current artifact with a real 4-6 person expert subagent panel. Explicit-only: invoke with `/gosu-review`.
+Post-build value review, not a bug review: a real panel of 5-6 independent subagents asks whether something already built is still worth it. Explicit-only: invoke with `/gosu-review`.
 
-Single-agent reviews collapse into one voice. `gosu-review` keeps each panelist's independent lens visible, then surfaces the orchestrator's tensions, consensus, and per-persona verdicts.
+A plain review already finds the defects. `gosu-review` asks whether the result is still worth it: each seat looks from a different vantage — the user, the premise, what can be cut, the project's purpose, the alternatives — and the panel surfaces what changes the decision and where the seats disagree.
 
 ```text
 /gosu-review
@@ -57,9 +57,7 @@ Source:
 
 - `skills/review/gosu-review/SKILL.md`
 - `skills/review/gosu-review/agents/openai.yaml`
-- `skills/review/gosu-review/references/personas.md`
 - `skills/review/gosu-review/references/cross-examine.md`
-- `skills/review/gosu-review/references/verdict.md`
 
 ### Evaluated, not yet used in daily workflows
 
@@ -190,8 +188,6 @@ skills/
         openai.yaml
       references/
         cross-examine.md
-        personas.md
-        verdict.md
 spec/
 ```
 

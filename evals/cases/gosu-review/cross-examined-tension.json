@@ -14,7 +14,7 @@
         "parallel_subagents": "native",
         "subagent_resume": "native"
       },
-      "subagent_behavior": "Every dispatched subagent returns one panel entry, and at least two entries name the same element with opposite fixes. Claude Code resumes the two original conflicting panelists; Codex dispatches two fresh subagents carrying persona, original context, and both positions. A first panel that never produces that conflict is fixture-premise-invalid, not a skill failure.",
+      "subagent_behavior": "Every dispatched subagent returns one panel entry, and at least two entries name the same element with opposite fixes. Claude Code resumes the two original conflicting panelists; Codex dispatches two fresh subagents carrying the seat's vantage, the Target, the original Origin, Project purpose, and Context, and both positions. A first panel that never produces that conflict is fixture-premise-invalid, not a skill failure.",
       "measurement_limit": "The Round-two trace, not the aggregate host dispatch count, is the claim. Passing proves both conflicting seats received a second turn, the recorded route was resume or fresh, each side reread the target and returned a new artifact anchor, each side's hold|concede|refine and resolved fix were preserved, and the resolved|unresolved status follows from those returns. It does not prove the voices were independent or high quality. A grounded unresolved tension is a passing outcome; convergence is not required. Orchestrator-invented resolution, missing reread or new anchor, or a second extra round fails. Host or tool failure is unverified."
     }
   },

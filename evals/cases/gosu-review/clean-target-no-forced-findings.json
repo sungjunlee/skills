@@ -6,14 +6,14 @@
     "kind": "inline",
     "value": {
       "scenario": "glossary-patch-starved-seat-contract",
-      "target_request": "/gosu-review on a glossary-only documentation patch (static term definitions with one seeded terminology contradiction)",
-      "target_state": "The target is a glossary-only documentation patch: it only edits static term definitions, has no runtime, user input, network, storage, or provider paths, and contains exactly one seeded terminology contradiction.",
+      "target_request": "/gosu-review on a glossary-only documentation patch (static term definitions; one definition contradicts the project's stated purpose in its README)",
+      "target_state": "The target is a glossary-only documentation patch: it only edits static term definitions, has no runtime, user input, network, storage, or provider paths, and one seeded definition contradicts the purpose the project's README states.",
       "capabilities": {
         "subagent_dispatch": "native",
         "parallel_subagents": "native"
       },
-      "subagent_behavior": "The panel includes a named Starved reviewer seat — a runtime resource-cost reviewer judging only CPU, memory, network, storage, and provider-spend effects — that returns zero findings and states why its axis does not apply to the target, and a named Control reviewer seat — a terminology editor — that returns at least one anchored finding on the seeded terminology contradiction. Panelists whose axis turns up nothing return zero findings; casting a deliberately starved seat is test construction, not production casting guidance.",
-      "measurement_limit": "The observer counts, per named seat, the findings in that seat's entry. Passing requires host-native subagent dispatch observed, the named Starved seat returning zero findings with the reason its axis does not apply, and the named Control seat returning at least one anchored finding on the seeded defect; other seats' zero-finding status is not used. It fails if the Starved seat manufactures an unrelated concern or the Control seat misses the seeded defect. A target that actually exercises the runtime-cost axis, or lacks a seeded defect, is a fixture-premise-invalid, not a run result."
+      "subagent_behavior": "The panel includes a named Starved reviewer seat — a Cost of owning seat judging only runtime resource cost (CPU, memory, network, storage, provider spend) — that returns zero points and states why its vantage does not apply to the target, and a named Control reviewer seat — a Project thesis seat — that returns at least one anchored point on the seeded contradiction with the README's stated purpose. Seats whose vantage turns up nothing return zero points; casting a deliberately starved seat is test construction, not production casting guidance.",
+      "measurement_limit": "The observer counts, per named seat, the points in that seat's entry. Passing requires host-native subagent dispatch observed, the named Starved seat returning zero points with the reason its vantage does not apply, and the named Control seat returning at least one anchored point on the seeded contradiction; other seats' zero-point status is not used. It fails if the Starved seat manufactures an unrelated concern or the Control seat misses the seeded contradiction. A target that actually exercises the runtime-cost axis, or lacks the seeded contradiction, is a fixture-premise-invalid, not a run result."
     }
   },
   "required_output_fields": [

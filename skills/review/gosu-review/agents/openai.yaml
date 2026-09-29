@@ -1,6 +1,6 @@
 interface:
   display_name: "Gosu Review"
-  short_description: "Review the current artifact with a real expert subagent panel"
-  default_prompt: "Use $gosu-review to run a real expert panel review of the selected target."
+  short_description: "Re-examine whether something already built is still worth it"
+  default_prompt: "Use $gosu-review to re-examine whether the selected target is still worth it, with a real panel of independent subagents."
 policy:
   allow_implicit_invocation: false

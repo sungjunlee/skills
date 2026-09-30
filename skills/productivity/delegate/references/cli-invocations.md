@@ -47,7 +47,7 @@ An input that names a model or family without a route resolves to that family's 
 
 | Family | Home route | Basis |
 |---|---|---|
-| `gpt-6-*` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
+| `gpt-*` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
 | `claude-*` | `claude/*` | the vendor's own CLI, with all five effort levels |
 | `grok-4.*` | `grok/*` | the vendor's own coding CLI |
 

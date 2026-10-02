@@ -1,0 +1,43 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "delegate.explicit-route-dispatch",
+  "skill": "productivity/delegate",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "explicit-route-with-effort",
+      "user_request": "/delegate claude/sonnet effort=high \"summarize this architecture\"",
+      "cli_environment": {
+        "claude_available": true,
+        "current_directory": "repository-root"
+      }
+    }
+  },
+  "required_output_fields": [
+    "route",
+    "model",
+    "effort",
+    "output",
+    "elapsed"
+  ],
+  "expected_route": "claude",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-route", "type": "output_field_present", "field": "route" },
+    { "assertion_id": "field-model", "type": "output_field_present", "field": "model" },
+    { "assertion_id": "field-effort", "type": "output_field_present", "field": "effort" },
+    { "assertion_id": "field-output", "type": "output_field_present", "field": "output" },
+    { "assertion_id": "field-elapsed", "type": "output_field_present", "field": "elapsed" },
+    { "assertion_id": "route-claude", "type": "route_equals" },
+    { "assertion_id": "no-confirmation", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit"]
+}

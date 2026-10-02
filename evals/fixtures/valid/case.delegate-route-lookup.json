@@ -1,0 +1,51 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "delegate.route-lookup-success",
+  "skill": "productivity/delegate",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "explicit-route",
+      "request": "/delegate claude/sonnet effort=high \"explain this function\"",
+      "cli_available": "claude",
+      "capabilities": {
+        "route_lookup": "native",
+        "model_selection": "native"
+      }
+    }
+  },
+  "required_output_fields": [
+    "route",
+    "model",
+    "effort",
+    "output"
+  ],
+  "expected_route": "claude",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "expected_escalation": "none",
+  "dispatch_contract": {
+    "expected_model": "claude-sonnet-5-5-high",
+    "expected_effort": "high",
+    "expected_prompt": "explain this function",
+    "expected_stdin": "devnull",
+    "expected_cwd": "caller",
+    "expected_outcome": "success",
+    "expected_output": "Function explanation returned successfully.",
+    "deadline_seconds": 1800
+  },
+  "semantic_assertions": [
+    { "assertion_id": "field-route", "type": "output_field_present", "field": "route" },
+    { "assertion_id": "field-model", "type": "output_field_present", "field": "model" },
+    { "assertion_id": "field-effort", "type": "output_field_present", "field": "effort" },
+    { "assertion_id": "field-output", "type": "output_field_present", "field": "output" },
+    { "assertion_id": "route-claude", "type": "route_equals" },
+    { "assertion_id": "no-confirmation", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-write", "type": "side_effect_absent", "side_effect": "repository_write" }
+  ],
+  "forbidden_side_effects": ["repository_write"]
+}

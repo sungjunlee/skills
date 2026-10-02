@@ -1,0 +1,86 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-10-02",
+  "case_id": "delegate.route-lookup-success",
+  "host": "fixture-host",
+  "host_version": "dispatch-smoke-v1",
+  "skill_revision": "f50ad6bb036d7a0e8f9c3b2a1e4d5f6a7b8c9d0e",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-route",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Route field present in output."
+    },
+    {
+      "assertion_id": "field-model",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Model field present in output."
+    },
+    {
+      "assertion_id": "field-effort",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Effort field present in output."
+    },
+    {
+      "assertion_id": "field-output",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Output field present with delegation result."
+    },
+    {
+      "assertion_id": "route-claude",
+      "status": "pass",
+      "observed": "claude",
+      "evidence": "Route resolved to claude as requested."
+    },
+    {
+      "assertion_id": "no-confirmation",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "No confirmation questions asked; explicit route provided."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "No escalation; CLI available and dispatch succeeded."
+    },
+    {
+      "assertion_id": "no-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No repository writes; pure delegation."
+    }
+  ],
+  "observed_output_fields": [
+    "route",
+    "model",
+    "effort",
+    "output",
+    "elapsed_ms"
+  ],
+  "observed_route": "claude",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "dispatch_observation": {
+    "host_dispatched": true,
+    "fake_cli_revision": "dispatch-smoke-v1",
+    "resolved_route": "claude",
+    "resolved_model": "claude-sonnet-5-5-high",
+    "resolved_effort": "high",
+    "argv": ["claude", "-p", "explain this function"],
+    "cwd": "caller",
+    "stdin": "devnull",
+    "outcome": "success",
+    "output": "Function explanation returned successfully.",
+    "elapsed_ms": 4500,
+    "terminated_before_deadline": false
+  },
+  "evidence_note": "Dispatch contract verified: explicit route, model, and effort resolved correctly; CLI invoked with expected argv; success outcome within deadline."
+}

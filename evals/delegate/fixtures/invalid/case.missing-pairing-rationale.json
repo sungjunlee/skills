@@ -1,0 +1,26 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.fixture.invalid-missing-rationale",
+  "work_shape": "mechanical_with_tests",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Rename variable foo to bar.",
+      "context": "Test fixture."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "renamed",
+      "kind": "command",
+      "spec": "Variable renamed successfully."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "sol-high", "model": "gpt-5.6-sol", "effort": "high" }
+  ],
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "delegate.timeout-enforced",
+  "skill": "productivity/delegate",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "timeout-scenario",
+      "user_request": "/delegate codex \"very long task\"",
+      "cli_environment": {
+        "codex_available": true,
+        "deadline_mechanism": "runtime_timer"
+      },
+      "expected_behavior": "dispatch_timeout after 30 minutes"
+    }
+  },
+  "required_output_fields": [
+    "status",
+    "code",
+    "elapsed"
+  ],
+  "expected_route": "codex",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 0,
+    "max": 0
+  },
+  "expected_escalation": "dispatch_timeout",
+  "semantic_assertions": [
+    { "assertion_id": "field-status", "type": "output_field_present", "field": "status" },
+    { "assertion_id": "field-code", "type": "output_field_present", "field": "code" },
+    { "assertion_id": "field-elapsed", "type": "output_field_present", "field": "elapsed" },
+    { "assertion_id": "route-codex", "type": "route_equals" },
+    { "assertion_id": "no-questions", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-timeout", "type": "escalation_equals" }
+  ],
+  "forbidden_side_effects": []
+}

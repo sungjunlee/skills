@@ -79,18 +79,24 @@ function validateCaseContract(evalCase) {
   ) {
     errors.push("file fixture values must be repository-relative and cannot traverse upward");
   }
-
+  
   if (!evalCase.pairing_rationale || evalCase.pairing_rationale.trim() === "") {
     errors.push("pairing_rationale must be non-empty");
   }
-
+  
   if (evalCase.acceptance_checks.length === 0) {
     errors.push("acceptance_checks must not be empty");
   }
-
+  
   for (const check of evalCase.acceptance_checks) {
     if (!check.check_id || check.check_id.trim() === "") {
       errors.push("check_id must be non-empty");
+    }
+    if (check.check_id && !/^[a-z0-9][a-z0-9._-]*$/.test(check.check_id)) {
+      errors.push(`check_id ${JSON.stringify(check.check_id)} must match pattern ^[a-z0-9][a-z0-9._-]*$`);
+    }
+    if (!check.spec || check.spec.trim() === "") {
+      errors.push(`check ${JSON.stringify(check.check_id)} spec must be non-empty`);
     }
     if (!["command", "rubric"].includes(check.kind)) {
       errors.push(`check kind must be command or rubric, got ${JSON.stringify(check.kind)}`);
@@ -105,8 +111,14 @@ function validateCaseContract(evalCase) {
     if (!profile.profile_id || profile.profile_id.trim() === "") {
       errors.push("profile_id must be non-empty");
     }
+    if (profile.profile_id && !/^[a-z0-9][a-z0-9._-]*$/.test(profile.profile_id)) {
+      errors.push(`profile_id ${JSON.stringify(profile.profile_id)} must match pattern ^[a-z0-9][a-z0-9._-]*$`);
+    }
     if (!profile.model || profile.model.trim() === "") {
       errors.push("profile model must be non-empty");
+    }
+    if (profile.effort !== null && !["minimal", "low", "medium", "high", "xhigh"].includes(profile.effort)) {
+      errors.push(`profile ${JSON.stringify(profile.profile_id)} effort must be null or one of minimal/low/medium/high/xhigh`);
     }
   }
 

@@ -44,8 +44,9 @@ export function validateCaseContract(replayCase) {
   for (const assertion of assertions) {
     if (!assertion.assertion_id || assertion.assertion_id.trim() === "") {
       errors.push("assertion_id must be a non-empty string");
-    }
-    if (assertion.assertion_id && /\s/.test(assertion.assertion_id)) {
+    } else if (assertion.assertion_id !== assertion.assertion_id.trim()) {
+      errors.push(`assertion_id ${JSON.stringify(assertion.assertion_id)} contains leading or trailing whitespace`);
+    } else if (/\s/.test(assertion.assertion_id)) {
       errors.push(`assertion_id ${JSON.stringify(assertion.assertion_id)} contains whitespace`);
     }
   }

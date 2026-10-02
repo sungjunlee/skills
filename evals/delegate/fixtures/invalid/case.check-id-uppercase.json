@@ -1,0 +1,18 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.invalid.check-id-uppercase",
+  "work_shape": "mechanical_with_tests",
+  "fixture": {
+    "kind": "inline",
+    "value": { "request": "Intentionally invalid: check_id with uppercase." }
+  },
+  "acceptance_checks": [
+    { "check_id": "TestsPass", "kind": "command", "spec": "Tests should pass." }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "sol-high", "model": "gpt-5.6-sol", "effort": "high" },
+    { "profile_id": "opus-high", "model": "claude-opus-5-5", "effort": "high" }
+  ],
+  "pairing_rationale": "Intentionally invalid fixture.",
+  "privacy": { "sensitivity": "synthetic", "approved_routes": [] }
+}

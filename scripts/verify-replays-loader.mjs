@@ -164,7 +164,9 @@ export async function main() {
   const invalidFiles = await jsonFiles(locations.invalid);
   const invalidDocuments = await Promise.all(invalidFiles.map((filename) => loadDocument(filename, contracts)));
   for (const document of invalidDocuments) {
-    if (document.errors.length === 0) {
+    const individualErrors = document.errors.length > 0;
+    const pairErrors = verifyPairs([...validDocuments, ...invalidDocuments, document]);
+    if (!individualErrors && pairErrors.length === 0) {
       errors.push(`${path.relative(root, document.filename)}: intentionally invalid fixture was accepted`);
     }
   }

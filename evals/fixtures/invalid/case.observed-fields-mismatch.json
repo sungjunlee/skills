@@ -1,0 +1,30 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "invalid.observed-fields-mismatch",
+  "skill": "test/invalid-fixture",
+  "input_fixture": {
+    "kind": "inline",
+    "value": { "request": "Test case for observed_output_fields mismatch." }
+  },
+  "required_output_fields": ["summary"],
+  "expected_route": "inline",
+  "expected_engine": null,
+  "question_count_range": null,
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    {
+      "assertion_id": "summary-present",
+      "type": "output_field_present",
+      "field": "summary"
+    },
+    {
+      "assertion_id": "inline-route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "no-escalation",
+      "type": "escalation_equals"
+    }
+  ],
+  "forbidden_side_effects": []
+}

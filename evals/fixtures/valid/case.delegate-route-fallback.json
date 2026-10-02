@@ -1,0 +1,49 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "delegate.multi-route-fallback",
+  "skill": "productivity/delegate",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "/delegate ambiguous-model 'test fallback routing'"
+    }
+  },
+  "required_output_fields": ["output", "resolved_route"],
+  "expected_route": "home-route-fallback",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 0,
+    "max": 1
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    {
+      "assertion_id": "output-present",
+      "type": "output_field_present",
+      "field": "output"
+    },
+    {
+      "assertion_id": "resolved-route-present",
+      "type": "output_field_present",
+      "field": "resolved_route"
+    },
+    {
+      "assertion_id": "fallback-route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "question-count",
+      "type": "question_count_in_range"
+    },
+    {
+      "assertion_id": "no-escalation",
+      "type": "escalation_equals"
+    },
+    {
+      "assertion_id": "no-commit",
+      "type": "side_effect_absent",
+      "side_effect": "commit"
+    }
+  ],
+  "forbidden_side_effects": ["commit"]
+}

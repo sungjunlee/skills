@@ -1,0 +1,38 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.cross-component-invariants",
+  "work_shape": "cross_component_invariants",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Add request rate limiting to the API gateway. The limit must be enforced consistently across both the REST and GraphQL endpoints, and the rate counter must survive pod restarts.",
+      "context": "Multi-component system with shared state requirements."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "rate-limit-enforced",
+      "kind": "command",
+      "spec": "Test suite confirms rate limiting blocks requests after threshold."
+    },
+    {
+      "check_id": "consistent-across-endpoints",
+      "kind": "rubric",
+      "spec": "Both REST and GraphQL endpoints share the same rate counter state."
+    },
+    {
+      "check_id": "persistence",
+      "kind": "rubric",
+      "spec": "Rate counter state survives pod restart in the test environment."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "opus-high", "model": "claude-opus-5-5", "effort": "high" },
+    { "profile_id": "sol-xhigh", "model": "gpt-5.6-sol", "effort": "xhigh" }
+  ],
+  "pairing_rationale": "Cross-component invariants require careful coordination and state management. High-effort models should catch the persistence requirement.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

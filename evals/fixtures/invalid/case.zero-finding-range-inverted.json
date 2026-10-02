@@ -1,0 +1,42 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "invalid.zero-finding-inverted",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": { "request": "Test inverted zero_finding_panelist_count_range." }
+  },
+  "required_output_fields": ["panel_summary"],
+  "expected_route": "panel",
+  "expected_engine": "bounded_parallel",
+  "question_count_range": null,
+  "zero_finding_panelist_count_range": {
+    "min": 5,
+    "max": 2
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    {
+      "assertion_id": "panel-summary-present",
+      "type": "output_field_present",
+      "field": "panel_summary"
+    },
+    {
+      "assertion_id": "panel-route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "bounded-parallel-engine",
+      "type": "engine_equals"
+    },
+    {
+      "assertion_id": "zero-finding-count",
+      "type": "zero_finding_panelist_count_in_range"
+    },
+    {
+      "assertion_id": "no-escalation",
+      "type": "escalation_equals"
+    }
+  ],
+  "forbidden_side_effects": []
+}

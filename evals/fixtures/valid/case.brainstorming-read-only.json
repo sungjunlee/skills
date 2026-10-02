@@ -1,0 +1,58 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "brainstorming.read-only",
+  "skill": "planning/brainstorming",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "We need a notification system but not sure where to start."
+    }
+  },
+  "required_output_fields": ["options", "brief"],
+  "expected_route": "widen-attack-converge",
+  "expected_engine": "serial_workers",
+  "question_count_range": {
+    "min": 3,
+    "max": 8
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    {
+      "assertion_id": "options-present",
+      "type": "output_field_present",
+      "field": "options"
+    },
+    {
+      "assertion_id": "brief-present",
+      "type": "output_field_present",
+      "field": "brief"
+    },
+    {
+      "assertion_id": "widen-route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "serial-engine",
+      "type": "engine_equals"
+    },
+    {
+      "assertion_id": "question-count",
+      "type": "question_count_in_range"
+    },
+    {
+      "assertion_id": "no-escalation",
+      "type": "escalation_equals"
+    },
+    {
+      "assertion_id": "no-write",
+      "type": "side_effect_absent",
+      "side_effect": "repository_write"
+    },
+    {
+      "assertion_id": "no-pr",
+      "type": "side_effect_absent",
+      "side_effect": "pull_request"
+    }
+  ],
+  "forbidden_side_effects": ["repository_write", "pull_request"]
+}

@@ -1,0 +1,24 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-10-02",
+  "case_id": "invalid.observed-fields-mismatch",
+  "host": "test-host",
+  "host_version": "v1",
+  "skill_revision": "0000000000000000000000000000000000000000000000000000000000000000",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "summary-present",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Field was present."
+    }
+  ],
+  "observed_output_fields": ["different_field"],
+  "observed_route": "inline",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Invalid result where observed_output_fields does not match the assertion."
+}

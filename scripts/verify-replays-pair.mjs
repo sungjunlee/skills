@@ -212,6 +212,23 @@ export function validateReplayPair(replayCase, result) {
     }
   }
 
+  // Validate that observed_output_fields are consistent with output_field_present assertions
+  const outputAssertions = replayCase.semantic_assertions.filter(
+    (assertion) => assertion.type === "output_field_present"
+  );
+  for (const assertion of outputAssertions) {
+    const assertionResult = result.assertion_results.find(
+      (candidate) => candidate.assertion_id === assertion.assertion_id,
+    );
+    if (assertionResult && assertionResult.status === "pass" && assertionResult.observed === true) {
+      if (!result.observed_output_fields.includes(assertion.field)) {
+        errors.push(
+          `assertion ${JSON.stringify(assertion.assertion_id)} passed but field ${JSON.stringify(assertion.field)} not in observed_output_fields`,
+        );
+      }
+    }
+  }
+
   if (replayCase.dispatch_contract && !result.dispatch_observation) {
     errors.push("executed dispatch result is missing dispatch_observation");
   } else if (!replayCase.dispatch_contract && result.dispatch_observation) {

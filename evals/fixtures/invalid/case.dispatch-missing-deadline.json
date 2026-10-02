@@ -1,0 +1,39 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "invalid.dispatch-missing-deadline",
+  "skill": "productivity/delegate",
+  "input_fixture": {
+    "kind": "inline",
+    "value": { "request": "/delegate claude/sonnet 'explain this code'" }
+  },
+  "required_output_fields": ["output"],
+  "expected_route": "claude",
+  "expected_engine": null,
+  "question_count_range": null,
+  "expected_escalation": "none",
+  "dispatch_contract": {
+    "expected_model": "claude-sonnet",
+    "expected_effort": "medium",
+    "expected_prompt": "explain this code",
+    "expected_stdin": "devnull",
+    "expected_cwd": "caller",
+    "expected_outcome": "success",
+    "expected_output": "Explanation of the code."
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "output-present",
+      "type": "output_field_present",
+      "field": "output"
+    },
+    {
+      "assertion_id": "claude-route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "no-escalation",
+      "type": "escalation_equals"
+    }
+  ],
+  "forbidden_side_effects": []
+}

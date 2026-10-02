@@ -1,0 +1,62 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-10-02",
+  "case_id": "gosu-review.starved-control-seats",
+  "host": "fixture-host",
+  "host_version": "v1",
+  "skill_revision": "c2be9beaf5ca28ac9c01c8bc8e3e82dcd7f9c5c0dbffd5f7bd9b6e32e73b18af",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "verdict-present",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Verdict field was present."
+    },
+    {
+      "assertion_id": "panel-summary-present",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Panel summary field was present."
+    },
+    {
+      "assertion_id": "panel-route",
+      "status": "pass",
+      "observed": "panel",
+      "evidence": "Panel route was selected."
+    },
+    {
+      "assertion_id": "bounded-parallel-engine",
+      "status": "pass",
+      "observed": "bounded_parallel",
+      "evidence": "Bounded parallel engine was used."
+    },
+    {
+      "assertion_id": "starved-seat-count",
+      "status": "pass",
+      "observed": 1,
+      "evidence": "One starved seat returned zero findings."
+    },
+    {
+      "assertion_id": "control-seat-count",
+      "status": "pass",
+      "observed": 3,
+      "evidence": "Three control seats returned anchored findings."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "No escalation occurred."
+    }
+  ],
+  "observed_output_fields": ["verdict", "panel_summary"],
+  "observed_route": "panel",
+  "observed_engine": "bounded_parallel",
+  "question_count": null,
+  "observed_starved_seat_zero_finding_count": 1,
+  "observed_control_seat_anchored_finding_count": 3,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Synthetic fixture testing starved and control seat counters."
+}

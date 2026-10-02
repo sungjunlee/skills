@@ -1,0 +1,54 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-10-02",
+  "case_id": "delegate.multi-route-fallback",
+  "host": "fixture-host",
+  "host_version": "v1",
+  "skill_revision": "f50ad6bb036d823bea2e36f25ab8a45e4f8cb6a3d4eb9f8bdceae63c7bbfe8d1",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "output-present",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Output field was present."
+    },
+    {
+      "assertion_id": "resolved-route-present",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Resolved route field was present."
+    },
+    {
+      "assertion_id": "fallback-route",
+      "status": "pass",
+      "observed": "home-route-fallback",
+      "evidence": "Home route fallback was used."
+    },
+    {
+      "assertion_id": "question-count",
+      "status": "pass",
+      "observed": 0,
+      "evidence": "No clarifying questions were asked."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "No escalation occurred."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commit side effect occurred."
+    }
+  ],
+  "observed_output_fields": ["output", "resolved_route"],
+  "observed_route": "home-route-fallback",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Synthetic fixture testing multi-provider home-route fallback."
+}

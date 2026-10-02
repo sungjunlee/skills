@@ -1,0 +1,38 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.cross-component-invariants",
+  "profile_id": "opus-high",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "observation_date": "2026-10-02",
+  "executor": {
+    "name": "claude-code-cli",
+    "version": "0.82.1"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "rate-limit-enforced",
+      "status": "pass",
+      "evidence": "Test suite confirms rate limiting after threshold."
+    },
+    {
+      "check_id": "consistent-across-endpoints",
+      "status": "pass",
+      "evidence": "Shared Redis counter used by both endpoints."
+    },
+    {
+      "check_id": "persistence",
+      "status": "pass",
+      "evidence": "Redis state persists across pod restarts."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 412,
+    "tokens": { "input": 8400, "output": 2100, "reasoning": null },
+    "cost": { "api_usd": null, "quota_note": "subscription run" },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Synthetic fixture result for cross-component invariants work shape."
+}

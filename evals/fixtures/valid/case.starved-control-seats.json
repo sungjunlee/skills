@@ -1,0 +1,58 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "gosu-review.starved-control-seats",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "target": "A simple feature request with clear acceptance criteria.",
+      "context": "Test starved seat and control seat counters."
+    }
+  },
+  "required_output_fields": ["verdict", "panel_summary"],
+  "expected_route": "panel",
+  "expected_engine": "bounded_parallel",
+  "question_count_range": null,
+  "starved_seat_zero_finding_count_range": {
+    "min": 1,
+    "max": 2
+  },
+  "control_seat_anchored_finding_count_range": {
+    "min": 2,
+    "max": 5
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    {
+      "assertion_id": "verdict-present",
+      "type": "output_field_present",
+      "field": "verdict"
+    },
+    {
+      "assertion_id": "panel-summary-present",
+      "type": "output_field_present",
+      "field": "panel_summary"
+    },
+    {
+      "assertion_id": "panel-route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "bounded-parallel-engine",
+      "type": "engine_equals"
+    },
+    {
+      "assertion_id": "starved-seat-count",
+      "type": "starved_seat_zero_finding_count_in_range"
+    },
+    {
+      "assertion_id": "control-seat-count",
+      "type": "control_seat_anchored_finding_count_in_range"
+    },
+    {
+      "assertion_id": "no-escalation",
+      "type": "escalation_equals"
+    }
+  ],
+  "forbidden_side_effects": []
+}

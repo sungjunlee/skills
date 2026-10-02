@@ -1,0 +1,66 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-10-02",
+  "case_id": "brainstorming.read-only",
+  "host": "fixture-host",
+  "host_version": "v1",
+  "skill_revision": "a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "options-present",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Options field was present with multiple alternatives."
+    },
+    {
+      "assertion_id": "brief-present",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Brief field was present with convergence summary."
+    },
+    {
+      "assertion_id": "widen-route",
+      "status": "pass",
+      "observed": "widen-attack-converge",
+      "evidence": "Full brainstorming route was used."
+    },
+    {
+      "assertion_id": "serial-engine",
+      "status": "pass",
+      "observed": "serial_workers",
+      "evidence": "Serial workers engine was used."
+    },
+    {
+      "assertion_id": "question-count",
+      "status": "pass",
+      "observed": 5,
+      "evidence": "Five clarifying questions were asked."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "No escalation occurred."
+    },
+    {
+      "assertion_id": "no-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No repository write occurred."
+    },
+    {
+      "assertion_id": "no-pr",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No pull request was created."
+    }
+  ],
+  "observed_output_fields": ["options", "brief"],
+  "observed_route": "widen-attack-converge",
+  "observed_engine": "serial_workers",
+  "question_count": 5,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Synthetic fixture testing brainstorming read-only contract."
+}

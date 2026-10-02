@@ -1,0 +1,39 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "invalid.round-two-side-count",
+  "skill": "review/gosu-review",
+  "input_fixture": {
+    "kind": "inline",
+    "value": { "request": "Test invalid round_two_contract required_side_count." }
+  },
+  "required_output_fields": ["verdict"],
+  "expected_route": "cross-examine",
+  "expected_engine": "bounded_parallel",
+  "question_count_range": null,
+  "expected_escalation": "none",
+  "round_two_contract": {
+    "allowed_routes": ["resume", "fresh"],
+    "required_side_count": 3,
+    "max_extra_rounds": 0
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "verdict-present",
+      "type": "output_field_present",
+      "field": "verdict"
+    },
+    {
+      "assertion_id": "cross-examine-route",
+      "type": "route_equals"
+    },
+    {
+      "assertion_id": "bounded-parallel-engine",
+      "type": "engine_equals"
+    },
+    {
+      "assertion_id": "no-escalation",
+      "type": "escalation_equals"
+    }
+  ],
+  "forbidden_side_effects": []
+}

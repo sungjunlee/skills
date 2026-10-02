@@ -1,0 +1,39 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "brainstorming.widen-phase",
+  "skill": "planning/brainstorming",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "initial-idea",
+      "request": "/brainstorming \"add notifications to the app\"",
+      "capabilities": {
+        "web_search": "native",
+        "subagent_dispatch": "native"
+      }
+    }
+  },
+  "required_output_fields": [
+    "options",
+    "attacks",
+    "questions"
+  ],
+  "expected_route": null,
+  "expected_engine": "none",
+  "question_count_range": {
+    "min": 1,
+    "max": 5
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-options", "type": "output_field_present", "field": "options" },
+    { "assertion_id": "field-attacks", "type": "output_field_present", "field": "attacks" },
+    { "assertion_id": "field-questions", "type": "output_field_present", "field": "questions" },
+    { "assertion_id": "engine-none", "type": "engine_equals" },
+    { "assertion_id": "questions-asked", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit"]
+}

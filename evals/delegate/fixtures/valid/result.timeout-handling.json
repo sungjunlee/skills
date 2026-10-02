@@ -1,0 +1,40 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.fixture.timeout-handling",
+  "profile_id": "sol-low",
+  "model": "gpt-5.6-sol",
+  "effort": "low",
+  "observation_date": "2026-10-02",
+  "executor": {
+    "name": "fixture-smoke",
+    "version": "v1"
+  },
+  "status": "completed",
+  "acceptance_results": [
+    {
+      "check_id": "timeout-explained",
+      "status": "pass",
+      "evidence": "The output correctly identified the 30-minute hard deadline, multiple enforcement mechanisms (runtime deadline, provider timeout, supervisor), and graceful/force-kill strategy."
+    },
+    {
+      "check_id": "no-repo-mutation",
+      "status": "pass",
+      "evidence": "git status clean; fixture analysis-only contract upheld."
+    }
+  ],
+  "measurements": {
+    "wall_clock_seconds": 12,
+    "tokens": {
+      "input": 450,
+      "output": 320,
+      "reasoning": null
+    },
+    "cost": {
+      "api_usd": null,
+      "quota_note": "Analysis task, minimal token usage."
+    },
+    "reviewer_defects": 0,
+    "followup_corrections": 0
+  },
+  "evidence_note": "Fixture smoke test: delegate skill timeout mechanism correctly explained."
+}

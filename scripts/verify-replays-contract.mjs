@@ -41,6 +41,15 @@ export function validateCaseContract(replayCase) {
     errors.push(`duplicate semantic assertion id(s): ${[...new Set(duplicateIds)].join(", ")}`);
   }
 
+  for (const assertion of assertions) {
+    if (!assertion.assertion_id || assertion.assertion_id.trim() === "") {
+      errors.push("assertion_id must be a non-empty string");
+    }
+    if (assertion.assertion_id && /\s/.test(assertion.assertion_id)) {
+      errors.push(`assertion_id ${JSON.stringify(assertion.assertion_id)} contains whitespace`);
+    }
+  }
+
   const outputAssertions = assertions.filter((assertion) => assertion.type === "output_field_present");
   for (const field of replayCase.required_output_fields) {
     if (!outputAssertions.some((assertion) => assertion.field === field)) {
@@ -108,6 +117,32 @@ export function validateCaseContract(replayCase) {
     if (dispatch.expected_outcome !== "success" && dispatch.expected_output !== null) {
       errors.push("failure dispatch_contract expected_output must be null");
     }
+    if (dispatch.deadline_seconds <= 0) {
+      errors.push("dispatch_contract deadline_seconds must be positive");
+    }
+    if (!dispatch.expected_model || dispatch.expected_model.trim() === "") {
+      errors.push("dispatch_contract expected_model must be non-empty");
+    }
+    if (!dispatch.expected_prompt || dispatch.expected_prompt.trim() === "") {
+      errors.push("dispatch_contract expected_prompt must be non-empty");
+    }
+  }
+
+  const roundTwo = replayCase.round_two_contract;
+  if (roundTwo) {
+    if (roundTwo.allowed_routes.length === 0) {
+      errors.push("round_two_contract allowed_routes must not be empty");
+    }
+    if (roundTwo.required_side_count !== 2) {
+      errors.push("round_two_contract required_side_count must be 2");
+    }
+    if (roundTwo.max_extra_rounds !== 0) {
+      errors.push("round_two_contract max_extra_rounds must be 0");
+    }
+  }
+
+  if (replayCase.skill && (replayCase.skill.startsWith("/") || replayCase.skill.includes(".."))) {
+    errors.push("skill path must be relative and cannot traverse upward");
   }
 
   return errors;

@@ -1,0 +1,71 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-10-02",
+  "case_id": "brainstorming.widen-phase",
+  "host": "fixture-host",
+  "host_version": "brainstorming-smoke-v1",
+  "skill_revision": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+  "status": "pass",
+  "assertion_results": [
+    {
+      "assertion_id": "field-options",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Options field lists 4 distinct alternatives including reframing, minimal version, existing solutions, and contrary position."
+    },
+    {
+      "assertion_id": "field-attacks",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Each option attacked with failure modes, costs, and constraints."
+    },
+    {
+      "assertion_id": "field-questions",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Three decision-changing questions posed: scope boundaries, existing tool adoption feasibility, user acceptance of push vs pull."
+    },
+    {
+      "assertion_id": "engine-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "No subagent engine used; direct skill execution."
+    },
+    {
+      "assertion_id": "questions-asked",
+      "status": "pass",
+      "observed": 3,
+      "evidence": "Three questions asked and skill stopped to wait for answers."
+    },
+    {
+      "assertion_id": "escalation-none",
+      "status": "pass",
+      "observed": "none",
+      "evidence": "All required capabilities available; no degradation."
+    },
+    {
+      "assertion_id": "no-write",
+      "status": "pass",
+      "observed": true,
+      "evidence": "Read-only skill contract upheld."
+    },
+    {
+      "assertion_id": "no-commit",
+      "status": "pass",
+      "observed": true,
+      "evidence": "No commits created; analysis only."
+    }
+  ],
+  "observed_output_fields": [
+    "options",
+    "attacks",
+    "questions",
+    "search_citations"
+  ],
+  "observed_route": null,
+  "observed_engine": "none",
+  "question_count": 3,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Widen-phase contract verified: skill presented genuine alternatives, attacked each, asked decision-changing questions, and stopped without converging. Read-only guarantee upheld."
+}

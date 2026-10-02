@@ -1,36 +1,32 @@
 {
   "contract_version": "replay-v2",
-  "case_id": "fixture.dispatch-invalid-success",
+  "case_id": "invalid.dispatch-success-no-output",
   "skill": "productivity/delegate",
   "input_fixture": {
     "kind": "inline",
     "value": {
-      "scenario": "dispatch-contract-missing-output"
+      "scenario": "dispatch-contract-violation"
     }
   },
-  "required_output_fields": ["output"],
-  "expected_route": "reasonix/dispatch-replay-model",
+  "required_output_fields": ["route"],
+  "expected_route": "claude",
   "expected_engine": null,
-  "question_count_range": {
-    "min": 0,
-    "max": 0
-  },
+  "question_count_range": null,
   "expected_escalation": "none",
   "dispatch_contract": {
-    "expected_model": "dispatch-replay-model",
+    "expected_model": "claude-sonnet-5-5-high",
     "expected_effort": "high",
-    "expected_prompt": "Reply with exactly: DISPATCH_REPLAY_OK",
+    "expected_prompt": "test prompt",
     "expected_stdin": "devnull",
     "expected_cwd": "caller",
     "expected_outcome": "success",
     "expected_output": null,
-    "deadline_seconds": 90
+    "deadline_seconds": 1800
   },
   "semantic_assertions": [
-    { "assertion_id": "field-output", "type": "output_field_present", "field": "output" },
-    { "assertion_id": "route", "type": "route_equals" },
-    { "assertion_id": "questions", "type": "question_count_in_range" },
-    { "assertion_id": "escalation", "type": "escalation_equals" }
+    { "assertion_id": "field-route", "type": "output_field_present", "field": "route" },
+    { "assertion_id": "route-claude", "type": "route_equals" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" }
   ],
   "forbidden_side_effects": []
 }

@@ -1,0 +1,24 @@
+{
+  "contract_version": "replay-v2",
+  "observation_date": "2026-10-02",
+  "case_id": "foundation.inline-pass",
+  "host": "fixture-host",
+  "host_version": "invalid-smoke-v1",
+  "skill_revision": "84604931571288dda220db556dbd74624b48f0973efef2c532398089fef0a844",
+  "status": "unverified",
+  "assertion_results": [
+    {
+      "assertion_id": "summary-present",
+      "status": "unverified",
+      "observed": true,
+      "evidence": null
+    }
+  ],
+  "observed_output_fields": ["summary"],
+  "observed_route": "inline",
+  "observed_engine": null,
+  "question_count": 0,
+  "observed_escalation": "none",
+  "side_effects": [],
+  "evidence_note": "Invalid: unverified assertions must have observed: null."
+}

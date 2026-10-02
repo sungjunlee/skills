@@ -1,0 +1,38 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "delegate.route-lookup-fallback",
+  "skill": "productivity/delegate",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "model-without-home-route",
+      "user_request": "/delegate gpt-6.1-sol effort=xhigh \"analyze this system\"",
+      "cli_environment": {
+        "codex_available": true,
+        "operator_notes": "gpt has no home route, should fall back to codex"
+      }
+    }
+  },
+  "required_output_fields": [
+    "route",
+    "model",
+    "output"
+  ],
+  "expected_route": "codex",
+  "expected_engine": null,
+  "question_count_range": {
+    "min": 0,
+    "max": 1
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-route", "type": "output_field_present", "field": "route" },
+    { "assertion_id": "field-model", "type": "output_field_present", "field": "model" },
+    { "assertion_id": "field-output", "type": "output_field_present", "field": "output" },
+    { "assertion_id": "route-codex", "type": "route_equals" },
+    { "assertion_id": "confirmation-allowed", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" }
+  ],
+  "forbidden_side_effects": ["commit"]
+}

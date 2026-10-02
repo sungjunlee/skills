@@ -79,6 +79,37 @@ function validateCaseContract(evalCase) {
   ) {
     errors.push("file fixture values must be repository-relative and cannot traverse upward");
   }
+
+  if (!evalCase.pairing_rationale || evalCase.pairing_rationale.trim() === "") {
+    errors.push("pairing_rationale must be non-empty");
+  }
+
+  if (evalCase.acceptance_checks.length === 0) {
+    errors.push("acceptance_checks must not be empty");
+  }
+
+  for (const check of evalCase.acceptance_checks) {
+    if (!check.check_id || check.check_id.trim() === "") {
+      errors.push("check_id must be non-empty");
+    }
+    if (!["command", "rubric"].includes(check.kind)) {
+      errors.push(`check kind must be command or rubric, got ${JSON.stringify(check.kind)}`);
+    }
+  }
+
+  if (evalCase.candidate_profiles.length === 0) {
+    errors.push("candidate_profiles must not be empty");
+  }
+
+  for (const profile of evalCase.candidate_profiles) {
+    if (!profile.profile_id || profile.profile_id.trim() === "") {
+      errors.push("profile_id must be non-empty");
+    }
+    if (!profile.model || profile.model.trim() === "") {
+      errors.push("profile model must be non-empty");
+    }
+  }
+
   return errors;
 }
 

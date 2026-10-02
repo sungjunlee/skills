@@ -1,0 +1,33 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.fixture.timeout-handling",
+  "work_shape": "high_blast_radius_analysis",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Analyze the delegate skill's timeout mechanism and explain how it bounds execution.",
+      "context": "Synthetic analysis task; no repository changes expected."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "timeout-explained",
+      "kind": "rubric",
+      "spec": "The output describes the hard deadline mechanism and timer enforcement."
+    },
+    {
+      "check_id": "no-repo-mutation",
+      "kind": "command",
+      "spec": "git status reports no changes after the run."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "sol-low", "model": "gpt-5.6-sol", "effort": "low" },
+    { "profile_id": "terra-low", "model": "gpt-5.6-terra", "effort": "low" }
+  ],
+  "pairing_rationale": "Analysis-only work at low effort should expose whether Terra and Sol differ on pure comprehension tasks.",
+  "privacy": {
+    "sensitivity": "synthetic",
+    "approved_routes": []
+  }
+}

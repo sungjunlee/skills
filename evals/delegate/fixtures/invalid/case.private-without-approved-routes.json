@@ -1,0 +1,27 @@
+{
+  "contract_version": "delegate-eval-v1",
+  "case_id": "delegate.fixture.invalid-private-routes",
+  "work_shape": "high_blast_radius_analysis",
+  "fixture": {
+    "kind": "inline",
+    "value": {
+      "request": "Analyze internal API.",
+      "context": "Internal analysis."
+    }
+  },
+  "acceptance_checks": [
+    {
+      "check_id": "analyzed",
+      "kind": "rubric",
+      "spec": "API analyzed."
+    }
+  ],
+  "candidate_profiles": [
+    { "profile_id": "sol-high", "model": "gpt-5.6-sol", "effort": "high" }
+  ],
+  "pairing_rationale": "Test fixture.",
+  "privacy": {
+    "sensitivity": "private",
+    "approved_routes": []
+  }
+}

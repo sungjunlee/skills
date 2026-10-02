@@ -1,0 +1,45 @@
+{
+  "contract_version": "replay-v2",
+  "case_id": "brainstorming.read-only-guarantee",
+  "skill": "planning/brainstorming",
+  "input_fixture": {
+    "kind": "inline",
+    "value": {
+      "scenario": "full-brainstorm-to-convergence",
+      "user_request": "/brainstorming \"redesign the API layer\"",
+      "interaction": [
+        "widen phase completes",
+        "user answers questions",
+        "user asks to converge"
+      ]
+    }
+  },
+  "required_output_fields": [
+    "brief",
+    "problem",
+    "chosen_direction",
+    "acceptance_criteria",
+    "next_step"
+  ],
+  "expected_route": null,
+  "expected_engine": "none",
+  "question_count_range": {
+    "min": 1,
+    "max": 8
+  },
+  "expected_escalation": "none",
+  "semantic_assertions": [
+    { "assertion_id": "field-brief", "type": "output_field_present", "field": "brief" },
+    { "assertion_id": "field-problem", "type": "output_field_present", "field": "problem" },
+    { "assertion_id": "field-chosen-direction", "type": "output_field_present", "field": "chosen_direction" },
+    { "assertion_id": "field-acceptance-criteria", "type": "output_field_present", "field": "acceptance_criteria" },
+    { "assertion_id": "field-next-step", "type": "output_field_present", "field": "next_step" },
+    { "assertion_id": "engine-none", "type": "engine_equals" },
+    { "assertion_id": "questions-asked", "type": "question_count_in_range" },
+    { "assertion_id": "escalation-none", "type": "escalation_equals" },
+    { "assertion_id": "no-write", "type": "side_effect_absent", "side_effect": "repository_write" },
+    { "assertion_id": "no-commit", "type": "side_effect_absent", "side_effect": "commit" },
+    { "assertion_id": "no-push", "type": "side_effect_absent", "side_effect": "push" }
+  ],
+  "forbidden_side_effects": ["repository_write", "commit", "push"]
+}

@@ -86,6 +86,29 @@ async function skillFiles(dir) {
   return found;
 }
 
+// Entrypoint references must ship with the independently installed skill.
+async function checkReferences(skill) {
+  const text = await readFile(path.join(skill.dir, "SKILL.md"), "utf8");
+  const references = new Set([
+    ...text.matchAll(/`(references\/[^`\s]+)`/g),
+    ...text.matchAll(/\]\((references\/[^)\s]+)\)/g),
+  ].map((match) => match[1]));
+  const errors = [];
+  for (const reference of references) {
+    const resolved = path.resolve(skill.dir, reference);
+    if (!resolved.startsWith(`${skill.dir}${path.sep}`)) {
+      errors.push(`skills/${skill.category}/${skill.name}: reference escapes the skill: ${reference}`);
+      continue;
+    }
+    try {
+      if (!(await stat(resolved)).isFile()) throw new Error("not a file");
+    } catch {
+      errors.push(`skills/${skill.category}/${skill.name}: missing reference file ${reference}`);
+    }
+  }
+  return errors;
+}
+
 async function checkReadme(skills) {
   const errors = [];
   const readme = await readFile(path.join(root, "README.md"), "utf8");
@@ -141,6 +164,7 @@ async function main() {
   for (const skill of skills) {
     errors.push(...(await checkFrontmatter(skill)));
     errors.push(...(await checkAdapterMirror(skill)));
+    errors.push(...(await checkReferences(skill)));
   }
   errors.push(...(await checkReadme(skills)));
 

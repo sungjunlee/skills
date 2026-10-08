@@ -3,7 +3,7 @@
 // Checks the AGENTS.md authoring rules that can be checked. Every rule here
 // exists because the tree drifted from the contract at least once.
 
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readFile, readdir, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -86,6 +86,35 @@ async function skillFiles(dir) {
   return found;
 }
 
+// Entrypoint references must ship with the independently installed skill.
+async function checkReferences(skill) {
+  let text;
+  try {
+    text = await readFile(path.join(skill.dir, "SKILL.md"), "utf8");
+  } catch {
+    return []; // checkFrontmatter reports the missing SKILL.md
+  }
+  const references = new Set([
+    ...text.matchAll(/`(?:\.\/)?(references\/[^`\s#?]+)/g),
+    ...text.matchAll(/\]\((?:\.\/)?(references\/[^)\s#?]+)/g),
+  ].map((match) => match[1]));
+  const skillRoot = await realpath(skill.dir);
+  const errors = [];
+  for (const reference of references) {
+    const where = `skills/${skill.category}/${skill.name}: reference ${reference}`;
+    let resolved;
+    try {
+      resolved = await realpath(path.join(skill.dir, reference));
+    } catch {
+      errors.push(`${where} is missing`);
+      continue;
+    }
+    if (!resolved.startsWith(`${skillRoot}${path.sep}`)) errors.push(`${where} resolves outside the skill`);
+    else if (!(await stat(resolved)).isFile()) errors.push(`${where} is not a file`);
+  }
+  return errors;
+}
+
 async function checkReadme(skills) {
   const errors = [];
   const readme = await readFile(path.join(root, "README.md"), "utf8");
@@ -141,11 +170,12 @@ async function main() {
   for (const skill of skills) {
     errors.push(...(await checkFrontmatter(skill)));
     errors.push(...(await checkAdapterMirror(skill)));
+    errors.push(...(await checkReferences(skill)));
   }
   errors.push(...(await checkReadme(skills)));
 
   if (errors.length > 0) throw new Error(errors.join("\n"));
-  console.log(`Verified ${skills.length} skill(s): frontmatter, adapter mirrors, and README layout agree with the tree.`);
+  console.log(`Verified ${skills.length} skill(s): frontmatter, adapter mirrors, SKILL.md references, and README layout agree with the tree.`);
 }
 
 main().catch((error) => {

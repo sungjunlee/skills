@@ -36,6 +36,7 @@ Source:
 - `skills/productivity/delegate/SKILL.md`
 - `skills/productivity/delegate/references/cli-invocations.md`
 - `skills/productivity/delegate/references/model-catalog.md`
+- `skills/productivity/delegate/references/quota.md`
 
 #### gosu-review
 
@@ -124,6 +125,7 @@ skills/
       references/
         cli-invocations.md
         model-catalog.md
+        quota.md
   review/
     gosu-review/
       SKILL.md

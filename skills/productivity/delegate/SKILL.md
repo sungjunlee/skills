@@ -10,7 +10,7 @@ description: Delegate a prompt to an installed CLI in the current directory and 
 1. **Route.** Look up the provider in `references/cli-invocations.md`. An explicit user route always wins. A model or family without a route resolves to its home route there. With no home route, follow the operator's own routing notes, and ask which CLI when they do not settle it.
 2. **Profile.** Accept `/delegate <route> [effort=<level>] "<prompt>"`: one unquoted `effort=` token between route and prompt is the effort; anything inside the prompt is prompt text. Keep effort out of the model id, except on routes whose ids encode it. Match the model to an id in the route's own live list when the route has one; if nothing matches, ask. With no model or effort from the user, keep the CLI default.
    - For a recommendation or a fuzzy model name, read `references/model-catalog.md`. Choose the cheapest profile likely to finish correctly, counting retries and review, and pick a different family for independent review. Do not use the catalog for `reasonix/*`.
-   - Before large, repeated, or costly delegation, check the selected route's quota with `references/quota.md`.
+   - Before launching several children, or one long run on a frontier-cost profile, read `references/quota.md` and follow it.
 3. **Run.** Build argv from the provider row, with the prompt as one argv element and stdin from DEVNULL, and run it in `$PWD` under the guardrails below. Return the executor's stdout, or the extracted output where the row defines one.
 
 ## Guardrails

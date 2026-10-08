@@ -3,7 +3,7 @@
 // Checks the AGENTS.md authoring rules that can be checked. Every rule here
 // exists because the tree drifted from the contract at least once.
 
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readFile, readdir, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -88,23 +88,29 @@ async function skillFiles(dir) {
 
 // Entrypoint references must ship with the independently installed skill.
 async function checkReferences(skill) {
-  const text = await readFile(path.join(skill.dir, "SKILL.md"), "utf8");
+  let text;
+  try {
+    text = await readFile(path.join(skill.dir, "SKILL.md"), "utf8");
+  } catch {
+    return []; // checkFrontmatter reports the missing SKILL.md
+  }
   const references = new Set([
-    ...text.matchAll(/`(references\/[^`\s]+)`/g),
-    ...text.matchAll(/\]\((references\/[^)\s]+)\)/g),
+    ...text.matchAll(/`(?:\.\/)?(references\/[^`\s#?]+)/g),
+    ...text.matchAll(/\]\((?:\.\/)?(references\/[^)\s#?]+)/g),
   ].map((match) => match[1]));
+  const skillRoot = await realpath(skill.dir);
   const errors = [];
   for (const reference of references) {
-    const resolved = path.resolve(skill.dir, reference);
-    if (!resolved.startsWith(`${skill.dir}${path.sep}`)) {
-      errors.push(`skills/${skill.category}/${skill.name}: reference escapes the skill: ${reference}`);
+    const where = `skills/${skill.category}/${skill.name}: reference ${reference}`;
+    let resolved;
+    try {
+      resolved = await realpath(path.join(skill.dir, reference));
+    } catch {
+      errors.push(`${where} is missing`);
       continue;
     }
-    try {
-      if (!(await stat(resolved)).isFile()) throw new Error("not a file");
-    } catch {
-      errors.push(`skills/${skill.category}/${skill.name}: missing reference file ${reference}`);
-    }
+    if (!resolved.startsWith(`${skillRoot}${path.sep}`)) errors.push(`${where} resolves outside the skill`);
+    else if (!(await stat(resolved)).isFile()) errors.push(`${where} is not a file`);
   }
   return errors;
 }
@@ -169,7 +175,7 @@ async function main() {
   errors.push(...(await checkReadme(skills)));
 
   if (errors.length > 0) throw new Error(errors.join("\n"));
-  console.log(`Verified ${skills.length} skill(s): frontmatter, adapter mirrors, and README layout agree with the tree.`);
+  console.log(`Verified ${skills.length} skill(s): frontmatter, adapter mirrors, SKILL.md references, and README layout agree with the tree.`);
 }
 
 main().catch((error) => {

@@ -4,7 +4,7 @@ Read before launching several children, or one long run on a frontier-cost profi
 
 ## Find the pool
 
-The pool is the account the route's CLI bills for this launch: subscription or API key, as configured. `claude/*`, `codex/*`, `cursor/*`, and `grok/*` bill their own vendor account; a Claude model on `cursor/*` bills Cursor. For `opencode`, `opencode-go`, `pi`, `cline-pass`, and `reasonix`, read the billing provider from that CLI's config. Do not infer the pool from the model family, and do not run a login flow.
+The pool is the account the route's CLI bills for this launch: subscription or API key, as configured. `claude/*`, `codex/*`, `cursor/*`, `grok/*`, and `agy/*` bill their own vendor account; a Claude model on `cursor/*` bills Cursor, and one on `agy/*` bills Google. For `opencode`, `opencode-go`, `pi`, `cline-pass`, and `reasonix`, read the billing provider from that CLI's config. Do not infer the pool from the model family, and do not run a login flow.
 
 ## Read the pool
 

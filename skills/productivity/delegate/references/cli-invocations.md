@@ -34,6 +34,7 @@ If the resolved profile includes an effort, append or translate it with the Effo
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `--thinking <off\|minimal\|low\|medium\|high\|xhigh\|max>` | `DEVNULL` | `pi --list-models [search]` |
 | `cursor/*` | `cursor-agent --print --yolo --trust --model <model> <prompt>` (not `agent`, which is Grok Build) | select the matching effort-bearing slug from `cursor-agent models`; no separate argv | `DEVNULL` | `cursor-agent models` |
 | `grok/*` | `grok --always-approve -m <model> -p <prompt>` (the prompt is `-p`'s value; passed positionally it opens the TUI and fails headless) | `--effort <low\|medium\|high\|xhigh>` | `DEVNULL` | `grok models` |
+| `agy/*` | `agy --mode plan --model <model> -p <prompt>` (read-only; the prompt is `-p`'s value, and a flag after `-p` is taken as the prompt: exit 2) | `--effort <low\|medium\|high\|xhigh\|max>` (model-specific; an unsupported level is rejected: Gemini 4 Argon takes `low\|medium\|high`) | `DEVNULL` | `agy models` (ids end in an effort; pass the bare id with `--effort`) |
 | `reasonix/*` | `reasonix run --model <model> <prompt>` (`-m` is not accepted: exit 2, no output) | `--effort <disabled\|high\|max>` (the CLI rejects `low` even though the DeepSeek API accepts it) | `DEVNULL` | `reasonix doctor --json`; each id is `providers[].name` joined with one of its `models[]` |
 | `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | `--thinking <none\|low\|medium\|high\|xhigh>` | `DEVNULL` | — (no CLI subcommand) |
 
@@ -50,8 +51,9 @@ An input that names a model or family without a route resolves to that family's 
 | `gpt-*` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
 | `claude-*` | `claude/*` | the vendor's own CLI, with all five effort levels |
 | `grok-4.*` | `grok/*` | the vendor's own coding CLI |
+| `gemini-*` | `agy/*` | the vendor's own coding CLI (Antigravity), with graded effort as separate argv |
 
-A family absent from the table has no default — `glm-*`, `gemini-*`, `muse-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` may run on several routes, so ask which CLI to use.
+A family absent from the table has no default — `glm-*`, `muse-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` may run on several routes, so ask which CLI to use.
 
 A home route says which CLI hosts a family, nothing more; it is not a model-effort profile. Effort still comes from the user or the recommendation path. Where the route encodes effort in the id, as `cursor/*` does, that level is part of the model's name rather than an option — resolve it from the family's catalog effort profile before building the slug, and ask when the catalog offers none.
 
@@ -77,6 +79,8 @@ The prompt is already in argv, so connect stdin to DEVNULL for every current rou
 For the OpenCode routes, `--auto` has the same trust implications as other non-interactive permission bypass flags. The two log flags are not optional either: without them a fatal provider error prints nothing, the run stays silent as if healthy, and the failure only surfaces as a spent deadline. They leave stdout clean, so extraction is unaffected.
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
+
+`agy/*` runs in `plan` mode, which is read-only: use it for review, analysis, and answers. No edit-capable mode has been verified for one-shot dispatch, so for a task that must change files, report that and ask for another route.
 
 `opencode`, `pi`, and `cline` reach many providers, and which ones are connected is operator state: name the provider in the route and confirm the model in the live list. `cursor/*` is one subscription over many families, but not GPT; GPT goes to `codex/*`.
 

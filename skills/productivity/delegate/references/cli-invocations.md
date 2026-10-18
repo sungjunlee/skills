@@ -24,7 +24,7 @@ These two rules are not per-provider. They apply before any row below is used.
 
 ## Per-provider reference
 
-If the resolved profile includes an effort, translate it with the Effort argv column and place it before the prompt (before `-p <prompt>` where a row uses that form). On `cursor/*` and `agy/*`, select the matching effort-bearing id instead and add no effort argv.
+If the resolved profile includes an effort, translate it with the Effort argv column and place it before the prompt, or before `-p <prompt>`.
 
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|
@@ -34,7 +34,7 @@ If the resolved profile includes an effort, translate it with the Effort argv co
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `--thinking <off\|minimal\|low\|medium\|high\|xhigh\|max>` | `DEVNULL` | `pi --list-models [search]` |
 | `cursor/*` | `cursor-agent --print --yolo --trust --model <model> <prompt>` (not `agent`, which is Grok Build) | select the matching effort-bearing slug from `cursor-agent models`; no separate argv | `DEVNULL` | `cursor-agent models` |
 | `grok/*` | `grok --always-approve -m <model> -p <prompt>` (the prompt is `-p`'s value; passed positionally it opens the TUI and fails headless) | `--effort <low\|medium\|high\|xhigh>` | `DEVNULL` | `grok models` |
-| `agy/*` | `agy --mode plan --model <model> -p <prompt>` (`-p <prompt>` comes last: `-p` takes the next token as the prompt, so a flag there is swallowed and the CLI exits 2) | select the matching effort-bearing id from `agy models`; no separate argv | `DEVNULL` | `agy models` |
+| `agy/*` | `agy --mode plan --model <model> -p <prompt>` (`-p` takes the next token as the prompt; a flag there exits 2) | select the matching effort-bearing id from `agy models`; no separate argv | `DEVNULL` | `agy models` |
 | `reasonix/*` | `reasonix run --model <model> <prompt>` (`-m` is not accepted: exit 2, no output) | `--effort <disabled\|high\|max>` (the CLI rejects `low` even though the DeepSeek API accepts it) | `DEVNULL` | `reasonix doctor --json`; each id is `providers[].name` joined with one of its `models[]` |
 | `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | `--thinking <none\|low\|medium\|high\|xhigh>` | `DEVNULL` | — (no CLI subcommand) |
 
@@ -51,7 +51,7 @@ An input that names a model or family without a route resolves to that family's 
 | `gpt-*` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
 | `claude-*` | `claude/*` | the vendor's own CLI, with all five effort levels |
 | `grok-4.*` | `grok/*` | the vendor's own coding CLI |
-| `gemini-*` | `agy/*` | the vendor's own coding CLI (Antigravity); `plan` mode only, so not for file edits |
+| `gemini-*` | `agy/*` | the vendor's own coding CLI; `plan` mode only |
 
 A family absent from the table has no default — `glm-*`, `muse-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` may run on several routes, so ask which CLI to use.
 
@@ -80,7 +80,7 @@ For the OpenCode routes, `--auto` has the same trust implications as other non-i
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
 
-`agy/*` runs in `plan` mode: use it for review, analysis, and answers. No edit-capable mode has been verified for one-shot dispatch, so for a task that must change files, report that and ask for another route.
+`agy/*` runs in `plan` mode, for review, analysis, and answers. No edit mode is verified, so for a task that changes files, ask for another route.
 
 `opencode`, `pi`, and `cline` reach many providers, and which ones are connected is operator state: name the provider in the route and confirm the model in the live list. `cursor/*` is one subscription over many families, but not GPT; GPT goes to `codex/*`.
 

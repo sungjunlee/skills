@@ -24,7 +24,7 @@ These two rules are not per-provider. They apply before any row below is used.
 
 ## Per-provider reference
 
-If the resolved profile includes an effort, append or translate it with the Effort argv column.
+If the resolved profile includes an effort, translate it with the Effort argv column and place it before the prompt (before `-p <prompt>` where a row uses that form). On `cursor/*` and `agy/*`, select the matching effort-bearing id instead and add no effort argv.
 
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|

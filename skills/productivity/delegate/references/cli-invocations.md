@@ -24,7 +24,7 @@ These two rules are not per-provider. They apply before any row below is used.
 
 ## Per-provider reference
 
-If the resolved profile includes an effort, append or translate it with the Effort argv column.
+If the resolved profile includes an effort, translate it with the Effort argv column and place it before the prompt, or before `-p <prompt>`.
 
 | Provider | Run argv | Effort argv | Stdin | List models |
 |---|---|---|---|---|
@@ -34,6 +34,7 @@ If the resolved profile includes an effort, append or translate it with the Effo
 | `pi/*` | `pi --print --model <model> --no-session <prompt>` | `--thinking <off\|minimal\|low\|medium\|high\|xhigh\|max>` | `DEVNULL` | `pi --list-models [search]` |
 | `cursor/*` | `cursor-agent --print --yolo --trust --model <model> <prompt>` (not `agent`, which is Grok Build) | select the matching effort-bearing slug from `cursor-agent models`; no separate argv | `DEVNULL` | `cursor-agent models` |
 | `grok/*` | `grok --always-approve -m <model> -p <prompt>` (the prompt is `-p`'s value; passed positionally it opens the TUI and fails headless) | `--effort <low\|medium\|high\|xhigh>` | `DEVNULL` | `grok models` |
+| `agy/*` | `agy --mode plan --model <model> -p <prompt>` (`-p` takes the next token as the prompt; a flag there exits 2) | select the matching effort-bearing id from `agy models`; no separate argv | `DEVNULL` | `agy models` |
 | `reasonix/*` | `reasonix run --model <model> <prompt>` (`-m` is not accepted: exit 2, no output) | `--effort <disabled\|high\|max>` (the CLI rejects `low` even though the DeepSeek API accepts it) | `DEVNULL` | `reasonix doctor --json`; each id is `providers[].name` joined with one of its `models[]` |
 | `cline-pass/*` | `cline --json -P cline-pass -m <model> <prompt>` | `--thinking <none\|low\|medium\|high\|xhigh>` | `DEVNULL` | — (no CLI subcommand) |
 
@@ -50,19 +51,20 @@ An input that names a model or family without a route resolves to that family's 
 | `gpt-*` | `codex/*` | the vendor's own CLI, with graded effort as separate argv |
 | `claude-*` | `claude/*` | the vendor's own CLI, with all five effort levels |
 | `grok-4.*` | `grok/*` | the vendor's own coding CLI |
+| `gemini-*` | `agy/*` | the vendor's own coding CLI; `plan` mode only |
 
-A family absent from the table has no default — `glm-*`, `gemini-*`, `muse-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` may run on several routes, so ask which CLI to use.
+A family absent from the table has no default — `glm-*`, `muse-*`, `deepseek-*`, `kimi-*`, `minimax-*`, `mimo-*`, `hy3`, and `qwen*` may run on several routes, so ask which CLI to use.
 
-A home route says which CLI hosts a family, nothing more; it is not a model-effort profile. Effort still comes from the user or the recommendation path. Where the route encodes effort in the id, as `cursor/*` does, that level is part of the model's name rather than an option — resolve it from the family's catalog effort profile before building the slug, and ask when the catalog offers none.
+A home route says which CLI hosts a family, nothing more; it is not a model-effort profile. Effort still comes from the user or the recommendation path. Where the route encodes effort in the id, as `cursor/*` and `agy/*` do, that level is part of the model's name rather than an option — resolve it from the family's catalog effort profile before building the slug, and ask when the catalog offers none.
 
 ## Effort and id shape
 
 Effort support can vary by model even when the CLI accepts the flag. Reject a value known to be unsupported; if support cannot be verified, report that uncertainty instead of inventing a fallback.
 
-`cursor/*` is the one route with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `claude-opus-5-5-high` and do not synthesize bracket overrides. Its list is also the only one holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross:
+`cursor/*` and `agy/*` are the routes with no effort argv: there the level is part of the model id, so match the requested profile to a concrete live slug such as `claude-opus-5-5-high` or `gemini-4-argon-high` and do not synthesize bracket overrides. Their lists are also the only ones holding effort-bearing ids, which is why a fuzzy family-plus-effort request appears to match there first. Id shape is therefore route-specific, and the shapes must not cross:
 
 - Never carry an effort suffix into another route. `-m claude-opus-5-5-high` on `claude/*` names a different, probably nonexistent model, and rule 1's charset accepts it — no syntactic check catches this one.
-- Never send a bare catalog slug to `cursor/*`; conversely, an effort-bearing id names `cursor/*` even without the route prefix, since no other route has one — except a GPT id, which resolves to `codex/*` with the suffix as its effort.
+- Never send a bare catalog slug to `cursor/*` or `agy/*`. Conversely, an effort-bearing id without a route prefix names `cursor/*`, except a GPT id, which resolves to `codex/*` with the suffix as its effort, and a Gemini id, which resolves to `agy/*` unchanged.
 - Dispatch only ids the route's own list holds. When the requested profile has no id there, report that — do not approximate with a neighboring level, a `-fast` variant, or a dropped `-m`. Omitting the model on `cursor/*` selects its `auto` mode, which is a valid request when the user wants Cursor to choose but not a substitute for a named family.
 
 ## Per-route notes
@@ -77,6 +79,8 @@ The prompt is already in argv, so connect stdin to DEVNULL for every current rou
 For the OpenCode routes, `--auto` has the same trust implications as other non-interactive permission bypass flags. The two log flags are not optional either: without them a fatal provider error prints nothing, the run stays silent as if healthy, and the failure only surfaces as a spent deadline. They leave stdout clean, so extraction is unaffected.
 
 For `cline-pass/*`, return JSONL `run_result.text`; if absent, return raw stdout.
+
+`agy/*` runs in `plan` mode, for review, analysis, and answers. No edit mode is verified, so for a task that changes files, ask for another route.
 
 `opencode`, `pi`, and `cline` reach many providers, and which ones are connected is operator state: name the provider in the route and confirm the model in the live list. `cursor/*` is one subscription over many families, but not GPT; GPT goes to `codex/*`.
 

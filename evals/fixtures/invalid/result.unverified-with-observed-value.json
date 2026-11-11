@@ -11,7 +11,31 @@
       "assertion_id": "summary-present",
       "status": "unverified",
       "observed": true,
-      "evidence": null
+      "evidence": "Invalid: an unverified assertion must not record an observed value."
+    },
+    {
+      "assertion_id": "inline-route",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "The route was not verified."
+    },
+    {
+      "assertion_id": "no-questions",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "The question count was not verified."
+    },
+    {
+      "assertion_id": "no-escalation",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "The escalation state was not verified."
+    },
+    {
+      "assertion_id": "no-publish",
+      "status": "unverified",
+      "observed": null,
+      "evidence": "The absence of a publish side effect was not verified."
     }
   ],
   "observed_output_fields": ["summary"],

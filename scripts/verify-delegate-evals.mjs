@@ -5,7 +5,13 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
+import {
+  isolateNegativeFixture,
+  negativeFixtureMembers,
+} from "./lib/negative-fixture-isolation.mjs";
 import { duplicates, validateSchema } from "./lib/schema-validator.mjs";
+
+export { isolateNegativeFixture };
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const base = path.join(root, "evals/delegate");
@@ -177,6 +183,25 @@ function formatErrors(document) {
   return document.errors.map((error) => `${repositoryPath(document.filename)}: ${error}`);
 }
 
+export function negativeFixtureErrors(validDocuments, invalidDocuments, subject) {
+  const members = negativeFixtureMembers(invalidDocuments, subject);
+  const errors = members.flatMap(formatErrors);
+  if (errors.length === 0) {
+    errors.push(...pairErrors(isolateNegativeFixture(validDocuments, invalidDocuments, subject)));
+  }
+  return errors;
+}
+
+export function invalidFixtureAcceptanceErrors(validDocuments, invalidDocuments) {
+  const errors = [];
+  for (const document of invalidDocuments) {
+    if (negativeFixtureErrors(validDocuments, invalidDocuments, document).length === 0) {
+      errors.push(`${repositoryPath(document.filename)}: intentionally invalid fixture was accepted`);
+    }
+  }
+  return errors;
+}
+
 function pairErrors(documents) {
   const errors = [];
   const cases = new Map();
@@ -241,7 +266,7 @@ function shapeCoverageErrors(documents, schemas) {
     .map((shape) => `committed delegate cases cover no ${shape} case`);
 }
 
-async function loadAll(target, schemas) {
+export async function loadAll(target, schemas) {
   const files = await jsonFiles(target);
   return Promise.all(files.map((filename) => loadDocument(filename, schemas)));
 }
@@ -276,12 +301,7 @@ async function main() {
   if (errors.length === 0) errors.push(...pairErrors(validDocuments));
 
   const invalidDocuments = await loadAll(locations.invalid, schemas);
-  for (const document of invalidDocuments) {
-    const combined = [...document.errors, ...pairErrors([...validDocuments, document])];
-    if (combined.length === 0) {
-      errors.push(`${repositoryPath(document.filename)}: intentionally invalid fixture was accepted`);
-    }
-  }
+  errors.push(...invalidFixtureAcceptanceErrors(validDocuments, invalidDocuments));
 
   if (errors.length > 0) throw new Error(errors.join("\n"));
   console.log(

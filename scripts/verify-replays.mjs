@@ -10,6 +10,9 @@ import {
   jsonFiles,
   documentKind,
   verifyPairs,
+  isolateNegativeFixture,
+  negativeFixtureErrors,
+  invalidFixtureAcceptanceErrors,
   main,
 } from "./verify-replays-loader.mjs";
 
@@ -21,6 +24,9 @@ export {
   jsonFiles,
   documentKind,
   verifyPairs,
+  isolateNegativeFixture,
+  negativeFixtureErrors,
+  invalidFixtureAcceptanceErrors,
   main,
 };
 

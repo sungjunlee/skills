@@ -4,9 +4,15 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import { validateSchema } from "./lib/schema-validator.mjs";
+import {
+  isolateNegativeFixture,
+  negativeFixtureMembers,
+} from "./lib/negative-fixture-isolation.mjs";
 import { sha256Tree } from "./lib/skill-revision.mjs";
 import { validateCaseContract } from "./verify-replays-contract.mjs";
 import { validateReplayPair } from "./verify-replays-pair.mjs";
+
+export { isolateNegativeFixture };
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const locations = {
@@ -77,6 +83,25 @@ export async function loadDocument(filename, contracts) {
 function formatErrors(document) {
   const relative = repositoryPath(document.filename);
   return document.errors.map((error) => `${relative}: ${error}`);
+}
+
+export function negativeFixtureErrors(validDocuments, invalidDocuments, subject) {
+  const members = negativeFixtureMembers(invalidDocuments, subject);
+  const errors = members.flatMap(formatErrors);
+  if (errors.length === 0) {
+    errors.push(...verifyPairs(isolateNegativeFixture(validDocuments, invalidDocuments, subject)));
+  }
+  return errors;
+}
+
+export function invalidFixtureAcceptanceErrors(validDocuments, invalidDocuments) {
+  const errors = [];
+  for (const document of invalidDocuments) {
+    if (negativeFixtureErrors(validDocuments, invalidDocuments, document).length === 0) {
+      errors.push(`${repositoryPath(document.filename)}: intentionally invalid fixture was accepted`);
+    }
+  }
+  return errors;
 }
 
 export function verifyPairs(documents) {
@@ -163,13 +188,7 @@ export async function main() {
 
   const invalidFiles = await jsonFiles(locations.invalid);
   const invalidDocuments = await Promise.all(invalidFiles.map((filename) => loadDocument(filename, contracts)));
-  for (const document of invalidDocuments) {
-    const individualErrors = document.errors.length > 0;
-    const pairErrors = verifyPairs([...validDocuments, ...invalidDocuments, document]);
-    if (!individualErrors && pairErrors.length === 0) {
-      errors.push(`${path.relative(root, document.filename)}: intentionally invalid fixture was accepted`);
-    }
-  }
+  errors.push(...invalidFixtureAcceptanceErrors(validDocuments, invalidDocuments));
 
   const committedFiles = [
     ...(await jsonFiles(locations.cases)),

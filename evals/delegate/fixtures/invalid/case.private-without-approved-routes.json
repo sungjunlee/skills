@@ -17,7 +17,8 @@
     }
   ],
   "candidate_profiles": [
-    { "profile_id": "sol-high", "model": "gpt-5.6-sol", "effort": "high" }
+    { "profile_id": "sol-high", "model": "gpt-5.6-sol", "effort": "high" },
+    { "profile_id": "sol-xhigh", "model": "gpt-5.6-sol", "effort": "xhigh" }
   ],
   "pairing_rationale": "Test fixture.",
   "privacy": {

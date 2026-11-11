@@ -116,6 +116,10 @@ function writeShim(binDir, name, body) {
   chmodSync(filename, 0o755);
 }
 
+function quotePosixShellLiteral(value) {
+  return `'${value.replaceAll("'", "'\\''")}'`;
+}
+
 function setupRun(runDir, replayCase) {
   const binDir = path.join(runDir, "bin");
   mkdirSync(binDir, { recursive: true });
@@ -132,8 +136,8 @@ function setupRun(runDir, replayCase) {
     binDir,
     "reasonix",
     `#!/usr/bin/env bash
-export DISPATCH_REPLAY_CONFIG=${JSON.stringify(configPath)}
-exec node ${JSON.stringify(fakeCli)} "$@"
+export DISPATCH_REPLAY_CONFIG=${quotePosixShellLiteral(configPath)}
+exec node ${quotePosixShellLiteral(fakeCli)} "$@"
 `,
   );
   for (const name of BLOCKED_PROVIDERS) {

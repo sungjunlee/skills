@@ -1,4 +1,5 @@
 import { duplicates, same } from "./lib/schema-validator.mjs";
+import { parseReasonixReplayArgv } from "./lib/reasonix-replay-argv.mjs";
 
 export function dispatchDerived(replayCase, result) {
   const expected = replayCase.dispatch_contract;
@@ -8,12 +9,36 @@ export function dispatchDerived(replayCase, result) {
 
   const argv = observed.argv ?? [];
   const prompt = expected.expected_prompt;
+  const reasonix = replayCase.expected_route.startsWith("reasonix/");
+  const parsedArgv = reasonix
+    ? parseReasonixReplayArgv(argv, expected, { fakeCliRevision: observed.fake_cli_revision })
+    : null;
   const checks = [
     ["host_dispatched", observed.host_dispatched === true],
-    ["route", observed.resolved_route === replayCase.expected_route],
-    ["model", observed.resolved_model === expected.expected_model],
-    ["effort", observed.resolved_effort === expected.expected_effort],
-    ["prompt", argv.length > 0 && argv[argv.length - 1] === prompt && argv.includes(prompt)],
+    [
+      "route",
+      reasonix
+        ? parsedArgv.route === replayCase.expected_route && observed.resolved_route === parsedArgv.route
+        : observed.resolved_route === replayCase.expected_route,
+    ],
+    [
+      "model",
+      reasonix
+        ? parsedArgv.model === expected.expected_model && observed.resolved_model === parsedArgv.model
+        : observed.resolved_model === expected.expected_model,
+    ],
+    [
+      "effort",
+      reasonix
+        ? parsedArgv.effort === expected.expected_effort && observed.resolved_effort === parsedArgv.effort
+        : observed.resolved_effort === expected.expected_effort,
+    ],
+    [
+      "prompt",
+      reasonix
+        ? parsedArgv.prompt === prompt
+        : argv.length > 0 && argv[argv.length - 1] === prompt && argv.includes(prompt),
+    ],
     ["cwd", observed.cwd === expected.expected_cwd],
     ["stdin", observed.stdin === expected.expected_stdin],
     ["outcome", observed.outcome === expected.expected_outcome],
@@ -25,6 +50,7 @@ export function dispatchDerived(replayCase, result) {
     ],
     ["elapsed", Number.isInteger(observed.elapsed_ms) && observed.elapsed_ms >= 0],
   ];
+  if (reasonix) checks.push(["argv", parsedArgv.ok]);
   if (expected.expected_outcome === "dispatch_cli_error") {
     checks.push(["terminated_before_deadline", observed.terminated_before_deadline === true]);
     checks.push([

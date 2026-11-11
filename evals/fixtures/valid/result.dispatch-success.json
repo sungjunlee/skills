@@ -50,7 +50,7 @@
     "argv": [
       "reasonix",
       "run",
-      "-m",
+      "--model",
       "dispatch-replay-model",
       "--effort",
       "high",

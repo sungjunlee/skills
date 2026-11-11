@@ -19,6 +19,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const runner = path.join(root, "scripts/run-dispatch-replay.mjs");
 const fakeCli = path.join(root, "evals/fixtures/dispatch/fake-cli.mjs");
+const argvParser = path.join(root, "scripts/lib/reasonix-replay-argv.mjs");
 const successCase = path.join(root, "evals/cases/dispatch/success.json");
 const prompt = "Reply with exactly: DISPATCH_REPLAY_OK";
 
@@ -45,6 +46,7 @@ const PATH_CASES = [
 function copyFixtureCheckout(checkout) {
   const files = [
     [runner, path.join(checkout, "scripts/run-dispatch-replay.mjs")],
+    [argvParser, path.join(checkout, "scripts/lib/reasonix-replay-argv.mjs")],
     [fakeCli, path.join(checkout, "evals/fixtures/dispatch/fake-cli.mjs")],
     [successCase, path.join(checkout, "evals/cases/dispatch/success.json")],
   ];

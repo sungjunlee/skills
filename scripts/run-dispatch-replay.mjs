@@ -11,6 +11,8 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
+import { parseReasonixReplayArgv } from "./lib/reasonix-replay-argv.mjs";
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const caller = path.join(root, "evals/fixtures/dispatch/caller");
 const fakeCli = path.join(root, "evals/fixtures/dispatch/fake-cli.mjs");
@@ -128,6 +130,9 @@ function setupRun(runDir, replayCase) {
   const config = {
     mode: MODES[replayCase.case_id],
     expected_cwd: caller,
+    expected_model: replayCase.dispatch_contract.expected_model,
+    expected_effort: replayCase.dispatch_contract.expected_effort,
+    expected_prompt: replayCase.dispatch_contract.expected_prompt,
     log: logPath,
     argv0: "reasonix",
   };
@@ -312,17 +317,13 @@ async function main() {
   const deadlineMs = replayCase.dispatch_contract.deadline_seconds * 1000;
   const elapsed = elapsedMs(fakeRecord, report);
   const argv = fakeRecord?.argv ?? [];
-  // The reasonix row uses `--model`; accept the `-m` short form too.
-  const modelFlag = ["--model", "-m"].find((flag) => argv.includes(flag));
-  const modelFromArgv = modelFlag ? argv[argv.indexOf(modelFlag) + 1] : null;
-  const effortFromArgv = argv.includes("--effort") ? argv[argv.indexOf("--effort") + 1] : null;
+  const parsedArgv = parseReasonixReplayArgv(argv, replayCase.dispatch_contract);
   const observation = {
-    host_dispatched: dispatches === 1,
+    host_dispatched: dispatches === 1 && parsedArgv.ok,
     fake_cli_revision: sha256File(fakeCli),
-    resolved_route:
-      argv[0] && modelFromArgv ? `${argv[0]}/${modelFromArgv}` : report.resolved_route || replayCase.expected_route,
-    resolved_model: modelFromArgv || report.resolved_model || replayCase.dispatch_contract.expected_model,
-    resolved_effort: effortFromArgv || report.resolved_effort || replayCase.dispatch_contract.expected_effort,
+    resolved_route: parsedArgv.route,
+    resolved_model: parsedArgv.model,
+    resolved_effort: parsedArgv.effort,
     argv: fakeRecord?.argv ?? [],
     cwd: fakeRecord?.cwd ?? "other",
     stdin: fakeRecord?.stdin ?? "other",

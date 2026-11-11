@@ -11,6 +11,20 @@ export function targetDirFromArgv(caseId) {
   return path.resolve(target);
 }
 
+export function claimTarget(root) {
+  try {
+    mkdirSync(root, { recursive: false });
+  } catch (error) {
+    if (error?.code === "EEXIST") {
+      throw new Error(
+        `Refusing to overwrite existing fixture target ${root}. Choose a target path that does not exist.`,
+        { cause: error },
+      );
+    }
+    throw error;
+  }
+}
+
 export function writeTree(root, files) {
   for (const [relative, content] of Object.entries(files)) {
     const filename = path.join(root, relative);
@@ -32,6 +46,7 @@ export function seedGitRepo(root) {
 
 export function buildFixture(caseId, files) {
   const root = targetDirFromArgv(caseId);
+  claimTarget(root);
   writeTree(root, files);
   assertSuiteGreen(root);
   seedGitRepo(root);

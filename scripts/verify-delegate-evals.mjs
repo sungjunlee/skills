@@ -125,20 +125,39 @@ function validateCaseContract(evalCase) {
   return errors;
 }
 
-function validatePair(evalCase, result) {
+export function validatePair(evalCase, result) {
   const errors = [];
-  const profileIds = evalCase.candidate_profiles.map((profile) => profile.profile_id);
-  if (!profileIds.includes(result.profile_id)) {
+  const profile = evalCase.candidate_profiles.find(
+    (candidate) => candidate.profile_id === result.profile_id,
+  );
+  if (!profile) {
     errors.push(`profile_id ${JSON.stringify(result.profile_id)} is not a candidate profile of the case`);
+  } else {
+    if (result.model !== profile.model) {
+      errors.push(
+        `profile_id ${JSON.stringify(result.profile_id)} requires model ${JSON.stringify(profile.model)}, got ${JSON.stringify(result.model)}`,
+      );
+    }
+    if (result.effort !== profile.effort) {
+      errors.push(
+        `profile_id ${JSON.stringify(result.profile_id)} requires effort ${JSON.stringify(profile.effort)}, got ${JSON.stringify(result.effort)}`,
+      );
+    }
   }
   const checkIds = evalCase.acceptance_checks.map((check) => check.check_id);
+  const resultIds = result.acceptance_results.map((entry) => entry.check_id);
+  const duplicateResultIds = [...new Set(duplicates(resultIds))];
+  if (duplicateResultIds.length > 0) {
+    errors.push(
+      `duplicate acceptance result check_id(s): ${duplicateResultIds.map(JSON.stringify).join(", ")}`,
+    );
+  }
   for (const entry of result.acceptance_results) {
     if (!checkIds.includes(entry.check_id)) {
       errors.push(`unexpected acceptance result ${JSON.stringify(entry.check_id)}`);
     }
   }
   if (result.status === "completed") {
-    const resultIds = result.acceptance_results.map((entry) => entry.check_id);
     for (const id of checkIds) {
       if (!resultIds.includes(id)) errors.push(`completed result is missing acceptance result ${JSON.stringify(id)}`);
     }
@@ -270,7 +289,9 @@ async function main() {
   );
 }
 
-main().catch((error) => {
-  console.error(error.message);
-  process.exitCode = 1;
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error.message);
+    process.exitCode = 1;
+  });
+}

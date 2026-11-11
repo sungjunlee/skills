@@ -9,6 +9,8 @@ import { isatty } from "node:tty";
 import path from "node:path";
 import process from "node:process";
 
+import { parseReasonixReplayArgv } from "../../../scripts/lib/reasonix-replay-argv.mjs";
+
 const FATAL_STDERR = "Error: 429 Monthly usage limit reached. Resets in 13 days.";
 const SENTINEL = "DISPATCH_REPLAY_OK";
 
@@ -118,6 +120,12 @@ async function main() {
     record.signal = signal;
     writeLog(config.log, record);
   };
+
+  const parsedArgv = parseReasonixReplayArgv(argv, config);
+  if (!parsedArgv.ok) {
+    finish();
+    throw new Error(`invalid reasonix replay argv (${parsedArgv.failed.join(", ")})`);
+  }
 
   process.on("SIGTERM", () => {
     finish("SIGTERM");

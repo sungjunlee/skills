@@ -34,7 +34,9 @@ export function writeTree(root, files) {
 }
 
 export function assertSuiteGreen(root) {
-  execFileSync("node", ["--test"], { cwd: root, stdio: "pipe" });
+  const env = { ...process.env };
+  delete env.NODE_TEST_CONTEXT;
+  execFileSync("node", ["--test"], { cwd: root, env, stdio: "pipe" });
 }
 
 export function seedGitRepo(root) {

@@ -18,6 +18,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { buildFixture } from "../../evals/delegate/fixtures/generators/lib.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const generatorsDir = path.join(root, "evals/delegate/fixtures/generators");
@@ -200,6 +201,45 @@ test("rejects a symlink without changing the link destination or invoking Git", 
   assert.deepEqual(snapshotTree(target), linkBefore);
   assert.deepEqual(snapshotTree(destination), destinationBefore);
   assert.equal(existsSync(sentinel), false, "rejected symlink destination ran its test suite");
+});
+
+test("does not seed Git when a generated fixture suite fails", (t) => {
+  const harness = makeHarness(t);
+  const target = path.join(harness.base, "failing-fixture");
+  const sentinel = path.join(harness.base, "failing-test-ran");
+  const originalArgvLength = process.argv.length;
+  const originalArgv2 = process.argv[2];
+  const originalPath = process.env.PATH;
+  const originalGitLog = process.env.GIT_STUB_LOG;
+
+  process.argv[2] = target;
+  process.env.PATH = harness.env.PATH;
+  process.env.GIT_STUB_LOG = harness.gitLog;
+  try {
+    assert.throws(
+      () =>
+        buildFixture("target-safety-failing-suite", {
+          "test/deliberate-failure.test.cjs": `const assert = require("node:assert/strict");
+const { writeFileSync } = require("node:fs");
+const test = require("node:test");
+test("deliberate failure", () => {
+  writeFileSync(${JSON.stringify(sentinel)}, "ran");
+  assert.fail("expected fixture failure");
+});
+`,
+        }),
+    );
+  } finally {
+    if (originalArgvLength > 2) process.argv[2] = originalArgv2;
+    else process.argv.splice(2);
+    if (originalPath === undefined) delete process.env.PATH;
+    else process.env.PATH = originalPath;
+    if (originalGitLog === undefined) delete process.env.GIT_STUB_LOG;
+    else process.env.GIT_STUB_LOG = originalGitLog;
+  }
+
+  assert.equal(existsSync(sentinel), true, "deliberately failing fixture test did not run");
+  assert.deepEqual(gitCalls(harness.gitLog), [], "failing fixture suite invoked Git");
 });
 
 test("fresh targets build all four fixtures and retain premise checks with Git stubbed", async (t) => {
